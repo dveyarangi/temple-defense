@@ -1,0 +1,21 @@
+<quadraturin>
+	<ekran>
+		<xRes>640</xRes>
+		<yRes>480</yRes>
+		<anitaliasing>false</anitaliasing>
+	</ekran>
+	<input>
+		<scroll-step>40</scroll-step>
+		<scale-step>0.9</scale-step>
+		<binding key="37" action="quadraturin.navigation.scroll-left" />
+		<binding key="39" action="quadraturin.navigation.scroll-right" />
+		<binding key="38" action="quadraturin.navigation.scroll-up" />
+		<binding key="40" action="quadraturin.navigation.scroll-down" />
+		<binding key="33" action="quadraturin.navigation.zoom-in" />
+		<binding key="34" action="quadraturin.navigation.zoom-out" />
+	</input>
+	<stage>
+			<frame-length>1</frame-length>
+			<max-fps>60</max-fps>
+	</stage>
+</quadraturin>
