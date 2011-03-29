@@ -3,9 +3,9 @@
 	 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>dve.yarangi.game</groupId>
-	<artifactId>spacefight</artifactId>
+	<artifactId>temple-defense</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SpaceFight</name>
+	<name>Temple Defense</name>
 	<url>http://maven.apache.org</url>
 	 
 	<packaging>jar</packaging>
