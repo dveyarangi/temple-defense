@@ -3,6 +3,7 @@ package yarangi.game.spacefight.model.enemies;
 import yarangi.game.spacefight.model.Integrity;
 import yarangi.graphics.quadraturin.effects.SpriteLook;
 import yarangi.graphics.quadraturin.interaction.spatial.AABB;
+import yarangi.graphics.quadraturin.objects.SceneEntity;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.math.bezier.BezierBubble;
@@ -17,7 +18,7 @@ public class ElementalDarkness extends GenericEnemy
 	
 	private BezierBubble bubble;
 	
-	public ElementalDarkness(double x, double y, double a, Vector2D target) 
+	public ElementalDarkness(double x, double y, double a, SceneEntity target) 
 	{
 		super(new AABB(x, y, SIZE, a), target, new Integrity(1000, new double [] { 0,0,0,0}, 0));
 		setLook(/*new SpriteLook <ElementalDarkness> (*/new ElementalDarknessLook()/*, 64, 64, false)*/);
@@ -36,6 +37,11 @@ public class ElementalDarkness extends GenericEnemy
 
 	public BezierBubble getCurve() {
 		return bubble;
+	}
+
+	public void setImpactWith(SceneEntity arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

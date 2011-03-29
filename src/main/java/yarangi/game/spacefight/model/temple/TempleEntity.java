@@ -38,8 +38,6 @@ public class TempleEntity extends DummyEntity implements PhysicalEntity
 			playground.addEntity(bot, true);
 			
 		}*/
-		
-		playground.getVoices().addCursorListener(controller);
 	}
 	
 
@@ -47,16 +45,11 @@ public class TempleEntity extends DummyEntity implements PhysicalEntity
 	
 	public ControlEntity getController() { return controller; }
 	
-	public void destroy()
-	{
-		playground.getVoices().removeCursorListener(controller);
-	}
-
 
 	public Vector2D getVelocity() { return velocity; }
 
 
 	public void setImpactWith(SceneEntity e) {
-		System.out.println("temple hit: " + e);
+//		System.out.println("temple hit: " + e);
 	}
 }

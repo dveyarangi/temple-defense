@@ -7,14 +7,14 @@ import yarangi.game.spacefight.Playground;
 import yarangi.game.spacefight.actions.Fireable;
 import yarangi.game.spacefight.model.temple.TempleEntity;
 import yarangi.graphics.quadraturin.actions.Action;
-import yarangi.graphics.quadraturin.events.CursorMotionEvent;
-import yarangi.graphics.quadraturin.events.CursorMotionListener;
+import yarangi.graphics.quadraturin.events.CursorEvent;
+import yarangi.graphics.quadraturin.events.CursorListener;
 import yarangi.graphics.quadraturin.events.UserActionEvent;
 import yarangi.graphics.quadraturin.interaction.spatial.AABB;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
 import yarangi.math.Vector2D;
 
-public class ControlEntity extends SceneEntity implements CursorMotionListener
+public class ControlEntity extends SceneEntity implements CursorListener
 {
 
 	private static final long serialVersionUID = -2094957235603223096L;
@@ -37,13 +37,14 @@ public class ControlEntity extends SceneEntity implements CursorMotionListener
 	
 	private boolean isMouseButtonHeld = false;
 	
-	private Action fireAction = new Action()
-	{
-		public void act(UserActionEvent event) {
-				isMouseButtonHeld = event.isPressed() && event.getInputCode() == UserActionEvent.MOUSE_LEFT_BUTTON;
-		}
-		
+	private Action fireOnAction = new Action() {
+		public void act(UserActionEvent event) { isMouseButtonHeld = true; }
 	};
+	
+	private Action fireOffAction = new Action() {
+		public void act(UserActionEvent event) { isMouseButtonHeld = false; }
+	};
+
 	
 	public ControlEntity(Playground playground, TempleEntity temple) 
 	{
@@ -86,7 +87,7 @@ public class ControlEntity extends SceneEntity implements CursorMotionListener
 	public boolean isPickable() { return false; }
 
 
-	public void onCursorMotion(CursorMotionEvent event) 
+	public void onCursorMotion(CursorEvent event) 
 	{
 		cursorLocation = event.getWorldLocation();
 		highlighted = event.getEntity();
@@ -103,7 +104,8 @@ public class ControlEntity extends SceneEntity implements CursorMotionListener
 		return isMouseButtonHeld;
 	}
 
-	public Action getFireAction() { return fireAction; }
+	public Action getFireOnAction() { return fireOnAction; }
+	public Action getFireOffAction() { return fireOffAction; }
 
 
 	public SceneEntity getHighlighted() { return highlighted; }

@@ -25,7 +25,6 @@ public class SpawnerBubbleBehavior implements Behavior<SpawnerBubble>
 		
 		if(RandomUtil.getRandomInt(40) == 0 && entity.getTimeToSpawn() <= 0)
 			entity.spawn();
-		System.out.println("here");
 		if(entity.getTimeToSpawn() > 0)
 		{
 			List <BezierNode> nodes = entity.getCurve().getNodes();
