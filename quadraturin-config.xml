@@ -8,16 +8,20 @@
 		<scroll-step>40</scroll-step>
 		<scale-step>0.9</scale-step>
 		<!-- 
+		public static final int MOUSE_LEFT_BUTTON = -1;
+		public static final int MOUSE_RIGHT_BUTTON = -2;
+		
+		public static final int MOVED = 0;
 		public static final int PRESSED = 1;
 		public static final int TAPPED = 2;
 		public static final int RELEASED = 3;
 		public static final int DRAGGED = 4;	
 	
-		public static final int MOUSE_LEFT_BUTTON = -1;
-		public static final int MOUSE_RIGHT_BUTTON = -2;
 		
 		* keyboard key values are identical to KeyEvent.getKeyCode() values.
 	 -->
+		<binding actionId="cursor-moved" buttonId="0" modeId="0" />
+		
 		<binding actionId="scroll-left"  buttonId="37" modeId="2" />
 		<binding actionId="scroll-right" buttonId="39" modeId="2" />
 		<binding actionId="scroll-up"    buttonId="38" modeId="2" />
