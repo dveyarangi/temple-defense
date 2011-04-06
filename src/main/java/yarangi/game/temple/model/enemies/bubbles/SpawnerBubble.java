@@ -5,7 +5,7 @@ import yarangi.graphics.curves.BezierBubble;
 import yarangi.graphics.curves.BezierBubble.BezierNode;
 import yarangi.graphics.quadraturin.SceneVeil;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
-import yarangi.graphics.quadraturin.util.colors.Color;
+import yarangi.graphics.utils.colors.Color;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
@@ -42,10 +42,10 @@ public class SpawnerBubble extends SimpleBubble
 //		for(int i = 0; i < nodesNum; i ++)
 //			bubble.getAnchor(i).x += i % 2 == 0 ? 3 : -3;
 //		bubble.getAnchor(0).x += 5;
+		
+		this.mass = -100;
 
 	}
-	
-	public Vector2D getVelocity() { return velocity; }
 
 	public BezierBubble getCurve() {
 		return bubble;

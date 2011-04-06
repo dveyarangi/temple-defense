@@ -3,6 +3,7 @@ package yarangi.game.temple.model.enemies;
 import yarangi.game.temple.model.Integrity;
 import yarangi.graphics.curves.BezierBubble;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
+import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.AABB;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
@@ -13,6 +14,11 @@ public class ElementalDarkness extends GenericEnemy
 
 	public static final int SIZE = 40;
 	private Vector2D velocity;
+	
+	private Vector2D force;
+	
+	private double mass;
+	
 	
 	private BezierBubble bubble;
 	
@@ -30,16 +36,14 @@ public class ElementalDarkness extends GenericEnemy
 		
 		
 	}
-	
-	public Vector2D getVelocity() { return velocity; }
-
 	public BezierBubble getCurve() {
 		return bubble;
 	}
 
-	public void setImpactWith(SceneEntity arg0) {
+	public void setImpactWith(IPhysicalObject arg0) {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

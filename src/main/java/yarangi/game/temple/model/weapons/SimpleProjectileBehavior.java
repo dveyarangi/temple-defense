@@ -1,7 +1,6 @@
 package yarangi.game.temple.model.weapons;
 
 import yarangi.graphics.quadraturin.objects.Behavior;
-import yarangi.math.AABB;
 import yarangi.math.Vector2D;
 
 public class SimpleProjectileBehavior implements Behavior <Projectile>
@@ -10,11 +9,8 @@ public class SimpleProjectileBehavior implements Behavior <Projectile>
 
 	public boolean behave(double time, Projectile prj, boolean isVisible) 
 	{
-		Vector2D ds = prj.velocity.mul(time);
-		AABB aabb = prj.getAABB();
-
-		aabb.x += ds.x;
-		aabb.y += ds.y;
+		
+		Vector2D ds = prj.getVelocity().mul(time);
 		
 		if(prj.addRangeSquare(ds.x*ds.x + ds.y*ds.y))
 		{

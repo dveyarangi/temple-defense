@@ -2,14 +2,13 @@ package yarangi.game.temple.model.temple;
 
 import yarangi.game.temple.Playground;
 import yarangi.game.temple.controllers.ControlEntity;
-import yarangi.graphics.quadraturin.interaction.PhysicalEntity;
 import yarangi.graphics.quadraturin.objects.DummyEntity;
-import yarangi.graphics.quadraturin.objects.SceneEntity;
+import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.AABB;
 import yarangi.math.Vector2D;
 
 
-public class TempleEntity extends DummyEntity implements PhysicalEntity
+public class TempleEntity extends DummyEntity implements IPhysicalObject
 {
 
 	private static final long serialVersionUID = 6893825029204201873L;
@@ -49,7 +48,19 @@ public class TempleEntity extends DummyEntity implements PhysicalEntity
 	public Vector2D getVelocity() { return velocity; }
 
 
-	public void setImpactWith(SceneEntity e) {
+	public void setImpactWith(IPhysicalObject e) {
 //		System.out.println("temple hit: " + e);
+	}
+
+
+	public Vector2D getForce() {
+		// TODO Auto-generated method stub
+		return new Vector2D(0,0);
+	}
+
+
+	public double getMass() {
+		// TODO Auto-generated method stub
+		return 1000;
 	}
 }

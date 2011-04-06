@@ -3,11 +3,12 @@ package yarangi.game.temple.model.enemies;
 import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.Damageable;
 import yarangi.game.temple.model.Integrity;
-import yarangi.graphics.quadraturin.interaction.PhysicalEntity;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
+import yarangi.graphics.quadraturin.objects.NewtonialSceneEntity;
+import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.AABB;
 
-public abstract class GenericEnemy extends SceneEntity implements PhysicalEntity, Damageable
+public abstract class GenericEnemy extends NewtonialSceneEntity implements Damageable
 {
 
 	private Integrity integrity;

@@ -6,9 +6,9 @@ import yarangi.game.temple.model.enemies.bubbles.BubbleSwarm;
 import yarangi.graphics.quadraturin.IViewPoint;
 import yarangi.graphics.quadraturin.ViewPoint2D;
 import yarangi.graphics.quadraturin.WorldVeil;
+import yarangi.graphics.quadraturin.actions.DefaultCollisionManager;
 import yarangi.graphics.quadraturin.effects.BlurVeilEffect;
-import yarangi.graphics.quadraturin.interaction.DefaultCollisionManager;
-import yarangi.graphics.quadraturin.interaction.ICollisionManager;
+import yarangi.graphics.quadraturin.simulations.ICollisionManager;
 import yarangi.math.RangedDouble;
 import yarangi.math.Vector2D;
 

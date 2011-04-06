@@ -1,12 +1,12 @@
 package yarangi.game.temple.model.temple;
 
 import yarangi.game.temple.controllers.BattleInterface;
-import yarangi.graphics.quadraturin.interaction.PhysicalEntity;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
+import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.AABB;
 import yarangi.math.Vector2D;
 
-public class ShieldEntity extends SceneEntity implements PhysicalEntity 
+public class ShieldEntity extends SceneEntity implements IPhysicalObject 
 {
 
 	private static final long serialVersionUID = 9214872976966945125L;
@@ -41,9 +41,19 @@ public class ShieldEntity extends SceneEntity implements PhysicalEntity
 		return null;
 	}
 
-	public void setImpactWith(SceneEntity e) {
+	public void setImpactWith(IPhysicalObject e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Vector2D getForce() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public double getMass() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

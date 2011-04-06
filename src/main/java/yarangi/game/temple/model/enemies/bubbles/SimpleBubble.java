@@ -7,7 +7,8 @@ import yarangi.game.temple.model.Integrity;
 import yarangi.game.temple.model.enemies.GenericEnemy;
 import yarangi.graphics.curves.BezierBubble;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
-import yarangi.graphics.quadraturin.util.colors.Color;
+import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
+import yarangi.graphics.utils.colors.Color;
 import yarangi.math.AABB;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
@@ -16,7 +17,6 @@ import yarangi.numbers.RandomUtil;
 public class SimpleBubble extends GenericEnemy  
 {
 
-	protected Vector2D velocity;
 	
 	protected BezierBubble bubble;
 	
@@ -54,8 +54,6 @@ public class SimpleBubble extends GenericEnemy
 	public double getMaxSpeed() { return maxSpeed; }
 	public double getEnginePower() { return enginePower; }
 	
-	public Vector2D getVelocity() { return velocity; }
-
 	public BezierBubble getCurve() {
 		return bubble;
 	}
@@ -66,8 +64,9 @@ public class SimpleBubble extends GenericEnemy
 
 	public Color getColor() { return color; }
 
-	public void setImpactWith(SceneEntity e) {
+	public void setImpactWith(IPhysicalObject e) {
 		// TODO Auto-generated method stub
 		
 	}
+
 }

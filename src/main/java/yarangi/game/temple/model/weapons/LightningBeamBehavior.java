@@ -8,7 +8,7 @@ public class LightningBeamBehavior implements Behavior<LightningBeam>
 
 	public boolean behave(double time, LightningBeam prj, boolean isVisible) 
 	{
-		Vector2D speed = prj.velocity;
+		Vector2D speed = prj.getVelocity();
 		
 		if(prj.prev == null)
 		{

@@ -2,12 +2,12 @@ package yarangi.game.temple.model.temple.bots;
 
 import yarangi.game.temple.model.temple.MeshNode;
 import yarangi.game.temple.model.temple.platforms.CommandPlatform;
-import yarangi.graphics.quadraturin.interaction.PhysicalEntity;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
+import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.AABB;
 import yarangi.math.Vector2D;
 
-public class Bot extends SceneEntity implements PhysicalEntity
+public class Bot extends SceneEntity implements IPhysicalObject
 {
 
 	private static final long serialVersionUID = -19945327419649387L;
@@ -66,8 +66,18 @@ public class Bot extends SceneEntity implements PhysicalEntity
 
 	public Vector2D getVelocity() { return velocity; }
 
-	public void setImpactWith(SceneEntity arg0) {
+	public void setImpactWith(IPhysicalObject arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Vector2D getForce() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public double getMass() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

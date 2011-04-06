@@ -6,7 +6,7 @@ import javax.media.opengl.GL;
 import yarangi.game.temple.model.Integrity;
 import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
-import yarangi.graphics.quadraturin.util.colors.Color;
+import yarangi.graphics.utils.colors.Color;
 import yarangi.math.Vector2D;
 
 public class BubbleLook implements Look <SimpleBubble>

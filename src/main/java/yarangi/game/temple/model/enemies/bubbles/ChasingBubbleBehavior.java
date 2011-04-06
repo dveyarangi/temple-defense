@@ -30,18 +30,14 @@ public class ChasingBubbleBehavior implements Behavior <SimpleBubble>
 		double switchCoef = targetLocation.getBoundingRadius()*targetLocation.getBoundingRadius()/distanceToTarget;
 		Vector2D force = forceDir.mul(1-switchCoef).plus(forceDir.rotate(Angles.PI_div_2).mul(switchCoef));
 		
+		force = force.normalize().mul(bubble.getEnginePower());
 		
-		force.normalize();
-		Vector2D speed = bubble.velocity.plus(force.mul(bubble.getEnginePower()*time));
+		bubble.setForce(force.x, force.y); 
 		
-		if ( speed.abs() > bubble.getMaxSpeed())
-		{
-			speed = speed.normalize().mul(bubble.getMaxSpeed());
-		}
-		
-		bubble.velocity = speed;
-		bubble.getAABB().x += speed.getX()*time;
-		bubble.getAABB().y += speed.getY()*time;
+//		if ( speed.abs() > bubble.getMaxSpeed())
+//		{
+//			speed = speed.normalize().mul(bubble.getMaxSpeed());
+//		}
 
 		return true;
 	}

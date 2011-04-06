@@ -2,12 +2,12 @@ package yarangi.game.temple.model.weapons;
 
 import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.Damageable;
-import yarangi.graphics.quadraturin.interaction.PhysicalEntity;
-import yarangi.graphics.quadraturin.objects.SceneEntity;
+import yarangi.graphics.quadraturin.objects.NewtonialSceneEntity;
+import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.AABB;
 import yarangi.math.Vector2D;
 
-public class Projectile extends SceneEntity implements PhysicalEntity 
+public class Projectile extends NewtonialSceneEntity
 {
 
 	private static final long serialVersionUID = -2909463886504124942L;
@@ -18,7 +18,7 @@ public class Projectile extends SceneEntity implements PhysicalEntity
 	
 	protected double maxRange;
 	
-	public Vector2D velocity;
+//	public Vector2D velocity;
 	
 	protected Vector2D impactPoint;
 	
@@ -26,9 +26,10 @@ public class Projectile extends SceneEntity implements PhysicalEntity
 	{
 		super(new AABB(x, y, props.getProjectileHitRadius(), a));
 		this.range = 0;
-		this.velocity = v;
 		this.maxRange = props.getProjectileRange();
 		this.damage = props.getDamage();
+		setVelocity(v.x, v.y);
+		setMass(0.001);
 	}
 	public Damage getDamage() { return damage; }
 	public double getMaxRange() { return maxRange; }
@@ -47,7 +48,7 @@ public class Projectile extends SceneEntity implements PhysicalEntity
 	
 	public boolean isPickable() { return false; }
 
-	public void setImpactWith(SceneEntity e) 
+	public void setImpactWith(IPhysicalObject e) 
 	{
 		
 		if(e instanceof Damageable)
@@ -60,7 +61,5 @@ public class Projectile extends SceneEntity implements PhysicalEntity
 	}
 	
 	public Vector2D getImpactPoint() { return impactPoint; }
-
-	public Vector2D getVelocity() { return velocity; }
 	
 }

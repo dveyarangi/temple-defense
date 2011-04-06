@@ -1,7 +1,6 @@
 package yarangi.game.temple.model.weapons;
 
 import yarangi.graphics.quadraturin.objects.Behavior;
-import yarangi.math.AABB;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 
@@ -10,11 +9,8 @@ public class FlakShellBehavior implements Behavior <FlakShell>
 
 	public boolean behave(double time, FlakShell prj, boolean isVisible) 
 	{
-		AABB aabb = prj.getAABB();
-		Vector2D speed = prj.velocity;
-		Vector2D ds = speed.mul(time);
-		aabb.x += ds.x;
-		aabb.y += ds.y;
+		Vector2D ds = prj.getVelocity().mul(time);
+		
 		
 		if(prj.addRangeSquare(ds.x*ds.x + ds.y*ds.y))
 		{
@@ -31,7 +27,7 @@ public class FlakShellBehavior implements Behavior <FlakShell>
 				fragLocations[idx].x += fragSpeeds[idx].x;
 				fragLocations[idx].y += fragSpeeds[idx].y;
 			}
-			aabb.r += FlakShell.EXPLOSION_SPEED * time;
+			prj.getAABB().r += FlakShell.EXPLOSION_SPEED * time;
 		}
 		else
 		if(prj.isAtExplosionRange())
