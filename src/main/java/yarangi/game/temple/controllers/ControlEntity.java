@@ -6,20 +6,19 @@ import java.util.List;
 import yarangi.game.temple.Playground;
 import yarangi.game.temple.actions.Fireable;
 import yarangi.game.temple.model.temple.TempleEntity;
-import yarangi.graphics.quadraturin.actions.Action;
+import yarangi.graphics.quadraturin.actions.IAction;
 import yarangi.graphics.quadraturin.events.CursorEvent;
 import yarangi.graphics.quadraturin.events.CursorListener;
 import yarangi.graphics.quadraturin.events.UserActionEvent;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
-import yarangi.math.AABB;
 import yarangi.math.Vector2D;
+import yarangi.spatial.AABB;
 
 public class ControlEntity extends SceneEntity implements CursorListener
 {
 
 	private static final long serialVersionUID = -2094957235603223096L;
 
-	public static final int FIRE_ACTION = 11111111;
 	private TempleEntity temple;
 	
 	private Playground playground ;
@@ -44,11 +43,11 @@ public class ControlEntity extends SceneEntity implements CursorListener
 		
 	};*/
 	
-	private Action fireOnAction = new Action() {
+	private IAction fireOnAction = new IAction() {
 		public void act(UserActionEvent event) { isMouseButtonHeld = true; }
 	};
 	
-	private Action fireOffAction = new Action() {
+	private IAction fireOffAction = new IAction() {
 		public void act(UserActionEvent event) { isMouseButtonHeld = false; }
 	};
 
@@ -111,8 +110,8 @@ public class ControlEntity extends SceneEntity implements CursorListener
 		return isMouseButtonHeld;
 	}
 
-	public Action getFireOnAction() { return fireOnAction; }
-	public Action getFireOffAction() { return fireOffAction; }
+	public IAction getFireOnAction() { return fireOnAction; }
+	public IAction getFireOffAction() { return fireOffAction; }
 
 
 	public SceneEntity getHighlighted() { return highlighted; }

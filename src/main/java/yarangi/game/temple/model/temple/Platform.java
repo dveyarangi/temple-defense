@@ -4,8 +4,8 @@ import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.Damageable;
 import yarangi.game.temple.model.Integrity;
 import yarangi.graphics.quadraturin.objects.CompositeSceneEntity;
-import yarangi.math.AABB;
 import yarangi.math.Angles;
+import yarangi.spatial.AABB;
 
 public abstract class Platform extends CompositeSceneEntity implements Damageable
 {

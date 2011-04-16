@@ -4,8 +4,8 @@ import yarangi.game.temple.Playground;
 import yarangi.game.temple.controllers.ControlEntity;
 import yarangi.graphics.quadraturin.objects.DummyEntity;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
-import yarangi.math.AABB;
 import yarangi.math.Vector2D;
+import yarangi.spatial.AABB;
 
 
 public class TempleEntity extends DummyEntity implements IPhysicalObject
@@ -27,9 +27,10 @@ public class TempleEntity extends DummyEntity implements IPhysicalObject
 		controller = new ControlEntity(playground, this);
 		addChild(controller);
 		
-		structure = new TempleStructure(this, controller);
+		structure = new TempleStructure(this, controller, playground.getWorldVeil());
 		addChild(structure);
 		
+//		this.getAABB().r = structure.getShieldRadius();
 		this.playground = playground;
 /*		for(int idx = 0; idx < 100; idx ++)
 		{

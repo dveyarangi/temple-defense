@@ -3,7 +3,7 @@ package yarangi.game.temple.model.weapons;
 import yarangi.game.temple.actions.Fireable;
 import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
 import yarangi.graphics.quadraturin.objects.CompositeSceneEntity;
-import yarangi.math.AABB;
+import yarangi.spatial.AABB;
 import yarangi.math.Vector2D;
 
 public abstract class Weapon extends CompositeSceneEntity implements Fireable

@@ -3,8 +3,8 @@ package yarangi.game.temple.model.temple;
 import yarangi.game.temple.controllers.BattleInterface;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
-import yarangi.math.AABB;
 import yarangi.math.Vector2D;
+import yarangi.spatial.AABB;
 
 public class ShieldEntity extends SceneEntity implements IPhysicalObject 
 {

@@ -4,8 +4,8 @@ import yarangi.game.temple.model.temple.MeshNode;
 import yarangi.game.temple.model.temple.platforms.CommandPlatform;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
-import yarangi.math.AABB;
 import yarangi.math.Vector2D;
+import yarangi.spatial.AABB;
 
 public class Bot extends SceneEntity implements IPhysicalObject
 {

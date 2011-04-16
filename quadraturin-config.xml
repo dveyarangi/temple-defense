@@ -22,12 +22,12 @@
 	 -->
 		<binding actionId="cursor-moved" buttonId="0" modeId="0" />
 		
-		<binding actionId="scroll-left"  buttonId="37" modeId="2" />
-		<binding actionId="scroll-right" buttonId="39" modeId="2" />
-		<binding actionId="scroll-up"    buttonId="38" modeId="2" />
-		<binding actionId="scroll-down"  buttonId="40" modeId="2" />
-		<binding actionId="zoom-in"      buttonId="33" modeId="2" /> <!-- page up -->
-		<binding actionId="zoom-out"     buttonId="34" modeId="2" /> <!-- page down -->
+		<binding actionId="scroll-left"  buttonId="37" modeId="1" />
+		<binding actionId="scroll-right" buttonId="39" modeId="1" />
+		<binding actionId="scroll-up"    buttonId="38" modeId="1" />
+		<binding actionId="scroll-down"  buttonId="40" modeId="1" />
+		<binding actionId="zoom-in"      buttonId="33" modeId="1" /> <!-- page up -->
+		<binding actionId="zoom-out"     buttonId="34" modeId="1" /> <!-- page down -->
 		
 		<binding actionId="fire-on"      buttonId="32" modeId="1" /> <!-- space -->
 		<binding actionId="fire-off"     buttonId="32" modeId="3" /> <!-- space -->
@@ -38,6 +38,6 @@
 	</input>
 	<stage>
 			<frame-length>1</frame-length>
-			<max-fps>60</max-fps>
+			<max-fps>300</max-fps>
 	</stage>
 </quadraturin>

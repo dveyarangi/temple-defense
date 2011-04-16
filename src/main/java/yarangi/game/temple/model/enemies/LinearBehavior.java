@@ -1,7 +1,7 @@
 package yarangi.game.temple.model.enemies;
 
 import yarangi.graphics.quadraturin.objects.Behavior;
-import yarangi.math.AABB;
+import yarangi.spatial.AABB;
 
 public class LinearBehavior implements Behavior<GenericEnemy> 
 {
@@ -10,8 +10,9 @@ public class LinearBehavior implements Behavior<GenericEnemy>
 	{
 		AABB aabb = entity.getAABB();
 		
-		aabb.x += entity.getVelocity().x;
-		aabb.y += entity.getVelocity().y;
+//		aabb.x += entity.getVelocity().x;
+//		aabb.y += entity.getVelocity().y;
+//		System.out.println(aabb);
 		
 		if(entity.getIntegrity().getHitPoints() == 0)
 			entity.setIsAlive(false);

@@ -24,7 +24,7 @@ public class MinigunLook implements Look<Minigun>
 		
 		double startAngle = controlAngle - width;
 		double endAngle = controlAngle + width;
-		gl.glBegin(GL.GL_POLYGON);
+/*		gl.glBegin(GL.GL_POLYGON);
 		gl.glColor4f(1.0f, 0.5f, 0.7f,0.1f);
 //			gl.glVertex3f((float)(controlRadius*cos),(float)(controlRadius*sin),0);
 			gl.glVertex3f((float)(maxDistance*Math.cos(endAngle)),   (float)(maxDistance*Math.sin(endAngle)), 0);
@@ -32,7 +32,7 @@ public class MinigunLook implements Look<Minigun>
 		
 			for(double a = startAngle; a < endAngle; a += 0.1)
 				gl.glVertex3f((float)(10*Math.cos(a)),(float)(10*Math.sin(a)),0);
-		gl.glEnd();	
+		gl.glEnd();	*/
 		}
 
 	public void init(GL gl, Minigun entity) {

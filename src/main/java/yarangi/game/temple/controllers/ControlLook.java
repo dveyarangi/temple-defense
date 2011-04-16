@@ -6,9 +6,9 @@ import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
-import yarangi.math.AABB;
 import yarangi.math.DistanceUtils;
 import yarangi.math.Vector2D;
+import yarangi.spatial.AABB;
 
 public class ControlLook implements Look <ControlEntity> 
 {
@@ -34,7 +34,7 @@ public class ControlLook implements Look <ControlEntity>
 		
 		double startAngle = controlAngle - Math.PI/20;
 		double endAngle = controlAngle + Math.PI/20;
-		gl.glBegin(GL.GL_POLYGON);
+/*		gl.glBegin(GL.GL_POLYGON);
 		gl.glColor4f(0.5f, 1.0f, 0.7f,0.1f);
 //			gl.glVertex3f((float)(controlRadius*cos),(float)(controlRadius*sin),0);
 			gl.glVertex3f((float)(maxDistance*Math.cos(endAngle)),   (float)(maxDistance*Math.sin(endAngle)), 0);
@@ -54,9 +54,9 @@ public class ControlLook implements Look <ControlEntity>
 		for(double a = startAngle; a < endAngle; a += 0.1)
 			gl.glVertex3f((float)(distance*Math.cos(a)),(float)(distance*Math.sin(a)),0);
 		gl.glEnd();
+*/		
 		
-		
-		SceneEntity highlighted = entity.getHighlighted(); 
+/*		SceneEntity highlighted = entity.getHighlighted(); 
 		if(highlighted != null)
 		{
 			AABB haabb = highlighted.getAABB();
@@ -70,7 +70,7 @@ public class ControlLook implements Look <ControlEntity>
 			
 			gl.glEnd();
 			
-		}
+		}*/
 /*		double width = distance*Math.sin(Math.PI/20);
 		gl.glBegin(GL.GL_LINE_STRIP);
 			for(double a = 0; a < 2*Math.PI; a += 0.1)

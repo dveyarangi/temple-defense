@@ -4,10 +4,10 @@ import yarangi.game.temple.controllers.BattleInterface;
 import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
-import yarangi.math.AABB;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
+import yarangi.spatial.AABB;
 
 public class LightningEmitter extends Weapon 
 {

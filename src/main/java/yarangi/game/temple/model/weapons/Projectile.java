@@ -4,8 +4,8 @@ import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.Damageable;
 import yarangi.graphics.quadraturin.objects.NewtonialSceneEntity;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
-import yarangi.math.AABB;
 import yarangi.math.Vector2D;
+import yarangi.spatial.AABB;
 
 public class Projectile extends NewtonialSceneEntity
 {
@@ -22,7 +22,7 @@ public class Projectile extends NewtonialSceneEntity
 	
 	protected Vector2D impactPoint;
 	
-	public  Projectile(double x, double y, double a, Vector2D v, WeaponProperties props) 
+	public Projectile(double x, double y, double a, Vector2D v, WeaponProperties props) 
 	{
 		super(new AABB(x, y, props.getProjectileHitRadius(), a));
 		this.range = 0;

@@ -2,7 +2,6 @@ package yarangi.game.temple;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.SceneException;
 import yarangi.graphics.quadraturin.UIVeil;
 
 public class TestUIVeil extends UIVeil 

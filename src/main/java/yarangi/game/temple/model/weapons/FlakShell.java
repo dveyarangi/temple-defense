@@ -1,8 +1,13 @@
 package yarangi.game.temple.model.weapons;
 
-import yarangi.math.Vector2D;
+import java.util.Map;
 
-public class FlakShell extends Projectile 
+import yarangi.graphics.lights.ICircleLightEntity;
+import yarangi.graphics.utils.colors.Color;
+import yarangi.math.Vector2D;
+import yarangi.spatial.ISpatialObject;
+
+public class FlakShell extends Projectile implements ICircleLightEntity
 {
 
 	private static final long serialVersionUID = 5706030916443249716L;
@@ -12,12 +17,18 @@ public class FlakShell extends Projectile
 	
 	public Vector2D [] frags;
 	public Vector2D [] speeds;
+	
+	private Map<ISpatialObject, Double> entities;
+	
+	private Color color;
 
 	public FlakShell(double x, double y, double a, Vector2D s, double explosionRangeSquare, WeaponProperties props) {
-		super(x, y, a, s, props);
+		super(x, y, 0, s, props);
 		
 		this.explosionRangeSquare = explosionRangeSquare;
 		this.maxRange = explosionRangeSquare + 150;
+		
+		this.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
 	}
 	
 	public boolean isAtExplosionRange() 
@@ -35,5 +46,20 @@ public class FlakShell extends Projectile
 	}
 
 	public double getExplosionRange() { return explosionRangeSquare; }
+
+	public void setEntities(Map<ISpatialObject, Double> entities) {
+		this.entities = entities;
+	}
+
+	public Map<ISpatialObject, Double> getEntities() {
+		return entities;
+	}
+
+	public double getSensorRadius() {
+		// TODO Auto-generated method stub
+		return getAABB().r*10;
+	}
+
+	public Color getColor() { return color; }
 
 }

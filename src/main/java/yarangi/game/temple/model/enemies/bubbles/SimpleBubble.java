@@ -9,10 +9,10 @@ import yarangi.graphics.curves.BezierBubble;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.graphics.utils.colors.Color;
-import yarangi.math.AABB;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
+import yarangi.spatial.AABB;
 
 public class SimpleBubble extends GenericEnemy  
 {
@@ -37,7 +37,6 @@ public class SimpleBubble extends GenericEnemy
 		setLook(/*new SpriteLook <ElementalDarkness> (*/new BubbleLook()/*, 64, 64, false)*/);
 		setBehavior(new ChasingBubbleBehavior());
 		
-		this.velocity = velocity;
 		this.color = color;
 		
 		bubble = new BezierBubble(new Vector2D(0,0), size, nodesNum);

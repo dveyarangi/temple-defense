@@ -6,16 +6,16 @@ import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
-import yarangi.math.AABB;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
+import yarangi.spatial.AABB;
 
 public class Minigun extends Weapon 
 {
 	private static final long serialVersionUID = -4267007085490446753L;
 	public static final double BASE_TRACKING_SPEED = 3;
-	public static final double CANNON_TRACKING_HALF_WIDTH = 60;
+	public static final double CANNON_TRACKING_HALF_WIDTH = 360;
 	public static final double projectileSpeed = 6;
 	public static final double projectileHitRadius = 1;
 	public static final double trackingSpeed = BASE_TRACKING_SPEED;

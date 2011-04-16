@@ -6,9 +6,9 @@ import yarangi.game.temple.model.temple.Platform;
 import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.game.temple.model.temple.TempleStructure;
 import yarangi.game.temple.model.weapons.Weapon;
-import yarangi.math.AABB;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
+import yarangi.spatial.AABB;
 
 public class CommandPlatform extends Platform implements BattleInterface
 {

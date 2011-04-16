@@ -4,7 +4,7 @@ import javax.media.opengl.GL;
 
 import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
-import yarangi.math.AABB;
+import yarangi.spatial.AABB;
 
 public class MinigunBurstLook implements Look <Projectile> 
 {

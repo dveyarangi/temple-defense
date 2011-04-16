@@ -7,7 +7,6 @@ import yarangi.graphics.quadraturin.IViewPoint;
 import yarangi.graphics.quadraturin.ViewPoint2D;
 import yarangi.graphics.quadraturin.WorldVeil;
 import yarangi.graphics.quadraturin.actions.DefaultCollisionManager;
-import yarangi.graphics.quadraturin.effects.BlurVeilEffect;
 import yarangi.graphics.quadraturin.simulations.ICollisionManager;
 import yarangi.math.RangedDouble;
 import yarangi.math.Vector2D;
@@ -15,14 +14,14 @@ import yarangi.math.Vector2D;
 
 public class ArcadeWorldVeil extends WorldVeil 
 {
-
+	
 
 	private BubbleSwarm swarm;
 	
 	public ArcadeWorldVeil(int width, int height) {
 		super(width, height);
 		
-		setOverlayEffect(new BlurVeilEffect());
+//		setOverlayEffect(new BlurVeilEffect());
 		
 	}
 
@@ -30,6 +29,7 @@ public class ArcadeWorldVeil extends WorldVeil
 	public void init(GL gl) 
 	{
 		super.init(gl);
+
 		gl.glClearColor(0.0f,0.0f, 0.0f, 0.0f);
 	}
 

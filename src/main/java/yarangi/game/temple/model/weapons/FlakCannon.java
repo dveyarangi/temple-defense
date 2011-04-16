@@ -4,11 +4,13 @@ import yarangi.game.temple.controllers.BattleInterface;
 import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
-import yarangi.math.AABB;
 import yarangi.math.Angles;
 import yarangi.math.DistanceUtils;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
+import yarangi.spatial.AABB;
+import yarangi.spatial.ISpatialObject;
+import yarangi.spatial.SpatialIndexer;
 
 public class FlakCannon extends Weapon 
 {
@@ -18,15 +20,16 @@ public class FlakCannon extends Weapon
 	 */
 	private static final long serialVersionUID = -3710249126189305664L;
 	private static final WeaponProperties FLACK_PROPS = 
-		new WeaponProperties(1, 60, 5, 1, 2, 600, 1, 0, new Damage(0.1, 0.1, 0, 0));
+		new WeaponProperties(1, 180, 5, 5, 2, 600, 1, 2, new Damage(0.1, 0.1, 0, 0));
 	
-	
-	private FlakShellBehavior shellBehavior = new FlakShellBehavior();
+	private FlakShellBehavior shellBehavior;
 	private FlakShellLook shellLook = new FlakShellLook();
 	
-	public FlakCannon(WeaponPlatform platform, double x, double y, double a) {
+	public FlakCannon(WeaponPlatform platform, double x, double y, double a, SpatialIndexer <ISpatialObject> indexer) {
 		super(platform, x, y, a, FLACK_PROPS);
 		setLook(new FlakCannonLook());
+		
+		shellBehavior = new FlakShellBehavior(indexer);
 	}
 
 	/**
