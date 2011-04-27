@@ -1,8 +1,8 @@
 package yarangi.game.temple.controllers;
 
 import yarangi.game.temple.actions.Fireable;
+import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.graphics.quadraturin.objects.Behavior;
-import yarangi.graphics.quadraturin.objects.SceneEntity;
 
 public class ControlBehavior implements Behavior <ControlEntity> 
 {
@@ -28,15 +28,21 @@ public class ControlBehavior implements Behavior <ControlEntity>
 			{
 				for(Fireable fireable : ctrl.getFireables())
 				{
-					SceneEntity fire = fireable.fire();
+					Projectile fire = fireable.fire();
 					
 					if(fire == null)
 						continue;
+					
+					fire.setFeedback(ctrl.createFeedbackBeacon(fireable));
 					ctrl.getPlayground().addEntity(fire);
+					
+					
 				}
 				ctrl.setFireStopped(false);
 			}
 		}
+		ctrl.clearObservedObjects();
+	
 		
 //		Vector2D cp = ctrl.getCursorLocation();
 //		if ( cp != null)

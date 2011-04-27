@@ -1,6 +1,7 @@
 package yarangi.game.temple.model.weapons;
 
 import yarangi.game.temple.actions.Fireable;
+import yarangi.game.temple.ai.IIntellectCore;
 import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
 import yarangi.graphics.quadraturin.objects.CompositeSceneEntity;
 import yarangi.spatial.AABB;
@@ -13,11 +14,13 @@ public abstract class Weapon extends CompositeSceneEntity implements Fireable
 
 	private WeaponPlatform platform;
 	
-	private Vector2D trackingPoint;
+//	private Vector2D trackingPoint;
 	
 //	private double trackingSpeed;
 	
 	private WeaponProperties props;
+	
+	private IIntellectCore core;
 	
 //	private double reloadTime;
 	private double timeToReload = 0;
@@ -34,7 +37,7 @@ public abstract class Weapon extends CompositeSceneEntity implements Fireable
 	public WeaponPlatform getPlatform() { return platform; }
 	public void setPlatform(WeaponPlatform platform) { this.platform = platform; }
 	
-	public Vector2D getTrackingPoint() { return trackingPoint; }
+//	public Vector2D getTrackingPoint() { return trackingPoint; }
 	public double getTrackingSpeed() { return props.getCannonTrackingSpeed(); }
 	
 	public void setA(double a) 
@@ -64,5 +67,5 @@ public abstract class Weapon extends CompositeSceneEntity implements Fireable
 	@Override
 	public boolean isPickable() { return false; }
 	
-
+	public IIntellectCore getCore() { return core; }
 }

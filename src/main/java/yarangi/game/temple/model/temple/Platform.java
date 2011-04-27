@@ -21,7 +21,7 @@ public abstract class Platform extends CompositeSceneEntity implements Damageabl
 	
 	protected Platform(Hexagon hexagon) 
 	{
-		super(new AABB(hexagon.getX(), hexagon.getY(), 1, Angles.toDegrees(Math.atan2(hexagon.getY(), hexagon.getX()))));
+		super(new AABB(hexagon.getX(), hexagon.getY(), 1, /*Angles.toDegrees(Math.atan2(hexagon.getY(), hexagon.getX()))*/0));
 		
 		this.hexagon = hexagon;
 

@@ -44,7 +44,6 @@ public class TempleEntity extends DummyEntity implements IPhysicalObject
 	public TempleStructure getStructure() { return structure; }
 	
 	public ControlEntity getController() { return controller; }
-	
 
 	public Vector2D getVelocity() { return velocity; }
 

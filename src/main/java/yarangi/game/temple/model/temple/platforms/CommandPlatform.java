@@ -6,6 +6,7 @@ import yarangi.game.temple.model.temple.Platform;
 import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.game.temple.model.temple.TempleStructure;
 import yarangi.game.temple.model.weapons.Weapon;
+import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
@@ -28,9 +29,9 @@ public class CommandPlatform extends Platform implements BattleInterface
 	public TempleStructure getTempleStructure() { return temple.getStructure(); }
 
 
-	public Vector2D getTrackingPoint(Weapon weapon) {
-		// TODO: create a nice target acquisition logic
-		return temple.getController().getCursorLocation();
+	public double getTargetAngle(Weapon weapon) 
+	{
+		return temple.getController().aquireFireAngle(weapon);
 	}
 	
 	public double getAbsoluteAngle() {
@@ -66,5 +67,6 @@ public class CommandPlatform extends Platform implements BattleInterface
 	}
 
 	public double getTempleRadius() { return Math.sqrt(temple.getStructure().getBoundingRadiusSquare()); }
+
 
 }

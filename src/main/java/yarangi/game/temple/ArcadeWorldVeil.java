@@ -2,14 +2,17 @@ package yarangi.game.temple;
 
 import javax.media.opengl.GL;
 
+import yarangi.game.temple.model.enemies.ElementalVoid;
 import yarangi.game.temple.model.enemies.bubbles.BubbleSwarm;
 import yarangi.graphics.quadraturin.IViewPoint;
 import yarangi.graphics.quadraturin.ViewPoint2D;
 import yarangi.graphics.quadraturin.WorldVeil;
 import yarangi.graphics.quadraturin.actions.DefaultCollisionManager;
 import yarangi.graphics.quadraturin.simulations.ICollisionManager;
+import yarangi.math.Angles;
 import yarangi.math.RangedDouble;
 import yarangi.math.Vector2D;
+import yarangi.numbers.RandomUtil;
 
 
 public class ArcadeWorldVeil extends WorldVeil 
@@ -56,5 +59,6 @@ public class ArcadeWorldVeil extends WorldVeil
 	{
 		return new DefaultCollisionManager(this);			
 	}
+
 
 }

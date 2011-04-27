@@ -2,8 +2,8 @@ package yarangi.game.temple.model.weapons;
 
 import java.util.Map;
 
+import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.ICircleLightEntity;
-import yarangi.graphics.utils.colors.Color;
 import yarangi.math.Vector2D;
 import yarangi.spatial.ISpatialObject;
 

@@ -33,7 +33,19 @@ public class MinigunLook implements Look<Minigun>
 			for(double a = startAngle; a < endAngle; a += 0.1)
 				gl.glVertex3f((float)(10*Math.cos(a)),(float)(10*Math.sin(a)),0);
 		gl.glEnd();	*/
-		}
+		
+//		AABB target = cannon.getTrackingPoint()
+		gl.glBegin(GL.GL_LINE_STRIP);
+		gl.glVertex3f((float)(cannon.getAABB().x), (float)(cannon.getAABB().y), 0);
+		gl.glVertex3f((float)(cannon.getAABB().x + maxDistance*Math.cos(cannon.getAABB().a)), 
+				      (float)(cannon.getAABB().y + maxDistance*Math.sin(cannon.getAABB().a)), 0);
+		gl.glEnd();
+
+		
+		
+	}
+	
+	
 
 	public void init(GL gl, Minigun entity) {
 		// TODO Auto-generated method stub

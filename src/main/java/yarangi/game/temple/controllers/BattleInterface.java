@@ -6,7 +6,7 @@ import yarangi.math.Vector2D;
 
 public interface BattleInterface 
 {
-	public Vector2D getTrackingPoint(Weapon weapon);
+	public double getTargetAngle(Weapon weapon);
 	
 	public double getAbsoluteAngle();
 	

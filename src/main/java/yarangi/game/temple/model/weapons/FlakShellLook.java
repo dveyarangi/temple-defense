@@ -4,9 +4,15 @@ import javax.media.opengl.GL;
 
 import yarangi.graphics.lights.CircleLightLook;
 import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.spatial.ISpatialFilter;
 
 public class FlakShellLook extends CircleLightLook<FlakShell>
 {
+	public FlakShellLook(ISpatialFilter filter) {
+		super(filter);
+		// TODO Auto-generated constructor stub
+	}
+
 	public void render(GL gl, double time, FlakShell shell, RenderingContext context) 
 	{
 		

@@ -8,23 +8,23 @@ import yarangi.spatial.AABB;
 
 public class MinigunBurstLook implements Look <Projectile> 
 {
-	static float UGLY = 0.0f;
+//	static float UGLY = 0.0f;
 	static float dir = 1;
 
 	public void render(GL gl, double time, Projectile prj, RenderingContext context) 
 	{
 
 		float scale = (float)(prj.getRangeSquare() / ( prj.getMaxRange()-prj.getRangeSquare()));
-		gl.glColor4f(UGLY, scale,1.0f-scale/2, 1.0f);
+		gl.glColor4f(0.1f, 1.0f, 0.1f, 1.0f);
 		AABB aabb = prj.getAABB();
-		UGLY += dir*0.00001;
+/*		UGLY += dir*0.00001;
 		if(UGLY >= 1)
 		{
 			dir = -1;
 		}
 		else
 			if(UGLY <= 0)
-				dir = 1;
+				dir = 1;*/
 		gl.glBegin(GL.GL_LINE_STRIP);
 			gl.glVertex3f(5, 0, 0);
 			gl.glVertex3f(-5, 0, 0);

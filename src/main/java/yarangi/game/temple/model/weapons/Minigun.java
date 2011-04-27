@@ -19,9 +19,9 @@ public class Minigun extends Weapon
 	public static final double projectileSpeed = 6;
 	public static final double projectileHitRadius = 1;
 	public static final double trackingSpeed = BASE_TRACKING_SPEED;
-	public static final double maxRangeSquare = 3000;
+	public static final double maxRangeSquare = 10000;
 	public static final double RELOADING_TIME = 1;
-	public static final double ACCURACY = 3;
+	public static final double ACCURACY = 1;
 	
 	public static final Damage damage = new Damage(10, 0.01, 0, 0);
 	
@@ -35,7 +35,7 @@ public class Minigun extends Weapon
 		setLook(new MinigunLook());
 	}
 
-	public SceneEntity fire() 
+	public Projectile fire() 
 	{
 		if(!isReloaded())
 			return null;

@@ -3,7 +3,6 @@ package yarangi.game.temple.model.weapons;
 import yarangi.game.temple.controllers.BattleInterface;
 import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
-import yarangi.graphics.quadraturin.objects.SceneEntity;
 import yarangi.math.Angles;
 import yarangi.math.DistanceUtils;
 import yarangi.math.Vector2D;
@@ -35,7 +34,7 @@ public class FlakCannon extends Weapon
 	/**
 	 * {@inheritDoc}
 	 */
-	public SceneEntity fire() 
+	public Projectile fire() 
 	{
 		if(!isReloaded())
 			return null;

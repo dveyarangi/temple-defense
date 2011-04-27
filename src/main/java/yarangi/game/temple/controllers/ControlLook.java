@@ -6,6 +6,7 @@ import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
+import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.DistanceUtils;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
@@ -76,7 +77,19 @@ public class ControlLook implements Look <ControlEntity>
 			for(double a = 0; a < 2*Math.PI; a += 0.1)
 				gl.glVertex3f((float)(mousePoint.x+width*Math.cos(a)),(float)(mousePoint.y+width*Math.sin(a)),0);
 		gl.glEnd();*/
-
+		
+		IPhysicalObject target = entity.getTarget(null);
+		if(target != null)
+		{
+			AABB aabb = target.getAABB();
+		gl.glBegin(GL.GL_LINE_STRIP);
+		gl.glVertex3f((float)(aabb.x-aabb.r), (float)(aabb.y-aabb.r), 0);
+		gl.glVertex3f((float)(aabb.x-aabb.r), (float)(aabb.y+aabb.r), 0);
+		gl.glVertex3f((float)(aabb.x+aabb.r), (float)(aabb.y+aabb.r), 0);
+		gl.glVertex3f((float)(aabb.x+aabb.r), (float)(aabb.y-aabb.r), 0);
+		gl.glVertex3f((float)(aabb.x-aabb.r), (float)(aabb.y-aabb.r), 0);
+		gl.glEnd();
+		}
 	}
 
 	public void init(GL gl, ControlEntity entity) {

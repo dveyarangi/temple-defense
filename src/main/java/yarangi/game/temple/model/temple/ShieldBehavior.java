@@ -15,13 +15,11 @@ public class ShieldBehavior implements Behavior<ShieldEntity>
 		
 		shield.getAABB().r = shield.getBattleInterface().getTempleRadius();
 		
-		Vector2D shieldPoint = shield.getBattleInterface().getTrackingPoint(null);
-		
 		ForcePoint [] forcePoints = shield.getForcePoints();
 		
-		if ( shieldPoint != null)
+/*		if ( shieldPoint != null)
 		{
-			double commandAngle = Math.atan2(shieldPoint.y, shieldPoint.x);
+			double commandAngle = shield.getBattleInterface().getTargetAngle(this);
 			for(int idx = 0; idx < forcePoints.length; idx ++)
 			{
 				ForcePoint p = forcePoints[idx];
@@ -36,7 +34,7 @@ public class ShieldBehavior implements Behavior<ShieldEntity>
 
 			}
 		}
-		else
+		else*/
 			for(int idx = 0; idx < forcePoints.length; idx ++)
 			{
 				ForcePoint p = forcePoints[idx];

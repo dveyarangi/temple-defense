@@ -1,18 +1,25 @@
 package yarangi.game.temple.model.temple;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import yarangi.graphics.lights.CircleLightLook;
+import yarangi.game.temple.ai.IFeedbackBeacon;
+import yarangi.game.temple.controllers.ControlEntity;
+import yarangi.game.temple.model.temple.structure.Connectable;
+import yarangi.game.temple.model.temple.structure.PowerConnector;
+import yarangi.game.temple.model.weapons.Projectile;
+import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.ICircleLightEntity;
 import yarangi.graphics.quadraturin.events.CursorEvent;
 import yarangi.graphics.quadraturin.events.CursorListener;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
-import yarangi.graphics.utils.colors.Color;
+import yarangi.math.Angles;
 import yarangi.spatial.AABB;
+import yarangi.spatial.ISpatialFilter;
 import yarangi.spatial.ISpatialObject;
 
-public class ObserverEntity extends SceneEntity implements ICircleLightEntity, CursorListener 
+public class ObserverEntity extends SceneEntity implements ICircleLightEntity, Connectable 
 {
 	private Map<ISpatialObject, Double> entities;
 	
@@ -20,27 +27,51 @@ public class ObserverEntity extends SceneEntity implements ICircleLightEntity, C
 	
 	private Color color;
 	
-	public ObserverEntity(AABB aabb, double radius, Color color) {
+	private PowerConnector [] connectors;
+	
+	private ControlEntity ctrl;
+	private Set <IFeedbackBeacon> trackedObjects = new HashSet <IFeedbackBeacon> ();
+
+	
+	public ObserverEntity(AABB aabb, ControlEntity ctrl, ISpatialFilter filter, double radius, Color color)
+	{
 		super(aabb);
 		
 		this.color = color;
 		
 		this.radius = radius;
 		
-		setLook(new ObserverLook());
+		this.ctrl = ctrl;
+		
+		setLook(new ObserverLook(filter));
+		
+		connectors = new PowerConnector[6];
+		int idx = 0;
+		for(double a = 0.01; a < Angles.PI_2; a += Angles.PI_div_3)
+			connectors[idx++] = new PowerConnector(this.getAABB(), a);
+
+	}
+	public ObserverEntity(AABB aabb, ControlEntity ctrl, double radius, Color color) 
+	{
+		this(aabb, ctrl, new ISpatialFilter() {
+
+			@Override
+			public boolean accept(ISpatialObject entity) {
+				if(entity instanceof Projectile || entity instanceof ShieldEntity)
+					return false;
+				return true;
+			}}
+		, radius, color);
 	}
 
 	@Override
-	public boolean isPickable() {
-		return true;
+	public boolean isPickable() { return true; }
+	
+	public Set <IFeedbackBeacon> getTrackedObjects() {
+		return trackedObjects;
 	}
-
-	public void onCursorMotion(CursorEvent event) {
-		if(event.getWorldLocation() == null)
-			return;
-		this.getAABB().x = event.getWorldLocation().x;
-		this.getAABB().y = event.getWorldLocation().y;
-	}
+	
+	public void setTrackedObjects(Set <IFeedbackBeacon> objects) { this.trackedObjects = objects; }
 
 	public void setEntities(Map<ISpatialObject, Double> entities) {
 		this.entities = entities;
@@ -58,5 +89,10 @@ public class ObserverEntity extends SceneEntity implements ICircleLightEntity, C
 	public Color getColor() {
 		return color;
 	}
+
+	@Override
+	public PowerConnector[] getConnectors() { return connectors; }
+
+	public ControlEntity getController() { return ctrl; }
 
 }

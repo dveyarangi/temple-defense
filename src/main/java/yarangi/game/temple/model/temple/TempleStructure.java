@@ -11,16 +11,18 @@ import yarangi.game.temple.model.temple.Hexagon.HexagonId;
 import yarangi.game.temple.model.temple.platforms.CommandPlatform;
 import yarangi.game.temple.model.temple.platforms.EmptyPlatform;
 import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
-import yarangi.game.temple.model.weapons.FlakCannon;
+import yarangi.game.temple.model.temple.structure.Connectable;
+import yarangi.game.temple.model.temple.structure.PowerConnector;
 import yarangi.game.temple.model.weapons.Minigun;
 import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.quadraturin.SceneVeil;
 import yarangi.graphics.quadraturin.objects.CompositeSceneEntity;
+import yarangi.math.Angles;
 import yarangi.math.DistanceUtils;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
 
-public strictfp class TempleStructure extends CompositeSceneEntity
+public strictfp class TempleStructure extends CompositeSceneEntity implements Connectable
 {
 
 	private static final long serialVersionUID = 1922785697163737467L;
@@ -39,9 +41,12 @@ public strictfp class TempleStructure extends CompositeSceneEntity
 	
 	public static final double hexRadius = 2;
 	
+	public PowerConnector [] connectors;
+	
+	
 	public TempleStructure(TempleEntity temple, ControlEntity controller, SceneVeil veil)
 	{
-		super(new AABB(0,0,0,0));
+		super(new AABB(0,0,10,0));
 		Hexagon centerHexagon = new Hexagon();
 		
 		this.commandPlatform = new CommandPlatform(temple, centerHexagon);
@@ -58,7 +63,6 @@ public strictfp class TempleStructure extends CompositeSceneEntity
 		Hexagon temp; 
 		Hexagon bottom = linkHexagon(centerHexagon, Hexagon.BOTTOM, new Hexagon());
 		WeaponPlatform testWeaponPlatform1 = new WeaponPlatform(bottom, commandPlatform, 10);
-		
 		
 		addChild(testWeaponPlatform1);
 			temp = linkHexagon(bottom, Hexagon.BOTTOM_LEFT, new Hexagon());
@@ -136,7 +140,11 @@ public strictfp class TempleStructure extends CompositeSceneEntity
 		ShieldEntity shield = new ShieldEntity(commandPlatform);
 		
 		addChild(shield);
-
+		
+		connectors = new PowerConnector[6];
+		int idx = 0;
+		for(double a = 0.01; a < Angles.PI_2; a += Angles.PI_div_3)
+			connectors[idx++] = new PowerConnector(this.getAABB(), a);
 	}
 	
 	
@@ -289,6 +297,9 @@ public strictfp class TempleStructure extends CompositeSceneEntity
 
 	@Override
 	public boolean isPickable() { return true; }
+
+
+	public PowerConnector[] getConnectors() { return connectors; }
 
 
 }

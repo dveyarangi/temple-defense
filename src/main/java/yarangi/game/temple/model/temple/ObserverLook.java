@@ -2,14 +2,20 @@ package yarangi.game.temple.model.temple;
 
 import javax.media.opengl.GL;
 
+import yarangi.game.temple.model.weapons.Projectile;
+import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.CircleLightLook;
 import yarangi.graphics.quadraturin.RenderingContext;
-import yarangi.graphics.utils.colors.Color;
 import yarangi.math.Angles;
+import yarangi.spatial.ISpatialFilter;
 import yarangi.spatial.ISpatialObject;
 
 public class ObserverLook extends CircleLightLook<ObserverEntity> 
 {
+	public ObserverLook(ISpatialFilter filter) {
+		super(filter);
+	}
+
 	public void render(GL gl, double time, ObserverEntity entity, RenderingContext context) 
 	{
 		if(entity.getEntities() == null)
@@ -19,6 +25,8 @@ public class ObserverLook extends CircleLightLook<ObserverEntity>
 		Color color = entity.getColor();
 		for(ISpatialObject e : entity.getEntities().keySet())
 		{
+			if(e instanceof Projectile)
+				continue;
 			double distance = entity.getEntities().get(e);
 	//		gl.glPushMatrix();
 //			gl.glTranslatef((float)(e.getAABB().x-entity.getAABB().x), (float)(e.getAABB().y-entity.getAABB().y), 0);

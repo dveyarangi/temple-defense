@@ -33,7 +33,7 @@ public class LightningEmitter extends Weapon
 
 	}
 
-	public SceneEntity fire() {
+	public Projectile fire() {
 		if(!isReloaded())
 			return null;
 		

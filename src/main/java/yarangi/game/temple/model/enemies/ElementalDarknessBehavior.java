@@ -1,8 +1,6 @@
 package yarangi.game.temple.model.enemies;
 
-import yarangi.graphics.curves.BezierBubble;
 import yarangi.graphics.quadraturin.objects.Behavior;
-import yarangi.spatial.AABB;
 
 public class ElementalDarknessBehavior implements Behavior<ElementalDarkness> 
 {
