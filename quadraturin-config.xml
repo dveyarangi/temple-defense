@@ -29,6 +29,9 @@
 		<binding actionId="zoom-in"      buttonId="33" modeId="1" /> <!-- page up -->
 		<binding actionId="zoom-out"     buttonId="34" modeId="1" /> <!-- page down -->
 		
+		<binding actionId="zoom-in"      buttonId="-3" modeId="5" /> <!-- page up -->
+		<binding actionId="zoom-out"     buttonId="-3" modeId="6" /> <!-- page down -->
+		
 		<binding actionId="fire-on"      buttonId="32" modeId="1" /> <!-- space -->
 		<binding actionId="fire-off"     buttonId="32" modeId="3" /> <!-- space -->
 		<binding actionId="fire-on"      buttonId="-1" modeId="1" />
