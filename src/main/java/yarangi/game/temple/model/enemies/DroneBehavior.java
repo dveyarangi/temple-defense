@@ -7,8 +7,8 @@ public class DroneBehavior implements Behavior<GenericEnemy>
 
 	@Override
 	public boolean behave(double time, GenericEnemy entity, boolean isVisible) {
-		if(entity.getAABB().x > 400 || entity.getAABB().y > 300
-		|| entity.getAABB().x < -400 || entity.getAABB().y < -300)
+		if(entity.getAABB().x > 800 || entity.getAABB().y > 800
+		|| entity.getAABB().x < -800 || entity.getAABB().y < -800)
 			entity.setIsAlive(false);
 		if(entity.getIntegrity().getHitPoints() <= 0)
 		{

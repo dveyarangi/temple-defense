@@ -7,13 +7,11 @@ import yarangi.ai.nn.init.RandomWeightsInitializer;
 import yarangi.ai.nn.numeric.ArrayInput;
 import yarangi.ai.nn.numeric.BackpropNetwork;
 import yarangi.ai.nn.numeric.CompleteNeuronLayer;
-import yarangi.ai.nn.numeric.LinearAF;
 import yarangi.ai.nn.numeric.NeuralNetworkRunner;
 import yarangi.ai.nn.numeric.Normalizer;
 import yarangi.ai.nn.numeric.ScalingNormalizer;
 import yarangi.ai.nn.numeric.TanHAF;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
-import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 
 public class IIntellectCore 
@@ -32,7 +30,7 @@ public class IIntellectCore
 	
 	private Logger log;
 	
-	public IIntellectCore(String name)
+	public IIntellectCore(String name, int worldWidth, int worldHeight)
 	{
 		this.name = name;
 		
@@ -46,13 +44,13 @@ public class IIntellectCore
 			network.addLayer(new CompleteNeuronLayer(10, new TanHAF(), 1));
 			network.addLayer(new CompleteNeuronLayer(20, new TanHAF(), 1));
 			network.addLayer(new CompleteNeuronLayer(10, new TanHAF(), 1));
-			network.addInput(new ArrayInput(new double [normalizer.inputSize()]));
+			network.addInput(new ArrayInput(new double [8]));
 		}
 		
 //		network.addLayer(new CompleteNeuronLayer(10, new TanHAF(), 1));
 		
-		normalizer = new ScalingNormalizer(new double [] {-1000, -1000, -10, -10}, new double [] {1000, 1000, 10, 10},
-												      new double [] {-1000, -1000}, new double [] {1000, 1000});
+		normalizer = new ScalingNormalizer(new double [] {-worldWidth, -worldHeight, -10, -10, -worldWidth, -worldHeight, -10, -10}, new double [] {worldWidth, worldHeight, 10, 10, worldWidth, worldHeight, 10, 10},
+										new double [] {-worldWidth*2, -worldHeight*2}, new double [] {worldWidth*2, worldHeight*2});
 		
 		runner = new NeuralNetworkRunner(normalizer, network);
 		
@@ -64,36 +62,42 @@ public class IIntellectCore
 
 //		if(beacon.getDistance() < 400000)
 		{
+			double [] input = createInput(beacon.getLocation(), beacon.getVelocity(), beacon.getSource().getAABB(), beacon.getProjectileVelocity());
 			Vector2D toTarget = capsule.getTarget().getAABB().minus(beacon.getSource().getAABB());
-			double [] res = runner.run(createInput(beacon.getLocation(), beacon.getVelocity()));
+			runner.run(input);
 //			System.out.println("training target: " + capsule.getTarget().getAABB() + " delta: " + (toTarget.x-res[0]) +","+ (toTarget.y-res[1]));
 //			System.out.println("feedback: d:" + beacon.getDistance() + " a:" + Math.cos(beacon.getAngle())+ ":" + Math.sin(beacon.getAngle()) + " net: " + res[0] + ":" + res[1]);
 
-			runner.train(normalizer.normalizeInput(createInput(beacon.getLocation(), beacon.getVelocity())), 
+			runner.train(normalizer.normalizeInput(input), 
 					normalizer.normalizeOutput(new double [] {toTarget.x, toTarget.y}), 0.15);
 		}
 	}
 
-	public double pickAngle(IPhysicalObject target) {
-		double [] res = runner.run(createInput(target.getAABB(), target.getVelocity()));
+	public Vector2D pickTrackPoint(Vector2D sourceLocation, Vector2D projectileVelocity, IPhysicalObject target) {
+		double [] res = runner.run(createInput(target.getAABB(), target.getVelocity(), sourceLocation, projectileVelocity));
 		
-		return Math.atan2(res[1], res[0]);
+		return new Vector2D(res[0], res[1]);
+//		return Math.atan2(res[1], res[0]);
 	}
-	private double [] createInput(Vector2D location, Vector2D velocity)
+	private double [] createInput(Vector2D targetLocation, Vector2D targetVelocity, Vector2D sourceLocation, Vector2D projectileVelocity)
 	{
 		return new double [] {
-				location.x,
-				location.y, 
+				targetLocation.x,
+				targetLocation.y, 
 //				Math.cos(target.getAABB().a),
 //				Math.sin(target.getAABB().a),
-				velocity.x,
-				velocity.y
+				targetVelocity.x,
+				targetVelocity.y,
+				sourceLocation.x,
+				sourceLocation.y,
+				projectileVelocity.x,
+				projectileVelocity.y
 			};
 	}
 
 	public void save() {
 //		System.out.println("hehe");
-		runner.save(network, name);
-		log.debug("Saved NN core " + name);
+		NeuralNetworkRunner.save(network, name);
+		log.debug("Saved NN core [" + name + "].");
 	}
 }

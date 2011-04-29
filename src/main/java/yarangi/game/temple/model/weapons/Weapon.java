@@ -2,6 +2,7 @@ package yarangi.game.temple.model.weapons;
 
 import yarangi.game.temple.actions.Fireable;
 import yarangi.game.temple.ai.IIntellectCore;
+import yarangi.game.temple.model.temple.Platform;
 import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
 import yarangi.graphics.quadraturin.objects.CompositeSceneEntity;
 import yarangi.spatial.AABB;
@@ -46,7 +47,7 @@ public abstract class Weapon extends CompositeSceneEntity implements Fireable
 	}
 	
 	public double getAbsoluteAngle() { return absoluteAngle; }
-	
+
 	public boolean isReloaded()
 	{
 		return timeToReload < 0;

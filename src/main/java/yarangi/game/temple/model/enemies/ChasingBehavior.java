@@ -1,7 +1,6 @@
 package yarangi.game.temple.model.enemies;
 
 import yarangi.graphics.quadraturin.objects.Behavior;
-import yarangi.math.Angles;
 import yarangi.math.DistanceUtils;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;

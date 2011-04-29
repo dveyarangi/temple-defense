@@ -77,7 +77,7 @@ public strictfp class TempleStructure extends CompositeSceneEntity implements Co
 //		Weapon weapon1 = new FlakCannon(testWeaponPlatform1, 0,0,0, veil.getEntityIndex());
 //		testWeaponPlatform1.addWeapon(weapon1);
 //		controller.addFireable(weapon1);
-		Weapon		weapon1 = new Minigun(testWeaponPlatform1, 0,0,0);
+		Weapon		weapon1 = new Minigun(testWeaponPlatform1, 0,000,0);
 		testWeaponPlatform1.addWeapon(weapon1);
 		controller.addFireable(weapon1);
 		
@@ -99,9 +99,9 @@ public strictfp class TempleStructure extends CompositeSceneEntity implements Co
 //		Weapon weapon2 = new FlakCannon(testWeaponPlatform2, 0,0,0);
 //		testWeaponPlatform2.addWeapon(weapon2);
 //		controller.addFireable(weapon2);
-//		Weapon			weapon2 = new Minigun(testWeaponPlatform2, 0,0,0);
-//				testWeaponPlatform2.addWeapon(weapon2);
-//				controller.addFireable(weapon2);
+		Weapon			weapon2 = new Minigun(testWeaponPlatform2, 00,00,0);
+				testWeaponPlatform2.addWeapon(weapon2);
+				controller.addFireable(weapon2);
 		
 		Hexagon hiRite = linkHexagon(centerHexagon, Hexagon.HIGH_RIGHT, new Hexagon());
 		WeaponPlatform testWeaponPlatform3 = new WeaponPlatform(hiRite, commandPlatform, 10);
@@ -118,9 +118,9 @@ public strictfp class TempleStructure extends CompositeSceneEntity implements Co
 //		Weapon weapon3 = new FlakCannon(testWeaponPlatform3, 0,0,0);
 //		testWeaponPlatform3.addWeapon(weapon3);
 //		controller.addFireable(weapon3);
-//		Weapon				weapon3 = new Minigun(testWeaponPlatform3, 0,0,0);
-//				testWeaponPlatform3.addWeapon(weapon3);
-//				controller.addFireable(weapon3);
+		Weapon				weapon3 = new Minigun(testWeaponPlatform3, -0,0,0);
+		testWeaponPlatform3.addWeapon(weapon3);
+				controller.addFireable(weapon3);
 		/*		weapon3 = new LightningEmitter(testWeaponPlatform3, 0,0,0);
 				testWeaponPlatform3.addWeapon(weapon3);
 				controller.addFireable(weapon3); */

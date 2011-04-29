@@ -9,6 +9,7 @@ import yarangi.graphics.quadraturin.ViewPoint2D;
 import yarangi.graphics.quadraturin.WorldVeil;
 import yarangi.graphics.quadraturin.actions.DefaultCollisionManager;
 import yarangi.graphics.quadraturin.simulations.ICollisionManager;
+import yarangi.graphics.textures.BlurVeilEffect;
 import yarangi.math.Angles;
 import yarangi.math.RangedDouble;
 import yarangi.math.Vector2D;
@@ -42,7 +43,7 @@ public class ArcadeWorldVeil extends WorldVeil
 		ViewPoint2D vp = (ViewPoint2D) viewPoint;
 		
 		vp.setCenter(new Vector2D(0,0));
-		vp.setHeight(new RangedDouble(1, 400, 500));
+		vp.setScale(new RangedDouble(0.1, 1, 2));
 	}
 	
 	@Override

@@ -1,8 +1,9 @@
 package yarangi.game.temple.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,8 +19,8 @@ import yarangi.game.temple.model.temple.ObserverBehavior;
 import yarangi.game.temple.model.temple.ObserverEntity;
 import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.game.temple.model.weapons.Projectile;
+import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.colors.Color;
-import yarangi.graphics.lights.CircleLightBehavior;
 import yarangi.graphics.quadraturin.actions.IAction;
 import yarangi.graphics.quadraturin.events.CursorEvent;
 import yarangi.graphics.quadraturin.events.CursorListener;
@@ -28,7 +29,6 @@ import yarangi.graphics.quadraturin.objects.SceneEntity;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.DistanceUtils;
 import yarangi.math.Vector2D;
-import yarangi.numbers.RandomUtil;
 import yarangi.spatial.AABB;
 import yarangi.spatial.ISpatialFilter;
 import yarangi.spatial.ISpatialObject;
@@ -44,7 +44,7 @@ public class ControlEntity extends SceneEntity implements CursorListener
 	/**
 	 * List of currently selected weapons.
 	 */
-	private List <Fireable> fireables = new LinkedList <Fireable> ();
+	private List <Weapon> fireables = new ArrayList <Weapon> ();
 
 	
 	private Vector2D cursorLocation;
@@ -56,8 +56,7 @@ public class ControlEntity extends SceneEntity implements CursorListener
 	private boolean isMouseButtonHeld = false;
 	
 	private Set <IPhysicalObject> observedEntities = new HashSet <IPhysicalObject> ();
-	private IPhysicalObject targetEntity;
-	private IIntellectCore core = new IIntellectCore("netcore");
+	private IIntellectCore core;
 	
 	private Map <Fireable, IPhysicalObject> targets = new HashMap <Fireable, IPhysicalObject> ();
 	
@@ -102,6 +101,8 @@ public class ControlEntity extends SceneEntity implements CursorListener
 		cursor = new ObserverEntity(new AABB(0, 0, 10, 0), this, 64,  new Color(1.0f,1.0f,0.5f,1f));		
 		cursor.setBehavior(new ObserverBehavior(playground.getWorldVeil().getEntityIndex()));
 		playground.addEntity(cursor);
+		
+		core = new IIntellectCore("netcore", playground.getWorldVeil().getWidth(), playground.getWorldVeil().getHeight());
 	}
 
 	
@@ -116,19 +117,19 @@ public class ControlEntity extends SceneEntity implements CursorListener
 		this.fireStopped = stopped;
 	}
 	
-	public void addFireable(Fireable fireable)
+	public void addFireable(Weapon fireable)
 	{
 		fireables.add(fireable);
 	}
 	
-	public void removeFireable(Fireable fireable)
+	public void removeFireable(Weapon fireable)
 	{
 		fireables.remove(fireable);
 	}
 	
 	public Playground getPlayground() { return playground; }
 
-	public  List <Fireable> getFireables() { return fireables; }
+	public  List <Weapon> getFireables() { return fireables; }
 
 
 	public boolean isPickable() { return false; }
@@ -178,14 +179,15 @@ public class ControlEntity extends SceneEntity implements CursorListener
 	{
 		double distance = Double.MAX_VALUE;
 		IPhysicalObject temp = null;
-		boolean found = false;
+		
+		boolean [] found = new boolean [fireables.size()];
 		for(IPhysicalObject object : observedEntities)
 		{
-			if(targetEntity == object)
-			{
-				found = true;
-//				break;
-			}
+			for(int idx = 0; idx < fireables.size(); idx ++)
+				if(object == targets.get(fireables.get(idx)))
+				{
+					found[idx] = true;
+				}
 			double d = DistanceUtils.calcDistanceSquare(cursor.getAABB().x, cursor.getAABB().y, object.getAABB().x, object.getAABB().y);
 			if(d < distance && d < 200)
 			{
@@ -195,16 +197,25 @@ public class ControlEntity extends SceneEntity implements CursorListener
 			}
 		}
 		
-		if(!found)
-			targetEntity = null;
+		Iterator <IPhysicalObject> it = observedEntities.iterator();
+		for(int idx = 0; idx < fireables.size(); idx ++)
+		{
+			if(!found[idx])
+			{
+				while(it.hasNext())
+				{
+					IPhysicalObject o = it.next();
+					if(!targets.values().contains(o))
+					{
+						targets.put(fireables.get(idx), o);
+						break;
+					}
+				}
+			}
+		}
 		
-		if(temp != null)
-			targetEntity = temp;
 		
-		if(targetEntity == null && !observedEntities.isEmpty())
-			targetEntity = observedEntities.iterator().next();
-		
-		filter.setHighlighted(targetEntity);
+/*		filter.setHighlighted(targetEntity);
 		if(targetEntity != null)
 		{
 			highlight.getAABB().x = targetEntity.getAABB().x; 
@@ -212,15 +223,19 @@ public class ControlEntity extends SceneEntity implements CursorListener
 			highlight.getAABB().r = targetEntity.getAABB().r;
 		}	
 		else 
-			highlight.getAABB().x = 10000;
+			highlight.getAABB().x = 10000;*/
+		
 		observedEntities.clear();
 	}
 	
-	public IFeedbackBeacon createFeedbackBeacon(ISpatialObject source) 
+	public IFeedbackBeacon createFeedbackBeacon(Weapon weapon) 
 	{
 		if(!observedEntities.isEmpty())
 		{
-			return new LinearFeedbackBeacon(source, observedEntities.iterator().next());
+			double speed = weapon.getWeaponProperties().getProjectileSpeed();
+			double angle = weapon.getAbsoluteAngle();
+//			return core.pickTrackPoint(fireable.getAABB(), new Vector2D(speed, angle, true), target);
+			return new LinearFeedbackBeacon(weapon, observedEntities.iterator().next(), new Vector2D(speed, angle, true));
 		}
 		return null;
 	}
@@ -230,29 +245,13 @@ public class ControlEntity extends SceneEntity implements CursorListener
 		core.processFeedback(beacon);
 	}
 
-
 //	public IPhysicalObject getTarget(Fireable fireable) {
 //		System.out.println(observedEntities.size());
 //		return observedEntities.isEmpty() ? null : observedEntities.iterator().next();
 //	}
 	public IPhysicalObject getTarget(Fireable fireable) 
 	{
-//		System.out.println(observedEntities.size());
-//		IPhysicalObject object = targets.get(fireable);
-//		if(object != null)
-//			return object;
-		
-//		if(object.)
-			
-//		if (observedEntities.isEmpty()) 
-//			return null;
-		
-//		object = observedEntities.iterator().next();
-		
-//		if(targetEntity != null)
-//		targets.put(fireable, targetEntity);
-		
-		return targetEntity;
+		return targets.get(fireable);
 	}
 	
 	public Map <Fireable, IPhysicalObject> getTargets()
@@ -260,13 +259,16 @@ public class ControlEntity extends SceneEntity implements CursorListener
 		return targets;
 	}
 	
-	public double aquireFireAngle(Fireable fireable)
+	public Vector2D acquireTrackPoint(Weapon fireable)
 	{
 		IPhysicalObject target = getTarget(fireable);
 		if(target == null)
-			return -1;
-		double angle = core.pickAngle(target);
-		return angle;
+			return null;
+		
+		double speed = fireable.getWeaponProperties().getProjectileSpeed();
+		double angle = fireable.getAbsoluteAngle();
+		return core.pickTrackPoint(fireable.getAABB(), new Vector2D(speed, angle, true), target);
+//
 	}
 	
 	public class HighLightFilter implements ISpatialFilter
@@ -288,4 +290,7 @@ public class ControlEntity extends SceneEntity implements CursorListener
 		super.destroy(gl);
 		core.save();
 	}
+
+
+
 }

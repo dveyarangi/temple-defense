@@ -17,14 +17,14 @@ public class ElementalVoid extends GenericEnemy
 	
 	public ElementalVoid(double x, double y, double a, double size, SceneEntity target) {
 		super(new AABB(x, y, size, a), target, 
-				new Integrity(300, new double [] { 0,0,0,0}, 0)
+				new Integrity(100, new double [] { 0,0,0,0}, 0)
 		);
 
 		setLook(new ElementalVoidLook());
 		setBehavior(new DroneBehavior());
 		setMass(10);
 		
-		setVelocity(RandomUtil.getRandomDouble(4)-2, RandomUtil.getRandomDouble(4)-2);
+		setVelocity(RandomUtil.getRandomDouble(5)-2.5, RandomUtil.getRandomDouble(5)-2.5);
 	}
 
 	public void setImpactWith(IPhysicalObject arg0) {

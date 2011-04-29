@@ -5,6 +5,7 @@ import yarangi.game.temple.controllers.BattleInterface;
 import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.math.Angles;
+import yarangi.math.Vector2D;
 
 public class WeaponBehavior implements Behavior <Weapon> 
 {
@@ -15,7 +16,10 @@ public class WeaponBehavior implements Behavior <Weapon>
 		WeaponPlatform platform = weapon.getPlatform();
 		BattleInterface bif = platform.getBattleInterface();
 		
-		double targetAngle = toDegrees(bif.getTargetAngle(weapon)) 
+		Vector2D trackPoint = bif.acquireTrackPoint(weapon);
+		if(trackPoint == null)
+			return false;
+		double targetAngle = toDegrees(trackPoint.getAngle()) 
 									- platform.getAABB().getA() - bif.getAbsoluteAngle();
 
 //		double newA = Angles.stepTo(weapon.getAABB().getA(), targetAngle, weapon.getWeaponProperties().getCannonTrackingSpeed());

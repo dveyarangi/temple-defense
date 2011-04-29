@@ -1,7 +1,7 @@
 package yarangi.game.temple.controllers;
 
-import yarangi.game.temple.actions.Fireable;
 import yarangi.game.temple.model.weapons.Projectile;
+import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.quadraturin.objects.Behavior;
 
 public class ControlBehavior implements Behavior <ControlEntity> 
@@ -19,14 +19,14 @@ public class ControlBehavior implements Behavior <ControlEntity>
 			{
 				if(!ctrl.isFireStopped())
 				{
-					for(Fireable fireable : ctrl.getFireables())
+					for(Weapon fireable : ctrl.getFireables())
 						fireable.stop();
 					ctrl.setFireStopped(true);
 				}
 			}
 			else
 			{
-				for(Fireable fireable : ctrl.getFireables())
+				for(Weapon fireable : ctrl.getFireables())
 				{
 					Projectile fire = fireable.fire();
 					

@@ -27,14 +27,14 @@ public class Playground extends Scene
 	
 //	private BackgroundEntity background;
 	
-	private int worldWidth = 1000;
-	private int worldHeight = 1000;
+//	private int worldWidth = 1000;
+//	private int worldHeight = 1000;
 	
 	public Playground(IEventManager voices)
 	{
 		super("Playground", new ArcadeWorldVeil(2000, 2000), new TestUIVeil(1000, 1000),  1000, 1000, 1.);
 		
-		BackgroundEntity background = new BackgroundEntity(100, 100, 50);		
+//		BackgroundEntity background = new BackgroundEntity(100, 100, 50);		
 //		addEntity(background);
 		
 		PowerGrid grid = new PowerGrid(this.getWorldVeil());
@@ -52,7 +52,7 @@ public class Playground extends Scene
 		{
 			double angle = i * Angles.PI_div_3 + Angles.PI_div_6;
 //			double angle = RandomUtil.getRandomDouble(Angles.PI_2);
-			double radius = 100;//RandomUtil.getRandomGaussian(400, 100);
+			double radius = 400;//RandomUtil.getRandomGaussian(400, 100);
 			ObserverEntity sensor2 = new ObserverEntity(
 					new AABB(radius*Math.cos(angle), radius*Math.sin(angle), 5, 0),
 					//new AABB(RandomUtil.getRandomGaussian(200, 50), RandomUtil.getRandomGaussian(200, 50), 5, 0),
@@ -84,11 +84,13 @@ public class Playground extends Scene
 	{
 		super.animate(time);
 		
-		if(RandomUtil.getRandomInt(3) == 0)
+		if(RandomUtil.oneOf(2))
 		{
 			double angle = RandomUtil.getRandomDouble(Angles.PI_2);
-			double radius = RandomUtil.getRandomGaussian(350, 0);
+			double radius = RandomUtil.getRandomGaussian(800, 0);
 			addEntity(new ElementalVoid(radius*Math.cos(angle), radius*Math.sin(angle), 0, RandomUtil.getRandomInt(4)+4, temple));
 		}
 	}
+	
+	public String toString() { return "playground scene"; }
 }

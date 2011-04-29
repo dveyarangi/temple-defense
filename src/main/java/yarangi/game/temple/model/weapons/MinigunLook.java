@@ -2,9 +2,12 @@ package yarangi.game.temple.model.weapons;
 
 import javax.media.opengl.GL;
 
+import yarangi.game.temple.controllers.BattleInterface;
+import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
 import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
+import yarangi.math.Vector2D;
 
 public class MinigunLook implements Look<Minigun> 
 {
@@ -35,14 +38,32 @@ public class MinigunLook implements Look<Minigun>
 		gl.glEnd();	*/
 		
 //		AABB target = cannon.getTrackingPoint()
+		WeaponPlatform platform = cannon.getPlatform();
+		BattleInterface bif = platform.getBattleInterface();
+		
+		Vector2D trackPoint = bif.acquireTrackPoint(cannon);
+		
+		gl.glColor4f(1.0f, 0.5f, 0.7f,0.5f);
+		
 		gl.glBegin(GL.GL_LINE_STRIP);
 		gl.glVertex3f((float)(cannon.getAABB().x), (float)(cannon.getAABB().y), 0);
-		gl.glVertex3f((float)(cannon.getAABB().x + maxDistance*Math.cos(cannon.getAABB().a)), 
-				      (float)(cannon.getAABB().y + maxDistance*Math.sin(cannon.getAABB().a)), 0);
+		if(trackPoint != null)
+			gl.glVertex3f((float)(trackPoint.x), (float)(trackPoint.y), 0);
+		else
+			gl.glVertex3f((float)(cannon.getAABB().x + maxDistance*Math.cos(cannon.getAABB().a)), 
+						  (float)(cannon.getAABB().y + maxDistance*Math.sin(cannon.getAABB().a)), 0);
 		gl.glEnd();
 
-		
-		
+		if(trackPoint != null)
+		{
+			gl.glBegin(GL.GL_LINE_STRIP);
+			gl.glVertex3f((float)(trackPoint.x-10), (float)(trackPoint.y-10), 0);
+			gl.glVertex3f((float)(trackPoint.x-10), (float)(trackPoint.y+10), 0);
+			gl.glVertex3f((float)(trackPoint.x+10), (float)(trackPoint.y+10), 0);
+			gl.glVertex3f((float)(trackPoint.x+10), (float)(trackPoint.y-10), 0);
+			gl.glVertex3f((float)(trackPoint.x-10), (float)(trackPoint.y-10), 0);
+			gl.glEnd();
+		}
 	}
 	
 	

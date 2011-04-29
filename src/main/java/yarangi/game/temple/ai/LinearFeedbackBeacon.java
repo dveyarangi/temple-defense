@@ -12,17 +12,17 @@ public class LinearFeedbackBeacon implements IFeedbackBeacon
 	
 	private Vector2D location;
 	private Vector2D velocity;
-	
+	private Vector2D projectileVelocity;
 	private IPhysicalObject target;
 	
 	private double distance;
 	private double angle;
 	
-	public LinearFeedbackBeacon(ISpatialObject source, IPhysicalObject target)
+	public LinearFeedbackBeacon(ISpatialObject source, IPhysicalObject target, Vector2D projectileVelocity)
 	{
 		this.source = source;
 		this.target = target;
-		
+		this.projectileVelocity = projectileVelocity;
 
 		this.angle = Math.atan2(target.getAABB().y - source.getAABB().y, target.getAABB().x - source.getAABB().x);
 		
@@ -54,4 +54,6 @@ public class LinearFeedbackBeacon implements IFeedbackBeacon
 	public Vector2D getVelocity() { return velocity; }
 
 	public Vector2D getLocation() { return location; }
+
+	public Vector2D getProjectileVelocity() { return projectileVelocity; }
 }

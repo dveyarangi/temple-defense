@@ -29,9 +29,9 @@ public class CommandPlatform extends Platform implements BattleInterface
 	public TempleStructure getTempleStructure() { return temple.getStructure(); }
 
 
-	public double getTargetAngle(Weapon weapon) 
+	public Vector2D acquireTrackPoint(Weapon weapon) 
 	{
-		return temple.getController().aquireFireAngle(weapon);
+		return temple.getController().acquireTrackPoint(weapon);
 	}
 	
 	public double getAbsoluteAngle() {
