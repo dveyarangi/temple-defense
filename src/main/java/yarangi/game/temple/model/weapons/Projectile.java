@@ -58,7 +58,7 @@ public class Projectile extends NewtonialSceneEntity implements IFeedbackCarrier
 		if(e instanceof Damageable)
 		{
 			// TODO: impact something.
-			impactPoint = new Vector2D(e.getAABB());
+			impactPoint = new Vector2D(e.getArea().getRefPoint());
 			((Damageable)e).hit(this.getDamage());
 		}
 		

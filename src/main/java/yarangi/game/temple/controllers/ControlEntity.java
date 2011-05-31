@@ -95,11 +95,11 @@ public class ControlEntity extends SceneEntity implements CursorListener
 		
 		highlight = new ObserverEntity(new AABB(0, 0, 10, 0), this, filter,
 		256,  new Color(1.0f,0.3f,0.3f,1f));
-		highlight.setBehavior(new ObserverBehavior(playground.getWorldVeil().getEntityIndex()));
+		highlight.setBehavior(new ObserverBehavior(playground.getEntityIndex()));
 		playground.addEntity(highlight);
 		
 		cursor = new ObserverEntity(new AABB(0, 0, 10, 0), this, 64,  new Color(1.0f,1.0f,0.5f,1f));		
-		cursor.setBehavior(new ObserverBehavior(playground.getWorldVeil().getEntityIndex()));
+		cursor.setBehavior(new ObserverBehavior(playground.getEntityIndex()));
 		playground.addEntity(cursor);
 		
 		core = new IIntellectCore("netcore", playground.getWorldVeil().getWidth(), playground.getWorldVeil().getHeight());
@@ -142,14 +142,15 @@ public class ControlEntity extends SceneEntity implements CursorListener
 		
 		if(cursorLocation != null)
 		{
-		cursor.getAABB().x = cursorLocation.x;
-		cursor.getAABB().y = cursorLocation.y;
+			cursor.getArea().getRefPoint().x = cursorLocation.x;
+			cursor.getArea().getRefPoint().y = cursorLocation.y;
 		}
 		else
 		{
-			cursor.getAABB().x = 100000;
-			cursor.getAABB().y = 100000;
-			}
+			// TODO: beee
+			cursor.getArea().getRefPoint().x = 100000;
+			cursor.getArea().getRefPoint().y = 100000;
+		}
 	}
 	
 	public Vector2D getCursorLocation()
@@ -181,14 +182,20 @@ public class ControlEntity extends SceneEntity implements CursorListener
 		IPhysicalObject temp = null;
 		
 		boolean [] found = new boolean [fireables.size()];
+		Vector2D cursorLoc = cursor.getArea().getRefPoint();
+		Vector2D objectLoc;
 		for(IPhysicalObject object : observedEntities)
 		{
+			
+			objectLoc = object.getArea().getRefPoint();
 			for(int idx = 0; idx < fireables.size(); idx ++)
 				if(object == targets.get(fireables.get(idx)))
 				{
 					found[idx] = true;
 				}
-			double d = DistanceUtils.calcDistanceSquare(cursor.getAABB().x, cursor.getAABB().y, object.getAABB().x, object.getAABB().y);
+			
+			
+			double d = DistanceUtils.calcDistanceSquare(cursorLoc.x, cursorLoc.y, objectLoc.x, objectLoc.y);
 			if(d < distance && d < 200)
 			{
 				distance = d;
@@ -267,7 +274,7 @@ public class ControlEntity extends SceneEntity implements CursorListener
 		
 		double speed = fireable.getWeaponProperties().getProjectileSpeed();
 		double angle = fireable.getAbsoluteAngle();
-		return core.pickTrackPoint(fireable.getAABB(), new Vector2D(speed, angle, true), target);
+		return core.pickTrackPoint(fireable.getArea().getRefPoint(), new Vector2D(speed, angle, true), target);
 //
 	}
 	

@@ -16,10 +16,10 @@ public class TempleLook implements Look <TempleStructure>
 //		System.out.println("drawing temple");
 		double perimeterOffset = 1;//temple.getHexRadius();
 		gl.glColor4f(0.5f, 0.2f, 1.0f,0.5f);
-		gl.glBegin(GL.GL_LINE_STRIP);
+/*		gl.glBegin(GL.GL_LINE_STRIP);
 		for(MeshNode node : temple.getPerimeter())
 			gl.glVertex3f((float)(perimeterOffset*node.getLocation().x), (float)(perimeterOffset*node.getLocation().y), 0);
-		gl.glEnd();
+		gl.glEnd();*/
 
 		
 	}

@@ -20,7 +20,7 @@ public class WeaponBehavior implements Behavior <Weapon>
 		if(trackPoint == null)
 			return false;
 		double targetAngle = toDegrees(trackPoint.getAngle()) 
-									- platform.getAABB().getA() - bif.getAbsoluteAngle();
+									- platform.getArea().getOrientation() - bif.getAbsoluteAngle();
 
 //		double newA = Angles.stepTo(weapon.getAABB().getA(), targetAngle, weapon.getWeaponProperties().getCannonTrackingSpeed());
 		
@@ -30,7 +30,7 @@ public class WeaponBehavior implements Behavior <Weapon>
 //		if(newA < -window)
 //			newA = -window;
 		weapon.setA( targetAngle );
-		weapon.getAABB().a = Angles.toRadians(targetAngle);
+		weapon.getArea().setOrientation(Angles.toRadians(targetAngle));
 //		weapon.setA(absoluteAngle);
 		
 		// just in case we are reloading:

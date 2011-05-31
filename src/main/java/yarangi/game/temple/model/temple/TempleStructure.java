@@ -15,7 +15,6 @@ import yarangi.game.temple.model.temple.structure.Connectable;
 import yarangi.game.temple.model.temple.structure.PowerConnector;
 import yarangi.game.temple.model.weapons.Minigun;
 import yarangi.game.temple.model.weapons.Weapon;
-import yarangi.graphics.quadraturin.SceneVeil;
 import yarangi.graphics.quadraturin.objects.CompositeSceneEntity;
 import yarangi.math.Angles;
 import yarangi.math.DistanceUtils;
@@ -44,7 +43,7 @@ public strictfp class TempleStructure extends CompositeSceneEntity implements Co
 	public PowerConnector [] connectors;
 	
 	
-	public TempleStructure(TempleEntity temple, ControlEntity controller, SceneVeil veil)
+	public TempleStructure(TempleEntity temple, ControlEntity controller)
 	{
 		super(new AABB(0,0,10,0));
 		Hexagon centerHexagon = new Hexagon();
@@ -80,6 +79,9 @@ public strictfp class TempleStructure extends CompositeSceneEntity implements Co
 		Weapon		weapon1 = new Minigun(testWeaponPlatform1, 0,000,0);
 		testWeaponPlatform1.addWeapon(weapon1);
 		controller.addFireable(weapon1);
+		weapon1 = new Minigun(testWeaponPlatform1, 0,000,0);
+		testWeaponPlatform1.addWeapon(weapon1);
+		controller.addFireable(weapon1);
 		
 //		linkPlatform(center, Hexagon.BOTTOM_LEFT, new Hexagon());
 		
@@ -102,6 +104,9 @@ public strictfp class TempleStructure extends CompositeSceneEntity implements Co
 		Weapon			weapon2 = new Minigun(testWeaponPlatform2, 00,00,0);
 				testWeaponPlatform2.addWeapon(weapon2);
 				controller.addFireable(weapon2);
+		weapon2 = new Minigun(testWeaponPlatform2, 00,00,0);
+		testWeaponPlatform2.addWeapon(weapon2);
+		controller.addFireable(weapon2);
 		
 		Hexagon hiRite = linkHexagon(centerHexagon, Hexagon.HIGH_RIGHT, new Hexagon());
 		WeaponPlatform testWeaponPlatform3 = new WeaponPlatform(hiRite, commandPlatform, 10);
@@ -121,6 +126,9 @@ public strictfp class TempleStructure extends CompositeSceneEntity implements Co
 		Weapon				weapon3 = new Minigun(testWeaponPlatform3, -0,0,0);
 		testWeaponPlatform3.addWeapon(weapon3);
 				controller.addFireable(weapon3);
+		weapon3 = new Minigun(testWeaponPlatform3, -0,0,0);
+		testWeaponPlatform3.addWeapon(weapon3);
+		controller.addFireable(weapon3);
 		/*		weapon3 = new LightningEmitter(testWeaponPlatform3, 0,0,0);
 				testWeaponPlatform3.addWeapon(weapon3);
 				controller.addFireable(weapon3); */
@@ -137,14 +145,14 @@ public strictfp class TempleStructure extends CompositeSceneEntity implements Co
 		shieldRadius = boundingRadius*hexRadius + 1;
 		
 		
-		ShieldEntity shield = new ShieldEntity(commandPlatform);
+//		ShieldEntity shield = new ShieldEntity(commandPlatform);
+//		
+//		addChild(shield);
 		
-		addChild(shield);
-		
-		connectors = new PowerConnector[6];
+/*		connectors = new PowerConnector[6];
 		int idx = 0;
 		for(double a = 0.01; a < Angles.PI_2; a += Angles.PI_div_3)
-			connectors[idx++] = new PowerConnector(this.getAABB(), a);
+			connectors[idx++] = new PowerConnector(this.getAABB(), a);*/
 	}
 	
 	
@@ -285,15 +293,22 @@ public strictfp class TempleStructure extends CompositeSceneEntity implements Co
 
 	public double getBoundingRadiusSquare() { return boundingRadiusSquare; }
 	public double getShieldRadius() { return shieldRadius; }
+	
 	public Vector2D toTempleCoordinates(Vector2D vec)
 	{
-		return getAABB().toEntityCoordinates(vec.x, vec.y, hexRadius);
+		return toEntityCoordinates(vec.x, vec.y, hexRadius);
 	}
 	public Vector2D toTempleCoordinates(double x, double y)
 	{
-		return getAABB().toEntityCoordinates(x, y, hexRadius);
+		return toEntityCoordinates(x, y, hexRadius);
 	}
-
+	public Vector2D toEntityCoordinates(double x, double y, double scale)
+	{
+		double aRad = Angles.toRadians(0);
+		double sina = Math.sin(aRad);
+		double cosa = Math.cos(aRad);
+		return new Vector2D(x*scale*cosa-y*scale*sina, x*scale*sina+y*scale*cosa );
+	}	
 
 	@Override
 	public boolean isPickable() { return true; }

@@ -9,7 +9,7 @@ public class Integrity
 	private double armor;
 	
 	
-	public Integrity(double maxHitPoints, double [] resistances, double armor)
+	public Integrity(double maxHitPoints, double armor, double [] resistances)
 	{
 		this.maxHitPoints = maxHitPoints;
 		this.hitPoints = maxHitPoints;

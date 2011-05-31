@@ -8,7 +8,7 @@ public class LinearBehavior implements Behavior<GenericEnemy>
 
 	public boolean behave(double time, GenericEnemy entity, boolean isVisible) 
 	{
-		AABB aabb = entity.getAABB();
+//		AABB aabb = entity.getAABB();
 		
 //		aabb.x += entity.getVelocity().x;
 //		aabb.y += entity.getVelocity().y;

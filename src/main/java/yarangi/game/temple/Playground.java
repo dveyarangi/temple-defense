@@ -13,6 +13,7 @@ import yarangi.graphics.quadraturin.IEventManager;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.actions.DefaultActionFactory;
 import yarangi.graphics.quadraturin.actions.IAction;
+import yarangi.graphics.quadraturin.events.UserActionEvent;
 import yarangi.graphics.scene.BackgroundEntity;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
@@ -52,7 +53,7 @@ public class Playground extends Scene
 		{
 			double angle = i * Angles.PI_div_3 + Angles.PI_div_6;
 //			double angle = RandomUtil.getRandomDouble(Angles.PI_2);
-			double radius = 400;//RandomUtil.getRandomGaussian(400, 100);
+			double radius = 200;//RandomUtil.getRandomGaussian(400, 100);
 			ObserverEntity sensor2 = new ObserverEntity(
 					new AABB(radius*Math.cos(angle), radius*Math.sin(angle), 5, 0),
 					//new AABB(RandomUtil.getRandomGaussian(200, 50), RandomUtil.getRandomGaussian(200, 50), 5, 0),
@@ -62,7 +63,7 @@ public class Playground extends Scene
 					);
 			sensor2.setBehavior(new ObserverBehavior(this.getWorldVeil().getEntityIndex()));
 			addEntity(sensor2);
-			grid.connect(temple.getStructure(), sensor2);
+//			grid.connect(temple.getStructure(), sensor2);
 			
 		}
 		
@@ -70,6 +71,21 @@ public class Playground extends Scene
 //		actions.put("cursor-moved", temple.getController());
 		actions.put("fire-on", temple.getController().getFireOnAction());
 		actions.put("fire-off", temple.getController().getFireOffAction());
+/*		actions.put("hold-child", new IAction() {
+			
+			@Override
+			public void act(UserActionEvent event) {
+				ObserverEntity sensor2 = new ObserverEntity(
+						new AABB(event.get, 5, 0),
+						//new AABB(RandomUtil.getRandomGaussian(200, 50), RandomUtil.getRandomGaussian(200, 50), 5, 0),
+						temple.getController(), 
+						256, 
+						(i % 2 == 0 ? new Color(0, 0.3f, 1, 1) : new Color(0, 0.3f, 1.f, 1)) 
+						);
+				sensor2.setBehavior(new ObserverBehavior(this.getWorldVeil().getEntityIndex()));
+				addEntity(sensor2);
+			}
+		})*/
 			
 //		voices.addCursorListener(temple.getController());
 		voices.addCursorListener(temple.getController());
@@ -84,11 +100,11 @@ public class Playground extends Scene
 	{
 		super.animate(time);
 		
-		if(RandomUtil.oneOf(2))
+//		if(RandomUtil.oneOf(2))
 		{
 			double angle = RandomUtil.getRandomDouble(Angles.PI_2);
 			double radius = RandomUtil.getRandomGaussian(800, 0);
-			addEntity(new ElementalVoid(radius*Math.cos(angle), radius*Math.sin(angle), 0, RandomUtil.getRandomInt(4)+4, temple));
+			addEntity(new ElementalVoid(radius*Math.cos(angle), radius*Math.sin(angle), 0, RandomUtil.getRandomInt(1)+7, temple));
 		}
 	}
 	

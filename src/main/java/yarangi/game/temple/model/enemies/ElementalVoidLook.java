@@ -6,7 +6,6 @@ import yarangi.game.temple.model.Integrity;
 import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
-import yarangi.numbers.RandomUtil;
 
 public class ElementalVoidLook implements Look <ElementalVoid> 
 {
@@ -21,7 +20,7 @@ public class ElementalVoidLook implements Look <ElementalVoid>
 		gl.glColor4f((float)red, (float)green, (float)blue, 1);
 		gl.glBegin(GL.GL_POLYGON);
 		for(double a = 0; a < Angles.PI_2; a += Angles.PI_div_6)
-			gl.glVertex3f((float)(entity.getAABB().r*Math.cos(a)), (float)(entity.getAABB().r*Math.sin(a)), 0);
+			gl.glVertex3f((float)(10*Math.cos(a)), (float)(10*Math.sin(a)), 0);
 		
 		gl.glEnd();
 	}

@@ -8,6 +8,7 @@ import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
+import yarangi.spatial.Area;
 
 public class MinigunLook implements Look<Minigun> 
 {
@@ -42,16 +43,17 @@ public class MinigunLook implements Look<Minigun>
 		BattleInterface bif = platform.getBattleInterface();
 		
 		Vector2D trackPoint = bif.acquireTrackPoint(cannon);
-		
+		Area area = cannon.getArea();
+		Vector2D loc = area.getRefPoint();
 		gl.glColor4f(1.0f, 0.5f, 0.7f,0.5f);
 		
 		gl.glBegin(GL.GL_LINE_STRIP);
-		gl.glVertex3f((float)(cannon.getAABB().x), (float)(cannon.getAABB().y), 0);
+		gl.glVertex3f((float)(loc.x()), (float)(loc.y()), 0);
 		if(trackPoint != null)
 			gl.glVertex3f((float)(trackPoint.x), (float)(trackPoint.y), 0);
 		else
-			gl.glVertex3f((float)(cannon.getAABB().x + maxDistance*Math.cos(cannon.getAABB().a)), 
-						  (float)(cannon.getAABB().y + maxDistance*Math.sin(cannon.getAABB().a)), 0);
+			gl.glVertex3f((float)(loc.x() + maxDistance*Math.cos(area.getOrientation())), 
+						  (float)(loc.y() + maxDistance*Math.sin(area.getOrientation())), 0);
 		gl.glEnd();
 
 		if(trackPoint != null)

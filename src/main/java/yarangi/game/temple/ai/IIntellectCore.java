@@ -7,8 +7,10 @@ import yarangi.ai.nn.init.RandomWeightsInitializer;
 import yarangi.ai.nn.numeric.ArrayInput;
 import yarangi.ai.nn.numeric.BackpropNetwork;
 import yarangi.ai.nn.numeric.CompleteNeuronLayer;
+import yarangi.ai.nn.numeric.LinearAF;
 import yarangi.ai.nn.numeric.NeuralNetworkRunner;
 import yarangi.ai.nn.numeric.Normalizer;
+import yarangi.ai.nn.numeric.NumericAF;
 import yarangi.ai.nn.numeric.ScalingNormalizer;
 import yarangi.ai.nn.numeric.TanHAF;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
@@ -20,7 +22,6 @@ public class IIntellectCore
 //	private BackpropNetwork network = new BackpropNetwork(1);
 	private NeuralNetworkRunner runner; 
 	private BackpropNetwork network;
-	private Normalizer normalizer;
 	
 	private String name;
 	static {
@@ -29,6 +30,7 @@ public class IIntellectCore
 	}
 	
 	private Logger log;
+
 	
 	public IIntellectCore(String name, int worldWidth, int worldHeight)
 	{
@@ -41,16 +43,20 @@ public class IIntellectCore
 		} catch (Exception e) {
 			log.debug("Cannot load NN core " + name + ", creating new one");
 			network = new BackpropNetwork(2);
-			network.addLayer(new CompleteNeuronLayer(10, new TanHAF(), 1));
-			network.addLayer(new CompleteNeuronLayer(20, new TanHAF(), 1));
-			network.addLayer(new CompleteNeuronLayer(10, new TanHAF(), 1));
+			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
+			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
+			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
+//			network.addLayer(new CompleteNeuronLayer(10, new NumericAF [] { new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF()}, 1));
 			network.addInput(new ArrayInput(new double [8]));
 		}
 		
 //		network.addLayer(new CompleteNeuronLayer(10, new TanHAF(), 1));
 		
-		normalizer = new ScalingNormalizer(new double [] {-worldWidth, -worldHeight, -10, -10, -worldWidth, -worldHeight, -10, -10}, new double [] {worldWidth, worldHeight, 10, 10, worldWidth, worldHeight, 10, 10},
-										new double [] {-worldWidth*2, -worldHeight*2}, new double [] {worldWidth*2, worldHeight*2});
+		Normalizer normalizer = new ScalingNormalizer(
+						new double [] {-2*worldWidth, -2*worldHeight, -20, -20, -2*worldWidth, -2*worldHeight, -20, -20}, 
+						new double [] { 2*worldWidth,  2*worldHeight,  20,  20,  2*worldWidth,  2*worldHeight,  20,  20},
+						new double [] {-worldWidth, -worldHeight}, 
+						new double [] { worldWidth,  worldHeight});
 		
 		runner = new NeuralNetworkRunner(normalizer, network);
 		
@@ -62,19 +68,18 @@ public class IIntellectCore
 
 //		if(beacon.getDistance() < 400000)
 		{
-			double [] input = createInput(beacon.getLocation(), beacon.getVelocity(), beacon.getSource().getAABB(), beacon.getProjectileVelocity());
-			Vector2D toTarget = capsule.getTarget().getAABB().minus(beacon.getSource().getAABB());
-			runner.run(input);
-//			System.out.println("training target: " + capsule.getTarget().getAABB() + " delta: " + (toTarget.x-res[0]) +","+ (toTarget.y-res[1]));
+			double [] input = createInput(beacon.getLocation(), beacon.getVelocity(), beacon.getSource().getArea().getRefPoint(), beacon.getProjectileVelocity());
+			Vector2D toTarget = capsule.getTarget().getArea().getRefPoint().minus(beacon.getSource().getArea().getRefPoint());
+			double [] res = runner.run(input);
+//			System.out.println("training target: " + capsule.getTarget().getArea().getRefPoint() + " delta: " + (toTarget.x-res[0]) +","+ (toTarget.y-res[1]));
 //			System.out.println("feedback: d:" + beacon.getDistance() + " a:" + Math.cos(beacon.getAngle())+ ":" + Math.sin(beacon.getAngle()) + " net: " + res[0] + ":" + res[1]);
 
-			runner.train(normalizer.normalizeInput(input), 
-					normalizer.normalizeOutput(new double [] {toTarget.x, toTarget.y}), 0.15);
+			runner.train(new double [] {toTarget.x, toTarget.y}, 0.01);
 		}
 	}
 
 	public Vector2D pickTrackPoint(Vector2D sourceLocation, Vector2D projectileVelocity, IPhysicalObject target) {
-		double [] res = runner.run(createInput(target.getAABB(), target.getVelocity(), sourceLocation, projectileVelocity));
+		double [] res = runner.run(createInput(target.getArea().getRefPoint(), target.getVelocity(), sourceLocation, projectileVelocity));
 		
 		return new Vector2D(res[0], res[1]);
 //		return Math.atan2(res[1], res[0]);

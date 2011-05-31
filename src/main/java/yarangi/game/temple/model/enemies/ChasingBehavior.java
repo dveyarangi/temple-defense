@@ -3,7 +3,6 @@ package yarangi.game.temple.model.enemies;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.math.DistanceUtils;
 import yarangi.math.Vector2D;
-import yarangi.spatial.AABB;
 
 public class ChasingBehavior implements Behavior <GenericEnemy> 
 {
@@ -20,20 +19,20 @@ public class ChasingBehavior implements Behavior <GenericEnemy>
 			return false;
 		}
 	
-		AABB targetLocation = bubble.getTarget().isAlive() ? bubble.getTarget().getAABB() : new AABB(0,0,30, 0);  
+		Vector2D targetLocation = bubble.getTarget().isAlive() ? bubble.getTarget().getArea().getRefPoint() : new Vector2D(0,0);  
+		Vector2D bubbleLocation = bubble.getArea().getRefPoint();
 		
-		
-		double distanceToTarget = Math.sqrt(DistanceUtils.calcDistanceSquare(targetLocation, bubble.getAABB()));
+		double distanceToTarget = Math.sqrt(DistanceUtils.calcDistanceSquare(targetLocation, bubbleLocation));
 
-		Vector2D forceDir = targetLocation.minus(bubble.getAABB());
+		Vector2D forceDir = targetLocation.minus(bubbleLocation);
 		double a = Math.atan2(-forceDir.y, -forceDir.x);
 		a += Math.PI/1000f * time;
 //		double switchCoef = targetLocation.getBoundingRadius()*targetLocation.getBoundingRadius()/distanceToTarget;
 //		Vector2D force = forceDir.mul(1-switchCoef).plus(forceDir.rotate(Angles.PI_div_2).mul(switchCoef));
 //		Vector2D force = forceDir.rotate(Angles.PI_div_2).mul(1);
 
-		bubble.getAABB().x = distanceToTarget * Math.cos(a);
-		bubble.getAABB().y = distanceToTarget * Math.sin(a);
+		bubbleLocation.x = distanceToTarget * Math.cos(a);
+		bubbleLocation.y = distanceToTarget * Math.sin(a);
 //		force = force.normalize().mul(0.001/*bubble.getEnginePower()*/);
 		
 //		bubble.addForce(force.x, force.y); 

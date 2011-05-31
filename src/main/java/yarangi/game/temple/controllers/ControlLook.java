@@ -1,15 +1,16 @@
 package yarangi.game.temple.controllers;
 
+import java.util.Collection;
+
 import javax.media.opengl.GL;
 
 import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
-import yarangi.graphics.quadraturin.objects.SceneEntity;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
+import yarangi.math.Angles;
 import yarangi.math.DistanceUtils;
 import yarangi.math.Vector2D;
-import yarangi.spatial.AABB;
 
 public class ControlLook implements Look <ControlEntity> 
 {
@@ -78,18 +79,24 @@ public class ControlLook implements Look <ControlEntity>
 				gl.glVertex3f((float)(mousePoint.x+width*Math.cos(a)),(float)(mousePoint.y+width*Math.sin(a)),0);
 		gl.glEnd();*/
 		
-		IPhysicalObject target = entity.getTarget(null);
-		if(target != null)
-		{
-			AABB aabb = target.getAABB();
+		Collection <IPhysicalObject> targets = entity.getTargets().values();
+		
 		gl.glBegin(GL.GL_LINE_STRIP);
-		gl.glVertex3f((float)(aabb.x-aabb.r), (float)(aabb.y-aabb.r), 0);
-		gl.glVertex3f((float)(aabb.x-aabb.r), (float)(aabb.y+aabb.r), 0);
-		gl.glVertex3f((float)(aabb.x+aabb.r), (float)(aabb.y+aabb.r), 0);
-		gl.glVertex3f((float)(aabb.x+aabb.r), (float)(aabb.y-aabb.r), 0);
-		gl.glVertex3f((float)(aabb.x-aabb.r), (float)(aabb.y-aabb.r), 0);
-		gl.glEnd();
+		gl.glColor4f(1.0f, 0.5f, 0.5f, 1.0f);
+		Vector2D targetLoc;
+		Vector2D controlLoc = entity.getArea().getRefPoint();
+		for(IPhysicalObject t : targets)
+		{
+			targetLoc = t.getArea().getRefPoint();
+			gl.glBegin(GL.GL_POLYGON);
+			for(double a = 0; a <= 6; a ++)
+			{
+				gl.glVertex3f((float)((targetLoc.x-controlLoc.x) + 10*Math.cos(a*Angles.PI_div_3)), 
+							  (float)((targetLoc.y-controlLoc.y) + 10*Math.sin(a*Angles.PI_div_3)),1);
+			}
+			gl.glEnd();
 		}
+
 	}
 
 	public void init(GL gl, ControlEntity entity) {

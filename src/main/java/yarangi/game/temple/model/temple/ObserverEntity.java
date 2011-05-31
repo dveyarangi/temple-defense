@@ -11,17 +11,15 @@ import yarangi.game.temple.model.temple.structure.PowerConnector;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.ICircleLightEntity;
-import yarangi.graphics.quadraturin.events.CursorEvent;
-import yarangi.graphics.quadraturin.events.CursorListener;
 import yarangi.graphics.quadraturin.objects.SceneEntity;
-import yarangi.math.Angles;
 import yarangi.spatial.AABB;
+import yarangi.spatial.IAreaChunk;
 import yarangi.spatial.ISpatialFilter;
 import yarangi.spatial.ISpatialObject;
 
 public class ObserverEntity extends SceneEntity implements ICircleLightEntity, Connectable 
 {
-	private Map<ISpatialObject, Double> entities;
+	private Map <IAreaChunk, ISpatialObject> entities;
 	
 	private double radius;
 	
@@ -45,10 +43,10 @@ public class ObserverEntity extends SceneEntity implements ICircleLightEntity, C
 		
 		setLook(new ObserverLook(filter));
 		
-		connectors = new PowerConnector[6];
+/*		connectors = new PowerConnector[6];
 		int idx = 0;
 		for(double a = 0.01; a < Angles.PI_2; a += Angles.PI_div_3)
-			connectors[idx++] = new PowerConnector(this.getAABB(), a);
+			connectors[idx++] = new PowerConnector(this.getArea().getRefPoint(), a);*/
 
 	}
 	public ObserverEntity(AABB aabb, ControlEntity ctrl, double radius, Color color) 
@@ -73,11 +71,11 @@ public class ObserverEntity extends SceneEntity implements ICircleLightEntity, C
 	
 	public void setTrackedObjects(Set <IFeedbackBeacon> objects) { this.trackedObjects = objects; }
 
-	public void setEntities(Map<ISpatialObject, Double> entities) {
+	public void setEntities(Map <IAreaChunk, ISpatialObject> entities) {
 		this.entities = entities;
 	}
 
-	public Map<ISpatialObject, Double> getEntities() {
+	public Map <IAreaChunk, ISpatialObject> getEntities() {
 		return entities;
 	}
 

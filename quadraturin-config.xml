@@ -38,6 +38,9 @@
 		<binding actionId="fire-on"      buttonId="-1" modeId="4" />
 		<binding actionId="fire-off"     buttonId="0" modeId="3" /> <!-- TODO: pending bug in QuadVoices -->
 		<binding actionId="fire-off"     buttonId="-1" modeId="2" />
+		
+		<binding actionId="hold-child"  buttonId="-2" modeId="1" />
+		
 	</input>
 	<stage>
 			<frame-length>1</frame-length>

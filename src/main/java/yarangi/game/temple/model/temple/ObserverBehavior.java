@@ -7,18 +7,18 @@ import yarangi.game.temple.ai.IFeedbackBeacon;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
+import yarangi.spatial.ISpatialIndex;
 import yarangi.spatial.ISpatialObject;
 import yarangi.spatial.MapSensor;
-import yarangi.spatial.SpatialIndexer;
 
 public class ObserverBehavior implements Behavior <ObserverEntity>
 {
 	
-	private SpatialIndexer <ISpatialObject> indexer;
+	private ISpatialIndex <ISpatialObject> indexer;
 	
 	private MapSensor <ISpatialObject> sensor = new MapSensor<ISpatialObject>();
 	
-	public ObserverBehavior (SpatialIndexer <ISpatialObject> indexer)
+	public ObserverBehavior (ISpatialIndex <ISpatialObject> indexer)
 	{
 		this.indexer = indexer;
 	}
@@ -27,13 +27,13 @@ public class ObserverBehavior implements Behavior <ObserverEntity>
 	{
 		sensor.clear();
 
-		indexer.query(sensor, entity.getAABB().x, entity.getAABB().y, entity.getSensorRadius());
+		indexer.query(sensor, entity.getArea().getRefPoint().x, entity.getArea().getRefPoint().x, entity.getSensorRadius());
 		
 		Set <IFeedbackBeacon> trackList = new HashSet <IFeedbackBeacon> ();
 		Set <IFeedbackBeacon> prevTrack = entity.getTrackedObjects();
 		
 		IFeedbackBeacon feedback;
-		for(ISpatialObject object : sensor.keySet())
+		for(ISpatialObject object : sensor.values())
 		{
 
 			if(object instanceof Projectile)

@@ -17,7 +17,7 @@ public class ElementalVoid extends GenericEnemy
 	
 	public ElementalVoid(double x, double y, double a, double size, SceneEntity target) {
 		super(new AABB(x, y, size, a), target, 
-				new Integrity(100, new double [] { 0,0,0,0}, 0)
+				new Integrity(1000,  0, new double [] { 0,0,0,0})
 		);
 
 		setLook(new ElementalVoidLook());

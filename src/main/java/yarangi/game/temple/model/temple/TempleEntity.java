@@ -17,8 +17,6 @@ public class TempleEntity extends DummyEntity implements IPhysicalObject
 	
 	private ControlEntity controller;
 	
-	private Playground playground;
-	
 	private Vector2D velocity = new Vector2D(0,0);
 
 	public TempleEntity(Playground playground)
@@ -27,11 +25,11 @@ public class TempleEntity extends DummyEntity implements IPhysicalObject
 		controller = new ControlEntity(playground, this);
 		addChild(controller);
 		
-		structure = new TempleStructure(this, controller, playground.getWorldVeil());
+		structure = new TempleStructure(this, controller);
 		addChild(structure);
 		
 //		this.getAABB().r = structure.getShieldRadius();
-		this.playground = playground;
+//		this.playground = playground;
 /*		for(int idx = 0; idx < 100; idx ++)
 		{
 			Bot bot = new Bot(structure.getCenter(), new Vector2D(0,0), 10);
@@ -62,5 +60,47 @@ public class TempleEntity extends DummyEntity implements IPhysicalObject
 	public double getMass() {
 		// TODO Auto-generated method stub
 		return 1000;
+	}
+
+
+	@Override
+	public void setMass(double mass) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setForce(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setVelocity(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void addForce(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void addVelocity(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void moveMassCenter(double dx, double dy) {
+		// TODO Auto-generated method stub
+		
 	}
 }

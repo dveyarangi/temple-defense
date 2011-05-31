@@ -5,6 +5,7 @@ import javax.media.opengl.GL;
 import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.spatial.AABB;
+import yarangi.spatial.Area;
 
 public class MinigunBurstLook implements Look <Projectile> 
 {
@@ -16,7 +17,7 @@ public class MinigunBurstLook implements Look <Projectile>
 
 		float scale = (float)(prj.getRangeSquare() / ( prj.getMaxRange()-prj.getRangeSquare()));
 		gl.glColor4f(0.1f, 1.0f, 0.1f, 1.0f);
-		AABB aabb = prj.getAABB();
+		Area area = prj.getArea();
 /*		UGLY += dir*0.00001;
 		if(UGLY >= 1)
 		{

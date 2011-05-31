@@ -2,18 +2,15 @@ package yarangi.game.temple;
 
 import javax.media.opengl.GL;
 
-import yarangi.game.temple.model.enemies.ElementalVoid;
 import yarangi.game.temple.model.enemies.bubbles.BubbleSwarm;
 import yarangi.graphics.quadraturin.IViewPoint;
 import yarangi.graphics.quadraturin.ViewPoint2D;
 import yarangi.graphics.quadraturin.WorldVeil;
 import yarangi.graphics.quadraturin.actions.DefaultCollisionManager;
-import yarangi.graphics.quadraturin.simulations.ICollisionManager;
-import yarangi.graphics.textures.BlurVeilEffect;
-import yarangi.math.Angles;
+import yarangi.graphics.quadraturin.simulations.IPhysicsEngine;
+import yarangi.graphics.quadraturin.simulations.StupidInteractions;
 import yarangi.math.RangedDouble;
 import yarangi.math.Vector2D;
-import yarangi.numbers.RandomUtil;
 
 
 public class ArcadeWorldVeil extends WorldVeil 
@@ -24,7 +21,6 @@ public class ArcadeWorldVeil extends WorldVeil
 	
 	public ArcadeWorldVeil(int width, int height) {
 		super(width, height);
-		
 //		setOverlayEffect(new BlurVeilEffect());
 		
 	}
@@ -56,9 +52,9 @@ public class ArcadeWorldVeil extends WorldVeil
 	public void postDisplay(GL gl) {}
 
 	@Override
-	public ICollisionManager createCollisionManager() 
+	public final IPhysicsEngine createPhysicsEngine() 
 	{
-		return new DefaultCollisionManager(this);			
+		return new StupidInteractions(new DefaultCollisionManager(this));
 	}
 
 

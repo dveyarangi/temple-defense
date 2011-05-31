@@ -6,10 +6,9 @@ import yarangi.game.temple.model.temple.Platform;
 import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.game.temple.model.temple.TempleStructure;
 import yarangi.game.temple.model.weapons.Weapon;
-import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
-import yarangi.spatial.AABB;
+import yarangi.spatial.Area;
 
 public class CommandPlatform extends Platform implements BattleInterface
 {
@@ -35,7 +34,7 @@ public class CommandPlatform extends Platform implements BattleInterface
 	}
 	
 	public double getAbsoluteAngle() {
-		return getTempleStructure().getAABB().getA();
+		return getTempleStructure().getArea().getOrientation();
 	}
 	
 	public Vector2D getAbsoluteLocation(double x, double y)
@@ -49,13 +48,14 @@ public class CommandPlatform extends Platform implements BattleInterface
 	 */
 	public Vector2D toWorldCoordinates(Platform platform, double x, double y) 
 	{
-		AABB aabb = platform.getAABB();
-		double absPlatfromAngle = Angles.toRadians(temple.getStructure().getAABB().getA()) + 
-			Math.PI/2+Math.atan2(aabb.getY(), aabb.getX());
+		Area area = platform.getArea();
+		Vector2D platformLoc = platform.getArea().getRefPoint();
+		double absPlatfromAngle = Angles.toRadians(temple.getStructure().getArea().getOrientation()) + 
+			Math.PI/2+Math.atan2(platformLoc.y(), platformLoc.x());
 		double sin1 = Math.sin(absPlatfromAngle);
 		double cos1 = Math.cos(absPlatfromAngle);
-		Vector2D absPlatformLoc = new Vector2D(aabb.getX()*cos1-aabb.getY()*sin1,
-				aabb.getX()*sin1+aabb.getY()*cos1);
+		Vector2D absPlatformLoc = new Vector2D(platformLoc.x()*cos1-platformLoc.y()*sin1,
+				platformLoc.x()*sin1+platformLoc.y()*cos1);
 		
 		double absObjectAngle = absPlatfromAngle+Math.atan2(y, x);
 		double sin2 = Math.sin(absObjectAngle);
