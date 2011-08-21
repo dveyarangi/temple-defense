@@ -17,20 +17,23 @@ public class Integrity
 		this.armor = armor;
 	}
 	
-	public void hit(Damage damage)
+	public double hit(Damage damage)
 	{
 		
+		double totalDamage = 0;
 		for(int type : Damage.TYPES)
 		{
 //			System.out.println(damage);
 			
 			double dam = damage.getDamage(type) * (1-resistances[type]);
 			if (dam > armor)
-				hitPoints -= (dam - armor);
+				totalDamage += (dam - armor);
 		}
 		
+		hitPoints -= totalDamage;
 		if ( this.hitPoints < 0 )
 			this.hitPoints = 0;
+		return totalDamage;
 	}
 	
 	public void recover(double hitPoints)

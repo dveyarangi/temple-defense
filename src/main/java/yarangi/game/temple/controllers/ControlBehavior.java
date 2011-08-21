@@ -1,21 +1,22 @@
 package yarangi.game.temple.controllers;
 
+import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.quadraturin.objects.Behavior;
 
-public class ControlBehavior implements Behavior <ControlEntity> 
+public class ControlBehavior implements Behavior <TempleController> 
 {
 
 
-	public boolean behave(double time, ControlEntity ctrl, boolean isVisible) 
+	public boolean behave(double time, TempleController ctrl, boolean isVisible) 
 	{
 //		FireAction action = ctrl.getFireAction();
-		
+		BattleInterface bi = ctrl.getBattleInterface();
 //		if (action.isActive())
 		{
 		
-			if(!ctrl.isButtonHeld())
+/*			if(!ctrl.isButtonHeld())
 			{
 				if(!ctrl.isFireStopped())
 				{
@@ -25,23 +26,23 @@ public class ControlBehavior implements Behavior <ControlEntity>
 				}
 			}
 			else
-			{
-				for(Weapon fireable : ctrl.getFireables())
+			{*/
+				for(Weapon fireable : bi.getFireables())
 				{
+					// TODO: not good
 					Projectile fire = fireable.fire();
 					
 					if(fire == null)
 						continue;
-					
-					fire.setFeedback(ctrl.createFeedbackBeacon(fireable));
-					ctrl.getPlayground().addEntity(fire);
+					fire.setFeedback(bi.createFeedbackBeacon(fireable));
+					ctrl.getScene().addEntity(fire);
 					
 					
 				}
-				ctrl.setFireStopped(false);
-			}
+//				ctrl.setFireStopped(false);
+			//}
 		}
-		ctrl.clearObservedObjects();
+		bi.clearObservedObjects();
 	
 		
 //		Vector2D cp = ctrl.getCursorLocation();

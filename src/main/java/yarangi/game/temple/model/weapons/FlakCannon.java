@@ -1,13 +1,7 @@
 package yarangi.game.temple.model.weapons;
 
-import yarangi.game.temple.controllers.BattleInterface;
 import yarangi.game.temple.model.Damage;
-import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
-import yarangi.math.Angles;
-import yarangi.math.DistanceUtils;
-import yarangi.math.Vector2D;
-import yarangi.numbers.RandomUtil;
-import yarangi.spatial.AABB;
+import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.spatial.ISpatialObject;
 import yarangi.spatial.SpatialIndexer;
 
@@ -19,12 +13,12 @@ public class FlakCannon extends Weapon
 	 */
 	private static final long serialVersionUID = -3710249126189305664L;
 	private static final WeaponProperties FLACK_PROPS = 
-		new WeaponProperties(1, 180, 5, 5, 2, 600, 1, 2, new Damage(0.1, 0.1, 0, 0));
+		new WeaponProperties(1, 180, 5, 5, 1000, 2, 600, 1, 2, new Damage(0.1, 0.1, 0, 0));
 	
 	private FlakShellBehavior shellBehavior;
-	private FlakShellLook shellLook = new FlakShellLook();
+	private FlakShellLook shellLook;// = new FlakShellLook();
 	
-	public FlakCannon(WeaponPlatform platform, double x, double y, double a, SpatialIndexer <ISpatialObject> indexer) {
+	public FlakCannon(BattleInterface platform, double x, double y, double a, SpatialIndexer <ISpatialObject> indexer) {
 		super(platform, x, y, a, FLACK_PROPS);
 		setLook(new FlakCannonLook());
 		
@@ -38,7 +32,7 @@ public class FlakCannon extends Weapon
 	{
 		if(!isReloaded())
 			return null;
-		AABB aabb = getAABB();
+/*		AABB aabb = getAABB();
 		BattleInterface bi = getPlatform().getBattleInterface();
 		Vector2D weaponLoc = bi.toWorldCoordinates(getPlatform(), aabb.getX(), aabb.getY());
 		
@@ -56,9 +50,9 @@ public class FlakCannon extends Weapon
 		
 		reload();
 		shell.setLook(shellLook);
-		shell.setBehavior(shellBehavior);
+		shell.setBehavior(shellBehavior);*/
 
-		return shell;
+		return null;
 	}
 
 	/**

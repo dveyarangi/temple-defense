@@ -1,32 +1,50 @@
 package yarangi.game.temple.model.temple;
 
 import yarangi.game.temple.Playground;
-import yarangi.game.temple.controllers.ControlEntity;
-import yarangi.graphics.quadraturin.objects.DummyEntity;
-import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
+import yarangi.game.temple.controllers.TempleController;
+import yarangi.game.temple.model.weapons.Projectile;
+import yarangi.graphics.colors.Color;
+import yarangi.graphics.quadraturin.objects.Dummy;
+import yarangi.graphics.quadraturin.objects.IWorldEntity;
+import yarangi.graphics.quadraturin.objects.Sensor;
+import yarangi.graphics.quadraturin.simulations.Body;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
+import yarangi.spatial.ISpatialFilter;
+import yarangi.spatial.ISpatialObject;
 
 
-public class TempleEntity extends DummyEntity implements IPhysicalObject
+public class TempleEntity extends Dummy implements Serviceable 
 {
 
 	private static final long serialVersionUID = 6893825029204201873L;
 
 	private TempleStructure structure;
 	
-	private ControlEntity controller;
+	private TempleController controller;
 	
 	private Vector2D velocity = new Vector2D(0,0);
 
-	public TempleEntity(Playground playground)
+	
+	ObserverEntity highlight;
+	
+	HighLightFilter filter = new HighLightFilter();
+
+	public TempleEntity(Playground playground, TempleController ctrl)
 	{
-		super(new AABB(0,0,0,0));
-		controller = new ControlEntity(playground, this);
-		addChild(controller);
+		super();
 		
-		structure = new TempleStructure(this, controller);
-		addChild(structure);
+		highlight = new ObserverEntity(ctrl);
+		highlight.setBehavior(new ObserverBehavior(0,0,null,0));
+		
+		highlight.setArea(new AABB(0, 0, 30, 0));
+		highlight.setSensor(new Sensor(512, filter));
+		highlight.setLook(new ObserverLook(new Color(0.6f, 0.5f, 1.0f, 1)));
+		highlight.setBody(new Body());
+		playground.addEntity(highlight);
+		
+//				structure = new TempleStructure(this, controller);
+//		addChild(structure);
 		
 //		this.getAABB().r = structure.getShieldRadius();
 //		this.playground = playground;
@@ -41,66 +59,32 @@ public class TempleEntity extends DummyEntity implements IPhysicalObject
 
 	public TempleStructure getStructure() { return structure; }
 	
-	public ControlEntity getController() { return controller; }
-
-	public Vector2D getVelocity() { return velocity; }
+	public TempleController getController() { return controller; }
 
 
-	public void setImpactWith(IPhysicalObject e) {
-//		System.out.println("temple hit: " + e);
-	}
-
-
-	public Vector2D getForce() {
+	public BattleInterface getCommandPlatform() {
 		// TODO Auto-generated method stub
-		return new Vector2D(0,0);
+		return null;
 	}
-
-
-	public double getMass() {
-		// TODO Auto-generated method stub
-		return 1000;
-	}
-
-
-	@Override
-	public void setMass(double mass) {
-		// TODO Auto-generated method stub
+	
+	public class HighLightFilter implements ISpatialFilter <IWorldEntity>
+	{
+		private ISpatialObject highlighted;
+		public void setHighlighted(ISpatialObject object)
+		{
+			this.highlighted = object;
+		}
+		@Override
+		public boolean accept(IWorldEntity entity) {
+			return !(entity instanceof Projectile) && entity != highlighted;
+		}
 		
 	}
 
-
 	@Override
-	public void setForce(double x, double y) {
-		// TODO Auto-generated method stub
-		
+	public Vector2D getServicePoint()
+	{
+		return getArea().getRefPoint();
 	}
 
-
-	@Override
-	public void setVelocity(double x, double y) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void addForce(double x, double y) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void addVelocity(double x, double y) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void moveMassCenter(double dx, double dy) {
-		// TODO Auto-generated method stub
-		
-	}
 }

@@ -1,28 +1,38 @@
 package yarangi.game.temple.model.weapons;
 
+import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.math.Vector2D;
 
 public class SimpleProjectileBehavior implements Behavior <Projectile>
 {
-
+	private BattleInterface bi;
+	
+	public SimpleProjectileBehavior(BattleInterface bi)
+	{
+		this.bi = bi;
+	}
 
 	public boolean behave(double time, Projectile prj, boolean isVisible) 
 	{
 		
-		Vector2D ds = prj.getVelocity().mul(time);
+		Vector2D ds = prj.getBody().getVelocity().mul(time);
 		
-		if(prj.addRangeSquare(ds.x*ds.x + ds.y*ds.y))
+		if(prj.addRange(Math.hypot( ds.x(), ds.y() )))
 		{
-			prj.setIsAlive(false);
+			prj.markDead();
 			return false;
 		}
 		if(prj.getImpactPoint() != null)
 		{
-			prj.setIsAlive(false);
+			prj.markDead();
 			return false;
 		}
 		
+/*		if(prj.getArea().getMaxRadius() != bi.getBattleScale())
+		{
+		prj.getArea().fitTo(bi.getBattleScale());
+		}*/
 		return true;
 	}
 

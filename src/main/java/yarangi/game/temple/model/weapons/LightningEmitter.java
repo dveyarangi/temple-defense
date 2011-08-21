@@ -1,9 +1,9 @@
 package yarangi.game.temple.model.weapons;
 
-import yarangi.game.temple.controllers.BattleInterface;
 import yarangi.game.temple.model.Damage;
+import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
-import yarangi.graphics.quadraturin.objects.SceneEntity;
+import yarangi.graphics.quadraturin.objects.WorldEntity;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
@@ -15,7 +15,7 @@ public class LightningEmitter extends Weapon
 	private static final long serialVersionUID = -1437318912599089233L;
 	
 	private static final WeaponProperties FLACK_PROPS = 
-		new WeaponProperties(1, 100, 1, 2, 5, 1000, 1, 1, new Damage(0, 1, 0.1, 0));
+		new WeaponProperties(1, 100, 1, 2, 5, 500, 1000, 1, 1, new Damage(0, 1, 0.1, 0));
 	
 	private LightningBeam last;
 	
@@ -26,7 +26,7 @@ public class LightningEmitter extends Weapon
 	private LightningBeamLook shellLook = new LightningBeamLook();
 	private LightningBeamBehavior shellBehavior = new LightningBeamBehavior();
 	
-	public LightningEmitter(WeaponPlatform platform, double x, double y, double a) 
+	public LightningEmitter(BattleInterface platform, double x, double y, double a) 
 	{
 		super(platform, x, y, a, FLACK_PROPS);
 		setLook(new LightningEmitterLook());
@@ -37,7 +37,7 @@ public class LightningEmitter extends Weapon
 		if(!isReloaded())
 			return null;
 		
-		AABB aabb = getAABB();
+/*		AABB aabb = getAABB();
 		
 		BattleInterface bi = getPlatform().getBattleInterface();
 		Vector2D weaponLoc = bi.toWorldCoordinates(getPlatform(), aabb.x, aabb.y);
@@ -59,7 +59,8 @@ public class LightningEmitter extends Weapon
 		shell.setLook(shellLook);
 		shell.setBehavior(shellBehavior);
 
-		return shell;
+		return shell;*/
+		return null;
 	}
 
 	public void stop() {

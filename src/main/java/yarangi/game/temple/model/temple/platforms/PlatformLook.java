@@ -2,9 +2,9 @@ package yarangi.game.temple.model.temple.platforms;
 
 import javax.media.opengl.GL;
 
-import yarangi.game.temple.model.temple.Hexagon;
-import yarangi.game.temple.model.temple.MeshNode;
 import yarangi.game.temple.model.temple.Platform;
+import yarangi.game.temple.model.temple.structure.Hexagon;
+import yarangi.game.temple.model.temple.structure.MeshNode;
 import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 

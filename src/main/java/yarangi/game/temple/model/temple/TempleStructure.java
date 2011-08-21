@@ -6,22 +6,26 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import yarangi.game.temple.controllers.ControlEntity;
-import yarangi.game.temple.model.temple.Hexagon.HexagonId;
+import yarangi.game.temple.controllers.TempleController;
 import yarangi.game.temple.model.temple.platforms.CommandPlatform;
 import yarangi.game.temple.model.temple.platforms.EmptyPlatform;
 import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
 import yarangi.game.temple.model.temple.structure.Connectable;
+import yarangi.game.temple.model.temple.structure.Hexagon;
+import yarangi.game.temple.model.temple.structure.HexagonObserver;
+import yarangi.game.temple.model.temple.structure.MeshNode;
 import yarangi.game.temple.model.temple.structure.PowerConnector;
+import yarangi.game.temple.model.temple.structure.Hexagon.HexagonId;
 import yarangi.game.temple.model.weapons.Minigun;
 import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.quadraturin.objects.CompositeSceneEntity;
 import yarangi.math.Angles;
-import yarangi.math.DistanceUtils;
+import yarangi.math.Geometry;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
+import yarangi.spatial.Area;
 
-public strictfp class TempleStructure extends CompositeSceneEntity implements Connectable
+public class TempleStructure extends CompositeSceneEntity implements Connectable
 {
 
 	private static final long serialVersionUID = 1922785697163737467L;
@@ -42,10 +46,11 @@ public strictfp class TempleStructure extends CompositeSceneEntity implements Co
 	
 	public PowerConnector [] connectors;
 	
-	
-	public TempleStructure(TempleEntity temple, ControlEntity controller)
+	public TempleStructure(TempleEntity temple, TempleController controller)
 	{
-		super(new AABB(0,0,10,0));
+		super();
+		
+		setArea(Area.EMPTY);
 		Hexagon centerHexagon = new Hexagon();
 		
 		this.commandPlatform = new CommandPlatform(temple, centerHexagon);
@@ -76,12 +81,12 @@ public strictfp class TempleStructure extends CompositeSceneEntity implements Co
 //		Weapon weapon1 = new FlakCannon(testWeaponPlatform1, 0,0,0, veil.getEntityIndex());
 //		testWeaponPlatform1.addWeapon(weapon1);
 //		controller.addFireable(weapon1);
-		Weapon		weapon1 = new Minigun(testWeaponPlatform1, 0,000,0);
-		testWeaponPlatform1.addWeapon(weapon1);
-		controller.addFireable(weapon1);
-		weapon1 = new Minigun(testWeaponPlatform1, 0,000,0);
-		testWeaponPlatform1.addWeapon(weapon1);
-		controller.addFireable(weapon1);
+//		Weapon		weapon1 = new Minigun(commandPlatform, 0,000,0);
+//		testWeaponPlatform1.addWeapon(weapon1);
+//		controller.addFireable(weapon1);
+//		weapon1 = new Minigun(commandPlatform, 0,000,0);
+//		testWeaponPlatform1.addWeapon(weapon1);
+//		controller.addFireable(weapon1);
 		
 //		linkPlatform(center, Hexagon.BOTTOM_LEFT, new Hexagon());
 		
@@ -101,12 +106,12 @@ public strictfp class TempleStructure extends CompositeSceneEntity implements Co
 //		Weapon weapon2 = new FlakCannon(testWeaponPlatform2, 0,0,0);
 //		testWeaponPlatform2.addWeapon(weapon2);
 //		controller.addFireable(weapon2);
-		Weapon			weapon2 = new Minigun(testWeaponPlatform2, 00,00,0);
+/*		Weapon	weapon2 = new Minigun(testWeaponPlatform2, 00,00,0);
 				testWeaponPlatform2.addWeapon(weapon2);
 				controller.addFireable(weapon2);
 		weapon2 = new Minigun(testWeaponPlatform2, 00,00,0);
 		testWeaponPlatform2.addWeapon(weapon2);
-		controller.addFireable(weapon2);
+		controller.addFireable(weapon2);*/
 		
 		Hexagon hiRite = linkHexagon(centerHexagon, Hexagon.HIGH_RIGHT, new Hexagon());
 		WeaponPlatform testWeaponPlatform3 = new WeaponPlatform(hiRite, commandPlatform, 10);
@@ -123,12 +128,12 @@ public strictfp class TempleStructure extends CompositeSceneEntity implements Co
 //		Weapon weapon3 = new FlakCannon(testWeaponPlatform3, 0,0,0);
 //		testWeaponPlatform3.addWeapon(weapon3);
 //		controller.addFireable(weapon3);
-		Weapon				weapon3 = new Minigun(testWeaponPlatform3, -0,0,0);
+/*		Weapon				weapon3 = new Minigun(testWeaponPlatform3, -0,0,0);
 		testWeaponPlatform3.addWeapon(weapon3);
 				controller.addFireable(weapon3);
 		weapon3 = new Minigun(testWeaponPlatform3, -0,0,0);
 		testWeaponPlatform3.addWeapon(weapon3);
-		controller.addFireable(weapon3);
+		controller.addFireable(weapon3);*/
 		/*		weapon3 = new LightningEmitter(testWeaponPlatform3, 0,0,0);
 				testWeaponPlatform3.addWeapon(weapon3);
 				controller.addFireable(weapon3); */
@@ -155,6 +160,7 @@ public strictfp class TempleStructure extends CompositeSceneEntity implements Co
 			connectors[idx++] = new PowerConnector(this.getAABB(), a);*/
 	}
 	
+	public BattleInterface getBattleInterface() { return commandPlatform; }
 	
 	public Hexagon linkHexagon(Hexagon target, int position, Hexagon hex)
 	{
@@ -264,7 +270,7 @@ public strictfp class TempleStructure extends CompositeSceneEntity implements Co
 			do
 			{
 				perimeter.add(node);
-				double distance = DistanceUtils.calcDistanceSquare(new Vector2D(0,0), node.getLocation()); 
+				double distance = Geometry.calcHypotSquare(0,0, node.getLocation().x, node.getLocation().y); 
 				if ( distance > boundingRadiusSquare)
 					boundingRadiusSquare = distance;
 				
@@ -315,6 +321,5 @@ public strictfp class TempleStructure extends CompositeSceneEntity implements Co
 
 
 	public PowerConnector[] getConnectors() { return connectors; }
-
 
 }

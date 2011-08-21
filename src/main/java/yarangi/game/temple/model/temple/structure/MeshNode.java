@@ -1,4 +1,4 @@
-package yarangi.game.temple.model.temple;
+package yarangi.game.temple.model.temple.structure;
 
 import yarangi.math.Vector2D;
 

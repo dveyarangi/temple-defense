@@ -4,7 +4,6 @@ import javax.media.opengl.GL;
 
 import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
-import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
 
 public class MinigunBurstLook implements Look <Projectile> 
@@ -18,6 +17,7 @@ public class MinigunBurstLook implements Look <Projectile>
 		float scale = (float)(prj.getRangeSquare() / ( prj.getMaxRange()-prj.getRangeSquare()));
 		gl.glColor4f(0.1f, 1.0f, 0.1f, 1.0f);
 		Area area = prj.getArea();
+//		System.out.println(area.getOrientation());
 /*		UGLY += dir*0.00001;
 		if(UGLY >= 1)
 		{
@@ -26,9 +26,12 @@ public class MinigunBurstLook implements Look <Projectile>
 		else
 			if(UGLY <= 0)
 				dir = 1;*/
-		gl.glBegin(GL.GL_LINE_STRIP);
-			gl.glVertex3f(5, 0, 0);
-			gl.glVertex3f(-5, 0, 0);
+		gl.glBegin(GL.GL_POLYGON);
+			gl.glVertex3f(0.5f, 0.5f, 0);
+			gl.glVertex3f(-0.5f, 0.5f, 0);
+			gl.glVertex3f(-0.5f, -0.5f, 0);
+			gl.glVertex3f(0.5f, -0.5f, 0);
+			gl.glVertex3f(0.5f, 0.5f, 0);
 		gl.glEnd();
 
 	}
@@ -40,6 +43,12 @@ public class MinigunBurstLook implements Look <Projectile>
 	public void destroy(GL gl, Projectile entity) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isCastsShadow() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

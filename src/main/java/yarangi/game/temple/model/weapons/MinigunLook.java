@@ -2,8 +2,6 @@ package yarangi.game.temple.model.weapons;
 
 import javax.media.opengl.GL;
 
-import yarangi.game.temple.controllers.BattleInterface;
-import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
 import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
@@ -19,16 +17,16 @@ public class MinigunLook implements Look<Minigun>
 		if(context.isForEffect())
 			return;
 		
-		double controlAngle = 0;
+		double controlAngle = cannon.getArea().getOrientation();
 		
-		double width =  Angles.toRadians(cannon.getWeaponProperties().getProjectileTrajectoryAccuracy());
+/*		double width =  cannon.getWeaponProperties().getProjectileTrajectoryAccuracy();
 		
 		double maxDistance = 1000;//Math.sqrt(DistanceUtils.calcDistanceSquare(new Vector2D(0,0), mousePoint));
 //		double distance = Math.sqrt(DistanceUtils.calcDistanceSquare(new Vector2D(0,0), mousePoint));
 		
 		double startAngle = controlAngle - width;
 		double endAngle = controlAngle + width;
-/*		gl.glBegin(GL.GL_POLYGON);
+		gl.glBegin(GL.GL_POLYGON);
 		gl.glColor4f(1.0f, 0.5f, 0.7f,0.1f);
 //			gl.glVertex3f((float)(controlRadius*cos),(float)(controlRadius*sin),0);
 			gl.glVertex3f((float)(maxDistance*Math.cos(endAngle)),   (float)(maxDistance*Math.sin(endAngle)), 0);
@@ -39,31 +37,34 @@ public class MinigunLook implements Look<Minigun>
 		gl.glEnd();	*/
 		
 //		AABB target = cannon.getTrackingPoint()
-		WeaponPlatform platform = cannon.getPlatform();
-		BattleInterface bif = platform.getBattleInterface();
-		
-		Vector2D trackPoint = bif.acquireTrackPoint(cannon);
 		Area area = cannon.getArea();
 		Vector2D loc = area.getRefPoint();
-		gl.glColor4f(1.0f, 0.5f, 0.7f,0.5f);
-		
-		gl.glBegin(GL.GL_LINE_STRIP);
-		gl.glVertex3f((float)(loc.x()), (float)(loc.y()), 0);
-		if(trackPoint != null)
-			gl.glVertex3f((float)(trackPoint.x), (float)(trackPoint.y), 0);
-		else
-			gl.glVertex3f((float)(loc.x() + maxDistance*Math.cos(area.getOrientation())), 
-						  (float)(loc.y() + maxDistance*Math.sin(area.getOrientation())), 0);
+		gl.glColor4f(0.0f, 1.0f, 0f,0.5f);
+		gl.glBegin(GL.GL_POLYGON);
+		for(double a = 0; a <= 6; a ++)
+		{
+			gl.glVertex3f((float)(0. + cannon.getArea().getMaxRadius()*Math.cos(a*Angles.PI_div_3)), 
+					(float)(0f + cannon.getArea().getMaxRadius()*Math.sin(a*Angles.PI_div_3)), 1);
+		}
 		gl.glEnd();
-
+		
+		gl.glColor4f(0.0f, 1.0f, 0f,0.2f);
+		Vector2D trackPoint = cannon.getBattleInterface().acquireTrackPoint(cannon);
+		
 		if(trackPoint != null)
 		{
+			Vector2D relTrack = trackPoint.minus(loc);
 			gl.glBegin(GL.GL_LINE_STRIP);
-			gl.glVertex3f((float)(trackPoint.x-10), (float)(trackPoint.y-10), 0);
-			gl.glVertex3f((float)(trackPoint.x-10), (float)(trackPoint.y+10), 0);
-			gl.glVertex3f((float)(trackPoint.x+10), (float)(trackPoint.y+10), 0);
-			gl.glVertex3f((float)(trackPoint.x+10), (float)(trackPoint.y-10), 0);
-			gl.glVertex3f((float)(trackPoint.x-10), (float)(trackPoint.y-10), 0);
+			gl.glVertex3f(0, 0, 0);
+			gl.glVertex3f((float)(relTrack.x()), (float)(relTrack.y()), 0);
+			gl.glEnd();
+			
+			gl.glBegin(GL.GL_LINE_STRIP);
+			gl.glVertex3f((float)(relTrack.x()-10), (float)(relTrack.y()-10), 0);
+			gl.glVertex3f((float)(relTrack.x()-10), (float)(relTrack.y()+10), 0);
+			gl.glVertex3f((float)(relTrack.x()+10), (float)(relTrack.y()+10), 0);
+			gl.glVertex3f((float)(relTrack.x()+10), (float)(relTrack.y()-10), 0);
+			gl.glVertex3f((float)(relTrack.x()-10), (float)(relTrack.y()-10), 0);
 			gl.glEnd();
 		}
 	}
@@ -79,5 +80,10 @@ public class MinigunLook implements Look<Minigun>
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+	@Override
+	public boolean isCastsShadow() { return true; }
 
 }

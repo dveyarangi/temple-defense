@@ -3,9 +3,10 @@ package yarangi.game.temple.model.temple;
 import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.Damageable;
 import yarangi.game.temple.model.Integrity;
+import yarangi.game.temple.model.temple.structure.Hexagon;
 import yarangi.graphics.quadraturin.objects.CompositeSceneEntity;
-import yarangi.math.Angles;
 import yarangi.spatial.AABB;
+import yarangi.spatial.Area;
 
 public abstract class Platform extends CompositeSceneEntity implements Damageable
 {
@@ -21,7 +22,9 @@ public abstract class Platform extends CompositeSceneEntity implements Damageabl
 	
 	protected Platform(Hexagon hexagon) 
 	{
-		super(new AABB(hexagon.getX(), hexagon.getY(), 1, /*Angles.toDegrees(Math.atan2(hexagon.getY(), hexagon.getX()))*/0));
+		super();
+		
+		setArea(new AABB(hexagon.getX(), hexagon.getY(), 1, /*Angles.toDegrees(Math.atan2(hexagon.getY(), hexagon.getX()))*/0));
 		
 		this.hexagon = hexagon;
 

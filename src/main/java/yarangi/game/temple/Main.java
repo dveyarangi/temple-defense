@@ -13,7 +13,7 @@ public class Main
 		Swing2DContainer container = new Swing2DContainer();
 		
 		// creating test scene:
-	    int playgroundId = container.addScene(new Playground(container.getEventManager()));
+//	    int playgroundId = container.addScene(new Playground(container.getEventManager()));
 	    
 	    container.registerPlugin(new ShaderFactory());
 	    
@@ -21,7 +21,7 @@ public class Main
 	    container.start();
 	    
 	    // actualizing playground scene
-	    container.activateScene(playgroundId);
+	    container.activateScene("playground");
 	    
 	}
 }

@@ -3,25 +3,28 @@ package yarangi.game.temple.model.enemies;
 import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.Damageable;
 import yarangi.game.temple.model.Integrity;
-import yarangi.graphics.quadraturin.objects.NewtonialSceneEntity;
-import yarangi.graphics.quadraturin.objects.SceneEntity;
+import yarangi.graphics.quadraturin.objects.Body;
+import yarangi.graphics.quadraturin.objects.IVeilEntity;
 import yarangi.spatial.AABB;
+import yarangi.spatial.Area;
 
-public abstract class GenericEnemy extends NewtonialSceneEntity implements Damageable
+public abstract class GenericEnemy implements Damageable
 {
 
 	private Integrity integrity;
 	
-	private SceneEntity target;
+	private IVeilEntity target;
 	
-	public GenericEnemy(AABB aabb, SceneEntity target, Integrity integrity) {
-		super(aabb);
-
+	
+	public GenericEnemy(Area area, IVeilEntity target, Integrity integrity) {
+		super();
 		this.target = target;
 		this.integrity = integrity;
+		
+		setArea(area);
 	}
 	
-	public SceneEntity getTarget() { return target; }
+	public IVeilEntity getTarget() { return target; }
 
 	public boolean isCollidable() {
 		return true;

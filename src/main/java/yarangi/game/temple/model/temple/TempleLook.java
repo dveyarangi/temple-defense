@@ -33,6 +33,12 @@ public class TempleLook implements Look <TempleStructure>
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean isCastsShadow() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 /*	public class DrawingObserver implements HexagonObserver
 	{

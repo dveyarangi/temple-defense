@@ -5,6 +5,7 @@ import java.util.Map;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.ICircleLightEntity;
 import yarangi.math.Vector2D;
+import yarangi.spatial.IAreaChunk;
 import yarangi.spatial.ISpatialObject;
 
 public class FlakShell extends Projectile implements ICircleLightEntity
@@ -47,19 +48,26 @@ public class FlakShell extends Projectile implements ICircleLightEntity
 
 	public double getExplosionRange() { return explosionRangeSquare; }
 
-	public void setEntities(Map<ISpatialObject, Double> entities) {
-		this.entities = entities;
-	}
-
-	public Map<ISpatialObject, Double> getEntities() {
-		return entities;
-	}
-
-	public double getSensorRadius() {
-		// TODO Auto-generated method stub
-		return getAABB().r*10;
-	}
 
 	public Color getColor() { return color; }
+
+	@Override
+	public void setEntities(Map<IAreaChunk, ISpatialObject> entities) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public double getSensorRadiusSquare() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Map<IAreaChunk, ISpatialObject> getEntities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

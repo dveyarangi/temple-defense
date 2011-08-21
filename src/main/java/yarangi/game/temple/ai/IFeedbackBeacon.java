@@ -6,7 +6,7 @@ public interface IFeedbackBeacon
 {
 	
 	
-	public IPhysicalObject getTarget();
+//	public IPhysicalObject getTarget();
 	
 //	public ISpatialObject getSource();
 	

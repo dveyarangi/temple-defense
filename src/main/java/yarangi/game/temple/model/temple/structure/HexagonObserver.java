@@ -1,4 +1,5 @@
-package yarangi.game.temple.model.temple;
+package yarangi.game.temple.model.temple.structure;
+
 
 public interface HexagonObserver 
 {

@@ -1,12 +1,11 @@
 package yarangi.game.temple.model.temple;
 
-import yarangi.game.temple.controllers.BattleInterface;
-import yarangi.graphics.quadraturin.objects.SceneEntity;
+import yarangi.graphics.quadraturin.objects.WorldEntity;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
 
-public class ShieldEntity extends SceneEntity implements IPhysicalObject 
+public class ShieldEntity extends WorldEntity implements IPhysicalObject 
 {
 
 	private static final long serialVersionUID = 9214872976966945125L;
@@ -18,7 +17,7 @@ public class ShieldEntity extends SceneEntity implements IPhysicalObject
 
 	public ShieldEntity(BattleInterface battleInterface)
 	{
-		super(new AABB(0,0,0,0));
+		super();
 		this.battleInterface = battleInterface;
 		
 		setLook(new ShieldLook());
@@ -54,6 +53,36 @@ public class ShieldEntity extends SceneEntity implements IPhysicalObject
 	public double getMass() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public void moveMassCenter(double dx, double dy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setMass(double mass) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setForce(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addForce(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addVelocity(double x, double y) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

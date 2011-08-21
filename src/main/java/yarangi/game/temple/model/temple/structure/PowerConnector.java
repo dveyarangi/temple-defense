@@ -3,11 +3,11 @@ package yarangi.game.temple.model.temple.structure;
 import java.util.ArrayList;
 import java.util.List;
 
-import yarangi.graphics.quadraturin.objects.SceneEntity;
+import yarangi.graphics.quadraturin.objects.WorldEntity;
 import yarangi.math.Vector2D;
-import yarangi.spatial.AABB;
+import yarangi.spatial.Area;
 
-public class PowerConnector extends SceneEntity
+public class PowerConnector extends WorldEntity
 {
 	private Vector2D sourceLoc;
 
@@ -15,10 +15,12 @@ public class PowerConnector extends SceneEntity
 	
 	private List <PowerLine> paths = new ArrayList <PowerLine> ();
 	
-	public PowerConnector(AABB area, double sourceAngle) 
+	public PowerConnector(Area area, double sourceAngle) 
 	{
-		super(area);
-		this.sourceLoc = new Vector2D(area.x, area.y, area.r, sourceAngle);
+		super();
+		
+		setArea(area);
+		this.sourceLoc = new Vector2D(area.getRefPoint().x(), area.getRefPoint().y(), 5, sourceAngle);
 		
 		this.sourceDir = new Vector2D(1, sourceAngle, true);
 		
@@ -59,6 +61,6 @@ public class PowerConnector extends SceneEntity
 
 	@Override
 	public boolean isPickable() { return true; }
-	
+
 
 }

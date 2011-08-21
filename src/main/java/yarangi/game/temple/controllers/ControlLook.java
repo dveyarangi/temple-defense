@@ -4,38 +4,38 @@ import java.util.Collection;
 
 import javax.media.opengl.GL;
 
-import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.objects.IWorldEntity;
 import yarangi.graphics.quadraturin.objects.Look;
-import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.Angles;
-import yarangi.math.DistanceUtils;
 import yarangi.math.Vector2D;
 
-public class ControlLook implements Look <ControlEntity> 
+public class ControlLook implements Look <TempleController> 
 {
 
-	public void render(GL gl, double time, ControlEntity entity, RenderingContext context) 
+	public void render(GL gl, double time, TempleController entity, RenderingContext context) 
 	{
 		if(context.isForEffect())
 			return;
-		TempleEntity temple = entity.getTemple();
+		
+		entity.getActionController().display( gl, time, context );
+//		TempleEntity temple = entity.getTemple();
 		
 		Vector2D mousePoint = entity.getCursorLocation();
 		if(mousePoint == null)
 			return;
 		
-		double controlAngle = Math.atan2(mousePoint.y, mousePoint.x);
-		double controlRadius = temple.getStructure().getShieldRadius()+1;
+//		double controlAngle = Math.atan2(mousePoint.y, mousePoint.x);
+//		double controlRadius = temple.getStructure().getShieldRadius()+1;
 //		System.out.println("hui: " + mousePoint);
 		gl.glColor4f(0.5f, 1.0f, 0.7f,0.2f);
 //		double sin = Math.sin(controlAngle);
 //		double cos = Math.cos(controlAngle);
-		double maxDistance = 1000;//Math.sqrt(DistanceUtils.calcDistanceSquare(new Vector2D(0,0), mousePoint));
-		double distance = Math.sqrt(DistanceUtils.calcDistanceSquare(new Vector2D(0,0), mousePoint));
+//		double maxDistance = 1000;//Math.sqrt(DistanceUtils.calcDistanceSquare(new Vector2D(0,0), mousePoint));
+//		double distance = Math.sqrt(Geometry.calcHypotSquare(new Vector2D(0,0), mousePoint));
 		
-		double startAngle = controlAngle - Math.PI/20;
-		double endAngle = controlAngle + Math.PI/20;
+//		double startAngle = controlAngle - Math.PI/20;
+//		double endAngle = controlAngle + Math.PI/20;
 /*		gl.glBegin(GL.GL_POLYGON);
 		gl.glColor4f(0.5f, 1.0f, 0.7f,0.1f);
 //			gl.glVertex3f((float)(controlRadius*cos),(float)(controlRadius*sin),0);
@@ -79,34 +79,42 @@ public class ControlLook implements Look <ControlEntity>
 				gl.glVertex3f((float)(mousePoint.x+width*Math.cos(a)),(float)(mousePoint.y+width*Math.sin(a)),0);
 		gl.glEnd();*/
 		
-		Collection <IPhysicalObject> targets = entity.getTargets().values();
+		Collection <IWorldEntity> targets = entity.getBattleInterface().getTargets().values();
 		
-		gl.glBegin(GL.GL_LINE_STRIP);
-		gl.glColor4f(1.0f, 0.5f, 0.5f, 1.0f);
+//		gl.glBegin(GL.GL_LINE_STRIP);
 		Vector2D targetLoc;
-		Vector2D controlLoc = entity.getArea().getRefPoint();
-		for(IPhysicalObject t : targets)
+		Vector2D controlLoc = new Vector2D(0,0);
+		for(IWorldEntity t : targets)
 		{
 			targetLoc = t.getArea().getRefPoint();
-			gl.glBegin(GL.GL_POLYGON);
+			gl.glColor4f(0.0f, 1.0f, 0f, 0.2f);
+//			gl.glBegin(GL.GL_POLYGON);
+			gl.glBegin(GL.GL_LINE_STRIP);
 			for(double a = 0; a <= 6; a ++)
 			{
-				gl.glVertex3f((float)((targetLoc.x-controlLoc.x) + 10*Math.cos(a*Angles.PI_div_3)), 
-							  (float)((targetLoc.y-controlLoc.y) + 10*Math.sin(a*Angles.PI_div_3)),1);
+				double size = (10/t.getBody().getVelocity().abs()+3);
+				gl.glVertex3f((float)((targetLoc.x()-controlLoc.x()) + size*Math.cos(a*Angles.PI_div_3)), 
+							  (float)((targetLoc.y()-controlLoc.y()) + size*Math.sin(a*Angles.PI_div_3)),1);
 			}
 			gl.glEnd();
 		}
 
 	}
 
-	public void init(GL gl, ControlEntity entity) {
+	public void init(GL gl, TempleController entity) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void destroy(GL gl, ControlEntity entity) {
+	public void destroy(GL gl, TempleController entity) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isCastsShadow() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import yarangi.graphics.quadraturin.SceneVeil;
-import yarangi.math.DistanceUtils;
+import yarangi.math.Geometry;
 
 public class PowerGrid
 {
@@ -25,7 +25,7 @@ public class PowerGrid
 		for(PowerConnector con1 : source.getConnectors())
 			for(PowerConnector con2 : target.getConnectors())
 			{
-				temp = DistanceUtils.calcDistanceSquare(con1.getLocation(), con2.getLocation());
+				temp = Geometry.calcHypotSquare(con1.getLocation(), con2.getLocation());
 				if(temp < min)
 				{
 					min = temp;

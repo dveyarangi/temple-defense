@@ -1,7 +1,8 @@
-package yarangi.game.temple.model.temple;
+package yarangi.game.temple.model.temple.structure;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * 

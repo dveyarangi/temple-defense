@@ -1,7 +1,7 @@
 package yarangi.game.temple.model.enemies;
 
 import yarangi.graphics.quadraturin.objects.Behavior;
-import yarangi.math.DistanceUtils;
+import yarangi.math.Geometry;
 import yarangi.math.Vector2D;
 
 public class ChasingBehavior implements Behavior <GenericEnemy> 
@@ -22,7 +22,7 @@ public class ChasingBehavior implements Behavior <GenericEnemy>
 		Vector2D targetLocation = bubble.getTarget().isAlive() ? bubble.getTarget().getArea().getRefPoint() : new Vector2D(0,0);  
 		Vector2D bubbleLocation = bubble.getArea().getRefPoint();
 		
-		double distanceToTarget = Math.sqrt(DistanceUtils.calcDistanceSquare(targetLocation, bubbleLocation));
+		double distanceToTarget = Geometry.calcHypot(targetLocation, bubbleLocation);
 
 		Vector2D forceDir = targetLocation.minus(bubbleLocation);
 		double a = Math.atan2(-forceDir.y, -forceDir.x);

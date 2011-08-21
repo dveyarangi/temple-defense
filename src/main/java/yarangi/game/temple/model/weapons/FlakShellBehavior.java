@@ -1,6 +1,6 @@
 package yarangi.game.temple.model.weapons;
 
-import yarangi.graphics.quadraturin.objects.SensorBehavior;
+import yarangi.graphics.quadraturin.objects.behaviors.SensorBehavior;
 import yarangi.math.Vector2D;
 import yarangi.spatial.ISpatialObject;
 import yarangi.spatial.SpatialIndexer;

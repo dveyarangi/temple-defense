@@ -3,9 +3,9 @@ package yarangi.game.temple.model.temple.platforms;
 import java.util.LinkedList;
 import java.util.List;
 
-import yarangi.game.temple.controllers.BattleInterface;
-import yarangi.game.temple.model.temple.Hexagon;
+import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.temple.Platform;
+import yarangi.game.temple.model.temple.structure.Hexagon;
 import yarangi.game.temple.model.weapons.Weapon;
 
 public class WeaponPlatform extends Platform 

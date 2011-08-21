@@ -1,7 +1,7 @@
 package yarangi.game.temple.model.temple.platforms;
 
-import yarangi.game.temple.model.temple.Hexagon;
 import yarangi.game.temple.model.temple.Platform;
+import yarangi.game.temple.model.temple.structure.Hexagon;
 
 public class EmptyPlatform extends Platform 
 {

@@ -8,7 +8,7 @@ import yarangi.spatial.ISpatialObject;
  * TODO: there should be entities that create entities on their own... 
  * 
  */
-public interface Fireable extends ISpatialObject
+public interface Fireable
 {
 	/**
 	 * Creates a new entity,

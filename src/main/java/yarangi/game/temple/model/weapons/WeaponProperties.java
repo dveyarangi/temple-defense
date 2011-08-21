@@ -29,6 +29,7 @@ public class WeaponProperties
 	 */
 	private double cannonTrackingHalfWidth;
 	
+	private double cannonEffectiveRange;
 	/**
 	 * Shell speed.
 	 */
@@ -40,6 +41,7 @@ public class WeaponProperties
 	private double projectileRange;
 	
 	private double projectileHitRadius;
+	
 	/**
 	 * Shell accuracy.
 	 * TODO: replace with trajectory function
@@ -49,7 +51,7 @@ public class WeaponProperties
 	private Damage damage;
 	
 	public WeaponProperties(double cannonTrackingSpeed, double cannonTrackingHalfWidth,
-			double cannonTrackingAccuracy, double cannonReloadingTime,
+			double cannonTrackingAccuracy, double cannonReloadingTime, double cannonEffectiveRange,
 			
 			double projectileSpeed, double projectileRange,
 			double projectileTrajectoryAccuracy,
@@ -62,6 +64,7 @@ public class WeaponProperties
 		this.cannonTrackingHalfWidth = cannonTrackingHalfWidth;
 		this.cannonTrackingAccuracy = cannonTrackingAccuracy;
 		this.cannonReloadingTime = cannonReloadingTime;
+		this.cannonEffectiveRange = cannonEffectiveRange;
 		this.projectileSpeed = projectileSpeed;
 		this.projectileRange = projectileRange;
 		this.projectileHitRadius = projectileHitRadius;
@@ -95,6 +98,10 @@ public class WeaponProperties
 		return projectileTrajectoryAccuracy;
 	}	
 	public Damage getDamage() { return damage; }
+
+	public double getEffectiveRange() {
+		return cannonEffectiveRange;
+	}
 	
 	
 }

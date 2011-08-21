@@ -13,7 +13,7 @@ public class ShieldBehavior implements Behavior<ShieldEntity>
 	{
 
 		
-		shield.getAABB().r = shield.getBattleInterface().getTempleRadius();
+//		shield.getAABB().r = shield.getBattleInterface().getTempleRadius();
 		
 		ForcePoint [] forcePoints = shield.getForcePoints();
 		

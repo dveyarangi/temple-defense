@@ -10,7 +10,22 @@ import static yarangi.math.Angles.*;
 
 public class BotLook implements Look<Bot> {
 
-	public void render(GL gl, double time, Bot entity, RenderingContext context) 
+	
+	private Vector2D [] tail;
+	
+	public BotLook(int tailSize)
+	{
+		tail = new Vector2D[tailSize];
+	}
+	
+	public void init(GL gl, Bot bot) {
+		
+		for(int idx = 0; idx < tail.length; idx ++)
+			tail[idx] = new Vector2D(bot.getArea().getRefPoint());
+		
+	}
+
+	public void render(GL gl, double time, Bot bot, RenderingContext context) 
 	{
 		
 /*		if(entity.isHighlighted())
@@ -19,32 +34,42 @@ public class BotLook implements Look<Bot> {
 			gl.glColor3f(0.0f, 1.0f, 0.2f);*/
 		
 		gl.glBegin(GL.GL_LINE_STRIP);
-		Vector2D [] tail = entity.getTail();
+		gl.glColor3f(0.0f,0.5f,1.0f);
 		for(int idx = 0; idx < tail.length; idx ++)
-			gl.glVertex3f((float)tail[idx].x, (float)tail[idx].y, 0f);
+			gl.glVertex3f((float)(tail[idx].x()-bot.getArea().getRefPoint().x()), 
+					      (float)(tail[idx].y()-bot.getArea().getRefPoint().y()), 0f);
 		gl.glEnd();
 
-		if(entity.getCurrTarget() == null)
+		if(bot.getCurrTarget() == null)
 			return;
-		Vector2D seg = entity.getCommandPlatform().getTempleStructure().toTempleCoordinates(entity.getCurrTarget().getLocation());
+		Vector2D seg = bot.getCurrTarget().getServicePoint();
 		gl.glBegin(GL.GL_POLYGON);
 		for(double angle = 0; angle < PI_2; angle += PI_div_10)
 		{
-			gl.glVertex3f((float)(seg.x + 0.1 * Math.cos(angle)), 
-						  (float)(seg.y + 0.1 * Math.sin(angle)), 0);
+			gl.glVertex3f((float)(seg.x() + 0.1 * Math.cos(angle)), 
+						  (float)(seg.y() + 0.1 * Math.sin(angle)), 0);
 		}
 		gl.glEnd();
-
-	}
-
-	public void init(GL gl, Bot entity) {
-		// TODO Auto-generated method stub
 		
+		for(int idx = tail.length-1; idx > 0; idx --)
+			tail[idx] = tail[idx-1];
+		
+		tail[0] = new Vector2D(bot.getArea().getRefPoint());
+
+
 	}
+
 
 	public void destroy(GL gl, Bot entity) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isCastsShadow()
+	{
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -1,17 +1,18 @@
 package yarangi.game.temple.model.weapons;
 
 import yarangi.game.temple.actions.Fireable;
-import yarangi.game.temple.ai.IIntellectCore;
-import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
-import yarangi.graphics.quadraturin.objects.CompositeSceneEntity;
-import yarangi.spatial.AABB;
+import yarangi.game.temple.ai.NetCore;
+import yarangi.game.temple.model.temple.BattleInterface;
+import yarangi.game.temple.model.temple.Serviceable;
+import yarangi.graphics.quadraturin.objects.WorldEntity;
+import yarangi.math.Vector2D;
 
-public abstract class Weapon extends CompositeSceneEntity implements Fireable
+public abstract class Weapon extends WorldEntity implements Fireable, Serviceable
 {
 
 	private static final long serialVersionUID = 1561840016371205291L;
 
-	private WeaponPlatform platform;
+//	private WeaponPlatform platform;
 	
 //	private Vector2D trackingPoint;
 	
@@ -19,32 +20,35 @@ public abstract class Weapon extends CompositeSceneEntity implements Fireable
 	
 	private WeaponProperties props;
 	
-	private IIntellectCore core;
+	private NetCore core;
 	
 //	private double reloadTime;
 	private double timeToReload = 0;
 	
-	private double absoluteAngle;
+//	private double absoluteAngle = 0;
 	
-	protected Weapon(WeaponPlatform platform, double x, double y, double a, WeaponProperties props) {
-		super(new AABB(x,y,a,0));
+	private BattleInterface battleInterface; 
 
-		this.platform = platform;
+	protected Weapon(BattleInterface battleInterface, WeaponProperties props) {
+		
+		this.battleInterface = battleInterface;
 		this.props = props;
-		setBehavior(new WeaponBehavior());
 	}
-	public WeaponPlatform getPlatform() { return platform; }
-	public void setPlatform(WeaponPlatform platform) { this.platform = platform; }
+//	public WeaponPlatform getPlatform() { return platform; }
+//	public void setPlatform(WeaponPlatform platform) { this.platform = platform; }
 	
 //	public Vector2D getTrackingPoint() { return trackingPoint; }
 	public double getTrackingSpeed() { return props.getCannonTrackingSpeed(); }
 	
-	public void setA(double a) 
-	{ 
-		this.absoluteAngle = a + platform.getArea().getOrientation() + platform.getBattleInterface().getAbsoluteAngle();
-	}
+//	public void setA(double a) 
+//	{ 
+//		getArea().setOrientation(a);
+//		this.absoluteAngle = a + platform.getArea().getOrientation() + platform.getBattleInterface().getAbsoluteAngle();
+//	}
 	
-	public double getAbsoluteAngle() { return absoluteAngle; }
+//	public double getA() { return getArea().getOrientation(); }
+	
+//	public double getAbsoluteAngle() { return absoluteAngle; }
 
 	public boolean isReloaded()
 	{
@@ -63,8 +67,15 @@ public abstract class Weapon extends CompositeSceneEntity implements Fireable
 	
 	public WeaponProperties getWeaponProperties() { return props; }
 	
+	public NetCore getCore() { return core; }
+
+	public BattleInterface getBattleInterface() {
+		return battleInterface;
+	}
 	@Override
-	public boolean isPickable() { return false; }
-	
-	public IIntellectCore getCore() { return core; }
+	public Vector2D getServicePoint()
+	{
+		return getArea().getRefPoint();
+	}
+
 }

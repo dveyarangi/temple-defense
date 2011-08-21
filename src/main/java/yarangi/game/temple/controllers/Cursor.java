@@ -1,6 +1,5 @@
 package yarangi.game.temple.controllers;
 
-public interface ConstructionInterface 
-{
+public class Cursor {
 
 }

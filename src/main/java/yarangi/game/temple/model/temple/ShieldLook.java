@@ -13,7 +13,7 @@ public class ShieldLook implements Look <ShieldEntity>
 	{
 
 	
-		for(ForcePoint forcePoint : shield.getForcePoints())
+/*		for(ForcePoint forcePoint : shield.getForcePoints())
 		{
 			if(forcePoint == null)
 				continue;
@@ -26,7 +26,7 @@ public class ShieldLook implements Look <ShieldEntity>
 				gl.glVertex3f((float)(shieldRadius*Math.cos(a)), (float)(shieldRadius*Math.sin(a)), 0);
 			gl.glEnd();
 			
-		}
+		}*/
 
 	}
 

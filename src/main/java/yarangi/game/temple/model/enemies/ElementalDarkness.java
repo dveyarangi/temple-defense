@@ -24,7 +24,7 @@ public class ElementalDarkness extends GenericEnemy
 		double speed = RandomUtil.getRandomDouble(0.1)+0.2;
 		double ang = Angles.toRadians(a);
 		
-		this.setVelocity(speed*Math.cos(ang), speed*Math.sin(ang));
+//		this.setVelocity(speed*Math.cos(ang), speed*Math.sin(ang));
 		
 //		bubble = new BezierBubble(new Vector2D(0,0), SIZE, 8);
 		
@@ -37,6 +37,11 @@ public class ElementalDarkness extends GenericEnemy
 	public void setImpactWith(IPhysicalObject arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public double getMaxSpeed() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

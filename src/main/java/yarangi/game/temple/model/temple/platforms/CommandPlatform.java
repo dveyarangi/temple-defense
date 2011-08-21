@@ -1,10 +1,10 @@
 package yarangi.game.temple.model.temple.platforms;
 
-import yarangi.game.temple.controllers.BattleInterface;
-import yarangi.game.temple.model.temple.Hexagon;
+import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.temple.Platform;
 import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.game.temple.model.temple.TempleStructure;
+import yarangi.game.temple.model.temple.structure.Hexagon;
 import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
@@ -30,7 +30,7 @@ public class CommandPlatform extends Platform implements BattleInterface
 
 	public Vector2D acquireTrackPoint(Weapon weapon) 
 	{
-		return temple.getController().acquireTrackPoint(weapon);
+		return weapon.getBattleInterface().acquireTrackPoint(weapon);
 	}
 	
 	public double getAbsoluteAngle() {
@@ -39,7 +39,7 @@ public class CommandPlatform extends Platform implements BattleInterface
 	
 	public Vector2D getAbsoluteLocation(double x, double y)
 	{
-		return new Vector2D(0,0);
+		throw new IllegalStateException("This method is not yet implemented.");
 	}
 
 
