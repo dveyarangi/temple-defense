@@ -83,7 +83,6 @@ public class KolbasaFactory
 			perimeterDir = nextDir.minus( currDir ).normalize();
 			currPoint = perimeterDir.multiply( radius ).add(line.getPoint(idx+1)).substract(refPoint);
 			poly.add( currPoint );
-			System.out.println(currPoint);
 		}
 		
 

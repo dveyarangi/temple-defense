@@ -50,5 +50,7 @@ public class MinigunBurstLook implements Look <Projectile>
 		// TODO Auto-generated method stub
 		return false;
 	}
+	@Override
+	public float getPriority() { return 0; }
 
 }

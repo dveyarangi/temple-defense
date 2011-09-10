@@ -15,14 +15,14 @@ import yarangi.math.FastMath;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 
-public class SwarmPathingBehavior implements IBehaviorState<Swarm> 
+public class PathingBehavior implements IBehaviorState<Swarm> 
 {
 	
 	private int flowRadius;
 	   ExecutorService executor = Executors.newFixedThreadPool(3);
 
 	FutureTask<String> future = null;
-	public SwarmPathingBehavior(int flowRadius)
+	public PathingBehavior(int flowRadius)
 	{
 		this.flowRadius = flowRadius;
 	}

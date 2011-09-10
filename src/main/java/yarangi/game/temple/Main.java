@@ -12,9 +12,6 @@ public class Main
 		// creating frame: 
 		Swing2DContainer container = new Swing2DContainer();
 		
-		// creating test scene:
-//	    int playgroundId = container.addScene(new Playground(container.getEventManager()));
-	    
 	    container.registerPlugin(new ShaderFactory());
 	    
 	    // starting engine

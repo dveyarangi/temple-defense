@@ -2,15 +2,15 @@ package yarangi.game.temple.model.temple;
 
 import javax.media.opengl.GL;
 
-import yarangi.game.temple.model.enemies.swarm.SwarmAgent;
+import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.CircleLightLook;
 import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.ISensor;
-import yarangi.graphics.quadraturin.objects.IWorldEntity;
-import yarangi.graphics.quadraturin.objects.WorldEntity;
+import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.math.Angles;
 import yarangi.math.Geometry;
 import yarangi.math.Vector2D;
@@ -23,10 +23,6 @@ public class ObserverLook extends CircleLightLook<ObserverEntity>
 
 	public void render(GL gl, double time, ObserverEntity entity, RenderingContext context) 
 	{	
-
-		ISensor <IWorldEntity>sensor = entity.getSensor();
-		if(sensor == null)
-			return;
 		super.render(gl, time, entity, context);
 
 /*		Color color = getColor();

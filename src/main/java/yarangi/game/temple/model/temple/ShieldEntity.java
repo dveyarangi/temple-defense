@@ -1,11 +1,11 @@
 package yarangi.game.temple.model.temple;
 
-import yarangi.graphics.quadraturin.objects.WorldEntity;
+import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
 
-public class ShieldEntity extends WorldEntity implements IPhysicalObject 
+public class ShieldEntity extends Entity implements IPhysicalObject 
 {
 
 	private static final long serialVersionUID = 9214872976966945125L;

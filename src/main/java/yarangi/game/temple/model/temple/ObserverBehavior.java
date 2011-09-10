@@ -2,14 +2,12 @@ package yarangi.game.temple.model.temple;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Vector;
 
 import yarangi.game.temple.ai.IFeedbackBeacon;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.ISensor;
-import yarangi.graphics.quadraturin.objects.IWorldEntity;
-import yarangi.graphics.quadraturin.objects.WorldEntity;
+import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Vector2D;
 
 public class ObserverBehavior implements Behavior <ObserverEntity>
@@ -36,12 +34,12 @@ public class ObserverBehavior implements Behavior <ObserverEntity>
 		Set <IFeedbackBeacon> trackList = new HashSet <IFeedbackBeacon> ();
 		Set <IFeedbackBeacon> prevTrack = entity.getTrackedObjects();
 		
-		ISensor <IWorldEntity> sensor = entity.getSensor();
+		ISensor <IEntity> sensor = entity.getSensor();
 //		System.out.println(getSensedObjects().size());
 		IFeedbackBeacon feedback;
 		
 		// updating list of tracked objects:
-		for(IWorldEntity object : sensor.getEntities())
+		for(IEntity object : sensor.getEntities())
 		{
 
 //			System.out.println(object);
@@ -62,11 +60,10 @@ public class ObserverBehavior implements Behavior <ObserverEntity>
 			}
 			else
 			{
-			if(object.getBehavior() != null &&
-			  !(object instanceof ObserverEntity) && !(object instanceof TempleEntity))
-			{
-				entity.getController().getBattleInterface().objectObserved(object);
-			}
+				if((object instanceof IEntity) && !(object instanceof ObserverEntity) && !(object instanceof TempleEntity))
+				{
+					entity.getController().getBattleInterface().objectObserved((IEntity)object);
+				}
 			}
 		}
 		

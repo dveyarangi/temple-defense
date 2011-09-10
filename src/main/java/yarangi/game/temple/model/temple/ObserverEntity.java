@@ -7,9 +7,9 @@ import yarangi.game.temple.ai.IFeedbackBeacon;
 import yarangi.game.temple.controllers.TempleController;
 import yarangi.game.temple.model.temple.structure.Connectable;
 import yarangi.game.temple.model.temple.structure.PowerConnector;
-import yarangi.graphics.quadraturin.objects.WorldEntity;
+import yarangi.graphics.quadraturin.objects.Entity;
 
-public class ObserverEntity extends WorldEntity implements Connectable 
+public class ObserverEntity extends Entity implements Connectable 
 {
 
 	private PowerConnector [] connectors;

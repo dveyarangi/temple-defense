@@ -5,7 +5,7 @@ import yarangi.game.temple.controllers.TempleController;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.objects.Dummy;
-import yarangi.graphics.quadraturin.objects.IWorldEntity;
+import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.simulations.Body;
 import yarangi.math.Vector2D;
@@ -23,8 +23,6 @@ public class TempleEntity extends Dummy implements Serviceable
 	
 	private TempleController controller;
 	
-	private Vector2D velocity = new Vector2D(0,0);
-
 	
 	ObserverEntity highlight;
 	
@@ -38,7 +36,7 @@ public class TempleEntity extends Dummy implements Serviceable
 		highlight.setBehavior(new ObserverBehavior(0,0,null,0));
 		
 		highlight.setArea(new AABB(0, 0, 30, 0));
-		highlight.setSensor(new Sensor(512, filter));
+		highlight.setSensor(new Sensor(512, 3, filter, true));
 		highlight.setLook(new ObserverLook(new Color(0.6f, 0.5f, 1.0f, 1)));
 		highlight.setBody(new Body());
 		playground.addEntity(highlight);
@@ -67,7 +65,7 @@ public class TempleEntity extends Dummy implements Serviceable
 		return null;
 	}
 	
-	public class HighLightFilter implements ISpatialFilter <IWorldEntity>
+	public class HighLightFilter implements ISpatialFilter <IEntity>
 	{
 		private ISpatialObject highlighted;
 		public void setHighlighted(ISpatialObject object)
@@ -75,7 +73,7 @@ public class TempleEntity extends Dummy implements Serviceable
 			this.highlighted = object;
 		}
 		@Override
-		public boolean accept(IWorldEntity entity) {
+		public boolean accept(IEntity entity) {
 			return !(entity instanceof Projectile) && entity != highlighted;
 		}
 		

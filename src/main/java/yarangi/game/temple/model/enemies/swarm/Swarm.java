@@ -8,19 +8,21 @@ import javax.media.opengl.GL;
 
 import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.EffectUtils;
+import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.game.temple.model.terrain.Matter;
+import yarangi.game.temple.model.terrain.TerrainChunk;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.Scene;
-import yarangi.graphics.quadraturin.objects.WorldEntity;
+import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.FastMath;
 import yarangi.math.Vector2D;
 
-public class Swarm extends WorldEntity 
+public class Swarm extends Entity 
 {
 	private static final int WSIZE = 120;
 	
@@ -106,7 +108,7 @@ public class Swarm extends WorldEntity
 						return true;
 					}
 					else
-					if( target instanceof Matter)
+					if( target instanceof TerrainChunk)
 					{
 						setUnpassable(source);
 						source.getIntegrity().hit(MATTER_DAMAGE);
@@ -209,20 +211,20 @@ public class Swarm extends WorldEntity
 		int x = toBeaconIdx(agent.getArea().getRefPoint().x());
 		int y = toBeaconIdx(agent.getArea().getRefPoint().y());
 		
-		SwarmBeacon beacon = beacons[x][y];
+		Beacon beacon = beacons[x][y];
 		beacon.update(damage);
 	}
 	public void setUnpassable(SwarmAgent agent) {
 		int x = toBeaconIdx(agent.getArea().getRefPoint().x());
 		int y = toBeaconIdx(agent.getArea().getRefPoint().y());
 		
-		SwarmBeacon beacon = beacons[x][y];
+		Beacon beacon = beacons[x][y];
 		beacon.setUnpassable();
 	}
 
 
 	
-	public static class AStarNode extends SwarmBeacon
+	public static class AStarNode extends Beacon
 	{
 		public double g;
 		public double h;

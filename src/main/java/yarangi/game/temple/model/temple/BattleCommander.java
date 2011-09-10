@@ -15,9 +15,9 @@ import yarangi.game.temple.ai.IFeedbackBeacon;
 import yarangi.game.temple.ai.IntellectCore;
 import yarangi.game.temple.ai.LinearFeedbackBeacon;
 import yarangi.game.temple.controllers.TempleController;
-import yarangi.game.temple.model.enemies.swarm.SwarmAgent;
+import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.temple.model.weapons.Weapon;
-import yarangi.graphics.quadraturin.objects.IWorldEntity;
+import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Geometry;
 import yarangi.math.Vector2D;
 
@@ -30,9 +30,9 @@ public class BattleCommander implements BattleInterface
 	 * List of currently selected weapons.
 	 */
 	private List <Weapon> fireables = new ArrayList <Weapon> ();
-	private Set <IWorldEntity> observedEntities = new HashSet <IWorldEntity> ();
+	private Set <IEntity> observedEntities = new HashSet <IEntity> ();
 	
-	private Map <Fireable, IWorldEntity> targets = new HashMap <Fireable, IWorldEntity> ();
+	private Map <Fireable, IEntity> targets = new HashMap <Fireable, IEntity> ();
 	
 //	private Vector2D guarded = new Vector2D(0,0);
 	
@@ -49,13 +49,13 @@ public class BattleCommander implements BattleInterface
 		return guarded;
 	}*/
 
-	public IWorldEntity getTarget(Fireable fireable) 
+	public IEntity getTarget(Fireable fireable) 
 	{
 		return targets.get(fireable);
 	}
 	
 	@Override
-	public Map <Fireable, IWorldEntity> getTargets()
+	public Map <Fireable, IEntity> getTargets()
 	{
 		return targets;
 	}
@@ -69,7 +69,7 @@ public class BattleCommander implements BattleInterface
 	@Override
 	public Vector2D acquireTrackPoint(Weapon fireable)
 	{
-		IWorldEntity target = getTarget(fireable);
+		IEntity target = getTarget(fireable);
 		if(target == null)
 			return null;
 		
@@ -89,7 +89,7 @@ public class BattleCommander implements BattleInterface
 			found[i] = false;
 //		Vector2D cursorLoc = cursor.getArea().getRefPoint();
 		Vector2D objectLoc;
-		for(IWorldEntity object : observedEntities)
+		for(IEntity object : observedEntities)
 		{
 
 			objectLoc = object.getArea().getRefPoint();
@@ -115,7 +115,7 @@ public class BattleCommander implements BattleInterface
 			}*/
 		}
 		
-		Iterator <IWorldEntity> it;
+		Iterator <IEntity> it;
 		Weapon fireable;
 		for(int idx = 0; idx < fireables.size(); idx ++)
 		{
@@ -131,7 +131,7 @@ public class BattleCommander implements BattleInterface
 			targets.remove(fireable);
 			while(it.hasNext())
 			{
-				IWorldEntity o = it.next();
+				IEntity o = it.next();
 				
 				if(!(o instanceof SwarmAgent))
 					continue;
@@ -166,7 +166,7 @@ public class BattleCommander implements BattleInterface
 		observedEntities.clear();
 	}
 	@Override
-	public void objectObserved(IWorldEntity object)
+	public void objectObserved(IEntity object)
 	{
 		
 		this.observedEntities.add(object);

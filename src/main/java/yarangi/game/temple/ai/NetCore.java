@@ -13,7 +13,7 @@ import yarangi.ai.nn.numeric.Normalizer;
 import yarangi.ai.nn.numeric.NumericAF;
 import yarangi.ai.nn.numeric.ScalingNormalizer;
 import yarangi.ai.nn.numeric.TanHAF;
-import yarangi.graphics.quadraturin.objects.IWorldEntity;
+import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Vector2D;
 
 /**
@@ -98,7 +98,7 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 		return false;
 	}
 
-	public Vector2D pickTrackPoint(Vector2D sourceLocation, Vector2D projectileVelocity, IWorldEntity target) 
+	public Vector2D pickTrackPoint(Vector2D sourceLocation, Vector2D projectileVelocity, IEntity target) 
 	{
 //		System.out.println(sourceLocation);
 		Vector2D relativeTarget = target.getArea().getRefPoint().minus(sourceLocation);

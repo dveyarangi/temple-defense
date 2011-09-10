@@ -93,5 +93,7 @@ public class CrystalMatterLook implements Look <CrystalMatter>
 		// TODO Auto-generated method stub
 		return false;
 	}
+	@Override
+	public float getPriority() { return 1; }
 
 }

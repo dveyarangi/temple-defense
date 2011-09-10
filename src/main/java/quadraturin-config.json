@@ -45,19 +45,30 @@
 		"scenes" : [
 			{
 				"name" : "playground",
-				"sceneClass" : "yarangi.game.temple.Playground",
 				"width" : 1000,
 				"height" : 1000,
 				"frameLength" : 100,
-		    	"engineClass" : "yarangi.graphics.quadraturin.simulations.StupidInteractions",
 			    "viewpoint" : { 
 			    	"centerx"  : 0.0,
 			    	"centery"  : 0.0,
 			    	"maxZoom"  : 2,
 			    	"initZoom" : 1,
 			    	"minZoom"  : 0.1
-			    }
+			    },
 			    
+				"sceneClass" : "yarangi.game.temple.Playground",
+				
+		    	"engine" : {
+		    		"engineClass" : "yarangi.graphics.quadraturin.simulations.StupidInteractions",
+		    		"colliderClass" : "yarangi.graphics.quadraturin.simulations.RoughCollider"
+	    		},
+		    		
+		    	"terrain" : {
+		    	    "terrainClass"  : "yarangi.graphics.quadraturin.terrain.GridyTerrainMap",
+		    	    "lookClass"     : "yarangi.game.temple.model.terrain.GridyTerrainLook",
+		    	    "behaviorClass" : "yarangi.game.temple.model.terrain.GridyTerrainBehavior",
+		    	    "cellsize" : 1
+	    	    }
 			}
 		]
 	}

@@ -5,14 +5,14 @@ import java.util.Collection;
 import javax.media.opengl.GL;
 
 import yarangi.graphics.quadraturin.RenderingContext;
-import yarangi.graphics.quadraturin.objects.IWorldEntity;
+import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 
 public class ControlLook implements Look <TempleController> 
 {
-
+	
 	public void render(GL gl, double time, TempleController entity, RenderingContext context) 
 	{
 		if(context.isForEffect())
@@ -79,12 +79,12 @@ public class ControlLook implements Look <TempleController>
 				gl.glVertex3f((float)(mousePoint.x+width*Math.cos(a)),(float)(mousePoint.y+width*Math.sin(a)),0);
 		gl.glEnd();*/
 		
-		Collection <IWorldEntity> targets = entity.getBattleInterface().getTargets().values();
+		Collection <IEntity> targets = entity.getBattleInterface().getTargets().values();
 		
 //		gl.glBegin(GL.GL_LINE_STRIP);
 		Vector2D targetLoc;
 		Vector2D controlLoc = new Vector2D(0,0);
-		for(IWorldEntity t : targets)
+		for(IEntity t : targets)
 		{
 			targetLoc = t.getArea().getRefPoint();
 			gl.glColor4f(0.0f, 1.0f, 0f, 0.2f);
@@ -116,5 +116,8 @@ public class ControlLook implements Look <TempleController>
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public float getPriority() { return 0; }
 
 }

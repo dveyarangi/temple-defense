@@ -15,7 +15,7 @@ public class SwarmDebugOverlay implements Look <Swarm>
 		
 	}
 	
-	private float toAlpha(SwarmBeacon beacon)
+	private float toAlpha(Beacon beacon)
 	{
 		return beacon.getDangerFactor() >= Swarm.MAX_DANGER_FACTOR ? 1 :(float)((beacon.getDangerFactor()))/(float)Swarm.MAX_DANGER_FACTOR;
 
@@ -48,7 +48,7 @@ public class SwarmDebugOverlay implements Look <Swarm>
 				{
 					x = (float)entity.toBeaconCoord(i);//+2f*size;
 				
-				SwarmBeacon beacon = entity.getBeacons()[i][j];  
+				Beacon beacon = entity.getBeacons()[i][j];  
 				                                                 
 				float curr = toAlpha(beacon);
 //				float topLeft     = toAlpha(entity.getBeacons()[i-1][j+1]);
@@ -104,14 +104,14 @@ public class SwarmDebugOverlay implements Look <Swarm>
 					gl.glColor4f(0.7f+bottom, 0, 0.3f, bottom);
 					gl.glVertex2f(x, y-size);
 					gl.glEnd();
-/*					Vector2D flow = beacon.getFlow().mul(10);
+					Vector2D flow = beacon.getFlow().mul(10);
 					Vector2D l = beacon.getFlow().left();
 					gl.glColor4f(0,1,1,0.25f);
 					gl.glBegin(GL.GL_TRIANGLES);
 					gl.glVertex3f((float)(x+l.x()), (float)(y+l.y()), 0);
 					gl.glVertex3f((float)(x+flow.x()), (float)(y+flow.y()), 0);
 					gl.glVertex3f((float)(x-l.x()), (float)(y-l.y()), 0);
-					gl.glEnd();*/
+					gl.glEnd();
 					
 					if(beacon.isUnpassable())
 					{
@@ -143,5 +143,7 @@ public class SwarmDebugOverlay implements Look <Swarm>
 
 	@Override
 	public boolean isCastsShadow() { return false; }
+	@Override
+	public float getPriority() { return 1; }
 
 }

@@ -2,7 +2,7 @@ package yarangi.game.temple.model.enemies;
 
 import javax.media.opengl.GL;
 
-import yarangi.game.temple.model.enemies.swarm.SwarmAgent;
+import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
@@ -16,8 +16,8 @@ public class ElementalVoidLook implements Look <SwarmAgent>
 		
 //		System.out.println("here");
 //		Integrity integrity = entity.getIntegrity();
-		gl.glColor4f(0.0f, 0.0f, 0.0f, 1);
-//		gl.glColor4f(0.5f, 0.25f, 0.0f, 1);
+//		gl.glColor4f(0.2f, 0.1f, 0.1f, 1);
+		gl.glColor4f(0.5f, 0.25f, 0.0f, 1);
 		gl.glBegin(GL.GL_POLYGON);
 		double rad = entity.getArea().getMaxRadius();
 		for(double a = 0; a <= Angles.PI_2; a += Angles.PI_div_6)
@@ -38,6 +38,8 @@ public class ElementalVoidLook implements Look <SwarmAgent>
 	}
 
 	@Override
-	public boolean isCastsShadow() { return false; }
+	public boolean isCastsShadow() { return true; }
+	@Override
+	public float getPriority() { return 0; }
 
 }

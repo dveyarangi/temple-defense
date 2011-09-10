@@ -2,6 +2,7 @@ package yarangi.game.temple.controllers;
 
 import javax.media.opengl.GL;
 
+import yarangi.game.temple.actions.DefaultActionFactory;
 import yarangi.game.temple.ai.IntellectCore;
 import yarangi.game.temple.model.temple.BattleCommander;
 import yarangi.game.temple.model.temple.BattleInterface;
@@ -17,8 +18,8 @@ import yarangi.graphics.quadraturin.actions.IActionController;
 import yarangi.graphics.quadraturin.events.CursorEvent;
 import yarangi.graphics.quadraturin.events.CursorListener;
 import yarangi.graphics.quadraturin.objects.IVeilEntity;
-import yarangi.graphics.quadraturin.objects.IWorldEntity;
-import yarangi.graphics.quadraturin.objects.WorldEntity;
+import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
@@ -26,7 +27,7 @@ import yarangi.spatial.Area;
 import yarangi.spatial.IAreaChunk;
 import yarangi.spatial.ISpatialSensor;
 
-public class TempleController extends WorldEntity implements CursorListener
+public class TempleController extends Entity implements CursorListener
 {
 
 	private static final long serialVersionUID = -2094957235603223096L;
@@ -61,7 +62,7 @@ public class TempleController extends WorldEntity implements CursorListener
 
 		cursor = new ObserverEntity(this);		
 		cursor.setBehavior(new ObserverBehavior(0, 1, null, 0));
-		cursor.setSensor(new Sensor(128, null));
+		cursor.setSensor(new Sensor(64, 1, null, true));
 		cursor.setLook(new ObserverLook(new Color(1.0f,1.0f,0.5f,1f)));
 		cursor.setArea(new AABB(0, 0, 10, 0));
 		
@@ -70,7 +71,10 @@ public class TempleController extends WorldEntity implements CursorListener
 		battleInterface = new BattleCommander(this, core);
 		structureInterface = new StructureInterface();
 		
-		actionController =new OrdersActionController(scene);
+		actionController = new OrdersActionController();
+		DefaultActionFactory.fillNavigationActions(scene, actionController);
+		
+		// TODO: control modes
 		scene.setActionController(actionController);
 
 	}
@@ -123,36 +127,34 @@ public class TempleController extends WorldEntity implements CursorListener
 	}
 
 
-	public void objectObserved(WorldEntity object) { battleInterface.objectObserved(object); }
+	public void objectObserved(Entity object) { battleInterface.objectObserved(object); }
 
-	class LOSSensor implements ISpatialSensor <IWorldEntity> 
+	class LOSSensor implements ISpatialSensor <IEntity> 
 	{
-		private boolean noLOS = true;
-		public void resetSensor()
-		{
-			noLOS = true;
-		}
-		public boolean hasLOS()
-		{
-			return noLOS;
-		}
+		private boolean hasLOS = true;
+		public boolean hasLOS() { return hasLOS; }
+
 		@Override
-		public boolean objectFound(IAreaChunk chunk, IWorldEntity object)
+		public boolean objectFound(IAreaChunk chunk, IEntity object)
 		{
 			if(object instanceof Matter)
 			{
-				noLOS = false;
+				hasLOS = false;
 				return true;
 			}
 			return false;
 		}
+		
+		@Override
+		public void clear() { hasLOS = true; }
 		
 	}
 
 	public boolean testLOS(double x, double y, double x2, double y2)
 	{
 		LOSSensor sensor = new LOSSensor();
-		scene.getEntityIndex().query( sensor, x, y, x2-x, y2-y );
+//		scene.getEntityIndex().query( sensor, x, y, x2-x, y2-y );
+		scene.getWorldVeil().getTerrain().query( sensor, x, y, x2-x, y2-y );
 		return sensor.hasLOS();
 	}
 

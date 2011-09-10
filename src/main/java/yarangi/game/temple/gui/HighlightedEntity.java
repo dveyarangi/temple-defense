@@ -5,12 +5,12 @@ import java.util.Map;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.ICircleLightEntity;
 import yarangi.graphics.quadraturin.objects.IVeilEntity;
-import yarangi.graphics.quadraturin.objects.WorldEntity;
+import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.spatial.Area;
 import yarangi.spatial.IAreaChunk;
 import yarangi.spatial.ISpatialObject;
 
-public class HighlightedEntity extends WorldEntity implements ICircleLightEntity
+public class HighlightedEntity extends Entity implements ICircleLightEntity
 {
 
 	private Map<IAreaChunk, ISpatialObject> entities;

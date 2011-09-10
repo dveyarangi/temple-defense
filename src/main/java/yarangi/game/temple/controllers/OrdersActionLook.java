@@ -3,7 +3,7 @@ package yarangi.game.temple.controllers;
 import javax.media.opengl.GL;
 
 import yarangi.graphics.quadraturin.RenderingContext;
-import yarangi.graphics.quadraturin.objects.IWorldEntity;
+import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
@@ -21,9 +21,9 @@ public class OrdersActionLook implements Look <OrdersActionController>
 	@Override
 	public void render(GL gl, double time, OrdersActionController entity, RenderingContext context)
 	{
-		IWorldEntity dragged = entity.getDragged();
+		IEntity dragged = entity.getDragged();
 		Vector2D target = entity.getTarget();
-		IWorldEntity hovered = entity.getHovered();
+		IEntity hovered = entity.getHovered();
 		if(hovered != null)
 		{
 			gl.glColor4f( 0, 1, 0, 0.4f );
@@ -65,5 +65,7 @@ public class OrdersActionLook implements Look <OrdersActionController>
 		// TODO Auto-generated method stub
 		return false;
 	}
+	@Override
+	public float getPriority() { return 0; }
 
 }

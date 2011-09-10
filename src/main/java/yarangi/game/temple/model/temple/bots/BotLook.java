@@ -71,5 +71,7 @@ public class BotLook implements Look<Bot> {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	@Override
+	public float getPriority() { return 0; }
 
 }

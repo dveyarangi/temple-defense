@@ -1,11 +1,12 @@
-package yarangi.game.temple.model.enemies.swarm;
+package yarangi.game.temple.model.enemies.swarm.agents;
 
 import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.Damageable;
 import yarangi.game.temple.model.Integrity;
-import yarangi.graphics.quadraturin.objects.WorldEntity;
+import yarangi.game.temple.model.enemies.swarm.Swarm;
+import yarangi.graphics.quadraturin.objects.Entity;
 
-public class SwarmAgent extends WorldEntity implements Damageable
+public class SwarmAgent extends Entity implements Damageable
 {
 	private Swarm swarm;
 	

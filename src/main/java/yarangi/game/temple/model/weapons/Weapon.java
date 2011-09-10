@@ -4,10 +4,10 @@ import yarangi.game.temple.actions.Fireable;
 import yarangi.game.temple.ai.NetCore;
 import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.temple.Serviceable;
-import yarangi.graphics.quadraturin.objects.WorldEntity;
+import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.math.Vector2D;
 
-public abstract class Weapon extends WorldEntity implements Fireable, Serviceable
+public abstract class Weapon extends Entity implements Fireable, Serviceable
 {
 
 	private static final long serialVersionUID = 1561840016371205291L;

@@ -28,7 +28,7 @@ public class MatterLook implements Look <Matter>
 		PolyPoint start, curr = start = polyit.next();
 		
 		gl.glBegin(GL.GL_POLYGON);
-		gl.glColor4f(0.1f,0.2f,0.1f, 1.0f);
+		gl.glColor4f(0.5f,0.2f,0.2f, 1.0f);
 		gl.glVertex3f((float)curr.x(), (float)curr.y(), 0);
 		while(polyit.hasNext())
 		{
@@ -48,5 +48,7 @@ public class MatterLook implements Look <Matter>
 
 	@Override
 	public boolean isCastsShadow() { return true; }
+	@Override
+	public float getPriority() { return 1; }
 	
 }

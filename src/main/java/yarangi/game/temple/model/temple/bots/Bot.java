@@ -2,9 +2,9 @@ package yarangi.game.temple.model.temple.bots;
 
 import yarangi.game.temple.model.temple.Serviceable;
 import yarangi.game.temple.model.temple.StructureInterface;
-import yarangi.graphics.quadraturin.objects.WorldEntity;
+import yarangi.graphics.quadraturin.objects.Entity;
 
-public class Bot extends WorldEntity
+public class Bot extends Entity
 {
 
 	private static final long serialVersionUID = -19945327419649387L;

@@ -3,7 +3,7 @@ package yarangi.game.temple.model.weapons;
 import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
-import yarangi.graphics.quadraturin.objects.WorldEntity;
+import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;

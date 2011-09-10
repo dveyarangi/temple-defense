@@ -22,7 +22,7 @@ public class Minigun extends Weapon
 	public static final double trackingSpeed = BASE_TRACKING_SPEED;
 	public static final double effectiveRangeSquare = 40000;
 	public static final double maxRangeSquare = 200;
-	public static final double RELOADING_TIME = 10;
+	public static final double RELOADING_TIME = 5;
 	public static final double ACCURACY = 0.2;
 	public static final Damage DAMAGE = new Damage(5, 0.1, 0, 0);
 	private static final WeaponProperties PROPS = new WeaponProperties(

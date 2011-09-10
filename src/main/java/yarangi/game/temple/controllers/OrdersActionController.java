@@ -2,41 +2,36 @@ package yarangi.game.temple.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.media.opengl.GL;
 
-import yarangi.game.temple.actions.DefaultActionFactory;
 import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.quadraturin.RenderingContext;
-import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.actions.IAction;
 import yarangi.graphics.quadraturin.actions.IActionController;
 import yarangi.graphics.quadraturin.events.CursorEvent;
 import yarangi.graphics.quadraturin.events.UserActionEvent;
-import yarangi.graphics.quadraturin.objects.IWorldEntity;
+import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Vector2D;
 import yarangi.spatial.ISpatialFilter;
 
 public class OrdersActionController implements IActionController
 {
-	private Scene scene;
-	
 	Map <String, IAction> actions = new HashMap <String, IAction> ();
 	
-	private IWorldEntity dragged = null;
-	private IWorldEntity hovered = null;
+	private IEntity dragged = null;
+	private IEntity hovered = null;
 
 	
 	private Vector2D target;
 	
 	private Look <OrdersActionController> look = new OrdersActionLook();
 	
-	private ISpatialFilter <IWorldEntity> filter = new ISpatialFilter <IWorldEntity> ()
+	private ISpatialFilter <IEntity> filter = new ISpatialFilter <IEntity> ()
 	{
 		@Override
-		public boolean accept(IWorldEntity entity)
+		public boolean accept(IEntity entity)
 		{
 			if(entity instanceof Weapon)
 			{
@@ -45,13 +40,12 @@ public class OrdersActionController implements IActionController
 			}
 			return false;
 		}
-		
+	
 	};
 
 	
-	public OrdersActionController(Scene scene)
+	public OrdersActionController()
 	{
-		DefaultActionFactory.fillNavigationActions(scene, actions, scene.getViewPoint());
 //		actions.put("cursor-moved", temple.getController());
 		actions.put("mouse-drag", new IAction()
 		{
@@ -98,30 +92,17 @@ public class OrdersActionController implements IActionController
 				addEntity(sensor2);
 			}
 		})*/
-		
-		this.scene = scene;
 	}
 	
 	
 	@Override
-	public Set<String> getActionIds()
+	public Map<String, IAction> getActions()
 	{
-		return actions.keySet();
+		return actions;
 	}
-	
-	public void onUserAction(UserActionEvent event) 
-	{
-		IAction action = actions.get(event.getActionId());
-//		System.out.println("picked entity: " + event.getEntity());
-		if(action == null)
-			throw new IllegalArgumentException("Action id " + event.getActionId() + " is not defined." );
-		
-		action.act(event);
-	}
-
 
 	@Override
-	public ISpatialFilter<IWorldEntity> getPickingFilter() { return filter; }
+	public ISpatialFilter<IEntity> getPickingFilter() { return filter; }
 
 
 	@Override
@@ -130,9 +111,9 @@ public class OrdersActionController implements IActionController
 		hovered = event.getEntity();
 	}
 
-	public IWorldEntity getDragged() { return dragged; }
+	public IEntity getDragged() { return dragged; }
 	public Vector2D getTarget() { return target; }
-	public IWorldEntity getHovered() { return hovered; }
+	public IEntity getHovered() { return hovered; }
 
 	@Override
 	public void display(GL gl, double time, RenderingContext context)
@@ -140,10 +121,4 @@ public class OrdersActionController implements IActionController
 		look.render( gl, time, this, context );
 	}
 
-
-	@Override
-	public Look<? extends IActionController> getLook()
-	{
-		return look;
-	}
 }

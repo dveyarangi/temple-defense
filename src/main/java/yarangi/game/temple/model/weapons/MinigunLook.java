@@ -85,5 +85,7 @@ public class MinigunLook implements Look<Minigun>
 
 	@Override
 	public boolean isCastsShadow() { return true; }
+	@Override
+	public float getPriority() { return 0; }
 
 }

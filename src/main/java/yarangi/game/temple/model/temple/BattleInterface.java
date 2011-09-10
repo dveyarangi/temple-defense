@@ -8,7 +8,7 @@ import javax.media.opengl.GL;
 import yarangi.game.temple.actions.Fireable;
 import yarangi.game.temple.ai.IFeedbackBeacon;
 import yarangi.game.temple.model.weapons.Weapon;
-import yarangi.graphics.quadraturin.objects.IWorldEntity;
+import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Vector2D;
 
 public interface BattleInterface 
@@ -19,7 +19,7 @@ public interface BattleInterface
 
 	public void addFireable(Weapon weapon);
 
-	public Map <Fireable, IWorldEntity> getTargets();
+	public Map <Fireable, IEntity> getTargets();
 
 	public List <Weapon> getFireables();
 
@@ -29,7 +29,7 @@ public interface BattleInterface
 
 //	public Vector2D getGuarded(Weapon entity);
 
-	public void objectObserved(IWorldEntity object);
+	public void objectObserved(IEntity object);
 
 	public void dispatchFeedback(IFeedbackBeacon capsule);
 

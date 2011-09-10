@@ -3,11 +3,11 @@ package yarangi.game.temple.model.temple.structure;
 import java.util.ArrayList;
 import java.util.List;
 
-import yarangi.graphics.quadraturin.objects.WorldEntity;
+import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.math.Vector2D;
 import yarangi.spatial.Area;
 
-public class PowerConnector extends WorldEntity
+public class PowerConnector extends Entity
 {
 	private Vector2D sourceLoc;
 

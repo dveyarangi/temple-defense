@@ -10,7 +10,7 @@ import yarangi.math.Vector2D;
  * 
  * @author dveyarangi
  */
-public class SwarmBeacon 
+class Beacon 
 {
 	private int x, y;
 	
@@ -31,7 +31,7 @@ public class SwarmBeacon
 
 	private boolean unpassable;
 	
-	public SwarmBeacon(int x, int y)
+	public Beacon(int x, int y)
 	{
 		this.x = x;
 		this.y = y;

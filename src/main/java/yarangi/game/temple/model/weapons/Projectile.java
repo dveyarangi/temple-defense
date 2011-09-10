@@ -3,10 +3,10 @@ package yarangi.game.temple.model.weapons;
 import yarangi.game.temple.ai.IFeedbackBeacon;
 import yarangi.game.temple.ai.IFeedbackCarrier;
 import yarangi.game.temple.model.Damage;
-import yarangi.graphics.quadraturin.objects.WorldEntity;
+import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.math.Vector2D;
 
-public class Projectile extends WorldEntity implements IFeedbackCarrier
+public class Projectile extends Entity implements IFeedbackCarrier
 {
 
 	private static final long serialVersionUID = -2909463886504124942L;

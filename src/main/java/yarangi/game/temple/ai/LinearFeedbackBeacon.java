@@ -1,23 +1,23 @@
 package yarangi.game.temple.ai;
 
-import yarangi.graphics.quadraturin.objects.IWorldEntity;
+import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Geometry;
 import yarangi.math.Vector2D;
 
 public class LinearFeedbackBeacon implements IFeedbackBeacon 
 {
 
-	private IWorldEntity source;
+	private IEntity source;
 	
 	private Vector2D location;
 	private Vector2D velocity;
 	private Vector2D projectileVelocity;
-	private IWorldEntity target;
+	private IEntity target;
 	
 	private double distance;
 	private double angle;
 	
-	public LinearFeedbackBeacon(IWorldEntity source, IWorldEntity target, Vector2D projectileVelocity)
+	public LinearFeedbackBeacon(IEntity source, IEntity target, Vector2D projectileVelocity)
 	{
 		this.source = source;
 		this.target = target;
@@ -51,8 +51,8 @@ public class LinearFeedbackBeacon implements IFeedbackBeacon
 //		velocity = target.getVelocity();
 
 	}
-	public IWorldEntity getSource() {return source; }	
-	public IWorldEntity getTarget() { return target; }
+	public IEntity getSource() {return source; }	
+	public IEntity getTarget() { return target; }
 	
 	public double getDistance() { return distance; }
 	public double getAngle() { return angle; }

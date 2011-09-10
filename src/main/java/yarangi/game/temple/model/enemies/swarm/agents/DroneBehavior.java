@@ -1,5 +1,6 @@
-package yarangi.game.temple.model.enemies.swarm;
+package yarangi.game.temple.model.enemies.swarm.agents;
 
+import yarangi.game.temple.model.enemies.swarm.Swarm;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.Vector2D;
 

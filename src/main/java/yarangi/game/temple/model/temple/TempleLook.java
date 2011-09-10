@@ -84,5 +84,7 @@ public class TempleLook implements Look <TempleStructure>
 		}
 		
 	}*/
+	@Override
+	public float getPriority() { return 0; }
 
 }

@@ -1,6 +1,6 @@
 package yarangi.game.temple.ai;
 
-import yarangi.graphics.quadraturin.objects.IWorldEntity;
+import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Vector2D;
 
 /**
@@ -19,7 +19,7 @@ public interface IntellectCore
 	 * @param target
 	 * @return
 	 */
-	public Vector2D pickTrackPoint(Vector2D cannonLocation, Vector2D projectileVelocity, IWorldEntity target);
+	public Vector2D pickTrackPoint(Vector2D cannonLocation, Vector2D projectileVelocity, IEntity target);
 	
 	/**
 	 * 
