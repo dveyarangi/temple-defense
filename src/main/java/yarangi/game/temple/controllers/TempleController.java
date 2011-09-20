@@ -153,8 +153,9 @@ public class TempleController extends Entity implements CursorListener
 	public boolean testLOS(double x, double y, double x2, double y2)
 	{
 		LOSSensor sensor = new LOSSensor();
-//		scene.getEntityIndex().query( sensor, x, y, x2-x, y2-y );
-		scene.getWorldVeil().getTerrain().query( sensor, x, y, x2-x, y2-y );
+		scene.getEntityIndex().query( sensor, x, y, x2-x, y2-y );
+		
+//		scene.getWorldVeil().getTerrain().query( sensor, x, y, x2-x, y2-y );
 		return sensor.hasLOS();
 	}
 

@@ -64,10 +64,8 @@
 	    		},
 		    		
 		    	"terrain" : {
-		    	    "terrainClass"  : "yarangi.graphics.quadraturin.terrain.GridyTerrainMap",
-		    	    "lookClass"     : "yarangi.game.temple.model.terrain.GridyTerrainLook",
-		    	    "behaviorClass" : "yarangi.game.temple.model.terrain.GridyTerrainBehavior",
-		    	    "cellsize" : 1
+		    	    "factoryClass"  : "yarangi.game.temple.model.terrain.fractal.MandelbrotFactory",
+		    	    "cellsize" : 10
 	    	    }
 			}
 		]

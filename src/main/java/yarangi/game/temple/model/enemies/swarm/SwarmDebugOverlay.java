@@ -15,7 +15,7 @@ public class SwarmDebugOverlay implements Look <Swarm>
 		
 	}
 	
-	private float toAlpha(Beacon beacon)
+	private float toAlpha(IBeacon beacon)
 	{
 		return beacon.getDangerFactor() >= Swarm.MAX_DANGER_FACTOR ? 1 :(float)((beacon.getDangerFactor()))/(float)Swarm.MAX_DANGER_FACTOR;
 
@@ -48,7 +48,7 @@ public class SwarmDebugOverlay implements Look <Swarm>
 				{
 					x = (float)entity.toBeaconCoord(i);//+2f*size;
 				
-				Beacon beacon = entity.getBeacons()[i][j];  
+				IBeacon beacon = entity.getBeacons()[i][j];  
 				                                                 
 				float curr = toAlpha(beacon);
 //				float topLeft     = toAlpha(entity.getBeacons()[i-1][j+1]);

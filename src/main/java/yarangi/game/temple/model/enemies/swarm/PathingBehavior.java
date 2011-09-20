@@ -94,9 +94,6 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 				pathFound = true;
 				break;
 			}
-				
-			
-			
 			
 			tentativeIsBetter = false;
 			for(int dx = -1; dx <= 1; dx ++)
@@ -109,21 +106,24 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 					if(y < 0 || y >= WSIZE) continue;
 					
 					temp = beacons[x][y];
-					
+					if(temp.isClosed())
+						continue;
+				
 					if(temp.isUnpassable())
 						continue;
+					if(temp.isDeadly(SpawningBehavior.AGENT_HEALTH))
+						continue;
+					
 					double tentative = curr.g + ((dx == 0 || dy == 0) ? 1 : FastMath.ROOT_2);
 //					if(temp == null)
 //						temp = beacons[x][y] = new AStarNode(x, y);
 					
 					
-					if(temp.isClosed())
-						continue;
 					
 					if(!temp.isOpen()) // not yet visited
 					{
 						temp.markOpen();
-						temp.update( -(time - temp.getTime())*Swarm.DANGER_FACTOR_DECAY);
+						temp.update(temp.getDangerFactor() - (time - temp.getTime())*Swarm.DANGER_FACTOR_DECAY);
 					}
 					else
 					if(tentative < temp.g) // is better than before
@@ -140,7 +140,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 					
 					temp.origin = curr;
 					temp.g = tentative;
-					temp.h = temp.getDangerFactor(); // TODO: should be smarter
+					temp.h = temp.getDangerFactor()*10; // TODO: should be smarter
 					temp.f = temp.g + temp.h;
 					openNodes.add(temp); // reinstalling the node to OPEN queue with new priority
 				}

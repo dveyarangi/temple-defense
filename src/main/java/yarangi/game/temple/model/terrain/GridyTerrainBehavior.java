@@ -1,0 +1,16 @@
+package yarangi.game.temple.model.terrain;
+
+import yarangi.graphics.quadraturin.objects.Behavior;
+import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
+
+public class GridyTerrainBehavior implements Behavior<GridyTerrainMap<?>>
+{
+
+	@Override
+	public boolean behave(double time, GridyTerrainMap<?> entity, boolean isVisible)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

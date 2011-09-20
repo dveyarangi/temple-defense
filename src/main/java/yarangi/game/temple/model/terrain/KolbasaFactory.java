@@ -42,6 +42,7 @@ public class KolbasaFactory
 				if(line.size() >= maxSpan)
 				{
 					Matter matter = new Matter(generatePerimeter(line, levelWidth/2, 1));
+					matter.setLook(new MatterLook());
 
 					scene.addEntity( matter);
 					

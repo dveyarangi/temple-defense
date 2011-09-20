@@ -2,6 +2,7 @@ package yarangi.game.temple.model.enemies.swarm;
 
 import yarangi.game.temple.model.Integrity;
 import yarangi.game.temple.model.enemies.ElementalVoidLook;
+import yarangi.game.temple.model.enemies.swarm.agents.DangerBehavior;
 import yarangi.game.temple.model.enemies.swarm.agents.DroneBehavior;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.graphics.quadraturin.objects.Behavior;
@@ -23,6 +24,8 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	private double spawnInterval;
 	private double timeToSpawn = 0;
 	public static final int SPAWNING_RADIUS = 50;
+	public static final Integrity AGENT_INTEGRITY = new Integrity(10, 0, new double [] {0,0,0,0});
+	public static final double AGENT_HEALTH = AGENT_INTEGRITY.getMaxHitPoints();
 	
 //	public Integrity integrity = new Integrity(30, 0, new double [] {0,0,0,0});
 	public SpawningBehavior(double spawnInterval)
@@ -39,14 +42,14 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 		{
 			return false;
 		}
-		
+//		System.out.println(timeToSpawn);
 		while(timeToSpawn < 0)
 		{
 			timeToSpawn += spawnInterval;
 			double angle = RandomUtil.getRandomDouble(Angles.PI_2);
 	//			double radius = RandomUtil.getRandomGaussian(800, 0);
 			double size = RandomUtil.getRandomDouble(1)+1;
-			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(10*size, 0, new double [] {0,0,0,0}), false);
+			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(10, 0, new double [] {0,0,0,0}), false);
 			Vector2D source = swarm.getSource();
 			agent.setLook(new ElementalVoidLook());
 			agent.setBehavior(createAgentBehavior());
@@ -57,6 +60,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 			agent.setBody(new Body());
 			agent.getBody().setMaxSpeed( size);
 			swarm.addAgent(agent);
+			System.out.println("Agent spawn at " + agent.getArea().getRefPoint());
 		}
 		return false;
 	}
@@ -74,6 +78,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	public Behavior <SwarmAgent> createAgentBehavior()
 	{
 		final IBehaviorState<SwarmAgent> droneState = new DroneBehavior();
+//		final IBehaviorState<SwarmAgent> dangerState = new DangerBehavior();
 		
 		FSMBehavior <SwarmAgent> beh = new FSMBehavior<SwarmAgent>(droneState);
 		

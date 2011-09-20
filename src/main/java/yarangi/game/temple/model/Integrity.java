@@ -1,6 +1,8 @@
 package yarangi.game.temple.model;
 
-public class Integrity 
+import java.util.Arrays;
+
+public class Integrity implements Cloneable 
 {
 	private double maxHitPoints;
 	private double hitPoints;
@@ -50,5 +52,10 @@ public class Integrity
 	
 	public double getHitPoints() {
 		return hitPoints;
+	}
+	
+	public Integrity clone()
+	{
+		return new Integrity(maxHitPoints, armor, Arrays.copyOf( resistances, resistances.length ));
 	}
 }

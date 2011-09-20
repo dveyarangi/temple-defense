@@ -1,7 +1,5 @@
 package yarangi.game.temple;
 
-import java.util.Map;
-
 import javax.media.opengl.GL;
 
 import yarangi.game.temple.ai.IntellectCore;
@@ -11,7 +9,6 @@ import yarangi.game.temple.controllers.ControlLook;
 import yarangi.game.temple.controllers.TempleController;
 import yarangi.game.temple.model.EffectUtils;
 import yarangi.game.temple.model.enemies.swarm.Swarm;
-import yarangi.game.temple.model.enemies.swarm.SwarmDebugOverlay;
 import yarangi.game.temple.model.enemies.swarm.SwarmFactory;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.temple.model.temple.BattleInterface;
@@ -20,10 +17,8 @@ import yarangi.game.temple.model.temple.ObserverEntity;
 import yarangi.game.temple.model.temple.ObserverLook;
 import yarangi.game.temple.model.temple.StructureInterface;
 import yarangi.game.temple.model.temple.TempleEntity;
-import yarangi.game.temple.model.terrain.GridyTerrainBehavior;
-import yarangi.game.temple.model.terrain.GridyTerrainLook;
+import yarangi.game.temple.model.terrain.KolbasaFactory;
 import yarangi.game.temple.model.terrain.Matter;
-import yarangi.game.temple.model.terrain.fractal.MandelbrotFactory;
 import yarangi.game.temple.model.weapons.Minigun;
 import yarangi.game.temple.model.weapons.MinigunLook;
 import yarangi.game.temple.model.weapons.Projectile;
@@ -32,15 +27,12 @@ import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.QuadVoices;
 import yarangi.graphics.quadraturin.Scene;
-import yarangi.graphics.quadraturin.actions.IAction;
 import yarangi.graphics.quadraturin.config.SceneConfig;
 import yarangi.graphics.quadraturin.objects.Dummy;
-import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.simulations.Body;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
-import yarangi.graphics.quadraturin.simulations.StupidInteractions;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
@@ -77,10 +69,6 @@ public class Playground extends Scene
 		controller.setBehavior(new ControlBehavior());
 		addEntity(controller);
 		StructureInterface structure = controller.getStructureInterface();
-		
-		addTerrain( MandelbrotFactory.generateMandelbrot(config.getWidth(), config.getHeight(), 1), 
-				new GridyTerrainLook(), 
-				new GridyTerrainBehavior() );
 		
 		temple = new TempleEntity(this, controller);
 		temple.setLook(Dummy.LOOK);

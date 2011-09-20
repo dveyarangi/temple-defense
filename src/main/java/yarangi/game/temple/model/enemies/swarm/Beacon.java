@@ -2,6 +2,7 @@ package yarangi.game.temple.model.enemies.swarm;
 
 import yarangi.math.FastMath;
 import yarangi.math.Vector2D;
+import yarangi.numbers.AverageCounter;
 
 /**
  * A beacon represent swarm knowledge about space segment. 
@@ -10,14 +11,14 @@ import yarangi.math.Vector2D;
  * 
  * @author dveyarangi
  */
-class Beacon 
+public class Beacon implements IBeacon 
 {
 	private int x, y;
 	
 	/**
 	 * Danger level of this segment.
 	 */
-	private int dangerFactor = 1;
+	private AverageCounter dangerFactor = new AverageCounter();
 	
 	/**
 	 * Swarm drones flow direction.
@@ -35,25 +36,38 @@ class Beacon
 	{
 		this.x = x;
 		this.y = y;
-		dangerFactor = 0;
+//		dangerFactor = 0;
 		flow = Vector2D.ZERO();
 		time = 0;
 	}
-	
+	/* (non-Javadoc)
+	 * @see yarangi.game.temple.model.enemies.swarm.IBeacon#getX()
+	 */
+	@Override
 	public int getX() { return x; }
+	/* (non-Javadoc)
+	 * @see yarangi.game.temple.model.enemies.swarm.IBeacon#getY()
+	 */
+	@Override
 	public int getY() { return y; }
 	
-	public int getDangerFactor() { return dangerFactor; }
+	/* (non-Javadoc)
+	 * @see yarangi.game.temple.model.enemies.swarm.IBeacon#getDangerFactor()
+	 */
+	@Override
+	public int getDangerFactor() { return FastMath.round(dangerFactor.getAverage()); }
 	public void update(double damage)
 	{
-		dangerFactor += FastMath.round(damage);
-		if(dangerFactor > Swarm.MAX_DANGER_FACTOR)
-			dangerFactor = Swarm.MIN_DANGER_FACTOR;
-		else
-		if(dangerFactor < 0)
-			dangerFactor = 0;
+		dangerFactor.addValue( damage > 0 ? damage : 0 );
+		
 		time = System.currentTimeMillis(); // TODO: should be engine's/scene time
 		unpassable = false;
+	}
+	
+	public boolean isDeadly(double damageThreshold)
+	{
+		return getDangerFactor() > damageThreshold;
+		
 	}
 	
 	public long getUpdateTime() { return time; }
@@ -67,6 +81,10 @@ class Beacon
 	}
 	
 
+	/* (non-Javadoc)
+	 * @see yarangi.game.temple.model.enemies.swarm.IBeacon#addFlow(double, double)
+	 */
+	@Override
 	public void addFlow(double x, double y) 
 	{
 		flow.add(x, y);
@@ -78,22 +96,25 @@ class Beacon
 
 	
 	public long getTime() { return time; }
+	/* (non-Javadoc)
+	 * @see yarangi.game.temple.model.enemies.swarm.IBeacon#getFlow()
+	 */
+	@Override
 	public Vector2D getFlow() { return flow; }
 
-	public void setDangerFactor(int d) 
-	{ 
-		this.dangerFactor = d;
-		if(dangerFactor < Swarm.MIN_DANGER_FACTOR)
-			dangerFactor = Swarm.MIN_DANGER_FACTOR;
-		if(dangerFactor > Swarm.MAX_DANGER_FACTOR)
-			dangerFactor = Swarm.MAX_DANGER_FACTOR;
-//		System.out.println("danger set: " + getDangerFactor());
-	}
 
+	/* (non-Javadoc)
+	 * @see yarangi.game.temple.model.enemies.swarm.IBeacon#isVisited()
+	 */
+	@Override
 	public boolean isVisited() {
 		return time != 0;
 	}
 
 	public void setUnpassable() { this.unpassable = true; }
+	/* (non-Javadoc)
+	 * @see yarangi.game.temple.model.enemies.swarm.IBeacon#isUnpassable()
+	 */
+	@Override
 	public boolean isUnpassable() { return unpassable; }
 }

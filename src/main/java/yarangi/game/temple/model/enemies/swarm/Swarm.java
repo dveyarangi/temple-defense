@@ -26,6 +26,9 @@ public class Swarm extends Entity
 {
 	private static final int WSIZE = 120;
 	
+	/**
+	 * TODO: replace with GridMap.
+	 */
 	private AStarNode [][] beacons;
 	
 //	private Vector2D [][] flows;
@@ -54,6 +57,11 @@ public class Swarm extends Entity
 	
 	private Damage MATTER_DAMAGE = new Damage(1000, 0, 0, 0);
 	 	
+	/**
+	 * 
+	 * @param worldSize
+	 * @param _scene
+	 */
 	public Swarm(int worldSize, Scene _scene)
 	{
 		
@@ -119,6 +127,18 @@ public class Swarm extends Entity
 							return true;
 						}
 					}
+					else
+						if( target instanceof Matter)
+						{
+							setUnpassable(source);
+							source.getIntegrity().hit(MATTER_DAMAGE);
+//							if(source.getIntegrity().getHitPoints() <= 0)
+							{
+								source.markDead();
+								EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldVeil(), new Color(0,1,0,1), 32);
+								return true;
+							}
+						}
 				
 					return false;
 				}
@@ -196,7 +216,7 @@ public class Swarm extends Entity
 
 	final public Vector2D getTarget() { return target; }
 
-	final public AStarNode [][] getBeacons() { return beacons; }
+	final protected AStarNode [][] getBeacons() { return beacons; }
 
 	final public void addAgent(SwarmAgent agent) {
 		scene.addEntity(agent);
@@ -284,5 +304,12 @@ public class Swarm extends Entity
 	}
 
 	public Vector2D getSource() { return currNode.getSpawnLocation(); }
+
+	public IBeacon getBeacon(Vector2D point)
+	{
+		int px = toBeaconIdx(point.x());
+		int py = toBeaconIdx(point.y());
+		return beacons[px][py];
+	}
 
 }
