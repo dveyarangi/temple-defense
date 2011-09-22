@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Vector2D;
 import yarangi.spatial.Polygon;
@@ -14,14 +14,14 @@ public class MatterLook implements Look <Matter>
 {
 
 	@Override
-	public void init(GL gl, Matter entity) {
+	public void init(GL gl, Matter entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void render(GL gl, double time, Matter entity,
-			RenderingContext context) {
+			IRenderingContext context) {
 		Polygon polygon = (Polygon) entity.getArea();
 		
 		Iterator <PolyPoint> polyit =  polygon.getPoints().iterator();
@@ -41,7 +41,7 @@ public class MatterLook implements Look <Matter>
 	}
 
 	@Override
-	public void destroy(GL gl, Matter entity) {
+	public void destroy(GL gl, Matter entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}

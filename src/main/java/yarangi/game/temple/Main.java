@@ -12,7 +12,7 @@ public class Main
 		// creating frame: 
 		Swing2DContainer container = new Swing2DContainer();
 		
-	    container.registerPlugin(new ShaderFactory());
+//	    container.registerPlugin(new ShaderFactory());
 	    
 	    // starting engine
 	    container.start();

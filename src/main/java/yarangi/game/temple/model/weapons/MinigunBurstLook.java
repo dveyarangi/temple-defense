@@ -2,7 +2,7 @@ package yarangi.game.temple.model.weapons;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.spatial.Area;
 
@@ -11,7 +11,7 @@ public class MinigunBurstLook implements Look <Projectile>
 //	static float UGLY = 0.0f;
 	static float dir = 1;
 
-	public void render(GL gl, double time, Projectile prj, RenderingContext context) 
+	public void render(GL gl, double time, Projectile prj, IRenderingContext context) 
 	{
 
 		float scale = (float)(prj.getRangeSquare() / ( prj.getMaxRange()-prj.getRangeSquare()));
@@ -36,11 +36,11 @@ public class MinigunBurstLook implements Look <Projectile>
 
 	}
 
-	public void init(GL gl, Projectile entity) {
+	public void init(GL gl, Projectile entity, IRenderingContext context) {
 //		System.out.println("MinigunBurstLook:initing");
 	}
 
-	public void destroy(GL gl, Projectile entity) {
+	public void destroy(GL gl, Projectile entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}

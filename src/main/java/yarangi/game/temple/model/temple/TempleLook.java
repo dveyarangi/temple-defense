@@ -2,14 +2,14 @@ package yarangi.game.temple.model.temple;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 
 public class TempleLook implements Look <TempleStructure> 
 {
 	
 	
-	public void render(GL gl, double time,TempleStructure temple, RenderingContext context) 
+	public void render(GL gl, double time,TempleStructure temple, IRenderingContext context) 
 	{
 		
 //		temple.getCenter().getHexagon().search(new DrawingObserver(gl, temple));

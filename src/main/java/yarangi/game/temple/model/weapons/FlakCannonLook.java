@@ -2,14 +2,14 @@ package yarangi.game.temple.model.weapons;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
 
 public class FlakCannonLook implements Look <FlakCannon>
 {
 
-	public void render(GL gl, double time, FlakCannon cannon, RenderingContext context) 
+	public void render(GL gl, double time, FlakCannon cannon, IRenderingContext context) 
 	{
 		if(context.isForEffect())
 			return;

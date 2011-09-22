@@ -4,7 +4,7 @@ import java.nio.IntBuffer;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.graphics.textures.TextureUtils;
@@ -15,7 +15,7 @@ public class GridyTerrainLook implements Look <GridyTerrainMap<TerrainChunk>>
 {
 	private FBOHandle fbo;
 	@Override
-	public void init(GL gl, GridyTerrainMap<TerrainChunk> entity)
+	public void init(GL gl, GridyTerrainMap<TerrainChunk> entity, IRenderingContext context)
 	{
 		// rounding texture size to power of 2:
 		int textureWidth  = BitUtils.po2Ceiling((int)(entity.getMaxX()-entity.getMinX()));
@@ -76,7 +76,7 @@ public class GridyTerrainLook implements Look <GridyTerrainMap<TerrainChunk>>
 	}
 
 	@Override
-	public void render(GL gl, double time, GridyTerrainMap<TerrainChunk> entity, RenderingContext context)
+	public void render(GL gl, double time, GridyTerrainMap<TerrainChunk> entity, IRenderingContext context)
 	{
 		float minx = entity.getMinX();
 		float maxx = entity.getMaxX();
@@ -106,7 +106,7 @@ public class GridyTerrainLook implements Look <GridyTerrainMap<TerrainChunk>>
 	}
 
 	@Override
-	public void destroy(GL gl, GridyTerrainMap<TerrainChunk> entity)
+	public void destroy(GL gl, GridyTerrainMap<TerrainChunk> entity, IRenderingContext context)
 	{
 		TextureUtils.destroyFBO( gl, fbo );
 	}

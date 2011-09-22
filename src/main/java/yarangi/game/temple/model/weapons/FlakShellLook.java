@@ -3,7 +3,7 @@ package yarangi.game.temple.model.weapons;
 import javax.media.opengl.GL;
 
 import yarangi.graphics.lights.CircleLightLook;
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.spatial.ISpatialFilter;
 
 public class FlakShellLook extends CircleLightLook<FlakShell>
@@ -13,7 +13,7 @@ public class FlakShellLook extends CircleLightLook<FlakShell>
 		// TODO Auto-generated constructor stub
 	}
 
-	public void render(GL gl, double time, FlakShell shell, RenderingContext context) 
+	public void render(GL gl, double time, FlakShell shell, IRenderingContext context) 
 	{
 		
 		super.render(gl, time, shell, context);

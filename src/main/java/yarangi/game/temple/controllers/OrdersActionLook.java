@@ -2,7 +2,7 @@ package yarangi.game.temple.controllers;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
@@ -12,14 +12,14 @@ public class OrdersActionLook implements Look <OrdersActionController>
 {
 
 	@Override
-	public void init(GL gl, OrdersActionController entity)
+	public void init(GL gl, OrdersActionController entity, IRenderingContext context)
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void render(GL gl, double time, OrdersActionController entity, RenderingContext context)
+	public void render(GL gl, double time, OrdersActionController entity, IRenderingContext context)
 	{
 		IEntity dragged = entity.getDragged();
 		Vector2D target = entity.getTarget();
@@ -53,7 +53,7 @@ public class OrdersActionLook implements Look <OrdersActionController>
 	}
 
 	@Override
-	public void destroy(GL gl, OrdersActionController entity)
+	public void destroy(GL gl, OrdersActionController entity, IRenderingContext context)
 	{
 		// TODO Auto-generated method stub
 		

@@ -60,7 +60,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 			agent.setBody(new Body());
 			agent.getBody().setMaxSpeed( size);
 			swarm.addAgent(agent);
-			System.out.println("Agent spawn at " + agent.getArea().getRefPoint());
+//			System.out.println("Agent spawn at " + agent.getArea().getRefPoint());
 		}
 		return false;
 	}

@@ -2,14 +2,14 @@ package yarangi.game.temple.model.temple;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 
 public class ShieldLook implements Look <ShieldEntity> 
 {
 
 
-	public void render(GL gl, double time, ShieldEntity shield, RenderingContext context) 
+	public void render(GL gl, double time, ShieldEntity shield, IRenderingContext context) 
 	{
 
 	

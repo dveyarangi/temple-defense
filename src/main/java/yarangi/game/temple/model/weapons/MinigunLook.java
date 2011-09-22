@@ -2,7 +2,7 @@ package yarangi.game.temple.model.weapons;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
@@ -12,7 +12,7 @@ public class MinigunLook implements Look<Minigun>
 {
 
 
-	public void render(GL gl, double time, Minigun cannon, RenderingContext context) 
+	public void render(GL gl, double time, Minigun cannon, IRenderingContext context) 
 	{
 		if(context.isForEffect())
 			return;
@@ -71,12 +71,12 @@ public class MinigunLook implements Look<Minigun>
 	
 	
 
-	public void init(GL gl, Minigun entity) {
+	public void init(GL gl, Minigun entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void destroy(GL gl, Minigun entity) {
+	public void destroy(GL gl, Minigun entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}

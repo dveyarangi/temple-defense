@@ -3,7 +3,17 @@
 		"xres" : 640,
 		"yres" : 480,
 		"aa"   : false,
-		"maxFPS" : 1000
+		"maxFPS" : 1000,
+		
+		"plugins" : [
+			{ "name" : "shaders",
+			  "factoryClass" : "yarangi.graphics.shaders.ShaderFactory", 
+			  "properties" : {
+			  	   "light" : "shaders/light1.glsl",
+			  	   "penumbra" : "shaders/penumbra.glsl"
+			  }
+			}
+		]
 	},
 	
 	"input" : {

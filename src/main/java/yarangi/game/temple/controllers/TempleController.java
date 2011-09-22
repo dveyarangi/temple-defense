@@ -14,7 +14,7 @@ import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.game.temple.model.terrain.Matter;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.Scene;
-import yarangi.graphics.quadraturin.actions.IActionController;
+import yarangi.graphics.quadraturin.actions.ActionController;
 import yarangi.graphics.quadraturin.events.CursorEvent;
 import yarangi.graphics.quadraturin.events.CursorListener;
 import yarangi.graphics.quadraturin.objects.IVeilEntity;
@@ -48,7 +48,7 @@ public class TempleController extends Entity implements CursorListener
 	
 	private StructureInterface structureInterface;
 	
-	private IActionController actionController;
+	private ActionController actionController;
 
 	public TempleController(Scene scene, IntellectCore core) 
 	{
@@ -71,7 +71,7 @@ public class TempleController extends Entity implements CursorListener
 		battleInterface = new BattleCommander(this, core);
 		structureInterface = new StructureInterface();
 		
-		actionController = new OrdersActionController();
+		actionController = new OrdersActionController(scene);
 		DefaultActionFactory.fillNavigationActions(scene, actionController);
 		
 		// TODO: control modes
@@ -159,7 +159,7 @@ public class TempleController extends Entity implements CursorListener
 		return sensor.hasLOS();
 	}
 
-	public IActionController getActionController()
+	public ActionController getActionController()
 	{
 		return actionController;
 	}

@@ -2,14 +2,14 @@ package yarangi.game.temple.model.temple.platforms;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 
 
 public class WeaponPlatformLook implements Look <WeaponPlatform>
 {
 
-	public void render(GL gl, double time, WeaponPlatform platform, RenderingContext context) {
+	public void render(GL gl, double time, WeaponPlatform platform, IRenderingContext context) {
 		// TODO Add look
 		
 	}

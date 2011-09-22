@@ -14,7 +14,7 @@ import yarangi.game.temple.model.terrain.Matter;
 import yarangi.game.temple.model.terrain.TerrainChunk;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.graphics.colors.Color;
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
@@ -288,7 +288,7 @@ public class Swarm extends Entity
 	}
 
 	@SuppressWarnings("unchecked")
-	public void display(GL gl, double time, RenderingContext context) 
+	public void display(GL gl, double time, IRenderingContext context) 
 	{
 		// if we here, it must be debug:
 		this.getLook().render(gl, time, this, context);

@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
@@ -13,12 +13,12 @@ import yarangi.math.Vector2D;
 public class ControlLook implements Look <TempleController> 
 {
 	
-	public void render(GL gl, double time, TempleController entity, RenderingContext context) 
+	public void render(GL gl, double time, TempleController entity, IRenderingContext context) 
 	{
 		if(context.isForEffect())
 			return;
 		
-		entity.getActionController().display( gl, time, context );
+//		entity.getActionController().display( gl, time, context );
 //		TempleEntity temple = entity.getTemple();
 		
 		Vector2D mousePoint = entity.getCursorLocation();
@@ -101,12 +101,12 @@ public class ControlLook implements Look <TempleController>
 
 	}
 
-	public void init(GL gl, TempleController entity) {
+	public void init(GL gl, TempleController entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void destroy(GL gl, TempleController entity) {
+	public void destroy(GL gl, TempleController entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}

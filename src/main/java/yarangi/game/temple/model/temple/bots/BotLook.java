@@ -2,7 +2,7 @@ package yarangi.game.temple.model.temple.bots;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Vector2D;
 import static yarangi.math.Angles.*;
@@ -25,7 +25,7 @@ public class BotLook implements Look<Bot> {
 		
 	}
 
-	public void render(GL gl, double time, Bot bot, RenderingContext context) 
+	public void render(GL gl, double time, Bot bot, IRenderingContext context) 
 	{
 		
 /*		if(entity.isHighlighted())

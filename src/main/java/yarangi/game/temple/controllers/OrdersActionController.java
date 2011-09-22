@@ -3,12 +3,10 @@ package yarangi.game.temple.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.media.opengl.GL;
-
 import yarangi.game.temple.model.weapons.Weapon;
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.Scene;
+import yarangi.graphics.quadraturin.actions.ActionController;
 import yarangi.graphics.quadraturin.actions.IAction;
-import yarangi.graphics.quadraturin.actions.IActionController;
 import yarangi.graphics.quadraturin.events.CursorEvent;
 import yarangi.graphics.quadraturin.events.UserActionEvent;
 import yarangi.graphics.quadraturin.objects.IEntity;
@@ -16,7 +14,7 @@ import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Vector2D;
 import yarangi.spatial.ISpatialFilter;
 
-public class OrdersActionController implements IActionController
+public class OrdersActionController extends ActionController
 {
 	Map <String, IAction> actions = new HashMap <String, IAction> ();
 	
@@ -44,8 +42,9 @@ public class OrdersActionController implements IActionController
 	};
 
 	
-	public OrdersActionController()
+	public OrdersActionController(Scene scene)
 	{
+		super(scene);
 //		actions.put("cursor-moved", temple.getController());
 		actions.put("mouse-drag", new IAction()
 		{
@@ -114,11 +113,5 @@ public class OrdersActionController implements IActionController
 	public IEntity getDragged() { return dragged; }
 	public Vector2D getTarget() { return target; }
 	public IEntity getHovered() { return hovered; }
-
-	@Override
-	public void display(GL gl, double time, RenderingContext context)
-	{
-		look.render( gl, time, this, context );
-	}
 
 }
