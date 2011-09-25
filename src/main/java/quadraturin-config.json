@@ -3,7 +3,17 @@
 		"xres" : 640,
 		"yres" : 480,
 		"aa"   : false,
-		"maxFPS" : 1000
+		"maxFPS" : 1000,
+		"plugins" : [
+			{ "name" : "shaders",
+			  "factoryClass" : "yarangi.graphics.shaders.ShaderFactory",
+			  "properties" : {
+			  		"light" : "shaders/light1.glsl",
+			  		"penumbra" : "shaders/penumbra.glsl"
+			  	}
+			}
+		 ]
+			  		
 	},
 	
 	"input" : {
@@ -22,7 +32,8 @@
 					{ "actionId" : "fire-on",       "buttonId" : 32,   "modeId" : 1 },
 					{ "actionId" : "fire-off",      "buttonId" : 32,   "modeId" : 3 },
 					{ "actionId" : "fire-on",       "buttonId" : -1,   "modeId" : 1 },
-					{ "actionId" : "mouse-drag",    "buttonId" : -1,   "modeId" : 4 },
+					{ "actionId" : "mouse-right-drag",    "buttonId" : -2,   "modeId" : 4 },
+					{ "actionId" : "mouse-left-drag",    "buttonId" : -1,   "modeId" : 4 },
 					{ "actionId" : "mouse-release", "buttonId" : 0,    "modeId" : 3 },
 					{ "actionId" : "fire-on",       "buttonId" : -1,   "modeId" : 2 },
 					{ "actionId" : "hold-child",    "buttonId" : -2,   "modeId" : 1 }
@@ -65,7 +76,7 @@
 		    		
 		    	"terrain" : {
 		    	    "factoryClass"  : "yarangi.game.temple.model.terrain.fractal.MandelbrotFactory",
-		    	    "cellsize" : 10
+		    	    "cellsize" : 8
 	    	    }
 			}
 		]

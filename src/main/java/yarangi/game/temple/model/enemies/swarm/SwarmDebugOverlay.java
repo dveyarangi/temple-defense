@@ -2,7 +2,7 @@ package yarangi.game.temple.model.enemies.swarm;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Vector2D;
 
@@ -10,7 +10,7 @@ public class SwarmDebugOverlay implements Look <Swarm>
 {
 
 	@Override
-	public void init(GL gl, Swarm entity) {
+	public void init(GL gl, Swarm entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -22,8 +22,7 @@ public class SwarmDebugOverlay implements Look <Swarm>
 	}
 
 	@Override
-	public void render(GL gl, double time, Swarm entity,
-			RenderingContext context) {
+	public void render(GL gl, double time, Swarm entity, IRenderingContext context) {
 		
 		if(context.isForEffect())
 			return;
@@ -136,7 +135,7 @@ public class SwarmDebugOverlay implements Look <Swarm>
 	}
 
 	@Override
-	public void destroy(GL gl, Swarm entity) {
+	public void destroy(GL gl, Swarm entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}

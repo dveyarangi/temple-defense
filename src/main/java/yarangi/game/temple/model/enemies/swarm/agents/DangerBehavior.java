@@ -14,7 +14,7 @@ public class DangerBehavior implements IBehaviorState <SwarmAgent>
 		Vector2D flow = swarm.getFlow(agent.getArea().getRefPoint());
 		
 		IBeacon localBeacon = swarm.getBeacon(agent.getArea().getRefPoint());
-		localBeacon.getDangerFactor()
+//		localBeacon.getDangerFactor()
 		
 		if(flow != null)
 			agent.getBody().setForce(flow.x(), flow.y());

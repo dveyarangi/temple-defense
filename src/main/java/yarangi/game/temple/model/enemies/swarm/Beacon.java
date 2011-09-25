@@ -55,11 +55,11 @@ public class Beacon implements IBeacon
 	 * @see yarangi.game.temple.model.enemies.swarm.IBeacon#getDangerFactor()
 	 */
 	@Override
-	public int getDangerFactor() { return FastMath.round(dangerFactor.getAverage()); }
+	public int getDangerFactor() { return FastMath.round(dangerFactor.getSum()); }
 	public void update(double damage)
 	{
 		dangerFactor.addValue( damage > 0 ? damage : 0 );
-		
+//		System.out.println(dangerFactor.getAverage());
 		time = System.currentTimeMillis(); // TODO: should be engine's/scene time
 		unpassable = false;
 	}

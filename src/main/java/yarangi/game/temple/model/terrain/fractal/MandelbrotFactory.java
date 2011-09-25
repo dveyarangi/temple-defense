@@ -2,12 +2,14 @@ package yarangi.game.temple.model.terrain.fractal;
 
 import yarangi.game.temple.model.terrain.GridyTerrainBehavior;
 import yarangi.game.temple.model.terrain.GridyTerrainLook;
-import yarangi.game.temple.model.terrain.TerrainChunk;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.objects.EntityShell;
 import yarangi.graphics.quadraturin.terrain.Cell;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.graphics.quadraturin.terrain.ITerrainFactory;
+
+import yarangi.graphics.quadraturin.terrain.Tile;
+import yarangi.spatial.Area;
 
 public class MandelbrotFactory implements ITerrainFactory
 {
@@ -32,10 +34,9 @@ public class MandelbrotFactory implements ITerrainFactory
 	
 	public EntityShell <GridyTerrainMap> generateTerrain(float width, float height, int cellsize)
 	{
-		GridyTerrainMap <TerrainChunk> terrain = new GridyTerrainMap<TerrainChunk>( width, height, cellsize );
-		
+		GridyTerrainMap <Tile, Color> terrain = new GridyTerrainMap <Tile, Color>( width, height, cellsize, 1 );
 		int startIt = 215;
-		int endIt = 300;
+		int endIt = 280;
 		double xstart = centerx - scale * width;
 		double xend = centerx + scale * width;
 		double ystart = centery - scale * height;
@@ -51,7 +52,6 @@ public class MandelbrotFactory implements ITerrainFactory
 		boolean inset = false;
 		Color color = null;
 		double xoffset, yoffset;
-		byte [] pixels;
 		float toColor = 1f / (endIt-startIt);
 		for (i = 0; i < terrain.getGridWidth(); i ++)
 		{
@@ -60,7 +60,8 @@ public class MandelbrotFactory implements ITerrainFactory
 		    {
 				yoffset = ystart + toYCoord * j * cellsize;
 
-		    	pixels = new byte [cellsize*cellsize*4];
+		    	Tile tile = new Tile( terrain.toRealXIndex( i ), terrain.toRealXIndex( j ), cellsize, 1);
+
 		    	for(pi = 0; pi < cellsize; pi ++)
 			    	for(pj = 0; pj < cellsize; pj ++)
 			    	{
@@ -106,20 +107,17 @@ public class MandelbrotFactory implements ITerrainFactory
 				        }
 					    if(!inset && color != null)
 					    { 
-					    	int offset = 4*(pi+cellsize*pj);
-					    	pixels[offset] = color.getRedByte();
-					    	pixels[offset+1] = color.getGreenByte();
-					    	pixels[offset+2] = color.getBlueByte();
-					    	pixels[offset+3] = color.getAlphaByte();
-		//			    	System.out.println((x-xstart)*toXCoord);
-					    	terrain.put( terrain.toRealXIndex( i ), terrain.toRealXIndex( j ), new Cell<TerrainChunk>(
-					    			new TerrainChunk( terrain.toRealXIndex( i ), terrain.toRealXIndex( j ), pixels)
-					    		));
+					    	tile.put( color, pi, pj );
 			    	    }
 			    	}
+		    	
+		    	terrain.put( terrain.toRealXIndex( i ), terrain.toRealXIndex( j ), tile);
+		    		
 		    }
 		}
 
-		return new EntityShell<GridyTerrainMap>( terrain, new GridyTerrainBehavior(), new GridyTerrainLook() );
+		GridyTerrainLook look = new GridyTerrainLook();
+		terrain.addListener( look );
+		return new EntityShell<GridyTerrainMap>( terrain, new GridyTerrainBehavior(), look );
 	}
 }

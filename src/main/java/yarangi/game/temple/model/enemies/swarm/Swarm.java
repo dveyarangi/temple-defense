@@ -11,14 +11,14 @@ import yarangi.game.temple.model.EffectUtils;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.game.temple.model.terrain.Matter;
-import yarangi.game.temple.model.terrain.TerrainChunk;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.graphics.colors.Color;
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
+import yarangi.graphics.quadraturin.terrain.Tile;
 import yarangi.math.FastMath;
 import yarangi.math.Vector2D;
 
@@ -116,10 +116,10 @@ public class Swarm extends Entity
 						return true;
 					}
 					else
-					if( target instanceof TerrainChunk)
+					if( target instanceof Tile || target instanceof Matter)
 					{
-						setUnpassable(source);
-						source.getIntegrity().hit(MATTER_DAMAGE);
+//						setUnpassable(source);
+						setDanger(source, source.getIntegrity().hit(MATTER_DAMAGE));
 //						if(source.getIntegrity().getHitPoints() <= 0)
 						{
 							source.markDead();
@@ -127,18 +127,6 @@ public class Swarm extends Entity
 							return true;
 						}
 					}
-					else
-						if( target instanceof Matter)
-						{
-							setUnpassable(source);
-							source.getIntegrity().hit(MATTER_DAMAGE);
-//							if(source.getIntegrity().getHitPoints() <= 0)
-							{
-								source.markDead();
-								EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldVeil(), new Color(0,1,0,1), 32);
-								return true;
-							}
-						}
 				
 					return false;
 				}
@@ -288,7 +276,7 @@ public class Swarm extends Entity
 	}
 
 	@SuppressWarnings("unchecked")
-	public void display(GL gl, double time, RenderingContext context) 
+	public void display(GL gl, double time, IRenderingContext context) 
 	{
 		// if we here, it must be debug:
 		this.getLook().render(gl, time, this, context);

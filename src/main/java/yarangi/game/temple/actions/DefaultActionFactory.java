@@ -5,14 +5,14 @@ import java.util.Map;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.ViewPoint2D;
 import yarangi.graphics.quadraturin.actions.IAction;
-import yarangi.graphics.quadraturin.actions.IActionController;
+import yarangi.graphics.quadraturin.actions.ActionController;
 import yarangi.graphics.quadraturin.config.InputConfig;
 import yarangi.graphics.quadraturin.config.QuadConfigFactory;
 import yarangi.graphics.quadraturin.events.UserActionEvent;
 
 public class DefaultActionFactory 
 {
-	public static Map <String, IAction> fillNavigationActions(final Scene scene, IActionController controller)
+	public static Map <String, IAction> fillNavigationActions(final Scene scene, ActionController controller)
 	{
 		final ViewPoint2D vp = (ViewPoint2D)scene.getViewPoint();
 		InputConfig config = QuadConfigFactory.getConfig().getInputConfig();

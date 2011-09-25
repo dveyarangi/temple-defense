@@ -3,20 +3,20 @@ package yarangi.game.temple.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.media.opengl.GL;
-
 import yarangi.game.temple.model.weapons.Weapon;
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.Scene;
+import yarangi.graphics.quadraturin.actions.ActionController;
 import yarangi.graphics.quadraturin.actions.IAction;
-import yarangi.graphics.quadraturin.actions.IActionController;
 import yarangi.graphics.quadraturin.events.CursorEvent;
 import yarangi.graphics.quadraturin.events.UserActionEvent;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
+import yarangi.graphics.quadraturin.terrain.Tile;
 import yarangi.math.Vector2D;
 import yarangi.spatial.ISpatialFilter;
 
-public class OrdersActionController implements IActionController
+public class OrdersActionController extends ActionController
 {
 	Map <String, IAction> actions = new HashMap <String, IAction> ();
 	
@@ -44,20 +44,39 @@ public class OrdersActionController implements IActionController
 	};
 
 	
-	public OrdersActionController()
+	public OrdersActionController(final Scene scene)
 	{
+		super(scene);
 //		actions.put("cursor-moved", temple.getController());
-		actions.put("mouse-drag", new IAction()
+		actions.put("mouse-left-drag", new IAction()
 		{
 
 			@Override
 			public void act(UserActionEvent event)
 			{
 				target = event.getCursor().getWorldLocation();
+				// TODO: test olnly
+				((GridyTerrainMap<Tile,?>)
+						scene.getWorldVeil().getTerrain()).consume( target.x(), target.y(), 10 );
+				
 				if(dragged != null || event.getEntity() == null)
 					return;
 				dragged = event.getEntity();
 				target = event.getCursor().getWorldLocation();
+			}
+			
+		});
+		actions.put("mouse-right-drag", new IAction()
+		{
+
+			@Override
+			public void act(UserActionEvent event)
+			{
+				// TODO: test olnly
+				target = event.getCursor().getWorldLocation();
+				((GridyTerrainMap<Tile,?>)
+						scene.getWorldVeil().getTerrain()).produce( target.x(), target.y(), 10 );
+				
 			}
 			
 		});
@@ -75,7 +94,6 @@ public class OrdersActionController implements IActionController
 				dragged.getArea().getRefPoint().setxy( location.x(), location.y() );
 				dragged = null;
 			}});
-		
 //		actions.put( "drag", value )
 /*		actions.put("hold-child", new IAction() {
 			
@@ -115,10 +133,10 @@ public class OrdersActionController implements IActionController
 	public Vector2D getTarget() { return target; }
 	public IEntity getHovered() { return hovered; }
 
-	@Override
+/*	@Override
 	public void display(GL gl, double time, RenderingContext context)
 	{
 		look.render( gl, time, this, context );
-	}
+	}*/
 
 }

@@ -7,7 +7,7 @@ import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.CircleLightLook;
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.ISensor;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Entity;
@@ -21,7 +21,7 @@ public class ObserverLook extends CircleLightLook<ObserverEntity>
 		super(color);
 	}
 
-	public void render(GL gl, double time, ObserverEntity entity, RenderingContext context) 
+	public void render(GL gl, double time, ObserverEntity entity, IRenderingContext context) 
 	{	
 		super.render(gl, time, entity, context);
 

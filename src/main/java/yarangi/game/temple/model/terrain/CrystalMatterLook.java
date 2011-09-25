@@ -2,20 +2,20 @@ package yarangi.game.temple.model.terrain;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 
 public class CrystalMatterLook implements Look <CrystalMatter> 
 {
 
 	@Override
-	public void init(GL gl, CrystalMatter entity) {
+	public void init(GL gl, CrystalMatter entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void render(GL gl, double time, CrystalMatter crystal, RenderingContext context) 
+	public void render(GL gl, double time, CrystalMatter crystal, IRenderingContext context) 
 	{
 		render(gl, time, crystal.getRoot());
 	}
@@ -82,7 +82,7 @@ public class CrystalMatterLook implements Look <CrystalMatter>
 	}
 
 	@Override
-	public void destroy(GL gl, CrystalMatter entity) {
+	public void destroy(GL gl, CrystalMatter entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}

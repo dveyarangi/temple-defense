@@ -3,14 +3,14 @@ package yarangi.game.temple.model.enemies;
 import javax.media.opengl.GL;
 
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
 
 public class ElementalVoidLook implements Look <SwarmAgent> 
 {
 
-	public void render(GL gl, double time, SwarmAgent entity, RenderingContext context) {
+	public void render(GL gl, double time, SwarmAgent entity, IRenderingContext context) {
 
 //		gl.glBlendFunc(GL.GL_ONE, GL.GL_ZERO);
 		
@@ -27,12 +27,12 @@ public class ElementalVoidLook implements Look <SwarmAgent>
 //		gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
 	}
 
-	public void init(GL gl, SwarmAgent entity) {
+	public void init(GL gl, SwarmAgent entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void destroy(GL gl, SwarmAgent entity) {
+	public void destroy(GL gl, SwarmAgent entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}

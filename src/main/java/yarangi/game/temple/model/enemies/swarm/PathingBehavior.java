@@ -119,7 +119,6 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 //						temp = beacons[x][y] = new AStarNode(x, y);
 					
 					
-					
 					if(!temp.isOpen()) // not yet visited
 					{
 						temp.markOpen();
