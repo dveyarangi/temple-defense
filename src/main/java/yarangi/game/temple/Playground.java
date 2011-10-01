@@ -51,7 +51,6 @@ public class Playground extends Scene
 //	private int worldWidth = 1000;
 //	private int worldHeight = 1000;
 	
-	public static int WORLD_SIZE = 1500;
 	private IntellectCore core;
 	public Playground(SceneConfig config, QuadVoices voices)
 	{
@@ -142,9 +141,11 @@ public class Playground extends Scene
 		
 //		KolbasaFactory.generateKolbasaMaze( this );
 		
-		Swarm swarm = SwarmFactory.createSwarm(WORLD_SIZE, this, 5);
-//		swarm.setLook(new SwarmDebugOverlay()); 
-		swarm.setLook(Dummy.LOOK);
+		Swarm swarm = SwarmFactory.createSwarm(config.getWidth(), this, 8);
+		SwarmDebugOverlay swarmLook = new SwarmDebugOverlay();
+		swarm.setModificationListener( swarmLook );
+		swarm.setLook(swarmLook); 
+//		swarm.setLook(Dummy.LOOK);
 		addEntity(swarm);
 		
 		ICollisionHandler<Projectile> projectileCollider = new ICollisionHandler <Projectile> ()
