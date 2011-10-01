@@ -115,17 +115,19 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 					if(temp.isClosed())
 						continue;
 				
-					if(temp.isUnpassable())
+					if(swarm.isOmniUnpassable(temp.getX(), temp.getY()))
 					{
-						if(omniscienceCount == 0)
+//						if(omniscienceCount == 0)
 							continue;
-						if(swarm.isOmniUnpassable(temp.getX(), temp.getY()))
-							continue;
-						else
+//						if(swarm.isOmniUnpassable(temp.getX(), temp.getY()))
+//							continue;
+/*						else
+						{
 							temp.setUnpassable(false);
-						System.out.println(temp.isUnpassable());
+							swarm.cellModified( temp.getX(), temp.getY() );
+						}
 						lastOmniscienceTime = time;
-						omniscienceCount --;
+						omniscienceCount --;*/
 					}
 					
 					if(temp.isDeadly(SpawningBehavior.AGENT_HEALTH))
@@ -202,6 +204,8 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 						}
 				node = node.origin;
 				node.addFlow(flow.x(), flow.y());
+				
+				swarm.cellModified( node.getX(), node.getY() );
 			}	
 		}
 //		System.out.println("pathing end");
@@ -218,5 +222,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 			node.unmarkClosed();
 			node.origin = null;
 		}
+		
+		swarm.fireGridModification();
 	}
 }

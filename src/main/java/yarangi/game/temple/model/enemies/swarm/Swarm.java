@@ -7,26 +7,22 @@ import java.util.List;
 import javax.media.opengl.GL;
 
 import yarangi.game.temple.model.Damage;
-import yarangi.game.temple.model.EffectUtils;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
-import yarangi.game.temple.model.temple.TempleEntity;
-import yarangi.game.temple.model.terrain.Matter;
-import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.objects.Entity;
-import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
-import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
+import yarangi.graphics.quadraturin.terrain.Cell;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.graphics.quadraturin.terrain.Tile;
 import yarangi.math.FastMath;
 import yarangi.math.Vector2D;
+import yarangi.spatial.IGrid;
+import yarangi.spatial.IGridListener;
 
-public class Swarm extends Entity 
+public class Swarm extends Entity implements IGrid
 {
-	private static final int WSIZE = 120;
-	
+	private int WSIZE ;
 	/**
 	 * TODO: replace with GridMap.
 	 */
@@ -36,13 +32,13 @@ public class Swarm extends Entity
 	
 	private Vector2D target = Vector2D.ZERO();
 	
-	private float cellsize;
+	private int cellsize = 8;
 	
 	private Scene scene;
 	
 	private double toNodeIdx;
 	
-	private int halfSize;
+	private float halfSize;
 	
 	private List <SpawnNode> spawnNodes = new LinkedList <SpawnNode> ();
 	private Iterator <SpawnNode> nodeIterator;
@@ -51,12 +47,13 @@ public class Swarm extends Entity
 	static final int MIN_DANGER_FACTOR = 0;
 	static final int MAX_DANGER_FACTOR = 100;
 	
-	static final double DANGER_FACTOR_DECAY = 1./1000.;
+	static final double DANGER_FACTOR_DECAY = 1./10000.;
 	static final double OMNISCIENCE_PERIOD = 100.;
-	final ICollisionHandler <SwarmAgent> agentCollider;
-	
-	private Damage MATTER_DAMAGE = new Damage(12, 0, 0, 0);
 	final GridyTerrainMap<Tile, Color> terrain;
+	
+	private IGridListener <Cell<Beacon>> listener;
+	
+	private List <Cell<Beacon>> modifiedCells;
 	/**
 	 * 
 	 * @param worldSize
@@ -64,12 +61,10 @@ public class Swarm extends Entity
 	 */
 	public Swarm(int worldSize, Scene _scene)
 	{
-		int cellsize = (int)((float)worldSize / (float)WSIZE);
+		WSIZE = (int)((float)worldSize / (float)cellsize);
 		
 //		setLook(Dummy.LOOK);
 		beacons = new AStarNode[WSIZE][WSIZE];
-		
-		
 		halfSize = worldSize / 2;
 		this.scene = _scene;
 		
@@ -90,53 +85,8 @@ public class Swarm extends Entity
 //			System.out.println(beacons[i][j].getFlow());
 		}
 		
-		agentCollider = new ICollisionHandler <SwarmAgent> (){
-
-			@Override
-			public boolean setImpactWith(SwarmAgent source, IPhysicalObject target)
-			{
-				if(target instanceof Projectile)
-					{
-						Projectile p = (Projectile) target;
-						
-						setDanger(source, source.getIntegrity().hit(p.getDamage()));
-						
-						if(source.getIntegrity().getHitPoints() <= 0)
-						{
-							source.markDead();
-							EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldVeil(), new Color(0,1,0,1), 32);
-							return true;
-						}
-
-					}
-					else
-					if(target instanceof TempleEntity)
-					{
-						source.markDead();
-						EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldVeil(), new Color(1,0,0,1), 64);
-						return true;
-					}
-					else
-					if( target instanceof Tile || target instanceof Matter)
-					{
-//						terrain.consume( source.getArea().getRefPoint().x(), 
-//								source.getArea().getRefPoint().y(), 10 );
-						setUnpassable(source);
-//						setDanger(source, source.getIntegrity().hit(MATTER_DAMAGE));
-//						if(source.getIntegrity().getHitPoints() <= 0)
-						{
-							source.markDead();
-							EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldVeil(), new Color(0,1,0,1), 32);
-							return true;
-						}
-					}
-				
-					return false;
-				}
-
-			};	
-			scene.getCollisionManager().registerHandler(SwarmAgent.class, agentCollider);
-		}
+		modifiedCells =  new LinkedList <Cell<Beacon>> ();
+	}
 
 	public void addSpawnNode(double x, double y)
 	{
@@ -202,7 +152,7 @@ public class Swarm extends Entity
 	{
 		return FastMath.round((v + halfSize) * toNodeIdx);
 	}
-	final public float getCellSize() { return cellsize;}
+	final public int getCellSize() { return cellsize;}
 	final public int getWorldSize() { return WSIZE; }
 
 	final public Vector2D getTarget() { return target; }
@@ -222,15 +172,36 @@ public class Swarm extends Entity
 		int x = toBeaconIdx(agent.getArea().getRefPoint().x());
 		int y = toBeaconIdx(agent.getArea().getRefPoint().y());
 		
-		Beacon beacon = beacons[x][y];
-		beacon.update(damage);
+		if(x >= 0 && x < WSIZE && y >= 0 && y < WSIZE)
+		{
+			Beacon beacon = beacons[x][y];
+			beacon.update(damage);
+		}
 	}
-	public void setUnpassable(SwarmAgent agent) {
-		int x = toBeaconIdx(agent.getArea().getRefPoint().x());
-		int y = toBeaconIdx(agent.getArea().getRefPoint().y());
-		
-		Beacon beacon = beacons[x][y];
-		beacon.setUnpassable(true);
+	public void setUnpassable(double x, double y) {
+		int i = toBeaconIdx(x);
+		int j = toBeaconIdx(y);
+		int di, dj;
+		if(i >= 0 && i < WSIZE && j >= 0 && j < WSIZE)
+		{
+			Beacon beacon = beacons[i][j];
+			beacon.setUnpassable(true);
+			cellModified( beacon.getX(), beacon.getY() );
+/*			for(int dx = -1; dx <= 1; dx ++)
+				for(int dy = -1; dy <= 1; dy ++)
+					{
+					if(dx == 0 && dy == 0)
+						continue;
+						di = i + dx;
+						if(i < 0 || x >= WSIZE) continue;
+						dj = j + dy;
+						if(y < 0 || y >= WSIZE) continue;
+						
+//						setDanger(source, source.getIntegrity().hit(MATTER_DAMAGE));
+						beacons[di][dj].setUnpassable(true);
+//						System.out.println(x + " " + y + " ::: " + beacons[x][y].getFlow());
+					}*/
+		}
 	}
 
 
@@ -303,8 +274,34 @@ public class Swarm extends Entity
 
 	public boolean isOmniUnpassable(int x, int y)
 	{
-		return !terrain.getCell( toBeaconCoord( x ), toBeaconCoord( y ) ).getProperties().isEmpty();
+		Cell <Tile> cell = terrain.getCell( toBeaconCoord( x ), toBeaconCoord( y ) );
+		return cell != null && !cell.getProperties().isEmpty();
+//		return !terrain.getCell( toBeaconCoord( x ), toBeaconCoord( y ) ).getProperties().isEmpty();
 				
+	}
+
+	@Override public float getMinX() { return -halfSize; }
+
+	@Override public float getMaxX() { return halfSize; }
+
+	@Override public float getMinY() { return -halfSize; }
+
+	@Override public float getMaxY() { return halfSize; }
+	
+	public void cellModified(int i, int j)
+	{
+		modifiedCells.add( new Cell<Beacon> (toBeaconCoord( i ), toBeaconCoord( j ), getCellSize(), beacons[i][j]) );
+	}
+
+	void fireGridModification()
+	{
+		listener.cellsModified( modifiedCells );
+		modifiedCells = new LinkedList <Cell<Beacon>> ();
+	}
+	
+	public void setModificationListener(IGridListener <Cell<Beacon>>listener)
+	{
+		this.listener = listener;
 	}
 
 }
