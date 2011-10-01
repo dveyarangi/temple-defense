@@ -59,7 +59,7 @@ public class SwarmDebugOverlay implements Look <Swarm>
 				float bottomLeft  = toAlpha(entity.getBeacons()[i-1][j-1]);
 				float left        = toAlpha(entity.getBeacons()[i-1][j]  );
 //				float red = beacon.isUnpassable() ? 1.0f : 0.3f; 
-//				curr = beacon.isUnpassable() ? 1.f : curr;
+				curr = beacon.isUnpassable() ? 1.f : curr;
 //				if(beacon1.getDangerFactor() != 0)
 				{
 					

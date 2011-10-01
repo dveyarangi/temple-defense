@@ -3,6 +3,7 @@ package yarangi.game.temple.model.terrain.fractal;
 import yarangi.game.temple.model.terrain.GridyTerrainBehavior;
 import yarangi.game.temple.model.terrain.GridyTerrainLook;
 import yarangi.graphics.colors.Color;
+import yarangi.graphics.grid.TileGridLook;
 import yarangi.graphics.quadraturin.objects.EntityShell;
 import yarangi.graphics.quadraturin.terrain.Cell;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
@@ -36,7 +37,7 @@ public class MandelbrotFactory implements ITerrainFactory
 	{
 		GridyTerrainMap <Tile, Color> terrain = new GridyTerrainMap <Tile, Color>( width, height, cellsize, 1 );
 		int startIt = 215;
-		int endIt = 280;
+		int endIt = 300;
 		double xstart = centerx - scale * width;
 		double xend = centerx + scale * width;
 		double ystart = centery - scale * height;

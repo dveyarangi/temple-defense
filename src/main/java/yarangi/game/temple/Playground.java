@@ -9,6 +9,7 @@ import yarangi.game.temple.controllers.ControlLook;
 import yarangi.game.temple.controllers.TempleController;
 import yarangi.game.temple.model.EffectUtils;
 import yarangi.game.temple.model.enemies.swarm.Swarm;
+import yarangi.game.temple.model.enemies.swarm.SwarmDebugOverlay;
 import yarangi.game.temple.model.enemies.swarm.SwarmFactory;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.temple.model.temple.BattleInterface;

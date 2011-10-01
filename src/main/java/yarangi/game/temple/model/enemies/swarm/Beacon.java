@@ -64,6 +64,20 @@ public class Beacon implements IBeacon
 		unpassable = false;
 	}
 	
+	public void decayDanger(long time)
+	{
+//		System.out.println(dangerFactor.getAverage());
+		double dt = time - this.time;
+//		if(dangerFactor.getSum() != 0)
+//			System.out.println(dangerFactor.getSum() + " : " + dt * Swarm.DANGER_FACTOR_DECAY);
+		dangerFactor.setSum(dangerFactor.getSum() - dt * Swarm.DANGER_FACTOR_DECAY);
+		if(dangerFactor.getSum() < 0)
+		{
+			dangerFactor.reset();
+		}
+		this.time = time; 
+	}
+	
 	public boolean isDeadly(double damageThreshold)
 	{
 		return getDangerFactor() > damageThreshold;
@@ -111,7 +125,7 @@ public class Beacon implements IBeacon
 		return time != 0;
 	}
 
-	public void setUnpassable() { this.unpassable = true; }
+	public void setUnpassable(boolean b) { this.unpassable = b; }
 	/* (non-Javadoc)
 	 * @see yarangi.game.temple.model.enemies.swarm.IBeacon#isUnpassable()
 	 */

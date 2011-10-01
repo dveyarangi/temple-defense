@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import yarangi.game.temple.model.weapons.Weapon;
+import yarangi.graphics.colors.MaskUtil;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.actions.ActionController;
 import yarangi.graphics.quadraturin.actions.IAction;
@@ -27,6 +28,8 @@ public class OrdersActionController extends ActionController
 	private Vector2D target;
 	
 	private Look <OrdersActionController> look = new OrdersActionLook();
+	
+	private byte [] mask = MaskUtil.createCircleMask( 8 );
 	
 	private ISpatialFilter <IEntity> filter = new ISpatialFilter <IEntity> ()
 	{

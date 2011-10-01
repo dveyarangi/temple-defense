@@ -18,6 +18,7 @@ import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
+import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.graphics.quadraturin.terrain.Tile;
 import yarangi.math.FastMath;
 import yarangi.math.Vector2D;
@@ -48,15 +49,14 @@ public class Swarm extends Entity
 	private SpawnNode currNode;
 	
 	static final int MIN_DANGER_FACTOR = 0;
-	static final int MAX_DANGER_FACTOR = 1000;
+	static final int MAX_DANGER_FACTOR = 100;
 	
-	static final double DANGER_FACTOR_DECAY = 1./10000.;
-	
+	static final double DANGER_FACTOR_DECAY = 1./1000.;
+	static final double OMNISCIENCE_PERIOD = 100.;
 	final ICollisionHandler <SwarmAgent> agentCollider;
-
 	
-	private Damage MATTER_DAMAGE = new Damage(1000, 0, 0, 0);
-	 	
+	private Damage MATTER_DAMAGE = new Damage(12, 0, 0, 0);
+	final GridyTerrainMap<Tile, Color> terrain;
 	/**
 	 * 
 	 * @param worldSize
@@ -64,17 +64,18 @@ public class Swarm extends Entity
 	 */
 	public Swarm(int worldSize, Scene _scene)
 	{
+		int cellsize = (int)((float)worldSize / (float)WSIZE);
 		
 //		setLook(Dummy.LOOK);
 		beacons = new AStarNode[WSIZE][WSIZE];
 		
-		cellsize = (float)worldSize / (float)WSIZE;
 		
 		halfSize = worldSize / 2;
 		this.scene = _scene;
 		
-		this.toNodeIdx = (double)WSIZE / (double)(worldSize);
+		terrain = (GridyTerrainMap<Tile, Color>)_scene.getWorldVeil().getTerrain();
 		
+		this.toNodeIdx = (double)WSIZE / (double)(worldSize);
 		
 		for(int i = 0; i < WSIZE; i ++)
 		for(int j = 0; j < WSIZE; j ++)
@@ -118,8 +119,10 @@ public class Swarm extends Entity
 					else
 					if( target instanceof Tile || target instanceof Matter)
 					{
-//						setUnpassable(source);
-						setDanger(source, source.getIntegrity().hit(MATTER_DAMAGE));
+//						terrain.consume( source.getArea().getRefPoint().x(), 
+//								source.getArea().getRefPoint().y(), 10 );
+						setUnpassable(source);
+//						setDanger(source, source.getIntegrity().hit(MATTER_DAMAGE));
 //						if(source.getIntegrity().getHitPoints() <= 0)
 						{
 							source.markDead();
@@ -227,7 +230,7 @@ public class Swarm extends Entity
 		int y = toBeaconIdx(agent.getArea().getRefPoint().y());
 		
 		Beacon beacon = beacons[x][y];
-		beacon.setUnpassable();
+		beacon.setUnpassable(true);
 	}
 
 
@@ -261,6 +264,7 @@ public class Swarm extends Entity
 		}
 		public void unmarkOpen() { open = false; }
 		public boolean isOpen() { return open; }
+
 	}
 	
 	public class SpawnNode
@@ -280,7 +284,6 @@ public class Swarm extends Entity
 	{
 		// if we here, it must be debug:
 		this.getLook().render(gl, time, this, context);
-
 	}
 
 	public void nextNode() 
@@ -295,9 +298,13 @@ public class Swarm extends Entity
 
 	public IBeacon getBeacon(Vector2D point)
 	{
-		int px = toBeaconIdx(point.x());
-		int py = toBeaconIdx(point.y());
-		return beacons[px][py];
+		return beacons[toBeaconIdx( point.x() )][ toBeaconIdx( point.y() )];
+	}
+
+	public boolean isOmniUnpassable(int x, int y)
+	{
+		return !terrain.getCell( toBeaconCoord( x ), toBeaconCoord( y ) ).getProperties().isEmpty();
+				
 	}
 
 }

@@ -21,6 +21,8 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 	private int flowRadius;
 	   ExecutorService executor = Executors.newFixedThreadPool(3);
 
+	private long lastOmniscienceTime = System.currentTimeMillis();
+
 	FutureTask<String> future = null;
 	public PathingBehavior(int flowRadius)
 	{
@@ -46,7 +48,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 	               {
 	                   public String call()
 	                   {
-	               			markPath(ox, oy, tx, ty, swarm.getWorldSize(), swarm.getBeacons());
+	               			markPath(ox, oy, tx, ty, swarm);
                 	   
 	                       return null;
 	                   }
@@ -57,9 +59,10 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 		return false;
 	}	
 	
-	public void markPath(int ox, int oy, int tx, int ty, int WSIZE, AStarNode [][] beacons)
+	public void markPath(int ox, int oy, int tx, int ty, Swarm swarm)
 	{
-	
+		int WSIZE = swarm.getWorldSize();
+		AStarNode [][] beacons = swarm.getBeacons();
 		PriorityQueue <AStarNode> openNodes = 
 					new PriorityQueue <AStarNode> (1000, new Comparator <AStarNode> () {
 			@Override
@@ -74,6 +77,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 		AStarNode temp;
 		
 		long time = System.currentTimeMillis();
+		int omniscienceCount = 0;//(int)((time - lastOmniscienceTime) / Swarm.OMNISCIENCE_PERIOD);
 		boolean tentativeIsBetter;
 		int cx = ox, cy = oy, x, y;
 		boolean pathFound = false;
@@ -95,6 +99,8 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 				break;
 			}
 			
+
+			
 			tentativeIsBetter = false;
 			for(int dx = -1; dx <= 1; dx ++)
 			for(int dy = -1; dy <= 1; dy ++)
@@ -110,11 +116,27 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 						continue;
 				
 					if(temp.isUnpassable())
-						continue;
+					{
+						if(omniscienceCount == 0)
+							continue;
+						if(swarm.isOmniUnpassable(temp.getX(), temp.getY()))
+							continue;
+						else
+							temp.setUnpassable(false);
+						System.out.println(temp.isUnpassable());
+						lastOmniscienceTime = time;
+						omniscienceCount --;
+					}
+					
 					if(temp.isDeadly(SpawningBehavior.AGENT_HEALTH))
 						continue;
 					
-					double tentative = curr.g + ((dx == 0 || dy == 0) ? 1 : FastMath.ROOT_2);
+					if(!temp.isOpen()) // not yet visited
+						temp.decayDanger(time);
+					
+					double tentative = curr.g + 
+								((dx == 0 || dy == 0) ? 1 : FastMath.ROOT_2) + 
+								temp.getDangerFactor();
 //					if(temp == null)
 //						temp = beacons[x][y] = new AStarNode(x, y);
 					
@@ -122,7 +144,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 					if(!temp.isOpen()) // not yet visited
 					{
 						temp.markOpen();
-						temp.update(temp.getDangerFactor() - (time - temp.getTime())*Swarm.DANGER_FACTOR_DECAY);
+//						temp.decayDanger(time);
 					}
 					else
 					if(tentative < temp.g) // is better than before
@@ -139,7 +161,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 					
 					temp.origin = curr;
 					temp.g = tentative;
-					temp.h = temp.getDangerFactor()*10; // TODO: should be smarter
+					temp.h = Math.sqrt((x-tx)*(x-tx) + (y-ty)*(y-ty));
 					temp.f = temp.g + temp.h;
 					openNodes.add(temp); // reinstalling the node to OPEN queue with new priority
 				}
