@@ -1,26 +1,19 @@
 package yarangi.game.temple.model.terrain;
 
-import java.util.List;
-
 import javax.media.opengl.GL;
 
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.grid.TileGridLook;
-import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.graphics.quadraturin.terrain.Cell;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.graphics.quadraturin.terrain.Tile;
 import yarangi.graphics.textures.TextureUtils;
-import yarangi.graphics.textures.TextureUtils.FBOHandle;
-import yarangi.math.BitUtils;
-import yarangi.spatial.IGridListener;
 
-public class GridyTerrainLook extends TileGridLook<Tile>
+public class GridyTerrainLook extends TileGridLook<Tile, GridyTerrainMap<Tile, Color>>
 {
 
 	@Override
-	protected void renderTile(GL gl, Cell<Tile> cell, double cellsize)
+	protected void renderTile(GL gl, Cell<Tile> cell, GridyTerrainMap<Tile, Color> grid)
 	{
 		Tile chunk = cell.getProperties();
 		if(chunk == null)
@@ -29,7 +22,7 @@ public class GridyTerrainLook extends TileGridLook<Tile>
 		if(chunk.hasTexture())
 			TextureUtils.destroyTexture(gl, chunk.getTextureId());
 		
-		int texId = TextureUtils.createBitmapTexture2D( gl, (int)cellsize, (int)cellsize, chunk.getPixels(), false );
+		int texId = TextureUtils.createBitmapTexture2D( gl, grid.getCellSize(), grid.getCellSize(), chunk.getPixels(), false );
 		chunk.setTextureId( texId );
 			
 		gl.glDisable( GL.GL_DEPTH_TEST );

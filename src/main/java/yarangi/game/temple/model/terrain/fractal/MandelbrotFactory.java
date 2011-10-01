@@ -37,7 +37,7 @@ public class MandelbrotFactory implements ITerrainFactory
 	{
 		GridyTerrainMap <Tile, Color> terrain = new GridyTerrainMap <Tile, Color>( width, height, cellsize, 1 );
 		int startIt = 215;
-		int endIt = 300;
+		int endIt = 250;
 		double xstart = centerx - scale * width;
 		double xend = centerx + scale * width;
 		double ystart = centery - scale * height;
