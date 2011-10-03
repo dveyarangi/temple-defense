@@ -108,6 +108,7 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 			gl.glEnd();
 			
 			gl.glColor4f(0.3f, 0, 0.7f+curr, curr*1f);
+//			System.out.println(curr);
 			gl.glBegin(GL.GL_QUADS);
 			gl.glVertex3f((float)(x), (float)(y), 0);
 			gl.glVertex3f((float)(x), (float)(y+size), 0);

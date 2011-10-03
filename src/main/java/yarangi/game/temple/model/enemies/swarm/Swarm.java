@@ -1,8 +1,10 @@
 package yarangi.game.temple.model.enemies.swarm;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.media.opengl.GL;
 
@@ -45,7 +47,7 @@ public class Swarm extends Entity implements IGrid
 	private SpawnNode currNode;
 	
 	static final int MIN_DANGER_FACTOR = 0;
-	static final int MAX_DANGER_FACTOR = 100;
+	static final int MAX_DANGER_FACTOR = 50;
 	
 	static final double DANGER_FACTOR_DECAY = 1./10000.;
 	static final double OMNISCIENCE_PERIOD = 100.;
@@ -53,7 +55,7 @@ public class Swarm extends Entity implements IGrid
 	
 	private IGridListener <Cell<Beacon>> listener;
 	
-	private List <Cell<Beacon>> modifiedCells;
+	private Set <Cell<Beacon>> modifiedCells;
 	/**
 	 * 
 	 * @param worldSize
@@ -85,7 +87,7 @@ public class Swarm extends Entity implements IGrid
 //			System.out.println(beacons[i][j].getFlow());
 		}
 		
-		modifiedCells =  new LinkedList <Cell<Beacon>> ();
+		modifiedCells =  new HashSet <Cell<Beacon>> ();
 	}
 
 	public void addSpawnNode(double x, double y)
@@ -176,6 +178,23 @@ public class Swarm extends Entity implements IGrid
 		{
 			Beacon beacon = beacons[x][y];
 			beacon.update(damage);
+			cellModified( beacon.getX(), beacon.getY() );
+			int i, j;
+			for(int dx = -2; dx <= 2; dx ++)
+				for(int dy = -2; dy <= 2; dy ++)
+				{
+					if(dx == 0 && dy == 0)
+						continue;
+					i = x + dx;
+					if(i < 0 || i >= WSIZE) continue;
+					
+					j = y + dy;
+					if(j < 0 || j >= WSIZE) continue;
+					
+					beacon = beacons[i][j];
+					beacon.update( damage/(dx+dy) );
+					
+				}
 		}
 	}
 	public void setUnpassable(double x, double y) {
@@ -193,9 +212,9 @@ public class Swarm extends Entity implements IGrid
 					if(dx == 0 && dy == 0)
 						continue;
 						di = i + dx;
-						if(i < 0 || x >= WSIZE) continue;
+						if(di < 0 || di >= WSIZE) continue;
 						dj = j + dy;
-						if(y < 0 || y >= WSIZE) continue;
+						if(dj < 0 || dj >= WSIZE) continue;
 						
 //						setDanger(source, source.getIntegrity().hit(MATTER_DAMAGE));
 						beacons[di][dj].setUnpassable(true);
@@ -296,7 +315,7 @@ public class Swarm extends Entity implements IGrid
 	void fireGridModification()
 	{
 		listener.cellsModified( modifiedCells );
-		modifiedCells = new LinkedList <Cell<Beacon>> ();
+		modifiedCells = new HashSet <Cell<Beacon>> ();
 	}
 	
 	public void setModificationListener(IGridListener <Cell<Beacon>>listener)
