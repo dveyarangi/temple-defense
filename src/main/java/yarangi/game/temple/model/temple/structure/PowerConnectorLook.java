@@ -2,7 +2,7 @@ package yarangi.game.temple.model.temple.structure;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
@@ -18,7 +18,7 @@ public class PowerConnectorLook implements Look <PowerConnector>
 
 	@Override
 	public void render(GL gl, double time, PowerConnector entity,
-			IRenderingContext context) 
+			RenderingContext context) 
 	{
 		
 /*		AABB aabb = entity.getAABB();

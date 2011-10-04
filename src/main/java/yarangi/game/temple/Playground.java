@@ -9,6 +9,7 @@ import yarangi.game.temple.controllers.ControlLook;
 import yarangi.game.temple.controllers.TempleController;
 import yarangi.game.temple.model.EffectUtils;
 import yarangi.game.temple.model.enemies.swarm.Swarm;
+import yarangi.game.temple.model.enemies.swarm.SwarmDebugOverlay;
 import yarangi.game.temple.model.enemies.swarm.SwarmFactory;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.temple.model.temple.BattleInterface;
@@ -25,6 +26,7 @@ import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.game.temple.model.weapons.TrackingBehavior;
 import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.colors.Color;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.QuadVoices;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.config.SceneConfig;
@@ -33,6 +35,7 @@ import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.simulations.Body;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
+import yarangi.graphics.quadraturin.terrain.Tile;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
@@ -48,7 +51,6 @@ public class Playground extends Scene
 //	private int worldWidth = 1000;
 //	private int worldHeight = 1000;
 	
-	public static int WORLD_SIZE = 1500;
 	private IntellectCore core;
 	public Playground(SceneConfig config, QuadVoices voices)
 	{
@@ -139,9 +141,11 @@ public class Playground extends Scene
 		
 //		KolbasaFactory.generateKolbasaMaze( this );
 		
-		Swarm swarm = SwarmFactory.createSwarm(WORLD_SIZE, this, 5);
-//		swarm.setLook(new SwarmDebugOverlay()); 
-		swarm.setLook(Dummy.LOOK);
+		Swarm swarm = SwarmFactory.createSwarm(config.getWidth(), this, 8);
+		SwarmDebugOverlay swarmLook = new SwarmDebugOverlay();
+		swarm.setModificationListener( swarmLook );
+		swarm.setLook(swarmLook); 
+//		swarm.setLook(Dummy.LOOK);
 		addEntity(swarm);
 		
 		ICollisionHandler<Projectile> projectileCollider = new ICollisionHandler <Projectile> ()
@@ -150,7 +154,7 @@ public class Playground extends Scene
 			@Override
 			public boolean setImpactWith(Projectile source, IPhysicalObject target)
 			{
-				if(target instanceof Matter || target instanceof TempleEntity)
+				if( target instanceof Tile || target instanceof Matter || target instanceof TempleEntity)
 				{
 					source.markDead();
 					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldVeil(), new Color(1,0,0,0), 4 );
@@ -202,15 +206,15 @@ public class Playground extends Scene
 		}
 	}*/
 	
-	public void init(GL gl)
+	public void init(GL gl, IRenderingContext context)
 	{
-		super.init(gl);
+		super.init(gl, context);
 		gl.glClearColor(0.0f,0.0f, 0.0f, 0.0f);
 	}
 	
-	public void destroy(GL gl)
+	public void destroy(GL gl, IRenderingContext context)
 	{
-		super.destroy(gl);
+		super.destroy(gl, context);
 		core.shutdown();
 	}
 

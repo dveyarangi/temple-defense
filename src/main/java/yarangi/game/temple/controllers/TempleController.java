@@ -11,26 +11,23 @@ import yarangi.game.temple.model.temple.ObserverEntity;
 import yarangi.game.temple.model.temple.ObserverLook;
 import yarangi.game.temple.model.temple.StructureInterface;
 import yarangi.game.temple.model.temple.TempleEntity;
-import yarangi.game.temple.model.terrain.Matter;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.actions.ActionController;
-import yarangi.graphics.quadraturin.events.CursorEvent;
 import yarangi.graphics.quadraturin.events.CursorListener;
-import yarangi.graphics.quadraturin.objects.IVeilEntity;
-import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.objects.Entity;
+import yarangi.graphics.quadraturin.objects.IVeilEntity;
 import yarangi.graphics.quadraturin.objects.Sensor;
+import yarangi.graphics.quadraturin.terrain.Tile;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
 import yarangi.spatial.IAreaChunk;
 import yarangi.spatial.ISpatialSensor;
-
+ 
 public class TempleController extends Entity implements CursorListener
 {
-
-	private static final long serialVersionUID = -2094957235603223096L;
 
 	private TempleEntity temple;
 	
@@ -85,7 +82,7 @@ public class TempleController extends Entity implements CursorListener
 
 	public TempleEntity getTemple() { return temple; }
 
-	public void onCursorMotion(CursorEvent event) 
+	public void onCursorMotion(ICursorEvent event) 
 	{
 		cursorLocation = event.getWorldLocation();
 		highlighted = event.getEntity();
@@ -129,15 +126,16 @@ public class TempleController extends Entity implements CursorListener
 
 	public void objectObserved(Entity object) { battleInterface.objectObserved(object); }
 
-	class LOSSensor implements ISpatialSensor <IEntity> 
+	class LOSSensor implements ISpatialSensor <Tile> 
 	{
 		private boolean hasLOS = true;
 		public boolean hasLOS() { return hasLOS; }
 
 		@Override
-		public boolean objectFound(IAreaChunk chunk, IEntity object)
+		public boolean objectFound(IAreaChunk chunk, Tile object)
 		{
-			if(object instanceof Matter)
+			if(object.isAlive())
+//			if(object instanceof Tile)
 			{
 				hasLOS = false;
 				return true;
@@ -153,15 +151,15 @@ public class TempleController extends Entity implements CursorListener
 	public boolean testLOS(double x, double y, double x2, double y2)
 	{
 		LOSSensor sensor = new LOSSensor();
-		scene.getEntityIndex().query( sensor, x, y, x2-x, y2-y );
+//		scene.getEntityIndex().query( sensor, x, y, x2-x, y2-y );
+		scene.getWorldVeil().getTerrain().query( sensor, x, y, x2-x, y2-y );
 		
-//		scene.getWorldVeil().getTerrain().query( sensor, x, y, x2-x, y2-y );
 		return sensor.hasLOS();
 	}
 
 	public ActionController getActionController()
 	{
-		return actionController;
+		 return actionController;
 	}
 
 

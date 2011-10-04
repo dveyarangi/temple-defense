@@ -5,14 +5,14 @@ import javax.media.opengl.GL;
 import yarangi.game.temple.model.temple.Platform;
 import yarangi.game.temple.model.temple.structure.Hexagon;
 import yarangi.game.temple.model.temple.structure.MeshNode;
-import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 
 public class PlatformLook implements Look <Platform>
 {
 
 
-	public void render(GL gl, double time, Platform platform, IRenderingContext context) 
+	public void render(GL gl, double time, Platform platform, RenderingContext context) 
 	{
 		Hexagon hexagon = platform.getHexagon();
 //		gl.glColor3f(0.5f, 0.2f, 1.0f);

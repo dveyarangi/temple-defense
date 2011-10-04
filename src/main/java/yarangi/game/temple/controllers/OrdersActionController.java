@@ -7,12 +7,15 @@ import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.actions.ActionController;
 import yarangi.graphics.quadraturin.actions.IAction;
-import yarangi.graphics.quadraturin.events.CursorEvent;
+import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.events.UserActionEvent;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
+import yarangi.graphics.quadraturin.terrain.Tile;
 import yarangi.math.Vector2D;
 import yarangi.spatial.ISpatialFilter;
+
 
 public class OrdersActionController extends ActionController
 {
@@ -33,7 +36,6 @@ public class OrdersActionController extends ActionController
 		{
 			if(entity instanceof Weapon)
 			{
-//				System.out.println("picked entity: " + entity);
 				return true;
 			}
 			return false;
@@ -42,21 +44,39 @@ public class OrdersActionController extends ActionController
 	};
 
 	
-	public OrdersActionController(Scene scene)
+	public OrdersActionController(final Scene scene)
 	{
 		super(scene);
 //		actions.put("cursor-moved", temple.getController());
-		actions.put("mouse-drag", new IAction()
+		actions.put("mouse-left-drag", new IAction()
 		{
 
 			@Override
 			public void act(UserActionEvent event)
 			{
 				target = event.getCursor().getWorldLocation();
+				// TODO: test olnly
+				((GridyTerrainMap<Tile,?>)
+						scene.getWorldVeil().getTerrain()).consume( target.x(), target.y(), 10 );
+				
 				if(dragged != null || event.getEntity() == null)
 					return;
 				dragged = event.getEntity();
 				target = event.getCursor().getWorldLocation();
+			}
+			
+		});
+		actions.put("mouse-right-drag", new IAction()
+		{
+
+			@Override
+			public void act(UserActionEvent event)
+			{
+				// TODO: test olnly
+				target = event.getCursor().getWorldLocation();
+				((GridyTerrainMap<Tile,?>)
+						scene.getWorldVeil().getTerrain()).produce( target.x(), target.y(), 10 );
+				
 			}
 			
 		});
@@ -74,7 +94,6 @@ public class OrdersActionController extends ActionController
 				dragged.getArea().getRefPoint().setxy( location.x(), location.y() );
 				dragged = null;
 			}});
-		
 //		actions.put( "drag", value )
 /*		actions.put("hold-child", new IAction() {
 			
@@ -105,7 +124,7 @@ public class OrdersActionController extends ActionController
 
 
 	@Override
-	public void onCursorMotion(CursorEvent event)
+	public void onCursorMotion(ICursorEvent event)
 	{
 		hovered = event.getEntity();
 	}
@@ -113,5 +132,11 @@ public class OrdersActionController extends ActionController
 	public IEntity getDragged() { return dragged; }
 	public Vector2D getTarget() { return target; }
 	public IEntity getHovered() { return hovered; }
+
+/*	@Override
+	public void display(GL gl, double time, RenderingContext context)
+	{
+		look.render( gl, time, this, context );
+	}*/
 
 }

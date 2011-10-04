@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.graphics.quadraturin.RenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 
 public class LightningBeamLook implements Look <LightningBeam> 
@@ -12,7 +12,7 @@ public class LightningBeamLook implements Look <LightningBeam>
 	public static Color beamColor = new Color(0,255,127, 255);
 
 
-	public void render(GL gl, double time, LightningBeam beam, IRenderingContext context) 
+	public void render(GL gl, double time, LightningBeam beam, RenderingContext context) 
 	{
 //		TODO: not working
 /*		LightningBeamNode beamNode = null;
