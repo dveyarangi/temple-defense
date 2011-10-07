@@ -47,9 +47,9 @@ public class Swarm extends Entity implements IGrid
 	private SpawnNode currNode;
 	
 	static final int MIN_DANGER_FACTOR = 0;
-	static final int MAX_DANGER_FACTOR = 50;
+	static final int MAX_DANGER_FACTOR = 1000;
 	
-	static final double DANGER_FACTOR_DECAY = 1./10000.;
+	static final double DANGER_FACTOR_DECAY = 1./1000.;
 	static final double OMNISCIENCE_PERIOD = 100.;
 	final GridyTerrainMap<Tile, Color> terrain;
 	
@@ -197,7 +197,7 @@ public class Swarm extends Entity implements IGrid
 				}
 		}
 	}
-	public void setUnpassable(double x, double y) {
+/*	public void setUnpassable(double x, double y) {
 		int i = toBeaconIdx(x);
 		int j = toBeaconIdx(y);
 		int di, dj;
@@ -206,7 +206,7 @@ public class Swarm extends Entity implements IGrid
 			Beacon beacon = beacons[i][j];
 			beacon.setUnpassable(true);
 			cellModified( beacon.getX(), beacon.getY() );
-/*			for(int dx = -1; dx <= 1; dx ++)
+			for(int dx = -1; dx <= 1; dx ++)
 				for(int dy = -1; dy <= 1; dy ++)
 					{
 					if(dx == 0 && dy == 0)
@@ -219,9 +219,9 @@ public class Swarm extends Entity implements IGrid
 //						setDanger(source, source.getIntegrity().hit(MATTER_DAMAGE));
 						beacons[di][dj].setUnpassable(true);
 //						System.out.println(x + " " + y + " ::: " + beacons[x][y].getFlow());
-					}*/
+					}
 		}
-	}
+	}*/
 
 
 	
@@ -254,6 +254,11 @@ public class Swarm extends Entity implements IGrid
 		}
 		public void unmarkOpen() { open = false; }
 		public boolean isOpen() { return open; }
+		public void reset()
+		{
+			g = h = f = 0;
+			origin = null;
+		}
 
 	}
 	

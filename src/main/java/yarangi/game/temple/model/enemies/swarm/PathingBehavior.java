@@ -130,8 +130,8 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 						omniscienceCount --;*/
 					}
 					
-					if(temp.isDeadly(SpawningBehavior.AGENT_HEALTH))
-						continue;
+//					if(temp.isDeadly(SpawningBehavior.AGENT_HEALTH))
+//						continue;
 					
 					if(!temp.isOpen()) // not yet visited
 						temp.decayDanger(time);
@@ -146,7 +146,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 					if(!temp.isOpen()) // not yet visited
 					{
 						temp.markOpen();
-//						temp.decayDanger(time);
+						temp.decayDanger(time);
 					}
 					else
 					if(tentative < temp.g) // is better than before
@@ -214,13 +214,13 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 		for(AStarNode node : openNodes)
 		{
 			node.unmarkOpen();
-			node.origin = null;
+			node.reset();
 		}
 		// TODO: replace with pass id check:
 		for(AStarNode node : closedNodes)
 		{
 			node.unmarkClosed();
-			node.origin = null;
+			node.reset();
 		}
 		
 		swarm.fireGridModification();

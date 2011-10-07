@@ -112,7 +112,7 @@ public class SwarmFactory
 					{
 //						terrain.consume( source.getArea().getRefPoint().x(), 
 //								source.getArea().getRefPoint().y(), 10 );
-						swarm.setUnpassable(target.getArea().getRefPoint().x(), target.getArea().getRefPoint().y());
+//						swarm.setUnpassable(target.getArea().getRefPoint().x(), target.getArea().getRefPoint().y());
 						
 						swarm.setDanger(source, source.getIntegrity().hit(MATTER_DAMAGE));
 //						if(source.getIntegrity().getHitPoints() <= 0)
