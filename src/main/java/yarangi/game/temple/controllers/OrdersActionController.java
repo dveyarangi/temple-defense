@@ -54,15 +54,16 @@ public class OrdersActionController extends ActionController
 			@Override
 			public void act(UserActionEvent event)
 			{
-				target = event.getCursor().getWorldLocation();
-				// TODO: test olnly
+				ICursorEvent cursor = event.getCursor();
+				target = cursor.getWorldLocation();
+				// TODO: test olnly 
 				((GridyTerrainMap<Tile,?>)
 						scene.getWorldVeil().getTerrain()).consume( target.x(), target.y(), 10 );
 				
-				if(dragged != null || event.getEntity() == null)
+				if(dragged != null || cursor.getEntity() == null)
 					return;
-				dragged = event.getEntity();
-				target = event.getCursor().getWorldLocation();
+				dragged = cursor.getEntity();
+				target = cursor.getWorldLocation();
 			}
 			
 		});
