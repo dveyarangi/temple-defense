@@ -18,7 +18,6 @@ import yarangi.game.temple.model.temple.ObserverEntity;
 import yarangi.game.temple.model.temple.ObserverLook;
 import yarangi.game.temple.model.temple.StructureInterface;
 import yarangi.game.temple.model.temple.TempleEntity;
-import yarangi.game.temple.model.terrain.KolbasaFactory;
 import yarangi.game.temple.model.terrain.Matter;
 import yarangi.game.temple.model.weapons.Minigun;
 import yarangi.game.temple.model.weapons.MinigunLook;
@@ -225,4 +224,9 @@ public class Playground extends Scene
 	}
 	
 	public String toString() { return "playground scene"; }
+	
+	public void toggleSwarmOverlay()
+	{
+		
+	}
 }
