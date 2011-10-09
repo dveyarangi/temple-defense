@@ -37,7 +37,7 @@
 					{ "actionId" : "mouse-release", "buttonId" : 0,    "modeId" : 3 },
 					{ "actionId" : "fire-on",       "buttonId" : -1,   "modeId" : 2 },
 					{ "actionId" : "hold-child",    "buttonId" : -2,   "modeId" : 1 },
-					{ "actionId" : "swarm-debug",   "buttonId" : 112,   "modeId" : 2 }
+					{ "actionId" : "swarm-debug",   "buttonId" : 84,   "modeId" : 3 }
 				],
 		"binding action ids" : " 
 					PRESSED = 1;

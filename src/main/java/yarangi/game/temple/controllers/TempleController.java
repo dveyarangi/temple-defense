@@ -2,6 +2,8 @@ package yarangi.game.temple.controllers;
 
 import javax.media.opengl.GL;
 
+import yarangi.game.temple.Debug;
+import yarangi.game.temple.Playground;
 import yarangi.game.temple.actions.DefaultActionFactory;
 import yarangi.game.temple.ai.IntellectCore;
 import yarangi.game.temple.model.temple.BattleCommander;
@@ -70,6 +72,7 @@ public class TempleController extends Entity implements CursorListener
 		
 		actionController = new OrdersActionController(scene);
 		DefaultActionFactory.fillNavigationActions(scene, actionController);
+		Debug.appendDebugActions( actionController.getActions(), (Playground) scene );
 		
 		// TODO: control modes
 		scene.setActionController(actionController);

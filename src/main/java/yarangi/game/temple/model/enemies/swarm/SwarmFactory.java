@@ -8,11 +8,13 @@ import yarangi.game.temple.model.terrain.Matter;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.Scene;
+import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
+import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.graphics.quadraturin.terrain.Tile;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
@@ -29,34 +31,6 @@ public class SwarmFactory
 	{
 		
 		final Swarm swarm = new Swarm (worldSize, scene);
-		swarm.setArea(new Point(0, 0));
-		final IBehaviorState<Swarm> rotating = new RotatingBehavior();
-		final IBehaviorState<Swarm> pathing = new PathingBehavior(1);
-		final IBehaviorState<Swarm> spawning = new SpawningBehavior(15);
-		final IBehaviorState<Swarm> shifting = new ShiftBehavior();
-		
-		FSMBehavior <Swarm> behavior = new FSMBehavior <Swarm> (shifting);
-		behavior.link(shifting, new IBehaviorCondition<Swarm>() {
-			@Override
-			public IBehaviorState<Swarm> nextState(Swarm entity) 
-			{
-				if(RandomUtil.oneOf(5))
-					return pathing;
-				
-				return spawning;
-				
-			}
-		});
-		behavior.link(spawning, new IBehaviorCondition<Swarm>() {
-			@Override
-			public IBehaviorState<Swarm> nextState(Swarm entity) { return shifting; }
-		});
-		behavior.link(pathing, new IBehaviorCondition<Swarm>() {
-			@Override
-			public IBehaviorState<Swarm> nextState(Swarm entity) { return shifting; }
-		});
-		
-		swarm.setBehavior(behavior);
 		
 /*		PickingSensor <IEntity> sensor = new PickingSensor<IEntity>( null );
 		double r , a;
@@ -80,7 +54,7 @@ public class SwarmFactory
 			swarm.addSpawnNode(r*Math.cos(a), r*Math.sin(a));
 		}
 		
-		
+		final GridyTerrainMap <Tile, Color> terrain = (GridyTerrainMap <Tile, Color>)scene.getWorldVeil().getTerrain();
 		ICollisionHandler <SwarmAgent> agentCollider = new ICollisionHandler <SwarmAgent> (){
 
 			@Override
@@ -110,8 +84,8 @@ public class SwarmFactory
 					else
 					if( target instanceof Tile || target instanceof Matter)
 					{
-//						terrain.consume( source.getArea().getRefPoint().x(), 
-//								source.getArea().getRefPoint().y(), 10 );
+						terrain.consume( source.getArea().getRefPoint().x(), 
+								source.getArea().getRefPoint().y(), 15 );
 //						swarm.setUnpassable(target.getArea().getRefPoint().x(), target.getArea().getRefPoint().y());
 						
 						swarm.setDanger(source, source.getIntegrity().hit(MATTER_DAMAGE));
@@ -134,5 +108,35 @@ public class SwarmFactory
 	}
 	
 //	};
-	
+	public static Behavior <Swarm> createDefaultBehavior()
+	{
+//		swarm.setArea(new Point(0, 0));
+		final IBehaviorState<Swarm> rotating = new RotatingBehavior();
+		final IBehaviorState<Swarm> pathing = new PathingBehavior(1);
+		final IBehaviorState<Swarm> spawning = new SpawningBehavior(15);
+		final IBehaviorState<Swarm> shifting = new ShiftBehavior();
+		
+		FSMBehavior <Swarm> behavior = new FSMBehavior <Swarm> (shifting);
+		behavior.link(shifting, new IBehaviorCondition<Swarm>() {
+			@Override
+			public IBehaviorState<Swarm> nextState(Swarm entity) 
+			{
+				if(RandomUtil.oneOf(5))
+					return pathing;
+				
+				return spawning;
+				
+			}
+		});
+		behavior.link(spawning, new IBehaviorCondition<Swarm>() {
+			@Override
+			public IBehaviorState<Swarm> nextState(Swarm entity) { return shifting; }
+		});
+		behavior.link(pathing, new IBehaviorCondition<Swarm>() {
+			@Override
+			public IBehaviorState<Swarm> nextState(Swarm entity) { return shifting; }
+		});
+		
+		return behavior;
+	}
 }

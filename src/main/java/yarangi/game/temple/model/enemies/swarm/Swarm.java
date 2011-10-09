@@ -6,14 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import javax.media.opengl.GL;
-
-import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.graphics.colors.Color;
-import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.Scene;
-import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.terrain.Cell;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.graphics.quadraturin.terrain.Tile;
@@ -22,7 +17,7 @@ import yarangi.math.Vector2D;
 import yarangi.spatial.IGrid;
 import yarangi.spatial.IGridListener;
 
-public class Swarm extends Entity implements IGrid
+public class Swarm implements IGrid
 {
 	private int WSIZE ;
 	/**
@@ -49,7 +44,7 @@ public class Swarm extends Entity implements IGrid
 	static final int MIN_DANGER_FACTOR = 0;
 	static final int MAX_DANGER_FACTOR = 1000;
 	
-	static final double DANGER_FACTOR_DECAY = 1./1000.;
+	static final double DANGER_FACTOR_DECAY = 1./100.;
 	static final double OMNISCIENCE_PERIOD = 100.;
 	final GridyTerrainMap<Tile, Color> terrain;
 	
@@ -274,13 +269,6 @@ public class Swarm extends Entity implements IGrid
 		public Vector2D getSpawnLocation() { return spawnLocation; }
 	}
 
-	@SuppressWarnings("unchecked")
-	public void display(GL gl, double time, IRenderingContext context) 
-	{
-		// if we here, it must be debug:
-		this.getLook().render(gl, time, this, context);
-	}
-
 	public void nextNode() 
 	{
 		if(!nodeIterator.hasNext())
@@ -314,11 +302,16 @@ public class Swarm extends Entity implements IGrid
 	
 	public void cellModified(int i, int j)
 	{
+		if(listener == null)
+			return;
 		modifiedCells.add( new Cell<Beacon> (toBeaconCoord( i ), toBeaconCoord( j ), getCellSize(), beacons[i][j]) );
 	}
 
 	void fireGridModification()
 	{
+		if(listener == null)
+			return;
+		
 		listener.cellsModified( modifiedCells );
 		modifiedCells = new HashSet <Cell<Beacon>> ();
 	}
@@ -326,6 +319,7 @@ public class Swarm extends Entity implements IGrid
 	public void setModificationListener(IGridListener <Cell<Beacon>>listener)
 	{
 		this.listener = listener;
+		modifiedCells = new HashSet <Cell<Beacon>> ();
 	}
 
 }

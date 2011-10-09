@@ -29,7 +29,9 @@ import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.QuadVoices;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.config.SceneConfig;
+import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.Dummy;
+import yarangi.graphics.quadraturin.objects.EntityShell;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.simulations.Body;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
@@ -49,6 +51,10 @@ public class Playground extends Scene
 	
 //	private int worldWidth = 1000;
 //	private int worldHeight = 1000;
+	
+	private EntityShell <Swarm> swarmShell;
+	private EntityShell <Swarm> debugSwarmShell;
+	private boolean debugSwarm = false;
 	
 	private IntellectCore core;
 	public Playground(SceneConfig config, QuadVoices voices)
@@ -141,11 +147,13 @@ public class Playground extends Scene
 //		KolbasaFactory.generateKolbasaMaze( this );
 		
 		Swarm swarm = SwarmFactory.createSwarm(config.getWidth(), this, 8);
-		SwarmDebugOverlay swarmLook = new SwarmDebugOverlay();
-		swarm.setModificationListener( swarmLook );
-		swarm.setLook(swarmLook); 
-//		swarm.setLook(Dummy.LOOK);
-		addEntity(swarm);
+		Behavior <Swarm> swarmBehavior = SwarmFactory.createDefaultBehavior();
+		swarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, Dummy.<Swarm>LOOK() );
+		addEntity(swarmShell);
+		
+		SwarmDebugOverlay swarmDebugLook = new SwarmDebugOverlay();
+		swarm.setModificationListener( swarmDebugLook );
+		debugSwarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, swarmDebugLook );
 		
 		ICollisionHandler<Projectile> projectileCollider = new ICollisionHandler <Projectile> ()
 		{
@@ -227,6 +235,18 @@ public class Playground extends Scene
 	
 	public void toggleSwarmOverlay()
 	{
-		
+		if(debugSwarm)
+		{
+			this.addEntity(debugSwarmShell);
+			this.removeEntity( swarmShell );
+			debugSwarm = false;
+		}
+		else
+		{
+			this.removeEntity(debugSwarmShell);
+			this.addEntity( swarmShell );
+			debugSwarm = true;
+		}
+		System.out.println("debug swarm: " + debugSwarm);
 	}
 }

@@ -118,7 +118,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 					if(swarm.isOmniUnpassable(temp.getX(), temp.getY()))
 					{
 //						if(omniscienceCount == 0)
-							continue;
+//							continue;
 //						if(swarm.isOmniUnpassable(temp.getX(), temp.getY()))
 //							continue;
 /*						else
