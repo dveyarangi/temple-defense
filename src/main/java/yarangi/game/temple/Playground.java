@@ -19,6 +19,7 @@ import yarangi.game.temple.model.temple.ObserverLook;
 import yarangi.game.temple.model.temple.StructureInterface;
 import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.game.temple.model.terrain.Matter;
+import yarangi.game.temple.model.terrain.Tile;
 import yarangi.game.temple.model.weapons.Minigun;
 import yarangi.game.temple.model.weapons.MinigunLook;
 import yarangi.game.temple.model.weapons.Projectile;
@@ -36,7 +37,6 @@ import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.simulations.Body;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
-import yarangi.graphics.quadraturin.terrain.Tile;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
@@ -152,7 +152,6 @@ public class Playground extends Scene
 		addEntity(swarmShell);
 		
 		SwarmDebugOverlay swarmDebugLook = new SwarmDebugOverlay();
-		swarm.setModificationListener( swarmDebugLook );
 		debugSwarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, swarmDebugLook );
 		
 		ICollisionHandler<Projectile> projectileCollider = new ICollisionHandler <Projectile> ()
@@ -237,14 +236,14 @@ public class Playground extends Scene
 	{
 		if(debugSwarm)
 		{
-			this.addEntity(debugSwarmShell);
-			this.removeEntity( swarmShell );
+			this.removeEntity( debugSwarmShell );
+			this.addEntity(swarmShell);
 			debugSwarm = false;
 		}
 		else
 		{
-			this.removeEntity(debugSwarmShell);
-			this.addEntity( swarmShell );
+			this.removeEntity(swarmShell);
+			this.addEntity( debugSwarmShell );
 			debugSwarm = true;
 		}
 		System.out.println("debug swarm: " + debugSwarm);

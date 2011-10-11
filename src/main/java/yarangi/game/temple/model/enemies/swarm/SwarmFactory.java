@@ -5,6 +5,7 @@ import yarangi.game.temple.model.EffectUtils;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.game.temple.model.terrain.Matter;
+import yarangi.game.temple.model.terrain.Tile;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.Scene;
@@ -15,10 +16,8 @@ import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
-import yarangi.graphics.quadraturin.terrain.Tile;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
-import yarangi.spatial.Point;
 
 public class SwarmFactory 
 {
@@ -54,7 +53,7 @@ public class SwarmFactory
 			swarm.addSpawnNode(r*Math.cos(a), r*Math.sin(a));
 		}
 		
-		final GridyTerrainMap <Tile, Color> terrain = (GridyTerrainMap <Tile, Color>)scene.getWorldVeil().getTerrain();
+		final GridyTerrainMap <Tile> terrain = (GridyTerrainMap <Tile>)scene.getWorldVeil().<Tile>getTerrain();
 		ICollisionHandler <SwarmAgent> agentCollider = new ICollisionHandler <SwarmAgent> (){
 
 			@Override
@@ -84,8 +83,8 @@ public class SwarmFactory
 					else
 					if( target instanceof Tile || target instanceof Matter)
 					{
-						terrain.consume( source.getArea().getRefPoint().x(), 
-								source.getArea().getRefPoint().y(), 15 );
+//						terrain.consume( source.getArea().getRefPoint().x(), 
+//								source.getArea().getRefPoint().y(), 15 );
 //						swarm.setUnpassable(target.getArea().getRefPoint().x(), target.getArea().getRefPoint().y());
 						
 						swarm.setDanger(source, source.getIntegrity().hit(MATTER_DAMAGE));

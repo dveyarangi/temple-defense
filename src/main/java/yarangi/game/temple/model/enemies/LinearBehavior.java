@@ -15,7 +15,7 @@ public class LinearBehavior implements Behavior<GenericEnemy>
 //		System.out.println(aabb);
 		
 		if(entity.getIntegrity().getHitPoints() == 0)
-			entity.setIsAlive(false);
+			entity.markDead();
 //		System.out.println(entity);
 		return true;
 	}

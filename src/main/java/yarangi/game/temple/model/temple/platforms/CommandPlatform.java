@@ -1,11 +1,19 @@
 package yarangi.game.temple.model.temple.platforms;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.media.opengl.GL;
+
+import yarangi.game.temple.actions.Fireable;
+import yarangi.game.temple.ai.IFeedbackBeacon;
 import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.temple.Platform;
 import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.game.temple.model.temple.TempleStructure;
 import yarangi.game.temple.model.temple.structure.Hexagon;
 import yarangi.game.temple.model.weapons.Weapon;
+import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.spatial.Area;
@@ -67,6 +75,69 @@ public class CommandPlatform extends Platform implements BattleInterface
 	}
 
 	public double getTempleRadius() { return Math.sqrt(temple.getStructure().getBoundingRadiusSquare()); }
+
+	@Override
+	public void destroy(GL gl)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addFireable(Weapon weapon)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Map<Fireable, IEntity> getTargets()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Weapon> getFireables()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IFeedbackBeacon createFeedbackBeacon(Weapon fireable)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void clearObservedObjects()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void objectObserved(IEntity object)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispatchFeedback(IFeedbackBeacon capsule)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public double getBattleScale()
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 
 }

@@ -36,11 +36,11 @@ public class WeaponPlatform extends Platform
 		return battleInterface; 
 	}
 	
-	public void addWeapon(Weapon weapon)
+/*	public void addWeapon(Weapon weapon)
 	{
 		if(weapons.size() > weaponSlots )
 			this.weapons.add(weapon);
 		addChild(weapon);
-	}
+	}*/
 
 }

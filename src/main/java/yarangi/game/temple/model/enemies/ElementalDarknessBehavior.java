@@ -14,7 +14,7 @@ public class ElementalDarknessBehavior implements Behavior<ElementalDarkness>
 		
 		if(entity.getIntegrity().getHitPoints() <= 0)
 		{
-			entity.setIsAlive(false);
+			entity.markDead();
 			return false;
 		}
 //		BezierBubble curve = entity.getCurve();

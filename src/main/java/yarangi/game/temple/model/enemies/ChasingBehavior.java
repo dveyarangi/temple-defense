@@ -15,7 +15,7 @@ public class ChasingBehavior implements Behavior <GenericEnemy>
 //			bbubbleot.setTarget(bubble.getCommandPlatform().getHexagon().getMeshNode(RandomUtil.getRandomInt(6)));
 		if(bubble.getIntegrity().getHitPoints() <= 0)
 		{
-			bubble.setIsAlive(false);
+			bubble.markDead();
 			return false;
 		}
 	
@@ -25,14 +25,13 @@ public class ChasingBehavior implements Behavior <GenericEnemy>
 		double distanceToTarget = Geometry.calcHypot(targetLocation, bubbleLocation);
 
 		Vector2D forceDir = targetLocation.minus(bubbleLocation);
-		double a = Math.atan2(-forceDir.y, -forceDir.x);
+		double a = Math.atan2(-forceDir.y(), -forceDir.x());
 		a += Math.PI/1000f * time;
 //		double switchCoef = targetLocation.getBoundingRadius()*targetLocation.getBoundingRadius()/distanceToTarget;
 //		Vector2D force = forceDir.mul(1-switchCoef).plus(forceDir.rotate(Angles.PI_div_2).mul(switchCoef));
 //		Vector2D force = forceDir.rotate(Angles.PI_div_2).mul(1);
 
-		bubbleLocation.x = distanceToTarget * Math.cos(a);
-		bubbleLocation.y = distanceToTarget * Math.sin(a);
+		bubbleLocation.setxy(distanceToTarget * Math.cos(a), distanceToTarget * Math.sin(a));
 //		force = force.normalize().mul(0.001/*bubble.getEnginePower()*/);
 		
 //		bubble.addForce(force.x, force.y); 

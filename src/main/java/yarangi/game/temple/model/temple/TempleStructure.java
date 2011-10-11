@@ -12,20 +12,17 @@ import yarangi.game.temple.model.temple.platforms.EmptyPlatform;
 import yarangi.game.temple.model.temple.platforms.WeaponPlatform;
 import yarangi.game.temple.model.temple.structure.Connectable;
 import yarangi.game.temple.model.temple.structure.Hexagon;
+import yarangi.game.temple.model.temple.structure.Hexagon.HexagonId;
 import yarangi.game.temple.model.temple.structure.HexagonObserver;
 import yarangi.game.temple.model.temple.structure.MeshNode;
 import yarangi.game.temple.model.temple.structure.PowerConnector;
-import yarangi.game.temple.model.temple.structure.Hexagon.HexagonId;
-import yarangi.game.temple.model.weapons.Minigun;
-import yarangi.game.temple.model.weapons.Weapon;
-import yarangi.graphics.quadraturin.objects.CompositeSceneEntity;
+import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.math.Angles;
 import yarangi.math.Geometry;
 import yarangi.math.Vector2D;
-import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
 
-public class TempleStructure extends CompositeSceneEntity implements Connectable
+public class TempleStructure extends Entity implements Connectable
 {
 
 	private static final long serialVersionUID = 1922785697163737467L;
@@ -51,7 +48,7 @@ public class TempleStructure extends CompositeSceneEntity implements Connectable
 		super();
 		
 		setArea(Area.EMPTY);
-		Hexagon centerHexagon = new Hexagon();
+/*		Hexagon centerHexagon = new Hexagon();
 		
 		this.commandPlatform = new CommandPlatform(temple, centerHexagon);
 		
@@ -113,7 +110,7 @@ public class TempleStructure extends CompositeSceneEntity implements Connectable
 		testWeaponPlatform2.addWeapon(weapon2);
 		controller.addFireable(weapon2);*/
 		
-		Hexagon hiRite = linkHexagon(centerHexagon, Hexagon.HIGH_RIGHT, new Hexagon());
+/*		Hexagon hiRite = linkHexagon(centerHexagon, Hexagon.HIGH_RIGHT, new Hexagon());
 		WeaponPlatform testWeaponPlatform3 = new WeaponPlatform(hiRite, commandPlatform, 10);
 		
 		addChild(testWeaponPlatform3);
@@ -140,7 +137,7 @@ public class TempleStructure extends CompositeSceneEntity implements Connectable
 		
 //		linkPlatform(center, Hexagon.BOTTOM_RIGHT, new Hexagon());
 		
-		centerHexagon.search(new PerimetringHexagonObserver());
+/*		centerHexagon.search(new PerimetringHexagonObserver());
 		
 		
 		setLook(new TempleLook());
@@ -270,7 +267,7 @@ public class TempleStructure extends CompositeSceneEntity implements Connectable
 			do
 			{
 				perimeter.add(node);
-				double distance = Geometry.calcHypotSquare(0,0, node.getLocation().x, node.getLocation().y); 
+				double distance = Geometry.calcHypotSquare(0,0, node.getLocation().x(), node.getLocation().y()); 
 				if ( distance > boundingRadiusSquare)
 					boundingRadiusSquare = distance;
 				
@@ -302,7 +299,7 @@ public class TempleStructure extends CompositeSceneEntity implements Connectable
 	
 	public Vector2D toTempleCoordinates(Vector2D vec)
 	{
-		return toEntityCoordinates(vec.x, vec.y, hexRadius);
+		return toEntityCoordinates(vec.x(), vec.y(), hexRadius);
 	}
 	public Vector2D toTempleCoordinates(double x, double y)
 	{
@@ -315,9 +312,6 @@ public class TempleStructure extends CompositeSceneEntity implements Connectable
 		double cosa = Math.cos(aRad);
 		return new Vector2D(x*scale*cosa-y*scale*sina, x*scale*sina+y*scale*cosa );
 	}	
-
-	@Override
-	public boolean isPickable() { return true; }
 
 
 	public PowerConnector[] getConnectors() { return connectors; }

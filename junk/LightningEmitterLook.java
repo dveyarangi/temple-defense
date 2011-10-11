@@ -1,25 +1,24 @@
-package yarangi.game.temple.model.temple.platforms;
+package yarangi.game.temple.model.weapons;
 
 import javax.media.opengl.GL;
 
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 
-
-public class WeaponPlatformLook implements Look <WeaponPlatform>
+public class LightningEmitterLook implements Look <LightningEmitter>
 {
 
-	public void render(GL gl, double time, WeaponPlatform platform, IRenderingContext context) {
+	public void render(GL gl, double time, LightningEmitter emitter, IRenderingContext context) {
 		// TODO Add look
 		
 	}
 
-	public void init(GL gl, WeaponPlatform entity, IRenderingContext context) {
+	public void init(GL gl, LightningEmitter entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void destroy(GL gl, WeaponPlatform entity, IRenderingContext context) {
+	public void destroy(GL gl, LightningEmitter entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}

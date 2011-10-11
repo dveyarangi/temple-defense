@@ -7,17 +7,17 @@ import java.util.List;
 import java.util.Set;
 
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
+import yarangi.game.temple.model.terrain.Tile;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.terrain.Cell;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
-import yarangi.graphics.quadraturin.terrain.Tile;
 import yarangi.math.FastMath;
 import yarangi.math.Vector2D;
 import yarangi.spatial.IGrid;
 import yarangi.spatial.IGridListener;
 
-public class Swarm implements IGrid
+public class Swarm implements IGrid <Cell<Beacon>>
 {
 	private int WSIZE ;
 	/**
@@ -46,7 +46,7 @@ public class Swarm implements IGrid
 	
 	static final double DANGER_FACTOR_DECAY = 1./100.;
 	static final double OMNISCIENCE_PERIOD = 100.;
-	final GridyTerrainMap<Tile, Color> terrain;
+	final GridyTerrainMap<Tile> terrain;
 	
 	private IGridListener <Cell<Beacon>> listener;
 	
@@ -65,7 +65,7 @@ public class Swarm implements IGrid
 		halfSize = worldSize / 2;
 		this.scene = _scene;
 		
-		terrain = (GridyTerrainMap<Tile, Color>)_scene.getWorldVeil().getTerrain();
+		terrain = (GridyTerrainMap<Tile>)_scene.getWorldVeil().<Tile>getTerrain();
 		
 		this.toNodeIdx = (double)WSIZE / (double)(worldSize);
 		

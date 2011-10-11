@@ -4,11 +4,10 @@ import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.Damageable;
 import yarangi.game.temple.model.Integrity;
 import yarangi.game.temple.model.temple.structure.Hexagon;
-import yarangi.graphics.quadraturin.objects.CompositeSceneEntity;
+import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.spatial.AABB;
-import yarangi.spatial.Area;
 
-public abstract class Platform extends CompositeSceneEntity implements Damageable
+public abstract class Platform extends Entity implements Damageable
 {
 
 	private static final long serialVersionUID = 5435486264209745580L;

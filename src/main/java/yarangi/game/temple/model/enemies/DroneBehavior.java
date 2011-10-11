@@ -10,12 +10,12 @@ public class DroneBehavior implements Behavior<GenericEnemy>
 	public boolean behave(double time, GenericEnemy entity, boolean isVisible) 
 	{
 		Vector2D loc = entity.getArea().getRefPoint();
-		if(loc.x > 800 || loc.y > 800
-		|| loc.x < -800 || loc.y < -800)
-			entity.setIsAlive(false);
+		if(loc.x() >  800 || loc.y() >  800
+		|| loc.x() < -800 || loc.y() < -800)
+			entity.markDead();
 		if(entity.getIntegrity().getHitPoints() <= 0)
 		{
-			entity.setIsAlive(false);
+			entity.markDead();
 			return false;
 		}
 		

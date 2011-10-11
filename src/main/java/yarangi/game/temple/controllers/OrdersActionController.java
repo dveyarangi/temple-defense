@@ -3,7 +3,9 @@ package yarangi.game.temple.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import yarangi.game.temple.model.terrain.Tile;
 import yarangi.game.temple.model.weapons.Weapon;
+import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.actions.ActionController;
 import yarangi.graphics.quadraturin.actions.IAction;
@@ -11,10 +13,12 @@ import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.events.UserActionEvent;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.terrain.Cell;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
-import yarangi.graphics.quadraturin.terrain.Tile;
 import yarangi.math.Vector2D;
+import yarangi.spatial.IAreaChunk;
 import yarangi.spatial.ISpatialFilter;
+import yarangi.spatial.ISpatialSensor;
 
 
 public class OrdersActionController extends ActionController
@@ -28,6 +32,8 @@ public class OrdersActionController extends ActionController
 	private Vector2D target;
 	
 	private Look <OrdersActionController> look = new OrdersActionLook();
+	
+	private GridyTerrainMap<Tile> terrain;
 	
 	private ISpatialFilter <IEntity> filter = new ISpatialFilter <IEntity> ()
 	{
@@ -47,6 +53,8 @@ public class OrdersActionController extends ActionController
 	public OrdersActionController(final Scene scene)
 	{
 		super(scene);
+		
+		terrain = (GridyTerrainMap<Tile>)scene.getWorldVeil().<Tile>getTerrain();
 //		actions.put("cursor-moved", temple.getController());
 		actions.put("mouse-left-drag", new IAction()
 		{
@@ -57,8 +65,7 @@ public class OrdersActionController extends ActionController
 				ICursorEvent cursor = event.getCursor();
 				target = cursor.getWorldLocation();
 				// TODO: test olnly 
-				((GridyTerrainMap<Tile,?>)
-						scene.getWorldVeil().getTerrain()).consume( target.x(), target.y(), 10 );
+				terrain.query(new ConsumingSensor( false,target.x(), target.y(), 10  ), target.x(), target.y(), 10 );
 				
 				if(dragged != null || cursor.getEntity() == null)
 					return;
@@ -75,8 +82,7 @@ public class OrdersActionController extends ActionController
 			{
 				// TODO: test olnly
 				target = event.getCursor().getWorldLocation();
-				((GridyTerrainMap<Tile,?>)
-						scene.getWorldVeil().getTerrain()).produce( target.x(), target.y(), 10 );
+				terrain.query(new ConsumingSensor( true,target.x(), target.y(), 10  ), target.x(), target.y(), 10 );
 				
 			}
 			
@@ -139,5 +145,51 @@ public class OrdersActionController extends ActionController
 	{
 		look.render( gl, time, this, context );
 	}*/
+	public class ConsumingSensor implements ISpatialSensor <Tile>
+	{
+		double ox, oy, radiusSquare;
+		boolean draw = false;
+		
+		public ConsumingSensor (boolean draw, double ox, double oy, double radiusSquare)
+		{
+			this.ox = ox;
+			this.oy = oy;
+			this.radiusSquare = radiusSquare;
+			this.draw = draw;
+		}
+		/**
+		 * @param chunk - current cell
+		 */
+		@Override
+		public boolean objectFound(IAreaChunk chunk, Tile tile)
+		{
+//			System.out.println(chunk + " : " + tile);
+			int pixelsBefore = tile.getPixelCount();
+			if(pixelsBefore == 0 && !draw)
+				return false;
+			for(int i = 0; i < tile.getSize(); i ++)
+				for(int j = 0; j < tile.getSize(); j ++)
+				{
+					double dx = chunk.getMinX() + i * terrain.getPixelSize() - ox;
+					double dy = chunk.getMinY() + j * terrain.getPixelSize() - oy;
+					if((dx*dx) + (dy*dy) > radiusSquare)
+						continue;
+
+					if(draw)
+						((Tile)tile).put((new Color(0,1,1,1)), i, j );
+					else
+						tile.remove( i, j );
+				}
+			
+			if(tile.getPixelCount() != pixelsBefore)
+				terrain.setModified( (Cell<Tile>)chunk );
+			
+			return false;
+		}
+
+		@Override
+		public void clear() { }
+		
+	}
 
 }

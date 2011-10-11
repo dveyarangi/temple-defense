@@ -2,7 +2,7 @@ package yarangi.game.temple.model.temple.structure;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
@@ -11,14 +11,13 @@ public class PowerConnectorLook implements Look <PowerConnector>
 {
 
 	@Override
-	public void init(GL gl, PowerConnector entity) {
+	public void init(GL gl, PowerConnector entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void render(GL gl, double time, PowerConnector entity,
-			RenderingContext context) 
+	public void render(GL gl, double time, PowerConnector entity, IRenderingContext context) 
 	{
 		
 /*		AABB aabb = entity.getAABB();
@@ -45,9 +44,23 @@ public class PowerConnectorLook implements Look <PowerConnector>
 	}
 
 	@Override
-	public void destroy(GL gl, PowerConnector entity) {
+	public void destroy(GL gl, PowerConnector entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public float getPriority()
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isCastsShadow()
+	{
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

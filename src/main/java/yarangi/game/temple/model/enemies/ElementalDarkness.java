@@ -34,15 +34,5 @@ public class ElementalDarkness extends GenericEnemy
 		return bubble;
 	}
 
-	public void setImpactWith(IPhysicalObject arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public double getMaxSpeed() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 
 }

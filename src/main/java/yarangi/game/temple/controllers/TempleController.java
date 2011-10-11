@@ -13,6 +13,7 @@ import yarangi.game.temple.model.temple.ObserverEntity;
 import yarangi.game.temple.model.temple.ObserverLook;
 import yarangi.game.temple.model.temple.StructureInterface;
 import yarangi.game.temple.model.temple.TempleEntity;
+import yarangi.game.temple.model.terrain.Tile;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.actions.ActionController;
@@ -21,7 +22,6 @@ import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.IVeilEntity;
 import yarangi.graphics.quadraturin.objects.Sensor;
-import yarangi.graphics.quadraturin.terrain.Tile;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
@@ -155,7 +155,7 @@ public class TempleController extends Entity implements CursorListener
 	{
 		LOSSensor sensor = new LOSSensor();
 //		scene.getEntityIndex().query( sensor, x, y, x2-x, y2-y );
-		scene.getWorldVeil().getTerrain().query( sensor, x, y, x2-x, y2-y );
+		scene.getWorldVeil().<Tile>getTerrain().query( sensor, x, y, x2-x, y2-y );
 		
 		return sensor.hasLOS();
 	}

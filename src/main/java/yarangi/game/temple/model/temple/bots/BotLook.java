@@ -2,7 +2,7 @@ package yarangi.game.temple.model.temple.bots;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Vector2D;
 import static yarangi.math.Angles.*;
@@ -18,14 +18,14 @@ public class BotLook implements Look<Bot> {
 		tail = new Vector2D[tailSize];
 	}
 	
-	public void init(GL gl, Bot bot) {
+	public void init(GL gl, Bot bot, IRenderingContext context) {
 		
 		for(int idx = 0; idx < tail.length; idx ++)
 			tail[idx] = new Vector2D(bot.getArea().getRefPoint());
 		
 	}
 
-	public void render(GL gl, double time, Bot bot, RenderingContext context) 
+	public void render(GL gl, double time, Bot bot, IRenderingContext context) 
 	{
 		
 /*		if(entity.isHighlighted())
@@ -60,7 +60,7 @@ public class BotLook implements Look<Bot> {
 	}
 
 
-	public void destroy(GL gl, Bot entity) {
+	public void destroy(GL gl, Bot entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}

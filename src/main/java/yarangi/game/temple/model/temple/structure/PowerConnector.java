@@ -48,8 +48,8 @@ public class PowerConnector extends Entity
 		
 //		double sourceTan = Math.tan(sourceDir.getAngle() + targetSide * Angles.PI_div_3);
 		
-		double param = ((sourceLoc.x - targetLoc.x) * targetDir.y - (sourceLoc.y - targetLoc.y) * targetDir.x) /
-						(targetDir.x*sourceDir.y - sourceDir.x*targetDir.y);
+		double param = ((sourceLoc.x() - targetLoc.x()) * targetDir.y() - (sourceLoc.y() - targetLoc.y()) * targetDir.x()) /
+						(targetDir.x()*sourceDir.y() - sourceDir.x()*targetDir.y());
 		
 		Vector2D intersection = sourceLoc.plus(sourceDir.mul(param));
 		
@@ -58,9 +58,6 @@ public class PowerConnector extends Entity
 	}
 	
 	public List <PowerLine> getPaths() { return paths; }
-
-	@Override
-	public boolean isPickable() { return true; }
 
 
 }

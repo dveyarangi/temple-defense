@@ -3,7 +3,7 @@ package yarangi.game.temple.model.enemies;
 import javax.media.opengl.GL;
 
 import yarangi.game.temple.model.Integrity;
-import yarangi.graphics.quadraturin.RenderingContext;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
@@ -14,7 +14,7 @@ public class ElementalDarknessLook implements Look <ElementalDarkness>
 	private double green = RandomUtil.getRandomDouble(0.5)+0.5;
 	private double red = RandomUtil.getRandomDouble(0.5)+0.5;
 
-	public void render(GL gl, double time, ElementalDarkness entity, RenderingContext context) 
+	public void render(GL gl, double time, ElementalDarkness entity, IRenderingContext context) 
 	{
 		Integrity integrity = entity.getIntegrity();
 //		gl.glColor3f(0.4f, 0.4f, 0.5f);
@@ -29,7 +29,7 @@ public class ElementalDarknessLook implements Look <ElementalDarkness>
 			point = entity.getCurve().pointAt(t);
 //			gl.glColor4f(1f, 1f, 1f, /*(float)(0.5*integrity.getHitPoints()/integrity.getMaxHitPoints())*/ 1f);
 //			gl.glColor4f(1f, 1f, 1f, /*(float)(0.5*integrity.getHitPoints()/integrity.getMaxHitPoints())*/ 1f);
-			gl.glVertex3f((float)point.x, (float) point.y, 0);
+			gl.glVertex3f((float)point.x(), (float) point.y(), 0);
 		}
 		gl.glEnd();
 		gl.glLineWidth(1);
@@ -46,14 +46,28 @@ public class ElementalDarknessLook implements Look <ElementalDarkness>
 		
 	}
 
-	public void init(GL gl, ElementalDarkness entity) {
+	public void init(GL gl, ElementalDarkness entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void destroy(GL gl, ElementalDarkness entity) {
+	public void destroy(GL gl, ElementalDarkness entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public float getPriority()
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isCastsShadow()
+	{
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

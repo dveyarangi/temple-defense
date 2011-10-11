@@ -2,18 +2,16 @@ package yarangi.game.temple.model.terrain;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.colors.Color;
 import yarangi.graphics.grid.TileGridLook;
 import yarangi.graphics.quadraturin.terrain.Cell;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
-import yarangi.graphics.quadraturin.terrain.Tile;
 import yarangi.graphics.textures.TextureUtils;
 
-public class GridyTerrainLook extends TileGridLook<Tile, GridyTerrainMap<Tile, Color>>
+public class GridyTerrainLook extends TileGridLook<Tile, GridyTerrainMap<Tile>>
 {
 
 	@Override
-	protected void renderTile(GL gl, Cell<Tile> cell, GridyTerrainMap<Tile, Color> grid)
+	protected void renderTile(GL gl, Cell<Tile> cell, GridyTerrainMap<Tile> grid)
 	{
 		Tile chunk = cell.getProperties();
 		if(chunk == null)

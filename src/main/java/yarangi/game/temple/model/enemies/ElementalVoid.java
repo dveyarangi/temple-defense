@@ -22,20 +22,9 @@ public class ElementalVoid extends GenericEnemy
 
 		setLook(new ElementalVoidLook());
 		setBehavior(new DroneBehavior());
-		setMass(10);
+//		setMass(10);
 		
 //		setVelocity(RandomUtil.getRandomDouble(5)-2.5, RandomUtil.getRandomDouble(5)-2.5);
-	}
-
-	public void setImpactWith(IPhysicalObject arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public double getMaxSpeed() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 
