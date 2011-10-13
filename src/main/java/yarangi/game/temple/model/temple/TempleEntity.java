@@ -2,6 +2,7 @@ package yarangi.game.temple.model.temple;
 
 import yarangi.game.temple.Playground;
 import yarangi.game.temple.controllers.TempleController;
+import yarangi.game.temple.model.Resource;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.objects.Dummy;
@@ -10,6 +11,7 @@ import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.simulations.Body;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
+import yarangi.spatial.Area;
 import yarangi.spatial.ISpatialFilter;
 import yarangi.spatial.ISpatialObject;
 
@@ -80,9 +82,25 @@ public class TempleEntity extends Dummy implements Serviceable
 	}
 
 	@Override
-	public Vector2D getServicePoint()
+	public Area getServicePoint()
 	{
-		return getArea().getRefPoint();
+		return getArea();
+	}
+
+
+	@Override
+	public void supply(Resource resource)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public Resource consume(Resource resource)
+	{
+		// TODO: infinite for now:
+		return new Resource(resource.getType(), resource.getAmount());
 	}
 
 }

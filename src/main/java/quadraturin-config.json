@@ -60,7 +60,7 @@
 				"name" : "playground",
 				"width" : 1000,
 				"height" : 1000,
-				"frameLength" : 100,
+				"frameLength" : 30,
 			    "viewpoint" : { 
 			    	"centerx"  : 0.0,
 			    	"centery"  : 0.0,

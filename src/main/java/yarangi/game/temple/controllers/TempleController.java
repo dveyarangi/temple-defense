@@ -6,6 +6,7 @@ import yarangi.game.temple.Debug;
 import yarangi.game.temple.Playground;
 import yarangi.game.temple.actions.DefaultActionFactory;
 import yarangi.game.temple.ai.IntellectCore;
+import yarangi.game.temple.controllers.bots.BotInterface;
 import yarangi.game.temple.model.temple.BattleCommander;
 import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.temple.ObserverBehavior;
@@ -47,6 +48,8 @@ public class TempleController extends Entity implements CursorListener
 	
 	private StructureInterface structureInterface;
 	
+	private BotInterface botInterface;
+	
 	private ActionController actionController;
 
 	public TempleController(Scene scene, IntellectCore core) 
@@ -69,6 +72,7 @@ public class TempleController extends Entity implements CursorListener
 		
 		battleInterface = new BattleCommander(this, core);
 		structureInterface = new StructureInterface();
+		botInterface = new BotInterface();
 		
 		actionController = new OrdersActionController(scene);
 		DefaultActionFactory.fillNavigationActions(scene, actionController);
@@ -84,6 +88,7 @@ public class TempleController extends Entity implements CursorListener
 	public Scene getScene() { return scene; }
 
 	public TempleEntity getTemple() { return temple; }
+	public void setTemple(TempleEntity temple) { this.temple = temple; }
 
 	public void onCursorMotion(ICursorEvent event) 
 	{
@@ -170,6 +175,13 @@ public class TempleController extends Entity implements CursorListener
 	public StructureInterface getStructureInterface()
 	{
 		return structureInterface; 
+	}
+
+
+
+	public BotInterface getBotInterface()
+	{
+		return botInterface;
 	}	
 
 }

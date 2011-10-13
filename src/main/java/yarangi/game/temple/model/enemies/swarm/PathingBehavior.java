@@ -30,10 +30,10 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 	}
 
 	@Override
-	public boolean behave(double time, final Swarm swarm, boolean isVisible) 
+	public double behave(double time, final Swarm swarm, boolean isVisible) 
 	{
 		if(future != null && !future.isDone())
-			return false;
+			return 0;
 		Vector2D origin = swarm.getSource();
 		Vector2D target = swarm.getTarget();
 
@@ -56,7 +56,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 	    
 	    executor.execute(future);
 		
-		return false;
+		return 0;
 	}	
 	
 	public void markPath(int ox, int oy, int tx, int ty, Swarm swarm)
@@ -225,4 +225,5 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 		
 		swarm.fireGridModification();
 	}
+	public int getId() { return this.getClass().hashCode(); }
 }

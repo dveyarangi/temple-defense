@@ -1,10 +1,13 @@
 package yarangi.game.temple.model.temple;
 
-import yarangi.math.Vector2D;
+import yarangi.game.temple.model.Resource;
+import yarangi.spatial.Area;
 
 public interface Serviceable
 {
-	public Vector2D getServicePoint();
+	public Area getServicePoint();
 	
-
+	public void supply(Resource resource);
+	
+	public Resource consume(Resource resource);
 }

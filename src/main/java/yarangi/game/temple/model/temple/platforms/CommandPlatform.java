@@ -7,6 +7,7 @@ import javax.media.opengl.GL;
 
 import yarangi.game.temple.actions.Fireable;
 import yarangi.game.temple.ai.IFeedbackBeacon;
+import yarangi.game.temple.model.Resource;
 import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.temple.Platform;
 import yarangi.game.temple.model.temple.TempleEntity;
@@ -134,6 +135,13 @@ public class CommandPlatform extends Platform implements BattleInterface
 
 	@Override
 	public double getBattleScale()
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int requestResource(Weapon weapon, Resource resource)
 	{
 		// TODO Auto-generated method stub
 		return 0;

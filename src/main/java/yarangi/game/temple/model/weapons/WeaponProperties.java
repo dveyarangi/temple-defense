@@ -1,6 +1,7 @@
 package yarangi.game.temple.model.weapons;
 
 import yarangi.game.temple.model.Damage;
+import yarangi.game.temple.model.Resource;
 
 /**
  * Unites the characteristics of a cannon and the projectile properties.
@@ -50,13 +51,19 @@ public class WeaponProperties
 	
 	private Damage damage;
 	
+	// TODO: following three parameters should be somehow generalized:
+	private double resourceCapacity;
+	private double resourceConsumption;
+	private Resource.Type resourceType;
+	
 	public WeaponProperties(double cannonTrackingSpeed, double cannonTrackingHalfWidth,
 			double cannonTrackingAccuracy, double cannonReloadingTime, double cannonEffectiveRange,
 			
 			double projectileSpeed, double projectileRange,
 			double projectileTrajectoryAccuracy,
 			double projectileHitRadius,
-			Damage damage) 
+			Damage damage, 
+			double resourceCapacity, double resourceConsumption, Resource.Type resourceType) 
 	{
 		
 		super();
@@ -70,6 +77,10 @@ public class WeaponProperties
 		this.projectileHitRadius = projectileHitRadius;
 		this.projectileTrajectoryAccuracy = projectileTrajectoryAccuracy;
 		this.damage = damage;
+		
+		this.resourceCapacity = resourceCapacity;
+		this.resourceConsumption = resourceConsumption;
+		this.resourceType = resourceType;
 	}
 	
 	public double getCannonTrackingSpeed() {
@@ -102,6 +113,8 @@ public class WeaponProperties
 	public double getEffectiveRange() {
 		return cannonEffectiveRange;
 	}
-	
+	public double getResourceCapacity() { return resourceCapacity; }
+	public double getResourceConsumption() { return resourceConsumption; }
+	public Resource.Type getResourceType() { return resourceType; }
 	
 }

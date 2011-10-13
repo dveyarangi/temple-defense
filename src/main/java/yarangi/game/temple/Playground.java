@@ -18,6 +18,8 @@ import yarangi.game.temple.model.temple.ObserverEntity;
 import yarangi.game.temple.model.temple.ObserverLook;
 import yarangi.game.temple.model.temple.StructureInterface;
 import yarangi.game.temple.model.temple.TempleEntity;
+import yarangi.game.temple.model.temple.bots.Bot;
+import yarangi.game.temple.model.temple.bots.BotFactory;
 import yarangi.game.temple.model.terrain.Matter;
 import yarangi.game.temple.model.terrain.Tile;
 import yarangi.game.temple.model.weapons.Minigun;
@@ -78,6 +80,7 @@ public class Playground extends Scene
 		StructureInterface structure = controller.getStructureInterface();
 		
 		temple = new TempleEntity(this, controller);
+		controller.setTemple( temple );
 		temple.setLook(Dummy.LOOK);
 		temple.setBehavior(Dummy.BEHAVIOR);
 		temple.setArea(new AABB(0,0,10, 0));
@@ -112,16 +115,11 @@ public class Playground extends Scene
 		addEntity(weapon);
 		bi.addFireable(weapon);
 		structure.addServiceable( weapon );
-/*		for(int i = 0; i < 20; i ++)
+		for(int i = 0; i < 20; i ++)
 		{
-			Bot bot = new Bot(structure);
-			
-			bot.setLook(new BotLook(10));
-			bot.setBehavior(new BotBehavior());
-			bot.setBody( new Body() );
-			bot.setArea( new AABB(0,0,1,0) );
+			Bot bot = BotFactory.createBot( controller );
 			addEntity( bot );
-		}*/
+		}
 
 
 		

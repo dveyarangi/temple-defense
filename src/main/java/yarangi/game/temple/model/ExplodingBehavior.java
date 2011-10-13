@@ -22,7 +22,7 @@ public class ExplodingBehavior implements IBehaviorState <Entity>
 	public Color getActiveColor() { return color; }
 	
 	@Override
-	public boolean behave(double time, Entity entity, boolean isVisible)
+	public double behave(double time, Entity entity, boolean isVisible)
 	{
 		
 		float ratio;
@@ -43,6 +43,9 @@ public class ExplodingBehavior implements IBehaviorState <Entity>
 		if(timeLeft <= 0)
 			entity.markDead();
 
-		return true;
+		return 0;
+
 	}
+	
+	public int getId() { return ExplodingBehavior.class.hashCode(); }
 }

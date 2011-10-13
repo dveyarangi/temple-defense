@@ -59,12 +59,12 @@ public class MinigunLook implements Look<Minigun>
 			gl.glVertex3f((float)(relTrack.x()), (float)(relTrack.y()), 0);
 			gl.glEnd();
 			
-			gl.glBegin(GL.GL_LINE_STRIP);
-			gl.glVertex3f((float)(relTrack.x()-10), (float)(relTrack.y()-10), 0);
-			gl.glVertex3f((float)(relTrack.x()-10), (float)(relTrack.y()+10), 0);
-			gl.glVertex3f((float)(relTrack.x()+10), (float)(relTrack.y()+10), 0);
-			gl.glVertex3f((float)(relTrack.x()+10), (float)(relTrack.y()-10), 0);
-			gl.glVertex3f((float)(relTrack.x()-10), (float)(relTrack.y()-10), 0);
+			gl.glBegin(GL.GL_QUADS);
+			gl.glVertex3f((float)(relTrack.x()-3), (float)(relTrack.y()-3), 0);
+			gl.glVertex3f((float)(relTrack.x()-3), (float)(relTrack.y()+3), 0);
+			gl.glVertex3f((float)(relTrack.x()+3), (float)(relTrack.y()+3), 0);
+			gl.glVertex3f((float)(relTrack.x()+3), (float)(relTrack.y()-3), 0);
+			gl.glVertex3f((float)(relTrack.x()-3), (float)(relTrack.y()-3), 0);
 			gl.glEnd();
 		}
 	}

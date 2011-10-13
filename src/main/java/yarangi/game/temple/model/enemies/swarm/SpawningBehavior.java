@@ -35,12 +35,12 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 
 	}
 	@Override
-	public boolean behave(double time, final Swarm swarm, boolean isVisible) 
+	public double behave(double time, final Swarm swarm, boolean isVisible) 
 	{
 		timeToSpawn -= time;
 		if(timeToSpawn > 0)
 		{
-			return false;
+			return 0;
 		}
 //		System.out.println(timeToSpawn);
 		while(timeToSpawn < 0)
@@ -62,7 +62,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 			swarm.addAgent(agent);
 //			System.out.println("Agent spawn at " + agent.getArea().getRefPoint());
 		}
-		return false;
+		return 0;
 	}
 	
 	public class AgentSensorFilter implements ISpatialFilter <IEntity>
@@ -82,7 +82,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 		
 		FSMBehavior <SwarmAgent> beh = new FSMBehavior<SwarmAgent>(droneState);
 		
-		beh.link(droneState, new IBehaviorCondition<SwarmAgent>()
+		beh.link(droneState.getId(), new IBehaviorCondition<SwarmAgent>()
 		{
 			@Override public IBehaviorState<SwarmAgent> nextState(SwarmAgent entity) {
 				return droneState; // TODO: always the same for now
@@ -91,5 +91,6 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 		
 		return beh;
 	}
+	public int getId() { return this.getClass().hashCode(); }
 
 }

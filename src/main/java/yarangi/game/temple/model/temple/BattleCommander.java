@@ -15,6 +15,7 @@ import yarangi.game.temple.ai.IFeedbackBeacon;
 import yarangi.game.temple.ai.IntellectCore;
 import yarangi.game.temple.ai.LinearFeedbackBeacon;
 import yarangi.game.temple.controllers.TempleController;
+import yarangi.game.temple.model.Resource;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.quadraturin.objects.IEntity;
@@ -209,6 +210,12 @@ public class BattleCommander implements BattleInterface
 
 	@Override
 	public  List <Weapon> getFireables() { return fireables; }
+
+	@Override
+	public int requestResource(Weapon weapon, Resource resource)
+	{
+		return controller.getBotInterface().requestResource( weapon, controller.getTemple(), resource, 1 );
+	}
 
 
 }

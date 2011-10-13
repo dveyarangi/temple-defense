@@ -1,6 +1,7 @@
 package yarangi.game.temple.model.weapons;
 
 import yarangi.game.temple.model.Damage;
+import yarangi.game.temple.model.Resource;
 import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.Look;
@@ -22,9 +23,13 @@ public class Minigun extends Weapon
 	public static final double trackingSpeed = BASE_TRACKING_SPEED;
 	public static final double effectiveRangeSquare = 40000;
 	public static final double maxRangeSquare = 200;
-	public static final double RELOADING_TIME = 5;
+	public static final double RELOADING_TIME = 15;
 	public static final double ACCURACY = 0.2;
 	public static final Damage DAMAGE = new Damage(5, 0.1, 0, 0);
+	public static final double resourceCapacity = 1000;
+	public static final double resourceConsumption = 10;
+	public static final Resource.Type resourceType = Resource.Type.ENERGY;
+
 	
 	private static final WeaponProperties PROPS = new WeaponProperties(
 			BASE_TRACKING_SPEED, 
@@ -36,7 +41,9 @@ public class Minigun extends Weapon
 			maxRangeSquare, 
 			ACCURACY, 
 			projectileHitRadius, 
-			DAMAGE);
+			DAMAGE,
+			resourceCapacity, resourceConsumption, resourceType
+			);
 	
 	
 	private Look <Projectile> shellLook = /*new SpriteLook <Projectile> (*/new MinigunBurstLook()/*, 8, 8, false)*/;
@@ -45,6 +52,8 @@ public class Minigun extends Weapon
 	public Minigun(BattleInterface bi) {
 		super(bi, PROPS);
 		shellBehavior = new SimpleProjectileBehavior(bi);
+		
+
 	}
 	
 	private double shotSpeed = -2;
@@ -53,6 +62,7 @@ public class Minigun extends Weapon
 	{
 		if(!isReloaded())
 			return null;
+
 		
 		Area area = getArea();
 //		Vector2D weaponLoc = battleInterface.toWorldCoordinates(getPlatform(), area.getRefPoint().x(), area.getRefPoint().y());
@@ -68,6 +78,13 @@ public class Minigun extends Weapon
 		Vector2D shellSpeed = new Vector2D(s, fireAngle, true);
 //		System.out.println(shellSpeed);
 		Projectile shell = new Projectile( shellSpeed, this.getWeaponProperties());
+		
+		double firingResource = this.consume( getWeaponProperties().getResourceConsumption());
+		if(firingResource == 0)
+			return null; // not enough resources
+
+		// TODO: should be less greedy:
+		requestResource();
 		
 /*		ExplodingBehavior dyingBehavior = new ExplodingBehavior( new Color(1,1,1,1), 5 );
 		Look <SceneEntity> dyingLook = new CircleLightLook<SceneEntity>( dyingBehavior.getActiveColor() );

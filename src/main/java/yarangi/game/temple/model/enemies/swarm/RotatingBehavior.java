@@ -7,7 +7,7 @@ public class RotatingBehavior implements IBehaviorState <Swarm>
 {
 
 	@Override
-	public boolean behave(double time, Swarm swarm, boolean isVisible) {
+	public double behave(double time, Swarm swarm, boolean isVisible) {
 //		Vector2D loc = swarm.getArea().getRefPoint();
 		
 /*		double d = Math.hypot(400, 400);
@@ -15,7 +15,8 @@ public class RotatingBehavior implements IBehaviorState <Swarm>
 		a += 0.01;
 //		System.out.println(d + " ::: " + a);
 		swarm.getArea().translate(d * Math.cos(a), d * Math.sin(a));*/
-		return false;
+		return 0;
 	}
+	public int getId() { return this.getClass().hashCode(); }
 
 }

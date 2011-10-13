@@ -9,7 +9,7 @@ public class DangerBehavior implements IBehaviorState <SwarmAgent>
 {
 
 	@Override
-	public boolean behave(double time, SwarmAgent agent, boolean isVisible) {
+	public double behave(double time, SwarmAgent agent, boolean isVisible) {
 		Swarm swarm = agent.getSwarm();
 		Vector2D flow = swarm.getFlow(agent.getArea().getRefPoint());
 		
@@ -18,7 +18,8 @@ public class DangerBehavior implements IBehaviorState <SwarmAgent>
 		
 		if(flow != null)
 			agent.getBody().setForce(flow.x(), flow.y());
-		return false;
+		return 0;
 	}
+	public int getId() { return this.getClass().hashCode(); }
 
 }

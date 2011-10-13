@@ -2,10 +2,12 @@ package yarangi.game.temple.model.weapons;
 
 import yarangi.game.temple.actions.Fireable;
 import yarangi.game.temple.ai.NetCore;
+import yarangi.game.temple.model.Resource;
 import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.temple.Serviceable;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.math.Vector2D;
+import yarangi.spatial.Area;
 
 public abstract class Weapon extends Entity implements Fireable, Serviceable
 {
@@ -27,12 +29,17 @@ public abstract class Weapon extends Entity implements Fireable, Serviceable
 	
 //	private double absoluteAngle = 0;
 	
+	private Resource availableResource;
+	
 	private BattleInterface battleInterface; 
-
+	private double requestedAmount = 0;
+	private double arrivedAmount = 0;
 	protected Weapon(BattleInterface battleInterface, WeaponProperties props) {
 		
 		this.battleInterface = battleInterface;
 		this.props = props;
+		// TODO: lets start with this:
+		this.availableResource = new Resource( props.getResourceType(), props.getResourceCapacity() / 2);
 	}
 //	public WeaponPlatform getPlatform() { return platform; }
 //	public void setPlatform(WeaponPlatform platform) { this.platform = platform; }
@@ -73,9 +80,42 @@ public abstract class Weapon extends Entity implements Fireable, Serviceable
 		return battleInterface;
 	}
 	@Override
-	public Vector2D getServicePoint()
+	public Area getServicePoint()
 	{
-		return getArea().getRefPoint();
+		return getArea();
 	}
 
+	public void supply(Resource resource)
+	{
+		if(this.availableResource.getType() == resource.getType())
+			this.availableResource.supply(resource.getAmount());
+		
+		arrivedAmount += resource.getAmount();
+		if(arrivedAmount >= requestedAmount )
+		{
+			requestedAmount = 0;
+			arrivedAmount = 0;
+		}
+	}
+	
+	public Resource consume(Resource resource)
+	{
+		return availableResource.consume( resource.getAmount(), false );
+	}
+	
+	protected double consume(double amountToConsume)
+	{
+		Resource consumed = availableResource.consume( amountToConsume, false );
+		return consumed == null ? 0 : consumed.getAmount();
+	}
+	
+	public void requestResource()
+	{
+		if(availableResource.getAmount() < getWeaponProperties().getResourceCapacity() / 2 && requestedAmount == 0)
+		{
+			this.requestedAmount = getWeaponProperties().getResourceCapacity();
+			getBattleInterface().requestResource( this, 
+					new Resource(getWeaponProperties().getResourceType(), requestedAmount) );
+		}
+	}
 }
