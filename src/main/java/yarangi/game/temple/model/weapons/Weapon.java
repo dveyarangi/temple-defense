@@ -2,11 +2,10 @@ package yarangi.game.temple.model.weapons;
 
 import yarangi.game.temple.actions.Fireable;
 import yarangi.game.temple.ai.NetCore;
-import yarangi.game.temple.model.Resource;
+import yarangi.game.temple.model.resource.Port;
 import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.temple.Serviceable;
 import yarangi.graphics.quadraturin.objects.Entity;
-import yarangi.math.Vector2D;
 import yarangi.spatial.Area;
 
 public abstract class Weapon extends Entity implements Fireable, Serviceable
@@ -28,18 +27,20 @@ public abstract class Weapon extends Entity implements Fireable, Serviceable
 	private double timeToReload = 0;
 	
 //	private double absoluteAngle = 0;
-	
-	private Resource availableResource;
-	
 	private BattleInterface battleInterface; 
 	private double requestedAmount = 0;
 	private double arrivedAmount = 0;
+	private Port port;
+	
+	private boolean isPoweredUp = true;
+	
 	protected Weapon(BattleInterface battleInterface, WeaponProperties props) {
 		
 		this.battleInterface = battleInterface;
 		this.props = props;
+		this.port = new Port();
+		port.setCapacity( props.getResourceType(), props.getResourceCapacity()/2, props.getResourceCapacity() );
 		// TODO: lets start with this:
-		this.availableResource = new Resource( props.getResourceType(), props.getResourceCapacity() / 2);
 	}
 //	public WeaponPlatform getPlatform() { return platform; }
 //	public void setPlatform(WeaponPlatform platform) { this.platform = platform; }
@@ -85,37 +86,34 @@ public abstract class Weapon extends Entity implements Fireable, Serviceable
 		return getArea();
 	}
 
-	public void supply(Resource resource)
+	public Port getPort() { return port; }
+	public boolean powerUp() 
 	{
-		if(this.availableResource.getType() == resource.getType())
-			this.availableResource.supply(resource.getAmount());
+		if(!isPoweredUp())
+			return false;
 		
-		arrivedAmount += resource.getAmount();
-		if(arrivedAmount >= requestedAmount )
+		double amountRemaining = port.get(props.getResourceType()).getAmount();
+		if(requestedAmount <= 0 && amountRemaining < props.getResourceCapacity()/2)
 		{
+			double resourceToRequest = 1.0*(props.getResourceCapacity()-amountRemaining);
+			if(resourceToRequest > 0)
+			{
+				this.requestedAmount += resourceToRequest;
+				System.out.println(requestedAmount + " : " + amountRemaining + " : " + resourceToRequest);
+				getBattleInterface().requestResource( this, props.getResourceType(), resourceToRequest);
+			}
+			
+		}
+		double consumed = port.use(props.getResourceType(), props.getResourceConsumption());
+		requestedAmount -= consumed;
+		if(requestedAmount < 0)
 			requestedAmount = 0;
-			arrivedAmount = 0;
-		}
+		return true;
 	}
 	
-	public Resource consume(Resource resource)
-	{
-		return availableResource.consume( resource.getAmount(), false );
-	}
-	
-	protected double consume(double amountToConsume)
-	{
-		Resource consumed = availableResource.consume( amountToConsume, false );
-		return consumed == null ? 0 : consumed.getAmount();
-	}
-	
-	public void requestResource()
-	{
-		if(availableResource.getAmount() < getWeaponProperties().getResourceCapacity() / 2 && requestedAmount == 0)
-		{
-			this.requestedAmount = getWeaponProperties().getResourceCapacity();
-			getBattleInterface().requestResource( this, 
-					new Resource(getWeaponProperties().getResourceType(), requestedAmount) );
-		}
+	public boolean isPoweredUp() { 
+		double amountRemaining = port.get(props.getResourceType()).getAmount();
+		double amountToConsume = props.getResourceConsumption();
+		return amountRemaining >= amountToConsume;
 	}
 }

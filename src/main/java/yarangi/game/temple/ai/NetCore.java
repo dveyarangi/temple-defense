@@ -65,8 +65,8 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 //		network.addLayer(new CompleteNeuronLayer(10, new TanHAF(), 1));
 		
 		Normalizer normalizer = new ScalingNormalizer(
-						new double [] {-2*worldWidth, -2*worldHeight, -20, -20, -2*worldWidth, -2*worldHeight, -20, -20}, 
-						new double [] { 2*worldWidth,  2*worldHeight,  20,  20,  2*worldWidth,  2*worldHeight,  20,  20},
+						new double [] {-2*worldWidth, -2*worldHeight, -20, -20,  0 }, 
+						new double [] { 2*worldWidth,  2*worldHeight,  20,  20,   20},
 						new double [] {-worldWidth, -worldHeight}, 
 						new double [] { worldWidth,  worldHeight});
 		
@@ -78,9 +78,9 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 	{
 		LinearFeedbackBeacon beacon = (LinearFeedbackBeacon) capsule;
 
-		if(beacon.getDistance() < 400000) // TODO: real beacon location test
+		if(beacon.getDistance() < 40000) // TODO: real beacon location test
 		{
-			Vector2D relativeTarget = beacon.getLocation().minus(beacon.getSource().getArea().getRefPoint());
+			Vector2D relativeTarget = beacon.getInitialTargetLocation().minus(beacon.getSource());
 			double [] input = createInput(relativeTarget, beacon.getVelocity(),/*beacon.getSource().getArea().getRefPoint(),*/ beacon.getProjectileVelocity());
 			
 //			System.out.println(beacon.getSource().getArea().getRefPoint());
@@ -88,9 +88,9 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 //			System.out.println("training target: " + capsule.getTarget().getArea().getRefPoint() + " delta: " + (toTarget.x-res[0]) +","+ (toTarget.y-res[1]));
 //			System.out.println("feedback: d:" + beacon.getDistance() + " a:" + Math.cos(beacon.getAngle())+ ":" + Math.sin(beacon.getAngle()) + " net: " + res[0] + ":" + res[1]);
 
-			Vector2D toTarget = beacon.getTarget().getArea().getRefPoint().minus(beacon.getSource().getArea().getRefPoint());
+			Vector2D toTarget = beacon.getTargetLocationMemo().minus(beacon.getSource());
 //			System.out.println(toTarget + " " + relativeTarget);
-			train(new double [] {toTarget.x(), toTarget.y()}, 0.005);
+			train(new double [] {toTarget.x(), toTarget.y()}, 0.05);
 			
 			return true;
 		}
@@ -116,10 +116,7 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 //				Math.sin(target.getAABB().a),
 				targetVelocity.x(),
 				targetVelocity.y(),
-				/*sourceLocation.x,
-				sourceLocation.y,*/1,1,
-				projectileVelocity.x(),
-				projectileVelocity.y()
+				projectileVelocity.abs()
 			};
 	}
 

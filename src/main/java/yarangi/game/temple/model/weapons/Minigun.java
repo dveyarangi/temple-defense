@@ -1,7 +1,7 @@
 package yarangi.game.temple.model.weapons;
 
 import yarangi.game.temple.model.Damage;
-import yarangi.game.temple.model.Resource;
+import yarangi.game.temple.model.resource.Resource;
 import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.Look;
@@ -21,13 +21,13 @@ public class Minigun extends Weapon
 	public static final double projectileSpeed = 6;
 	public static final double projectileHitRadius = 3;
 	public static final double trackingSpeed = BASE_TRACKING_SPEED;
-	public static final double effectiveRangeSquare = 40000;
-	public static final double maxRangeSquare = 200;
-	public static final double RELOADING_TIME = 15;
+	public static final double effectiveRangeSquare = 10000;
+	public static final double maxRangeSquare = 100;
+	public static final double RELOADING_TIME = 10;
 	public static final double ACCURACY = 0.2;
 	public static final Damage DAMAGE = new Damage(5, 0.1, 0, 0);
 	public static final double resourceCapacity = 1000;
-	public static final double resourceConsumption = 10;
+	public static final double resourceConsumption = 15;
 	public static final Resource.Type resourceType = Resource.Type.ENERGY;
 
 	
@@ -46,7 +46,6 @@ public class Minigun extends Weapon
 			);
 	
 	
-	private Look <Projectile> shellLook = /*new SpriteLook <Projectile> (*/new MinigunBurstLook()/*, 8, 8, false)*/;
 	private Behavior <Projectile> shellBehavior;
 	
 	public Minigun(BattleInterface bi) {
@@ -77,15 +76,12 @@ public class Minigun extends Weapon
 //			shotSpeed = -2;
 		Vector2D shellSpeed = new Vector2D(s, fireAngle, true);
 //		System.out.println(shellSpeed);
-		Projectile shell = new Projectile( shellSpeed, this.getWeaponProperties());
-		
-		double firingResource = this.consume( getWeaponProperties().getResourceConsumption());
-		if(firingResource == 0)
+		if(! this.powerUp())
 			return null; // not enough resources
 
-		// TODO: should be less greedy:
-		requestResource();
+		Projectile shell = new Projectile( shellSpeed, this.getWeaponProperties());
 		
+	
 /*		ExplodingBehavior dyingBehavior = new ExplodingBehavior( new Color(1,1,1,1), 5 );
 		Look <SceneEntity> dyingLook = new CircleLightLook<SceneEntity>( dyingBehavior.getActiveColor() );
 		SceneEntity explosion = new SceneEntity(){};
@@ -97,7 +93,7 @@ public class Minigun extends Weapon
 //		shell.setBehavior(shellBehavior);
 //		shell.setArea(new AABB(area.getRefPoint().x(), area.getRefPoint().y(), getWeaponProperties().getProjectileHitRadius(), fireAngle));
 //		shell.setSensor( new DummySensor(4) );
-		shell.setLook(shellLook);
+		shell.setLook(new MinigunBurstLook(this));
 		shell.setBehavior(shellBehavior);
 		shell.setArea(new AABB(area.getRefPoint().x(), area.getRefPoint().y(), getWeaponProperties().getProjectileHitRadius(), fireAngle));
 		shell.setBody(new Body());

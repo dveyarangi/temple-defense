@@ -20,6 +20,8 @@ public class Tile implements ITile <Color>, IPhysicalObject
 	
 	private int textureId = -1;
 	
+	private double pixelsize;
+	
 	/**
 	 * 
 	 * @param x
@@ -34,6 +36,8 @@ public class Tile implements ITile <Color>, IPhysicalObject
 		this.pixels = new byte[size*size*4];
 		
 		this.pixelNum = size;
+		
+		this.pixelsize = pixelsize;
 		
 		pixelCount = 0;
 		for(int i = 0; i < pixels.length/4; i += 4)
@@ -155,6 +159,7 @@ public class Tile implements ITile <Color>, IPhysicalObject
 	public int getTextureId() { return textureId; }
 	public boolean hasTexture() { return textureId != -1; }
 
+	public double getPixelSize() { return pixelsize; }
 	@Override
 	public Area getArea()
 	{

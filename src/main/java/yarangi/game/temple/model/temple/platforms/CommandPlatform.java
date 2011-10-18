@@ -7,7 +7,8 @@ import javax.media.opengl.GL;
 
 import yarangi.game.temple.actions.Fireable;
 import yarangi.game.temple.ai.IFeedbackBeacon;
-import yarangi.game.temple.model.Resource;
+import yarangi.game.temple.model.resource.Resource;
+import yarangi.game.temple.model.resource.Resource.Type;
 import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.temple.Platform;
 import yarangi.game.temple.model.temple.TempleEntity;
@@ -141,7 +142,7 @@ public class CommandPlatform extends Platform implements BattleInterface
 	}
 
 	@Override
-	public int requestResource(Weapon weapon, Resource resource)
+	public int requestResource(Weapon weapon, Type resource, double amount)
 	{
 		// TODO Auto-generated method stub
 		return 0;

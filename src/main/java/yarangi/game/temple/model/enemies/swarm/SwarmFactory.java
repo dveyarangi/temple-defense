@@ -4,6 +4,7 @@ import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.EffectUtils;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.temple.model.temple.TempleEntity;
+import yarangi.game.temple.model.terrain.ConsumingSensor;
 import yarangi.game.temple.model.terrain.Matter;
 import yarangi.game.temple.model.terrain.Tile;
 import yarangi.game.temple.model.weapons.Projectile;
@@ -18,6 +19,7 @@ import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
+import yarangi.spatial.AABB;
 
 public class SwarmFactory 
 {
@@ -83,8 +85,9 @@ public class SwarmFactory
 					else
 					if( target instanceof Tile || target instanceof Matter)
 					{
-//						terrain.consume( source.getArea().getRefPoint().x(), 
-//								source.getArea().getRefPoint().y(), 15 );
+						terrain.query( new ConsumingSensor(terrain, false,
+								source.getArea().getRefPoint().x(), source.getArea().getRefPoint().y(), 30*source.getArea().getMaxRadius() ), 
+								new AABB(source.getArea().getRefPoint().x(), source.getArea().getRefPoint().y(), 30*source.getArea().getMaxRadius(), 0));
 //						swarm.setUnpassable(target.getArea().getRefPoint().x(), target.getArea().getRefPoint().y());
 						
 						swarm.setDanger(source, source.getIntegrity().hit(MATTER_DAMAGE));
@@ -112,7 +115,7 @@ public class SwarmFactory
 //		swarm.setArea(new Point(0, 0));
 		final IBehaviorState<Swarm> rotating = new RotatingBehavior();
 		final IBehaviorState<Swarm> pathing = new PathingBehavior(1);
-		final IBehaviorState<Swarm> spawning = new SpawningBehavior(15);
+		final IBehaviorState<Swarm> spawning = new SpawningBehavior(1);
 		final IBehaviorState<Swarm> shifting = new ShiftBehavior();
 		
 		FSMBehavior <Swarm> behavior = new FSMBehavior <Swarm> (shifting);

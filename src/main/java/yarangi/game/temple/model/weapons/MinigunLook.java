@@ -2,6 +2,8 @@ package yarangi.game.temple.model.weapons;
 
 import javax.media.opengl.GL;
 
+import yarangi.game.temple.model.resource.Resource;
+import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
@@ -39,7 +41,10 @@ public class MinigunLook implements Look<Minigun>
 //		AABB target = cannon.getTrackingPoint()
 		Area area = cannon.getArea();
 		Vector2D loc = area.getRefPoint();
-		gl.glColor4f(0.0f, 1.0f, 0f,0.5f);
+		Resource.Type type = cannon.getWeaponProperties().getResourceType();
+		double resourcePercent = cannon.getPort().get( type ).getAmount() / cannon.getPort().getCapacity( type );
+		gl.glColor4f((float)((1-resourcePercent)/4+resourcePercent*0.3),  (float)(resourcePercent*0.3), (float)(resourcePercent),1);
+//		gl.glColor4f((float)((1-resourcePercent)*1.0), (float)(resourcePercent*1.0), 2f*(float)(0.5-Math.abs(resourcePercent-0.5)),0.5f);
 		gl.glBegin(GL.GL_POLYGON);
 		for(double a = 0; a <= 6; a ++)
 		{

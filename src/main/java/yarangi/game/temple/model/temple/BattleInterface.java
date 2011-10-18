@@ -7,7 +7,7 @@ import javax.media.opengl.GL;
 
 import yarangi.game.temple.actions.Fireable;
 import yarangi.game.temple.ai.IFeedbackBeacon;
-import yarangi.game.temple.model.Resource;
+import yarangi.game.temple.model.resource.Resource;
 import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Vector2D;
@@ -36,7 +36,7 @@ public interface BattleInterface
 
 	public double getBattleScale();
 	
-	public int requestResource(Weapon weapon, Resource resource);
+	public int requestResource(Weapon weapon, Resource.Type resource, double amount);
 	
 //	public double getAbsoluteAngle();
 	

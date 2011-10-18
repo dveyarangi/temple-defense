@@ -67,6 +67,8 @@ public class TempleController extends Entity implements CursorListener
 		cursor.setSensor(new Sensor(64, 1, null, true));
 		cursor.setLook(new ObserverLook(new Color(1.0f,1.0f,0.5f,1f)));
 		cursor.setArea(new AABB(0, 0, 10, 0));
+	
+		
 		
 		scene.addEntity(cursor);
 		

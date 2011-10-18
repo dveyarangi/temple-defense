@@ -1,13 +1,17 @@
 package yarangi.game.temple.model.temple;
 
-import yarangi.game.temple.model.Resource;
+import yarangi.game.temple.model.resource.Port;
 import yarangi.spatial.Area;
 
 public interface Serviceable
 {
 	public Area getServicePoint();
 	
-	public void supply(Resource resource);
-	
-	public Resource consume(Resource resource);
+	/**
+	 * Returns resource of specified type
+	 * @param type
+	 * @return
+	 */
+	public Port getPort();
+
 }

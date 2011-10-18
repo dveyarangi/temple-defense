@@ -1,7 +1,7 @@
 package yarangi.game.temple.model.weapons;
 
 import yarangi.game.temple.model.Damage;
-import yarangi.game.temple.model.Resource;
+import yarangi.game.temple.model.resource.Resource;
 
 /**
  * Unites the characteristics of a cannon and the projectile properties.

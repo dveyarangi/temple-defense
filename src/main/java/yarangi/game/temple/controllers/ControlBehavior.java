@@ -1,5 +1,6 @@
 package yarangi.game.temple.controllers;
 
+import yarangi.game.temple.controllers.bots.BotInterface;
 import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.game.temple.model.weapons.Weapon;
@@ -11,22 +12,9 @@ public class ControlBehavior implements Behavior <TempleController>
 
 	public boolean behave(double time, TempleController ctrl, boolean isVisible) 
 	{
-//		FireAction action = ctrl.getFireAction();
 		BattleInterface bi = ctrl.getBattleInterface();
-//		if (action.isActive())
 		{
-		
-/*			if(!ctrl.isButtonHeld())
-			{
-				if(!ctrl.isFireStopped())
-				{
-					for(Weapon fireable : ctrl.getFireables())
-						fireable.stop();
-					ctrl.setFireStopped(true);
-				}
-			}
-			else
-			{*/
+
 				for(Weapon fireable : bi.getFireables())
 				{
 					// TODO: not good
@@ -39,16 +27,15 @@ public class ControlBehavior implements Behavior <TempleController>
 					
 					
 				}
-//				ctrl.setFireStopped(false);
-			//}
 		}
 		bi.clearObservedObjects();
+		
+		BotInterface bots = ctrl.getBotInterface();
+		double transferRate = bots.changeTransferRate( 0.01 * time );
+		
+		// temple heart-beat:
+		ctrl.getTemple().setHealth((transferRate-BotInterface.MIN_TRANSFER_RATE)/(BotInterface.MAX_TRANSFER_RATE-BotInterface.MIN_TRANSFER_RATE));
 	
-		
-//		Vector2D cp = ctrl.getCursorLocation();
-//		if ( cp != null)
-//		ctrl.getPlayground().getBackground().setLightPosition(new float [] {(float)cp.x, (float)cp.y, 1.0f, 1.0f});
-		
 		return false;
 	}
 

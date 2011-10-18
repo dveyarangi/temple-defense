@@ -14,11 +14,6 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 	public boolean isCastsShadow() { return false; }
 	@Override
 	public float getPriority() { return 1; }
-	
-	public void render(GL gl, double time, Swarm grid, IRenderingContext context)
-	{
-		super.render( gl, time, grid, context );
-	}
 
 	@Override
 	protected void renderTile(GL gl, Cell<Beacon> cell, Swarm swarm)

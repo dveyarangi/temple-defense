@@ -1,4 +1,4 @@
-package yarangi.game.temple.controllers.bots;
+package yarangi.game.temple.controllers.orders;
 
 public enum EOrderState
 {

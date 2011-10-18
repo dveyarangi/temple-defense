@@ -1,5 +1,7 @@
 package yarangi.game.temple.ai;
 
+import yarangi.math.Vector2D;
+
 
 public interface IFeedbackBeacon 
 {
@@ -9,5 +11,8 @@ public interface IFeedbackBeacon
 	
 //	public ISpatialObject getSource();
 	
-	public void update();
+	/**
+	 * @return true, if this beacon can be dispatched
+	 */
+	public boolean update(Vector2D location);
 }

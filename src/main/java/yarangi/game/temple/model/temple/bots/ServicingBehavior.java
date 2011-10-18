@@ -1,14 +1,13 @@
 package yarangi.game.temple.model.temple.bots;
 
 import yarangi.game.temple.controllers.bots.BotInterface;
-import yarangi.game.temple.controllers.bots.GatheringOrder;
-import yarangi.game.temple.controllers.bots.IBotOrder;
-import yarangi.game.temple.model.Resource;
+import yarangi.game.temple.controllers.orders.IOrder;
+import yarangi.game.temple.model.resource.GatheringOrder;
 import yarangi.game.temple.model.temple.Serviceable;
 
 public class ServicingBehavior extends SatelliteBehavior
 {
-	private double TRANSFER_RATE = 10;
+	private double TRANSFER_RATE = 5;
 	private BotInterface controller;
 	public ServicingBehavior(BotInterface controller, Serviceable serviceable)
 	{
@@ -20,7 +19,7 @@ public class ServicingBehavior extends SatelliteBehavior
 	public double behave(double time, Bot bot, boolean isVisible)
 	{
 		super.behave( time, bot, isVisible );
-		IBotOrder order = bot.getOrder();
+		IOrder order = bot.getOrder();
 		boolean finished = false;
 		if(order instanceof GatheringOrder)
 		{
@@ -29,24 +28,16 @@ public class ServicingBehavior extends SatelliteBehavior
 			switch(go.getState())
 			{
 			case AT_PROVIDER:
-				Resource givenResource = go.getProvider().consume(new Resource(go.getRequestedResource().getType(), TRANSFER_RATE*time));
-				
-				bot.give( givenResource);
-				
-				if(bot.isFull())
+				if(go.sealExport(bot, time))
+				{
 					return 0;
-				
+				}
 				break;
 			case AT_REQUESTER:
-				Resource takenResource = bot.take(TRANSFER_RATE*time);
-			
-				if(bot.isEmpty())
-				{
-					 controller.fulfill( go );
+				if(go.sealImport(bot, time)) {
 					 return 0;
 				}
 				
-				go.getRequester().supply( takenResource ); 
 			}
 		}
 		

@@ -1,8 +1,8 @@
-package yarangi.game.temple.controllers.bots;
+package yarangi.game.temple.controllers.orders;
 
 import yarangi.game.temple.model.temple.Serviceable;
 
-public interface IBotOrder
+public interface IOrder
 {
 	/**
 	 * Requester of service that relies on this order
@@ -20,4 +20,5 @@ public interface IBotOrder
 
 	public void nextState();
 	
+	public boolean isClosed(); 
 }

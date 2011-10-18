@@ -15,8 +15,8 @@ import yarangi.game.temple.ai.IFeedbackBeacon;
 import yarangi.game.temple.ai.IntellectCore;
 import yarangi.game.temple.ai.LinearFeedbackBeacon;
 import yarangi.game.temple.controllers.TempleController;
-import yarangi.game.temple.model.Resource;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
+import yarangi.game.temple.model.resource.Resource;
 import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Geometry;
@@ -120,16 +120,21 @@ public class BattleCommander implements BattleInterface
 		Weapon fireable;
 		for(int idx = 0; idx < fireables.size(); idx ++)
 		{
-			if(found[idx])
-				continue;
-			it = observedEntities.iterator();
-			
 			fireable = fireables.get(idx);
+			if(found[idx] && fireable.isPoweredUp())
+				continue;
+			
+			targets.remove(fireable);
+			
+			if(!fireable.isPoweredUp())
+				continue;
+			
 			Vector2D weaponLoc = fireable.getArea().getRefPoint();
 			double range = fireable.getWeaponProperties().getEffectiveRange();
 			double minDistance = Double.MAX_VALUE;
 			
-			targets.remove(fireable);
+			it = observedEntities.iterator();
+			
 			while(it.hasNext())
 			{
 				IEntity o = it.next();
@@ -181,6 +186,7 @@ public class BattleCommander implements BattleInterface
 			double angle = weapon.getArea().getOrientation();
 			
 //			return core.pickTrackPoint(fireable.getAABB(), new Vector2D(speed, angle, true), target);
+			if(getTarget(weapon) != null)
 			return new LinearFeedbackBeacon(weapon, getTarget(weapon), new Vector2D(speed, angle, true));
 		}
 		return null;
@@ -212,9 +218,9 @@ public class BattleCommander implements BattleInterface
 	public  List <Weapon> getFireables() { return fireables; }
 
 	@Override
-	public int requestResource(Weapon weapon, Resource resource)
+	public int requestResource(Weapon weapon, Resource.Type type, double amount)
 	{
-		return controller.getBotInterface().requestResource( weapon, controller.getTemple(), resource, 1 );
+		return controller.getBotInterface().requestResource( weapon, controller.getTemple(), type, amount, 1 );
 	}
 
 

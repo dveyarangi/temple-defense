@@ -2,35 +2,23 @@ package yarangi.game.temple.model.temple;
 
 import javax.media.opengl.GL;
 
+import yarangi.graphics.colors.Color;
+import yarangi.graphics.lights.CircleLightLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.objects.Look;
 
-public class TempleLook implements Look <TempleStructure> 
+public class TempleLook extends CircleLightLook<TempleEntity>
 {
 	
 	
-	public void render(GL gl, double time,TempleStructure temple, IRenderingContext context) 
+	public void render(GL gl, double time,TempleEntity temple, IRenderingContext context) 
 	{
 		
-//		temple.getCenter().getHexagon().search(new DrawingObserver(gl, temple));
-//		System.out.println("drawing temple");
-		double perimeterOffset = 1;//temple.getHexRadius();
-		gl.glColor4f(0.5f, 0.2f, 1.0f,0.5f);
-/*		gl.glBegin(GL.GL_LINE_STRIP);
-		for(MeshNode node : temple.getPerimeter())
-			gl.glVertex3f((float)(perimeterOffset*node.getLocation().x), (float)(perimeterOffset*node.getLocation().y), 0);
-		gl.glEnd();*/
-
-		
-	}
-
-	public void init(GL gl, TempleStructure entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void destroy(GL gl, TempleStructure entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
+		float P = (float)temple.getHealth();
+//		this.setColor(new Color( P*0.2f+(1-P)*0.8f, 0.5f+0.5f*P, 1f*P, 1.0f));
+//		this.setColor(new Color( P*0.3f+(1-P)*0.7f, (1-P)*0.5f+0.5f*P, 1f*P, 1.0f));
+		this.setColor(new Color( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (float)(P),1));
+//		this.setColor(new Color( 1.0f, P, P, 1.0f));
+		super.render( gl, time, temple, context );
 		
 	}
 

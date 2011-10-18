@@ -86,6 +86,8 @@ public class ControlLook implements Look <TempleController>
 		Vector2D controlLoc = new Vector2D(0,0);
 		for(IEntity t : targets)
 		{
+			if(t == null)
+				continue;
 			targetLoc = t.getArea().getRefPoint();
 			gl.glColor4f(0.0f, 1.0f, 0f, 0.2f);
 //			gl.glBegin(GL.GL_POLYGON);

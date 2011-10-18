@@ -1,8 +1,8 @@
 package yarangi.game.temple.model.temple.bots;
 
 import yarangi.game.temple.controllers.bots.BotInterface;
-import yarangi.game.temple.controllers.bots.EOrderState;
-import yarangi.game.temple.controllers.bots.IBotOrder;
+import yarangi.game.temple.controllers.orders.EOrderState;
+import yarangi.game.temple.controllers.orders.IOrder;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 
 /**
@@ -22,7 +22,7 @@ public class QueryingBehavior implements IBehaviorState <Bot>
 	@Override
 	public double behave(double time, Bot bot, boolean isVisible)
 	{
-		IBotOrder order = bot.getOrder();
+		IOrder order = bot.getOrder();
 		
 		if(order == null)
 		{
@@ -33,13 +33,14 @@ public class QueryingBehavior implements IBehaviorState <Bot>
 		if(order == null)
 			return time;
 		
-		order.nextState();
-		
-		if(order.getState() == EOrderState.FINISH)
+		if(order.getState() == EOrderState.AT_REQUESTER)
 		{
 			controller.fulfill( order );
 			bot.setOrder( null );
 		}
+		
+		order.nextState();
+		
 		
 		return time; // takes to time
 	}

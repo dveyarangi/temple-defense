@@ -5,6 +5,7 @@ import java.util.Set;
 
 import yarangi.game.temple.ai.IFeedbackBeacon;
 import yarangi.game.temple.model.weapons.Projectile;
+import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.ISensor;
 import yarangi.graphics.quadraturin.objects.IEntity;
@@ -55,14 +56,16 @@ public class ObserverBehavior implements Behavior <ObserverEntity>
 				
 					Projectile prj = (Projectile) object;
 				
-					prj.getFeedback().update();
+//					System.out.println(object);
+					prj.getFeedback().update(prj.getArea().getRefPoint());
 				}
 			}
 			else
 			{
-				if((object instanceof IEntity) && !(object instanceof ObserverEntity) && !(object instanceof TempleEntity))
+				if(!(object instanceof ObserverEntity) && !(object instanceof TempleEntity) &&!(object instanceof Weapon))
 				{
-					entity.getController().getBattleInterface().objectObserved((IEntity)object);
+//					System.out.println(object);
+					entity.getController().getBattleInterface().objectObserved(object);
 				}
 			}
 		}

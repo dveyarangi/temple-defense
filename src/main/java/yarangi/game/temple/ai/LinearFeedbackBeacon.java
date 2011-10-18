@@ -1,64 +1,87 @@
 package yarangi.game.temple.ai;
 
+import java.lang.ref.WeakReference;
+
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Geometry;
 import yarangi.math.Vector2D;
 
 public class LinearFeedbackBeacon implements IFeedbackBeacon 
 {
-
-	private IEntity source;
+	/** beacon launch point */
+	private Vector2D sourceLocationMemo;
 	
-	private Vector2D location;
 	private Vector2D velocity;
 	private Vector2D projectileVelocity;
-	private IEntity target;
+	private WeakReference<IEntity> target;
+	
+	private Vector2D targetInitLoc;
+	private Vector2D targetLocationMemo;
 	
 	private double distance;
-	private double angle;
 	
 	public LinearFeedbackBeacon(IEntity source, IEntity target, Vector2D projectileVelocity)
 	{
-		this.source = source;
-		this.target = target;
-		this.projectileVelocity = projectileVelocity;
+		this.sourceLocationMemo = new Vector2D(source.getArea().getRefPoint());
 		
-		Vector2D targetLoc = target.getArea().getRefPoint();
+		this.target = new WeakReference<IEntity>( target );
+		this.projectileVelocity = projectileVelocity;
+		targetInitLoc = targetLocationMemo = new Vector2D(target.getArea().getRefPoint());
 		Vector2D sourceLoc = source.getArea().getRefPoint();
 
-		this.angle = Math.atan2(targetLoc.y() - sourceLoc.y(), targetLoc.x() - sourceLoc.x());
+		this.distance = Geometry.calcHypotSquare(sourceLoc, targetLocationMemo);
 		
-
-		this.distance = Geometry.calcHypotSquare(sourceLoc, targetLoc);
-		
-		this.location = new Vector2D(targetLoc);
 		this.velocity = new Vector2D(target.getBody().getVelocity());
 	}
 
 	@Override
-	public void update() 
+	public boolean update(Vector2D beaconLoc) 
 	{
+		if(target.get() == null) // if target is dead before a projectile at it:
+			return true;
 		
-		Vector2D targetLoc = target.getArea().getRefPoint();
-		Vector2D sourceLoc = source.getArea().getRefPoint();
-		double d = Geometry.calcHypotSquare(sourceLoc, targetLoc);
-		if(d > distance)
-			return;
+		
+		Vector2D targetLoc = target.get().getArea().getRefPoint();
+		double toTarget = Geometry.calcHypotSquare(sourceLocationMemo, targetLoc);
+		double toBeacon = Geometry.calcHypotSquare(sourceLocationMemo, beaconLoc);
+
+		double offset = Math.abs(toTarget-toBeacon);
+		if(offset < distance)
+			return false;
+		targetLocationMemo = new Vector2D(targetLoc);
 
 		// updating feedback parameters:
-		distance = d;
-		angle = Math.atan2(targetLoc.y() - sourceLoc.y(), targetLoc.x() - sourceLoc.x());
-//		velocity = target.getVelocity();
+		distance = offset;
+
+		
+/*		Vector2D targetLoc = target.get().getArea().getRefPoint();
+		double d = Geometry.calcHypotSquare(beaconLocation, targetLoc);
+
+		if(d > distance)
+			return false;
+		targetLocationMemo = new Vector2D(targetLoc);
+		beaconLocationMemo = new Vector2D(beaconLocation);
+
+		// updating feedback parameters:
+		distance = d;*/
+		
+		return false;
 
 	}
-	public IEntity getSource() {return source; }	
-	public IEntity getTarget() { return target; }
+	public Vector2D getSource() {return sourceLocationMemo; }	
 	
 	public double getDistance() { return distance; }
-	public double getAngle() { return angle; }
 	public Vector2D getVelocity() { return velocity; }
 
-	public Vector2D getLocation() { return location; }
 
 	public Vector2D getProjectileVelocity() { return projectileVelocity; }
+
+	public Vector2D getInitialTargetLocation()
+	{
+		return targetInitLoc;
+	}
+	public Vector2D getTargetLocationMemo()
+	{
+		return targetLocationMemo;
+	}
 }

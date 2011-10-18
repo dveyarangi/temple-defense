@@ -2,15 +2,26 @@ package yarangi.game.temple.model.temple.bots;
 
 import javax.media.opengl.GL;
 
+import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Vector2D;
+import yarangi.numbers.RandomUtil;
+import yarangi.game.temple.model.resource.Resource;
+import yarangi.game.temple.model.resource.ResourceRequest;
 
 
 public class BotLook implements Look<Bot> {
 
 	
 	private Vector2D [] tail;
+	private static int SKIP = 3;
+	private int step = 0;
+	
+	private Color color = new Color(RandomUtil.getRandomGaussian( 0.8f, 0.2f ), 
+			RandomUtil.getRandomGaussian(  0.8f, 0.2f  ), 
+			RandomUtil.getRandomGaussian( 0.8f, 0.2f ), 
+			0.5f);
 	
 	public BotLook(int tailSize)
 	{
@@ -32,16 +43,32 @@ public class BotLook implements Look<Bot> {
 		else
 			gl.glColor3f(0.0f, 1.0f, 0.2f);*/
 		
-		gl.glBegin(GL.GL_LINE_STRIP);
-		gl.glColor3f(1.0f,1.0f,1.0f);
-		for(int idx = 0; idx < tail.length; idx ++)
-			gl.glVertex3f((float)(tail[idx].x()-bot.getArea().getRefPoint().x()), 
-					      (float)(tail[idx].y()-bot.getArea().getRefPoint().y()), 0f);
+		double resourcePercent = bot.getPort().get( Resource.Type.ENERGY ).getAmount() / bot.getPort().getCapacity( Resource.Type.ENERGY );
+		gl.glColor4f((float)(1-resourcePercent), (float)(1.0),(float)(1-resourcePercent),0.3f);
+//		gl.glColor4f(0,1,0,(float)(0.2+resourcePercent*0.5));
+//		color.apply( gl );
+		double bx = bot.getArea().getRefPoint().x();
+		double by = bot.getArea().getRefPoint().y();
+		gl.glBegin(GL.GL_QUADS);
+			gl.glVertex2f((float)(tail[0].x()-bx-0.2), (float)(tail[0].y()-by-0.2)); 
+			gl.glVertex2f((float)(tail[0].x()-bx-0.2), (float)(tail[0].y()-by+0.2)); 
+			gl.glVertex2f((float)(tail[0].x()-bx+0.2), (float)(tail[0].y()-by+0.2)); 
+			gl.glVertex2f((float)(tail[0].x()-bx+0.2), (float)(tail[0].y()-by-0.2)); 
+
 		gl.glEnd();
 
+		gl.glBegin(GL.GL_LINE_STRIP);
+		for(int idx = 0; idx < tail.length; idx ++)
+			gl.glVertex2f((float)(tail[idx].x()-bx), (float)(tail[idx].y()-by)); 
+		gl.glEnd();
+
+		if(step % SKIP == 0)
+		{
 		for(int idx = tail.length-1; idx > 0; idx --)
 			tail[idx] = tail[idx-1];
-		
+			step = 0;
+		}
+		step ++;
 		tail[0] = new Vector2D(bot.getArea().getRefPoint());
 
 

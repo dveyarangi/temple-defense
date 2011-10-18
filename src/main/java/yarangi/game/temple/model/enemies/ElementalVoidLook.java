@@ -38,7 +38,7 @@ public class ElementalVoidLook implements Look <SwarmAgent>
 	}
 
 	@Override
-	public boolean isCastsShadow() { return true; }
+	public boolean isCastsShadow() { return false; }
 	@Override
 	public float getPriority() { return 0; }
 

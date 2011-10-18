@@ -1,6 +1,5 @@
-package yarangi.game.temple.controllers.bots;
+package yarangi.game.temple.model.resource;
 
-import yarangi.game.temple.model.Resource;
 import yarangi.game.temple.model.temple.Serviceable;
 
 public class ResourceRequest
@@ -42,7 +41,7 @@ public class ResourceRequest
 	
 	public boolean isApproved()
 	{
-		return unapprovedAmount == 0;
+		return unapprovedAmount <= 0;
 	}
 	
 	public boolean isFulfilled()

@@ -25,7 +25,7 @@ public class SatelliteBehavior implements IBehaviorState <Bot>
 	{
 		Vector2D botLocation = bot.getArea().getRefPoint();
 		Vector2D hostLocation = host.getRefPoint();
-		double satelliteDistanceSquare = host.getMaxRadius()*host.getMaxRadius();
+		double satelliteDistanceSquare = 2*host.getMaxRadius()*host.getMaxRadius();
 		
 		
 		Vector2D attractionDir = hostLocation.minus(botLocation).normalize();
@@ -36,15 +36,15 @@ public class SatelliteBehavior implements IBehaviorState <Bot>
 		}
 		double offset = Geometry.calcHypotSquare( botLocation, hostLocation ) - satelliteDistanceSquare;
 		
-		double rotationScalar = Math.exp( - Math.sqrt(Math.abs( offset ))/100 );
+		double rotationScalar = 1 / Math.log( Math.abs( offset )+1 );
 //		System.out.println(rotationScalar);
-		Vector2D attractionForce = attractionDir.multiply( (offset > 0 ? 1 : -1 ) * (1 - rotationScalar)*bot.getEnginePower()); 
+		Vector2D attractionForce = attractionDir.multiply( (offset > 0 ? 1 : -1 ) * (1 - rotationScalar)*2*bot.getEnginePower()); 
 		
 //			System.out.println(rotationScalar);
 		Vector2D rotationDir = attractionDir.left(); 
 		rotationDir = bot.getBody().getVelocity().dot( attractionDir.left() ) > 0 ? rotationDir : rotationDir.minus();
 		
-		Vector2D force = rotationDir.multiply( rotationScalar * bot.getEnginePower() ).add( attractionForce );
+		Vector2D force = rotationDir.multiply( rotationScalar *2* bot.getEnginePower() ).add( attractionForce );
 	
 //		System.out.println(bot.getArea() + " : " + offset);
 		bot.getBody().setForce( force.x(), force.y() );

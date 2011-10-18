@@ -7,6 +7,7 @@ import yarangi.game.temple.ai.NetCore;
 import yarangi.game.temple.controllers.ControlBehavior;
 import yarangi.game.temple.controllers.ControlLook;
 import yarangi.game.temple.controllers.TempleController;
+import yarangi.game.temple.controllers.bots.BotInterface;
 import yarangi.game.temple.model.EffectUtils;
 import yarangi.game.temple.model.enemies.swarm.Swarm;
 import yarangi.game.temple.model.enemies.swarm.SwarmDebugOverlay;
@@ -18,11 +19,13 @@ import yarangi.game.temple.model.temple.ObserverEntity;
 import yarangi.game.temple.model.temple.ObserverLook;
 import yarangi.game.temple.model.temple.StructureInterface;
 import yarangi.game.temple.model.temple.TempleEntity;
+import yarangi.game.temple.model.temple.TempleLook;
 import yarangi.game.temple.model.temple.bots.Bot;
 import yarangi.game.temple.model.temple.bots.BotFactory;
 import yarangi.game.temple.model.terrain.Matter;
 import yarangi.game.temple.model.terrain.Tile;
 import yarangi.game.temple.model.weapons.Minigun;
+import yarangi.game.temple.model.weapons.MinigunGlowingLook;
 import yarangi.game.temple.model.weapons.MinigunLook;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.game.temple.model.weapons.TrackingBehavior;
@@ -59,6 +62,7 @@ public class Playground extends Scene
 	private boolean debugSwarm = false;
 	
 	private IntellectCore core;
+	
 	public Playground(SceneConfig config, QuadVoices voices)
 	{
 		super(config, voices);
@@ -81,8 +85,9 @@ public class Playground extends Scene
 		
 		temple = new TempleEntity(this, controller);
 		controller.setTemple( temple );
-		temple.setLook(Dummy.LOOK);
-		temple.setBehavior(Dummy.BEHAVIOR);
+		temple.setLook(new TempleLook( ));
+		temple.setBehavior(new ObserverBehavior(0,512,null,0));
+		temple.setSensor(new Sensor(512, 3, null, true));
 		temple.setArea(new AABB(0,0,10, 0));
 		temple.setBody(new Body());
 		addEntity(temple);
@@ -92,38 +97,22 @@ public class Playground extends Scene
 
 		BattleInterface bi = controller.getBattleInterface();
 		
-		Weapon weapon = new Minigun(bi);
-		weapon.setArea(new AABB(-150, 100,5,0));
-		weapon.setLook(new MinigunLook());
-		weapon.setBehavior(new TrackingBehavior());
-		addEntity(weapon);
-		bi.addFireable(weapon);
-		structure.addServiceable( weapon );
-
-		 weapon = new Minigun(bi);
-		weapon.setArea(new AABB(-100, -100,5,0));
-		weapon.setLook(new MinigunLook());
-		weapon.setBehavior(new TrackingBehavior());
-		addEntity(weapon);
-		bi.addFireable(weapon);
-		structure.addServiceable( weapon );
-
-  	    weapon = new Minigun(bi);
-		weapon.setArea(new AABB(50, 200,5,0));
-		weapon.setLook(new MinigunLook());
-		weapon.setBehavior(new TrackingBehavior());
-		addEntity(weapon);
-		bi.addFireable(weapon);
-		structure.addServiceable( weapon );
-		for(int i = 0; i < 20; i ++)
+		float maxCannons = 36;
+		for(int a = 0; a < maxCannons; a ++)
 		{
-			Bot bot = BotFactory.createBot( controller );
-			addEntity( bot );
+			Weapon weapon = new Minigun(bi);
+			weapon.setArea(new AABB((100+ a%3*100)*Math.cos(Angles.PI_2/maxCannons *a), (100+ a%3*100)*Math.sin(Angles.PI_2/maxCannons * a ),5,0));
+			weapon.setLook(new MinigunGlowingLook());
+//			weapon.setLook(new MinigunLook());
+			weapon.setBehavior(new TrackingBehavior());
+			weapon.setSensor( new Sensor(64, 3, null, false)  );
+			addEntity(weapon);
+			bi.addFireable(weapon);
+			structure.addServiceable( weapon );
 		}
 
-
 		
-		for(int i = 0; i < 6; i ++)
+/*		for(int i = 0; i < 6; i ++)
 		{
 			double angle = i * Angles.PI_div_3 + Angles.PI_div_6;
 //			double angle = RandomUtil.getRandomDouble(Angles.PI_2);
@@ -136,7 +125,7 @@ public class Playground extends Scene
 			addEntity(sensor2);
 //			grid.connect(temple.getStructure(), sensor2);
 			
-		}
+		}*/
 		
 		
 		
@@ -175,29 +164,40 @@ public class Playground extends Scene
 			}
 			
 		};
-		
 		getCollisionManager().registerHandler( Projectile.class, projectileCollider );
 		
-/*		ICollisionHandler<TempleEntity> templeCollider = new ICollisionHandler <TempleEntity> ()
+				
+		
+		final BotInterface botInterface = controller.getBotInterface();
+		
+		for(int i = 0; i < 18; i ++)
+		{
+			Bot bot = BotFactory.createBot( controller );
+			addEntity( bot );
+			botInterface.add(bot);
+		}
+
+
+		ICollisionHandler<TempleEntity> templeCollider = new ICollisionHandler <TempleEntity> ()
 		{
 
 			@Override
-			public void setImpactWith(TempleEntity source, SceneEntity target)
+			public boolean setImpactWith(TempleEntity source, IPhysicalObject target)
 			{
-				if(target instanceof Matter)
-					source.markDead();
-	
-//				System.out.println(target);
-//				if(target instanceof SwarmAgent)
-//				EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldVeil(), , 32 );
+				if( target instanceof SwarmAgent)
+				{
+					botInterface.changeTransferRate(-0.5);
+					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldVeil(), new Color(1,0,0,0), 4 );
+					return true;
+				}
 				
+				return false;
 			}
 			
 		};
+		getCollisionManager().registerHandler( TempleEntity.class, templeCollider );
 		
-		getCollisionManager().registerHandler( TempleEntity.class, templeCollider );*/
 	}
-
 /*	public void animate(double time)
 	{
 		super.animate(time);
