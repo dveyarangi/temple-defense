@@ -5,16 +5,44 @@ import yarangi.game.temple.controllers.orders.IOrder;
 import yarangi.game.temple.model.resource.Resource.Type;
 import yarangi.game.temple.model.temple.Serviceable;
 
+/**
+ * This class represents a resource transaction order.
+ * 
+ * @author dveyarangi
+ */
 public class GatheringOrder implements IOrder
 {
+	/**
+	 * Order origin request
+	 */
 	private ResourceRequest request;
 	
+	/**
+	 * Amount of resource to be moved according to this order.
+	 */
 	private double orderedAmount;
+	
+	/**
+	 * Type of resource to be moved according to this order.
+	 */
 	private Resource.Type orderedType;
 	
+	/**
+	 * Order execution state
+	 * TODO: consider making generic
+	 */
 	public EOrderState state = EOrderState.BEGIN;
 	
+	/**
+	 * Amount of resource exported from provider by this order at current order state.
+	 * Increases during export procedure
+	 */
 	public double exportedAmount;
+	
+	/**
+	 * Amount of resource imported to requester by this order at current order state.
+	 * Increases during import procedure
+	 */
 	public double importedAmount;
 	
 	public GatheringOrder(ResourceRequest request, Type type, double amount)
@@ -80,8 +108,8 @@ public class GatheringOrder implements IOrder
 		
 		importStock.supply( transferedAmount );
 
-		importedAmount += transferedAmount; 
-		if(importedAmount+0.0000001 < orderedAmount)
+		exportedAmount += transferedAmount; 
+		if(exportedAmount+0.0000001 < orderedAmount)
 			return false;
 
 		return true;
@@ -113,8 +141,8 @@ public class GatheringOrder implements IOrder
 		
 		importStock.supply( transferedAmount );
 		
-		exportedAmount += transferedAmount; 
-		if(exportedAmount+0.0000001 < orderedAmount)
+		importedAmount += transferedAmount; 
+		if(importedAmount+0.0000001 < orderedAmount)
 			return false;
 
 		return true;

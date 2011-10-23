@@ -3,6 +3,11 @@ package yarangi.game.temple.model.resource;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * @author dveyarangi
+ *
+ */
 public class Port
 {
 	/**

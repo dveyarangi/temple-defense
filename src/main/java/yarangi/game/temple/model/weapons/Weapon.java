@@ -87,6 +87,11 @@ public abstract class Weapon extends Entity implements Fireable, Serviceable
 	}
 
 	public Port getPort() { return port; }
+	
+	/** consumes resource amount required for single shot
+     * TODO: resource requesting logic shouldn't be here.
+	 * @return power up success
+	 */
 	public boolean powerUp() 
 	{
 		if(!isPoweredUp())

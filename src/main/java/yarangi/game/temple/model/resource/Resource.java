@@ -1,5 +1,12 @@
 package yarangi.game.temple.model.resource;
 
+/**
+ * Represents a game resource. Resource supplying and consumption should be 
+ * performed through either {@link Port} or {@link GatheringOrder} interfaces.
+ * 
+ * @author dveyarangi
+ *
+ */
 public class Resource
 {
 	public static enum Type { MATTER, ENERGY }
@@ -26,7 +33,7 @@ public class Resource
 	 * @param consumeOnFailure either we should still consume when to enough resource available
 	 * @return
 	 */
-	public Resource consume(double consumedAmount, boolean consumeOnFailure)
+	Resource consume(double consumedAmount, boolean consumeOnFailure)
 	{
 		double consumed;
 		if(this.amount >= consumedAmount)
