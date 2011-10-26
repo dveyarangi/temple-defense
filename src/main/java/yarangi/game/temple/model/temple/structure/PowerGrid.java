@@ -3,15 +3,15 @@ package yarangi.game.temple.model.temple.structure;
 import java.util.HashSet;
 import java.util.Set;
 
-import yarangi.graphics.quadraturin.SceneVeil;
+import yarangi.graphics.quadraturin.SceneLayer;
 import yarangi.math.Geometry;
 
 public class PowerGrid
 {
 	private Set <Connectable> connectors = new HashSet <Connectable> ();
-	private SceneVeil veil;
+	private SceneLayer veil;
 	
-	public PowerGrid(SceneVeil veil)
+	public PowerGrid(SceneLayer veil)
 	{
 		this.veil = veil;
 	}

@@ -72,7 +72,7 @@ public class Playground extends Scene
 
 //		PowerGrid grid = new PowerGrid(this.getWorldVeil());
 		
-		core = new NetCore("netcore", this.getWorldVeil().getWidth(), this.getWorldVeil().getHeight());
+		core = new NetCore("netcore", this.getWorldLayer().getWidth(), this.getWorldLayer().getHeight());
 //		addEntity(new BubbleSwarm(getWorldVeil(), temple));
 		TempleController controller = new TempleController(this, core);
 		
@@ -150,13 +150,13 @@ public class Playground extends Scene
 				if( target instanceof Tile || target instanceof Matter || target instanceof TempleEntity)
 				{
 					source.markDead();
-					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldVeil(), new Color(1,0,0,0), 4 );
+					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(1,0,0,0), 4 );
 					return true;
 				}
 				if(target instanceof SwarmAgent)
 				{
 					source.markDead();
-					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldVeil(), new Color(0,1,0,0), 4 );
+					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(0,1,0,0), 4 );
 					return true;
 				}
 				
@@ -187,7 +187,7 @@ public class Playground extends Scene
 				if( target instanceof SwarmAgent)
 				{
 					botInterface.changeTransferRate(-0.5);
-					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldVeil(), new Color(1,0,0,0), 4 );
+					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(1,0,0,0), 4 );
 					return true;
 				}
 				

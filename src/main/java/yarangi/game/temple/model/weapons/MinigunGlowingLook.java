@@ -24,10 +24,6 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 
 	public void render(GL gl, double time, Minigun cannon, IRenderingContext context) 
 	{
-		if(context.isForEffect())
-			return;
-		
-		
 		Resource.Type type = cannon.getWeaponProperties().getResourceType();
 		float P = (float)(cannon.getPort().get( type ).getAmount() / cannon.getPort().getCapacity( type ));
 		this.setColor(new Color( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (float)(P),1));

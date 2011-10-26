@@ -5,11 +5,17 @@
 		"aa"   : false,
 		"maxFPS" : 1000,
 		"plugins" : [
-			{ "name" : "shaders",
-			  "factoryClass" : "yarangi.graphics.shaders.ShaderFactory",
+			{ "factoryClass" : "yarangi.graphics.shaders.ShaderFactory",
 			  "properties" : {
 			  		"light" : "shaders/light1.glsl",
-			  		"penumbra" : "shaders/penumbra.glsl"
+			  		"penumbra" : "shaders/penumbra.glsl",
+					"vblur" : "shaders/gaussian-vblur.glsl",
+ 			 		"hblur" : "shaders/gaussian-hblur.glsl",
+ 					"fade" : "shaders/fade.glsl"
+			  	}
+			}
+			{ "factoryClass" : "yarangi.graphics.veils.BlurVeil",
+			  "properties" : {
 			  	}
 			}
 		 ]

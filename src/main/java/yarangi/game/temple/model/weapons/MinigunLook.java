@@ -16,9 +16,7 @@ public class MinigunLook implements Look<Minigun>
 
 	public void render(GL gl, double time, Minigun cannon, IRenderingContext context) 
 	{
-		if(context.isForEffect())
-			return;
-		
+
 		double controlAngle = cannon.getArea().getOrientation();
 		
 /*		double width =  cannon.getWeaponProperties().getProjectileTrajectoryAccuracy();

@@ -65,7 +65,7 @@ public class Swarm implements IGrid <Cell<Beacon>>
 		halfSize = worldSize / 2;
 		this.scene = _scene;
 		
-		terrain = (GridyTerrainMap<Tile>)_scene.getWorldVeil().<Tile>getTerrain();
+		terrain = (GridyTerrainMap<Tile>)_scene.getWorldLayer().<Tile>getTerrain();
 		
 		this.toNodeIdx = (double)WSIZE / (double)(worldSize);
 		

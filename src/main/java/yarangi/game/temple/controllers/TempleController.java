@@ -21,7 +21,7 @@ import yarangi.graphics.quadraturin.actions.ActionController;
 import yarangi.graphics.quadraturin.events.CursorListener;
 import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.objects.Entity;
-import yarangi.graphics.quadraturin.objects.IVeilEntity;
+import yarangi.graphics.quadraturin.objects.ILayerEntity;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
@@ -39,7 +39,7 @@ public class TempleController extends Entity implements CursorListener
 	
 	private Vector2D cursorLocation;
 	
-	private IVeilEntity highlighted;
+	private ILayerEntity highlighted;
 
 
 	private ObserverEntity cursor;
@@ -114,7 +114,7 @@ public class TempleController extends Entity implements CursorListener
 	}
 
 
-	public IVeilEntity getHighlighted() { return highlighted; }
+	public ILayerEntity getHighlighted() { return highlighted; }
 	
 
 //	public IPhysicalObject getTarget(Fireable fireable) {
@@ -162,7 +162,7 @@ public class TempleController extends Entity implements CursorListener
 	{
 		LOSSensor sensor = new LOSSensor();
 //		scene.getEntityIndex().query( sensor, x, y, x2-x, y2-y );
-		scene.getWorldVeil().<Tile>getTerrain().query( sensor, x, y, x2-x, y2-y );
+		scene.getWorldLayer().<Tile>getTerrain().query( sensor, x, y, x2-x, y2-y );
 		
 		return sensor.hasLOS();
 	}

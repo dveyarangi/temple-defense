@@ -55,7 +55,7 @@ public class SwarmFactory
 			swarm.addSpawnNode(r*Math.cos(a), r*Math.sin(a));
 		}
 		
-		final GridyTerrainMap <Tile> terrain = (GridyTerrainMap <Tile>)scene.getWorldVeil().<Tile>getTerrain();
+		final GridyTerrainMap <Tile> terrain = (GridyTerrainMap <Tile>)scene.getWorldLayer().<Tile>getTerrain();
 		ICollisionHandler <SwarmAgent> agentCollider = new ICollisionHandler <SwarmAgent> (){
 
 			@Override
@@ -70,7 +70,7 @@ public class SwarmFactory
 						if(source.getIntegrity().getHitPoints() <= 0)
 						{
 							source.markDead();
-							EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldVeil(), new Color(0,1,0,1), 32);
+							EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(0,1,0,1), 32);
 							return true;
 						}
 
@@ -79,7 +79,7 @@ public class SwarmFactory
 					if(target instanceof TempleEntity)
 					{
 						source.markDead();
-						EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldVeil(), new Color(1,0,0,1), 64);
+						EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(1,0,0,1), 64);
 						return true;
 					}
 					else
@@ -94,7 +94,7 @@ public class SwarmFactory
 //						if(source.getIntegrity().getHitPoints() <= 0)
 						{
 							source.markDead();
-							EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldVeil(), new Color(0,1,0,1), 32);
+							EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(0,1,0,1), 32);
 							return true;
 						}
 					}

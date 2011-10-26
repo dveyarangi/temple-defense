@@ -55,7 +55,7 @@ public class OrdersActionController extends ActionController
 	{
 		super(scene);
 		
-		terrain = (GridyTerrainMap<Tile>)scene.getWorldVeil().<Tile>getTerrain();
+		terrain = (GridyTerrainMap<Tile>)scene.getWorldLayer().<Tile>getTerrain();
 //		actions.put("cursor-moved", temple.getController());
 		actions.put("mouse-left-drag", new IAction()
 		{

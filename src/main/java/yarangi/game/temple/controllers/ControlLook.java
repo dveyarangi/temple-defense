@@ -10,14 +10,12 @@ import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 
+// TODO: this class should be placed somewhere else!
 public class ControlLook implements Look <TempleController> 
 {
 	
 	public void render(GL gl, double time, TempleController entity, IRenderingContext context) 
 	{
-		if(context.isForEffect())
-			return;
-		
 //		entity.getActionController().display( gl, time, context );
 //		TempleEntity temple = entity.getTemple();
 		
