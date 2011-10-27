@@ -13,7 +13,7 @@
  			 		"hblur" : "shaders/gaussian-hblur.glsl",
  					"fade" : "shaders/fade.glsl"
 			  	}
-			}
+			},
 			{ "factoryClass" : "yarangi.graphics.veils.BlurVeil",
 			  "properties" : {
 			  	}
