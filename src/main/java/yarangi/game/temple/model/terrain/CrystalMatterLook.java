@@ -3,6 +3,7 @@ package yarangi.game.temple.model.terrain;
 import javax.media.opengl.GL;
 
 import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.Look;
 
 public class CrystalMatterLook implements Look <CrystalMatter> 
@@ -95,5 +96,7 @@ public class CrystalMatterLook implements Look <CrystalMatter>
 	}
 	@Override
 	public float getPriority() { return 1; }
+	@Override
+	public IVeil getVeil() { return IVeil.ORIENTING; }
 
 }

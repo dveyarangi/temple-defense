@@ -3,6 +3,7 @@ package yarangi.game.temple.model.temple.structure;
 import javax.media.opengl.GL;
 
 import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
@@ -62,5 +63,7 @@ public class PowerConnectorLook implements Look <PowerConnector>
 		// TODO Auto-generated method stub
 		return false;
 	}
+	@Override
+	public IVeil getVeil() { return IVeil.ORIENTING; }
 
 }

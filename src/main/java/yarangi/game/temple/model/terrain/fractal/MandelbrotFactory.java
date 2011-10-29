@@ -4,7 +4,9 @@ import yarangi.game.temple.model.terrain.GridyTerrainBehavior;
 import yarangi.game.temple.model.terrain.GridyTerrainLook;
 import yarangi.game.temple.model.terrain.Tile;
 import yarangi.graphics.colors.Color;
+import yarangi.graphics.quadraturin.objects.Dummy;
 import yarangi.graphics.quadraturin.objects.EntityShell;
+import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.graphics.quadraturin.terrain.ITerrainFactory;
 
@@ -113,7 +115,7 @@ public class MandelbrotFactory implements ITerrainFactory
 		    }
 		}
 
-		GridyTerrainLook look = new GridyTerrainLook();
+		Look <GridyTerrainMap> look = Dummy.LOOK(); //new GridyTerrainLook();
 		return new EntityShell<GridyTerrainMap>( terrain, new GridyTerrainBehavior(), look );
 	}
 }

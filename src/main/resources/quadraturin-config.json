@@ -11,10 +11,11 @@
 			  		"penumbra" : "shaders/penumbra.glsl",
 					"vblur" : "shaders/gaussian-vblur.glsl",
  			 		"hblur" : "shaders/gaussian-hblur.glsl",
- 					"fade" : "shaders/fade.glsl"
+ 					"fade" : "shaders/fade.glsl",
+ 					"isoheight" : "shaders/isoheight.glsl"
 			  	}
 			},
-			{ "factoryClass" : "yarangi.graphics.veils.BlurVeil",
+			{ "factoryClass" : "yarangi.graphics.veils.IsoheightVeil",
 			  "properties" : {
 			  	}
 			}

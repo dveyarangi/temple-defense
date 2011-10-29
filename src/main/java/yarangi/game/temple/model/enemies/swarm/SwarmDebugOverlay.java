@@ -3,7 +3,7 @@ package yarangi.game.temple.model.enemies.swarm;
 import javax.media.opengl.GL;
 
 import yarangi.graphics.grid.TileGridLook;
-import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.terrain.Cell;
 import yarangi.math.Vector2D;
 
@@ -130,5 +130,7 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 		return beacon.getDangerFactor() >= Swarm.MAX_DANGER_FACTOR ? 1 :(float)((beacon.getDangerFactor()))/(float)Swarm.MAX_DANGER_FACTOR;
 
 	}
+	@Override
+	public IVeil getVeil() { return IVeil.ORIENTING; }
 
 }

@@ -2,11 +2,13 @@ package yarangi.game.temple.model.enemies.swarm;
 
 import yarangi.game.temple.model.Integrity;
 import yarangi.game.temple.model.enemies.ElementalVoidLook;
+import yarangi.game.temple.model.enemies.MetaCircleLook;
 import yarangi.game.temple.model.enemies.swarm.agents.DangerBehavior;
 import yarangi.game.temple.model.enemies.swarm.agents.DroneBehavior;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
@@ -26,6 +28,8 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	public static final int SPAWNING_RADIUS = 50;
 	public static final Integrity AGENT_INTEGRITY = new Integrity(10, 0, new double [] {0,0,0,0});
 	public static final double AGENT_HEALTH = AGENT_INTEGRITY.getMaxHitPoints();
+	
+	public Look agentLook = new MetaCircleLook();
 	
 //	public Integrity integrity = new Integrity(30, 0, new double [] {0,0,0,0});
 	public SpawningBehavior(double spawnInterval)
@@ -51,7 +55,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 			double size = RandomUtil.getRandomDouble(1)+1;
 			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(10, 0, new double [] {0,0,0,0}), false);
 			Vector2D source = swarm.getSource();
-			agent.setLook(new ElementalVoidLook());
+			agent.setLook(agentLook);
 			agent.setBehavior(createAgentBehavior());
 	//		System.out.println("spawning agent at " + swarm.getArea().getRefPoint());
 			agent.setArea(new AABB(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 

@@ -3,6 +3,7 @@ package yarangi.game.temple.controllers;
 import javax.media.opengl.GL;
 
 import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
@@ -67,5 +68,8 @@ public class OrdersActionLook implements Look <OrdersActionController>
 	}
 	@Override
 	public float getPriority() { return 0; }
+
+	@Override
+	public IVeil getVeil() { return IVeil.ORIENTING; }
 
 }

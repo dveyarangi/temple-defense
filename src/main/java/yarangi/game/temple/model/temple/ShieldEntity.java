@@ -1,5 +1,6 @@
 package yarangi.game.temple.model.temple;
 
+import yarangi.game.temple.model.resource.Port;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.Vector2D;
@@ -13,8 +14,10 @@ public class ShieldEntity extends Entity implements IPhysicalObject
 	private double width;
 	
 	private ForcePoint [] forcePoints = new ForcePoint[150];
+	
+	private Port port;
 
-	public ShieldEntity(BattleInterface battleInterface)
+	public ShieldEntity(BattleInterface battleInterface, Port port)
 	{
 		super();
 		this.battleInterface = battleInterface;
@@ -22,7 +25,11 @@ public class ShieldEntity extends Entity implements IPhysicalObject
 		setLook(new ShieldLook());
 		setBehavior(new ShieldBehavior());
 		this.width = 1.5;
+		
+		this.port = port;
 	}
+	
+	public Port getPort() { return port; }
 
 	public ForcePoint[] getForcePoints() { return forcePoints; }
 

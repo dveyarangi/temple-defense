@@ -2,13 +2,13 @@ package yarangi.game.temple.model.temple.bots;
 
 import javax.media.opengl.GL;
 
+import yarangi.game.temple.model.resource.Resource;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
-import yarangi.game.temple.model.resource.Resource;
-import yarangi.game.temple.model.resource.ResourceRequest;
 
 
 public class BotLook implements Look<Bot> {
@@ -88,5 +88,7 @@ public class BotLook implements Look<Bot> {
 	}
 	@Override
 	public float getPriority() { return 0; }
+	@Override
+	public IVeil getVeil() { return IVeil.ORIENTING; }
 
 }
