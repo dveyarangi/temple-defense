@@ -100,7 +100,7 @@ public class Playground extends Scene
 
 		BattleInterface bi = controller.getBattleInterface();
 		
-		float maxCannons = 36;
+		float maxCannons = 18;
 		for(int a = 0; a < maxCannons; a ++)
 		{
 			Weapon weapon = new Minigun(bi);
@@ -187,7 +187,7 @@ public class Playground extends Scene
 		
 		final BotInterface botInterface = controller.getBotInterface();
 		
-		for(int i = 0; i < 18; i ++)
+		for(int i = 0; i < 9; i ++)
 		{
 			Bot bot = BotFactory.createBot( controller );
 			addEntity( bot );

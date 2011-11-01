@@ -18,6 +18,10 @@
 			{ "factoryClass" : "yarangi.graphics.veils.IsoheightVeil",
 			  "properties" : {
 			  	}
+			},
+			{ "factoryClass" : "yarangi.graphics.veils.BlurVeil",
+			  "properties" : {
+			  	}
 			}
 		 ]
 			  		
