@@ -17,6 +17,9 @@ import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.temple.ObserverBehavior;
 import yarangi.game.temple.model.temple.ObserverEntity;
 import yarangi.game.temple.model.temple.ObserverLook;
+import yarangi.game.temple.model.temple.ShieldBehavior;
+import yarangi.game.temple.model.temple.ShieldEntity;
+import yarangi.game.temple.model.temple.ShieldLook;
 import yarangi.game.temple.model.temple.StructureInterface;
 import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.game.temple.model.temple.TempleLook;
@@ -97,7 +100,7 @@ public class Playground extends Scene
 
 		BattleInterface bi = controller.getBattleInterface();
 		
-		float maxCannons = 36;
+		float maxCannons = 18;
 		for(int a = 0; a < maxCannons; a ++)
 		{
 			Weapon weapon = new Minigun(bi);
@@ -109,6 +112,20 @@ public class Playground extends Scene
 			addEntity(weapon);
 			bi.addFireable(weapon);
 			structure.addServiceable( weapon );
+			
+			ShieldEntity shield = new ShieldEntity(bi, weapon.getPort());
+			shield.setArea(new AABB((100+ a%3*100)*Math.cos(Angles.PI_2/maxCannons *a), (100+ a%3*100)*Math.sin(Angles.PI_2/maxCannons * a ),100,0));
+			shield.setLook(new ShieldLook());
+//			weapon.setLook(new MinigunLook());
+			shield.setBehavior(new ShieldBehavior());
+//			shield.setSensor( new Sensor(64, 3, null, false)  );
+			addEntity(shield);
+		}
+		int maxShields = 3;
+		for(int a = 0; a < maxShields; a ++)
+		{
+
+//			structure.addServiceable( weapon );
 		}
 
 		
@@ -170,7 +187,7 @@ public class Playground extends Scene
 		
 		final BotInterface botInterface = controller.getBotInterface();
 		
-		for(int i = 0; i < 18; i ++)
+		for(int i = 0; i < 9; i ++)
 		{
 			Bot bot = BotFactory.createBot( controller );
 			addEntity( bot );

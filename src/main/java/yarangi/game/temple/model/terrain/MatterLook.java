@@ -5,6 +5,7 @@ import java.util.Iterator;
 import javax.media.opengl.GL;
 
 import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.spatial.Polygon;
 import yarangi.spatial.Polygon.PolyPoint;
@@ -48,5 +49,7 @@ public class MatterLook implements Look <Matter>
 	public boolean isCastsShadow() { return true; }
 	@Override
 	public float getPriority() { return 1; }
+	@Override
+	public IVeil getVeil() { return IVeil.ORIENTING; }
 	
 }

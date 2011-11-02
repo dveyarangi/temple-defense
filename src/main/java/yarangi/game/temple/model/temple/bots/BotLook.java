@@ -2,13 +2,15 @@ package yarangi.game.temple.model.temple.bots;
 
 import javax.media.opengl.GL;
 
+import yarangi.game.temple.model.resource.Resource;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.graphics.quadraturin.IVeil;
+import yarangi.graphics.quadraturin.QServices;
 import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.veils.BlurVeil;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
-import yarangi.game.temple.model.resource.Resource;
-import yarangi.game.temple.model.resource.ResourceRequest;
 
 
 public class BotLook implements Look<Bot> {
@@ -17,6 +19,7 @@ public class BotLook implements Look<Bot> {
 	private Vector2D [] tail;
 	private static int SKIP = 3;
 	private int step = 0;
+	IVeil veil;
 	
 	private Color color = new Color(RandomUtil.getRandomGaussian( 0.8f, 0.2f ), 
 			RandomUtil.getRandomGaussian(  0.8f, 0.2f  ), 
@@ -30,6 +33,12 @@ public class BotLook implements Look<Bot> {
 	
 	public void init(GL gl, Bot bot, IRenderingContext context) {
 		
+		veil = context.<BlurVeil>getPlugin( BlurVeil.NAME );
+		if(veil == null)
+		{
+			QServices.rendering.warn( "Plugin [" + BlurVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
+			veil = IVeil.ORIENTING;
+		}
 		for(int idx = 0; idx < tail.length; idx ++)
 			tail[idx] = new Vector2D(bot.getArea().getRefPoint());
 		
@@ -88,5 +97,7 @@ public class BotLook implements Look<Bot> {
 	}
 	@Override
 	public float getPriority() { return 0; }
+	@Override
+	public IVeil getVeil() { return veil; }
 
 }

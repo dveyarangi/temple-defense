@@ -6,6 +6,7 @@ import yarangi.game.temple.model.temple.Platform;
 import yarangi.game.temple.model.temple.structure.Hexagon;
 import yarangi.game.temple.model.temple.structure.MeshNode;
 import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.Look;
 
 public class PlatformLook implements Look <Platform>
@@ -50,5 +51,7 @@ public class PlatformLook implements Look <Platform>
 		// TODO Auto-generated method stub
 		return false;
 	}
+	@Override
+	public IVeil getVeil() { return IVeil.ORIENTING; }
 
 }

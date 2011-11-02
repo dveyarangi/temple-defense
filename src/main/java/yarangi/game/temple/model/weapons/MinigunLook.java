@@ -5,6 +5,7 @@ import javax.media.opengl.GL;
 import yarangi.game.temple.model.resource.Resource;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
@@ -90,5 +91,7 @@ public class MinigunLook implements Look<Minigun>
 	public boolean isCastsShadow() { return true; }
 	@Override
 	public float getPriority() { return 0; }
+	@Override
+	public IVeil getVeil() { return IVeil.ORIENTING; }
 
 }

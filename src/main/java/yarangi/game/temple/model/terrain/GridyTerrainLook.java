@@ -3,6 +3,7 @@ package yarangi.game.temple.model.terrain;
 import javax.media.opengl.GL;
 
 import yarangi.graphics.grid.TileGridLook;
+import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.terrain.Cell;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.graphics.textures.TextureUtils;
@@ -51,5 +52,7 @@ public class GridyTerrainLook extends TileGridLook<Tile, GridyTerrainMap<Tile>>
 		gl.glBindTexture( GL.GL_TEXTURE_2D, 0 );
 		gl.glEnable( GL.GL_DEPTH_TEST );
 	}
+	@Override
+	public IVeil getVeil() { return IVeil.ORIENTING; }
 	
 }

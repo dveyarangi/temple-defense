@@ -3,7 +3,9 @@ package yarangi.game.temple.model.temple.bots;
 import yarangi.game.temple.controllers.bots.BotInterface;
 import yarangi.game.temple.controllers.orders.IOrder;
 import yarangi.game.temple.model.resource.GatheringOrder;
+import yarangi.game.temple.model.resource.Resource;
 import yarangi.game.temple.model.temple.Serviceable;
+import yarangi.numbers.RandomUtil;
 
 public class ServicingBehavior extends SatelliteBehavior
 {
@@ -18,6 +20,8 @@ public class ServicingBehavior extends SatelliteBehavior
 	@Override
 	public double behave(double time, Bot bot, boolean isVisible)
 	{
+		;
+//		bot.getBody().setMaxSpeed(7+RandomUtil.getRandomGaussian( 0, 1 ) );
 		super.behave( time, bot, isVisible );
 		IOrder order = bot.getOrder();
 		boolean finished = false;

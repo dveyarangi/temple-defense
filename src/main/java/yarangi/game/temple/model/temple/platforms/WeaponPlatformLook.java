@@ -3,6 +3,7 @@ package yarangi.game.temple.model.temple.platforms;
 import javax.media.opengl.GL;
 
 import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.Look;
 
 
@@ -37,5 +38,7 @@ public class WeaponPlatformLook implements Look <WeaponPlatform>
 		// TODO Auto-generated method stub
 		return false;
 	}
+	@Override
+	public IVeil getVeil() { return IVeil.ORIENTING; }
 
 }

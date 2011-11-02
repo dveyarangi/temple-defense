@@ -4,6 +4,7 @@ import javax.media.opengl.GL;
 
 import yarangi.game.temple.model.Integrity;
 import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
@@ -69,5 +70,7 @@ public class ElementalDarknessLook implements Look <ElementalDarkness>
 		// TODO Auto-generated method stub
 		return false;
 	}
+	@Override
+	public IVeil getVeil() { return IVeil.ORIENTING; }
 
 }

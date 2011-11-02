@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.media.opengl.GL;
 
 import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
@@ -119,5 +120,8 @@ public class ControlLook implements Look <TempleController>
 
 	@Override
 	public float getPriority() { return 0; }
+
+	@Override
+	public IVeil getVeil() { return IVeil.ORIENTING; }
 
 }
