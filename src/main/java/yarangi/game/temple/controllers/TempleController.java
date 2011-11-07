@@ -4,7 +4,6 @@ import javax.media.opengl.GL;
 
 import yarangi.game.temple.Debug;
 import yarangi.game.temple.Playground;
-import yarangi.game.temple.actions.DefaultActionFactory;
 import yarangi.game.temple.ai.IntellectCore;
 import yarangi.game.temple.controllers.bots.BotInterface;
 import yarangi.game.temple.model.temple.BattleCommander;
@@ -18,6 +17,7 @@ import yarangi.game.temple.model.terrain.Tile;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.actions.ActionController;
+import yarangi.graphics.quadraturin.actions.DefaultActionFactory;
 import yarangi.graphics.quadraturin.events.CursorListener;
 import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.objects.Entity;
@@ -77,7 +77,7 @@ public class TempleController extends Entity implements CursorListener
 		botInterface = new BotInterface();
 		
 		actionController = new OrdersActionController(scene);
-		DefaultActionFactory.fillNavigationActions(scene, actionController);
+		DefaultActionFactory.appendNavActions(scene, actionController);
 		Debug.appendDebugActions( actionController.getActions(), (Playground) scene );
 		
 		// TODO: control modes

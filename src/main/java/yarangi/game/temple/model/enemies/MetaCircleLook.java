@@ -89,9 +89,9 @@ public class MetaCircleLook implements Look <Entity>
 	@Override
 	public boolean isCastsShadow() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 	@Override
-	public IVeil getVeil() { return veil; }
+	public IVeil getVeil() { return IVeil.ORIENTING; }
 
 }

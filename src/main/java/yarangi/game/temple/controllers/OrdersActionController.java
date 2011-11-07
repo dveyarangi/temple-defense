@@ -8,8 +8,11 @@ import yarangi.game.temple.model.terrain.Tile;
 import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.Scene;
+import yarangi.graphics.quadraturin.ViewPoint2D;
 import yarangi.graphics.quadraturin.actions.ActionController;
+import yarangi.graphics.quadraturin.actions.CameraMover;
 import yarangi.graphics.quadraturin.actions.IAction;
+import yarangi.graphics.quadraturin.actions.ICameraMan;
 import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.events.UserActionEvent;
 import yarangi.graphics.quadraturin.objects.IEntity;
@@ -36,6 +39,8 @@ public class OrdersActionController extends ActionController
 	
 	private GridyTerrainMap<Tile> terrain;
 	
+	private ICameraMan cameraMan;
+	
 	private ISpatialFilter <IEntity> filter = new ISpatialFilter <IEntity> ()
 	{
 		@Override
@@ -54,6 +59,8 @@ public class OrdersActionController extends ActionController
 	public OrdersActionController(final Scene scene)
 	{
 		super(scene);
+		
+		cameraMan = new CameraMover( (ViewPoint2D) scene.getViewPoint() );
 		
 		terrain = (GridyTerrainMap<Tile>)scene.getWorldLayer().<Tile>getTerrain();
 //		actions.put("cursor-moved", temple.getController());
@@ -140,6 +147,13 @@ public class OrdersActionController extends ActionController
 	public IEntity getDragged() { return dragged; }
 	public Vector2D getTarget() { return target; }
 	public IEntity getHovered() { return hovered; }
+
+
+	@Override
+	public ICameraMan getCameraManager()
+	{
+		return cameraMan;
+	}
 
 /*	@Override
 	public void display(GL gl, double time, RenderingContext context)
