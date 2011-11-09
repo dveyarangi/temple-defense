@@ -6,20 +6,19 @@ import java.util.Map;
 import yarangi.game.temple.model.terrain.ConsumingSensor;
 import yarangi.game.temple.model.terrain.Tile;
 import yarangi.game.temple.model.weapons.Weapon;
-import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.Scene;
+import yarangi.graphics.quadraturin.ViewPoint2D;
 import yarangi.graphics.quadraturin.actions.ActionController;
+import yarangi.graphics.quadraturin.actions.CameraMover;
 import yarangi.graphics.quadraturin.actions.IAction;
+import yarangi.graphics.quadraturin.actions.ICameraMan;
 import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.events.UserActionEvent;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Look;
-import yarangi.graphics.quadraturin.terrain.Cell;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.math.Vector2D;
-import yarangi.spatial.IAreaChunk;
 import yarangi.spatial.ISpatialFilter;
-import yarangi.spatial.ISpatialSensor;
 
 
 public class OrdersActionController extends ActionController
@@ -35,6 +34,8 @@ public class OrdersActionController extends ActionController
 	private Look <OrdersActionController> look = new OrdersActionLook();
 	
 	private GridyTerrainMap<Tile> terrain;
+	
+	private ICameraMan cameraManager;
 	
 	private ISpatialFilter <IEntity> filter = new ISpatialFilter <IEntity> ()
 	{
@@ -56,6 +57,8 @@ public class OrdersActionController extends ActionController
 		super(scene);
 		
 		terrain = (GridyTerrainMap<Tile>)scene.getWorldLayer().<Tile>getTerrain();
+		
+		cameraManager = new CameraMover((ViewPoint2D)scene.getViewPoint());
 //		actions.put("cursor-moved", temple.getController());
 		actions.put("mouse-left-drag", new IAction()
 		{
@@ -140,6 +143,12 @@ public class OrdersActionController extends ActionController
 	public IEntity getDragged() { return dragged; }
 	public Vector2D getTarget() { return target; }
 	public IEntity getHovered() { return hovered; }
+
+
+	@Override
+	public ICameraMan getCameraManager() {
+		return cameraManager;
+	}
 
 /*	@Override
 	public void display(GL gl, double time, RenderingContext context)
