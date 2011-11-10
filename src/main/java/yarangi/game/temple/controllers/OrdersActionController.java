@@ -35,7 +35,7 @@ public class OrdersActionController extends ActionController
 	
 	private GridyTerrainMap<Tile> terrain;
 	
-	private ICameraMan cameraManager;
+	private ICameraMan cameraMan;
 	
 	private ISpatialFilter <IEntity> filter = new ISpatialFilter <IEntity> ()
 	{
@@ -56,9 +56,9 @@ public class OrdersActionController extends ActionController
 	{
 		super(scene);
 		
-		terrain = (GridyTerrainMap<Tile>)scene.getWorldLayer().<Tile>getTerrain();
+		cameraMan = new CameraMover( (ViewPoint2D) scene.getViewPoint() );
 		
-		cameraManager = new CameraMover((ViewPoint2D)scene.getViewPoint());
+		terrain = (GridyTerrainMap<Tile>)scene.getWorldLayer().<Tile>getTerrain();
 //		actions.put("cursor-moved", temple.getController());
 		actions.put("mouse-left-drag", new IAction()
 		{
@@ -146,8 +146,9 @@ public class OrdersActionController extends ActionController
 
 
 	@Override
-	public ICameraMan getCameraManager() {
-		return cameraManager;
+	public ICameraMan getCameraManager()
+	{
+		return cameraMan;
 	}
 
 /*	@Override
