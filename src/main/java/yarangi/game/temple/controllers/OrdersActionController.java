@@ -31,7 +31,7 @@ public class OrdersActionController extends ActionController
 	
 	private Vector2D target;
 	
-	private Look <OrdersActionController> look = new OrdersActionLook();
+	private Look look = new OrdersActionLook();
 	
 	private GridyTerrainMap<Tile> terrain;
 	
@@ -149,6 +149,14 @@ public class OrdersActionController extends ActionController
 	public ICameraMan getCameraManager()
 	{
 		return cameraMan;
+	}
+
+
+	@Override
+	public Look<ActionController> getLook()
+	{
+		
+		return look;
 	}
 
 /*	@Override

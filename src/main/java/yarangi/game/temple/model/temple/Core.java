@@ -12,6 +12,6 @@ public class Core extends Entity
 	public Core()
 	{
 		setSensor(new Sensor(100, 1, coreFilter, false));
-		setBehavior(new CoreBehavior());
+		setBehavior(new ShieldBehavior());
 	}
 }

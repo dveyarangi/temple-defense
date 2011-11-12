@@ -14,12 +14,14 @@ import yarangi.game.temple.model.enemies.swarm.SwarmDebugOverlay;
 import yarangi.game.temple.model.enemies.swarm.SwarmFactory;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.temple.model.temple.BattleInterface;
+import yarangi.game.temple.model.temple.ShieldBehavior;
 import yarangi.game.temple.model.temple.ObserverBehavior;
 import yarangi.game.temple.model.temple.ObserverEntity;
 import yarangi.game.temple.model.temple.ObserverLook;
-import yarangi.game.temple.model.temple.ShieldBehavior;
-import yarangi.game.temple.model.temple.ShieldEntity;
+import yarangi.game.temple.model.temple.ShieldBehaviorOld;
+import yarangi.game.temple.model.temple.Shield;
 import yarangi.game.temple.model.temple.ShieldLook;
+import yarangi.game.temple.model.temple.ShieldSensor;
 import yarangi.game.temple.model.temple.StructureInterface;
 import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.game.temple.model.temple.TempleLook;
@@ -113,13 +115,13 @@ public class Playground extends Scene
 			bi.addFireable(weapon);
 			structure.addServiceable( weapon );
 			
-			ShieldEntity shield = new ShieldEntity(bi, weapon.getPort());
+/*			Shield shield = new Shield(bi, weapon.getPort());
 			shield.setArea(new AABB((100+ a%3*100)*Math.cos(Angles.PI_2/maxCannons *a), (100+ a%3*100)*Math.sin(Angles.PI_2/maxCannons * a ),100,0));
 			shield.setLook(new ShieldLook());
 //			weapon.setLook(new MinigunLook());
+			shield.setSensor(new ShieldSensor(shield));
 			shield.setBehavior(new ShieldBehavior());
-//			shield.setSensor( new Sensor(64, 3, null, false)  );
-			addEntity(shield);
+			addEntity(shield);*/
 		}
 		int maxShields = 3;
 		for(int a = 0; a < maxShields; a ++)
