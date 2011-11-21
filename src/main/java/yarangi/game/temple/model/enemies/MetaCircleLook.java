@@ -46,7 +46,7 @@ public class MetaCircleLook implements Look <Entity>
 		texture.setTexParameteri(GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR);		
 		
 //		veil = context.getPlugin( IsoheightVeil.NAME );
-		veil = context.<BlurVeil>getPlugin( BlurVeil.NAME );
+		veil = context.<IVeil>getPlugin( IsoheightVeil.NAME );
 		if(veil == null)
 		{
 			QServices.rendering.warn( "Plugin [" + BlurVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
@@ -60,7 +60,7 @@ public class MetaCircleLook implements Look <Entity>
 		gl.glBlendFunc(GL.GL_ONE, GL.GL_ONE);
 		gl.glBlendEquation(GL.GL_FUNC_ADD);
 		
-		float radius = 1f*(float)(entity.getArea().getMaxRadius());
+		float radius = 2f*(float)(entity.getArea().getMaxRadius());
 		texture.bind();
 		
 		
@@ -89,9 +89,9 @@ public class MetaCircleLook implements Look <Entity>
 	@Override
 	public boolean isCastsShadow() {
 		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 	@Override
-	public IVeil getVeil() { return IVeil.ORIENTING; }
+	public IVeil getVeil() { return veil; }
 
 }

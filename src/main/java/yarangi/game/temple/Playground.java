@@ -27,6 +27,7 @@ import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.game.temple.model.temple.TempleLook;
 import yarangi.game.temple.model.temple.bots.Bot;
 import yarangi.game.temple.model.temple.bots.BotFactory;
+import yarangi.game.temple.model.temple.debug.ShieldDebugLook;
 import yarangi.game.temple.model.terrain.Matter;
 import yarangi.game.temple.model.terrain.Tile;
 import yarangi.game.temple.model.weapons.Minigun;
@@ -43,6 +44,7 @@ import yarangi.graphics.quadraturin.config.SceneConfig;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.Dummy;
 import yarangi.graphics.quadraturin.objects.EntityShell;
+import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.simulations.Body;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
@@ -50,6 +52,8 @@ import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
+import yarangi.spatial.Circle;
+import yarangi.spatial.ISpatialFilter;
 import yarangi.spatial.Point;
 
 public class Playground extends Scene
@@ -102,7 +106,7 @@ public class Playground extends Scene
 
 		BattleInterface bi = controller.getBattleInterface();
 		
-		float maxCannons = 18;
+		float maxCannons = 9;
 		for(int a = 0; a < maxCannons; a ++)
 		{
 			Weapon weapon = new Minigun(bi);
@@ -110,18 +114,24 @@ public class Playground extends Scene
 			weapon.setLook(new MinigunGlowingLook());
 //			weapon.setLook(new MinigunLook());
 			weapon.setBehavior(new TrackingBehavior());
-			weapon.setSensor( new Sensor(64, 3, null, false)  );
+			weapon.setSensor( new Sensor(32, 3, 
+					new ISpatialFilter <IEntity> () {
+
+						@Override public boolean accept(IEntity entity) { return entity.getLook() != null && entity.getLook().isCastsShadow(); }}, 
+					false)  );
 			addEntity(weapon);
 			bi.addFireable(weapon);
 			structure.addServiceable( weapon );
 			
-/*			Shield shield = new Shield(bi, weapon.getPort());
-			shield.setArea(new AABB((100+ a%3*100)*Math.cos(Angles.PI_2/maxCannons *a), (100+ a%3*100)*Math.sin(Angles.PI_2/maxCannons * a ),100,0));
-			shield.setLook(new ShieldLook());
+			Shield shield = new Shield(bi, weapon.getPort());
+			shield.setArea(new Circle((100+ a%3*100)*Math.cos(Angles.PI_2/maxCannons *a), (100+ a%3*100)*Math.sin(Angles.PI_2/maxCannons * a ),100));
+//			shield.setLook(new ShieldLook());
+			shield.setLook(new ShieldDebugLook());
 //			weapon.setLook(new MinigunLook());
 			shield.setSensor(new ShieldSensor(shield));
 			shield.setBehavior(new ShieldBehavior());
-			addEntity(shield);*/
+			shield.setBody( new Body() );
+			addEntity(shield);
 		}
 		int maxShields = 3;
 		for(int a = 0; a < maxShields; a ++)
@@ -152,7 +162,7 @@ public class Playground extends Scene
 		
 //		KolbasaFactory.generateKolbasaMaze( this );
 		
-		Swarm swarm = SwarmFactory.createSwarm(config.getWidth(), this, 8);
+		Swarm swarm = SwarmFactory.createSwarm(config.getWidth(), this, 1);
 		Behavior <Swarm> swarmBehavior = SwarmFactory.createDefaultBehavior();
 		swarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, Dummy.<Swarm>LOOK() );
 		addEntity(swarmShell);
@@ -215,6 +225,30 @@ public class Playground extends Scene
 			
 		};
 		getCollisionManager().registerHandler( TempleEntity.class, templeCollider );
+		
+		
+		ICollisionHandler<Shield> shieldCollider = new ICollisionHandler <Shield> ()
+		{
+
+			@Override
+			public boolean setImpactWith(Shield source, IPhysicalObject target)
+			{
+				if( target instanceof SwarmAgent)
+				{
+					if(!source.getExcludedSegments().covers(Math.atan2( target.getArea().getRefPoint().y()-source.getArea().getRefPoint().y(), 
+																	  target.getArea().getRefPoint().x()-source.getArea().getRefPoint().x())))
+					{
+						EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(1,0,0,0), 4 );
+						((SwarmAgent) target).markDead();
+						return true;
+					}
+				}
+				
+				return false;
+			}
+			
+		};
+		getCollisionManager().registerHandler( Shield.class, shieldCollider );
 		
 	}
 /*	public void animate(double time)

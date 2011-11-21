@@ -21,19 +21,16 @@ import com.sun.opengl.util.texture.TextureIO;
 public class ShieldLook implements Look <Shield> 
 {
 
+	
+	private float a1 = (float)RandomUtil.getRandomDouble( 0.1 );
+	private float a2 = (float)RandomUtil.getRandomDouble( 0.1 );
 
 //	private IsoheightVeil veil;
 	private IVeil veil;
 	
 	private static Texture texture;
 	private static int count = 0;
-	
-	private float a1 = (float)RandomUtil.getRandomDouble( 0.1 );
-	private float a2 = (float)RandomUtil.getRandomDouble( 0.1 );
-	
-	private float radius;
-	private float speed;
-	
+
 	@Override
 	public void init(GL gl, Shield entity, IRenderingContext context) {
 		
@@ -47,7 +44,6 @@ public class ShieldLook implements Look <Shield>
 		
 		Port port = entity.getPort();
 		double resourcePercent = port.get( Resource.Type.ENERGY ).getAmount() / port.getCapacity( Resource.Type.ENERGY );
-		radius = 1;//*(float)(entity.getArea().getMaxRadius() * (resourcePercent + 0.6f));
 		
 		if(texture == null) // shared
 		{
@@ -74,18 +70,8 @@ public class ShieldLook implements Look <Shield>
 			IRenderingContext context) {
 		gl.glBlendFunc(GL.GL_ONE, GL.GL_ONE);
 		gl.glBlendEquation(GL.GL_FUNC_ADD);
-		
-		Port port = entity.getPort();
-		double resourcePercent = port.get( Resource.Type.ENERGY ).getAmount() / port.getCapacity( Resource.Type.ENERGY );
-		float targetRadius = 1*(float)(entity.getArea().getMaxRadius() * (resourcePercent + 0.6f));
-		float force = (float)((targetRadius-radius))* 0.00001f;
-		speed += force * time / 2;
-		
-		if(speed > 0.01) speed -= 0.0001*time;
-		else
-		if(speed < 0.01) speed += 0.0001*time;
-		
-		radius += speed*time;
+		float radius = (float)entity.getArea().getMaxRadius();
+
 //	System.out.println(force + " : " + speed + " : " + radius + " : " + time);
 		texture.bind();
 		

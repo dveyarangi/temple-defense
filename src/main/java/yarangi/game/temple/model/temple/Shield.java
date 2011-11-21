@@ -1,13 +1,14 @@
 package yarangi.game.temple.model.temple;
 
+import yarangi.fragments.CircleSegmentList;
 import yarangi.game.temple.model.resource.Port;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
+import yarangi.intervals.CircleSegmentTree;
 import yarangi.math.Vector2D;
 import yarangi.spatial.ISpatialFilter;
-import yarangi.spatial.circle.CircleSegmentTree;
 
 public class Shield extends Entity implements IPhysicalObject 
 {
@@ -24,7 +25,7 @@ public class Shield extends Entity implements IPhysicalObject
 	
 	private Port port;
 	
-	private CircleSegmentTree segments = new CircleSegmentTree();
+	private CircleSegmentList segments = new CircleSegmentList(-Math.PI/2, Math.PI/2);
 
 	public Shield(BattleInterface battleInterface, Port port)
 	{
@@ -50,7 +51,7 @@ public class Shield extends Entity implements IPhysicalObject
 
 	public BattleInterface getBattleInterface() { return battleInterface; }
 	
-	public CircleSegmentTree getExcludedSegments() 
+	public CircleSegmentList getExcludedSegments() 
 	{
 		return segments;
 	}

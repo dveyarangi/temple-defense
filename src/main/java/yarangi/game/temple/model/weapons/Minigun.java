@@ -24,9 +24,9 @@ public class Minigun extends Weapon
 	public static final double maxRangeSquare = 100;
 	public static final double RELOADING_TIME = 5;
 	public static final double ACCURACY = 0.2;
-	public static final Damage DAMAGE = new Damage(5, 0.1, 0, 0);
+	public static final Damage DAMAGE = new Damage(10, 0.1, 0, 0);
 	public static final double resourceCapacity = 1000;
-	public static final double resourceConsumption = 5;
+	public static final double resourceConsumption = 20;
 	public static final Resource.Type resourceType = Resource.Type.ENERGY;
 
 	

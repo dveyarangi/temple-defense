@@ -15,8 +15,13 @@ public class DroneBehavior implements IBehaviorState <SwarmAgent>
 		Swarm swarm = agent.getSwarm();
 		Vector2D flow = swarm.getFlow(agent.getArea().getRefPoint());
 		
-		if(flow != null)
-			agent.getBody().setForce(flow.x(), flow.y());
+//		System.out.println(flow);
+		if(flow != null) {
+//			if(agent.getBody().getForce().x() == 0 && agent.getBody().getForce().y() == 0)
+				agent.getBody().setForce( flow.x(), flow.y() );
+//			else
+//				agent.getBody().addForce(flow.x(), flow.y());
+		}
 		return 0;
 	}
 	public int getId() { return this.getClass().hashCode(); }

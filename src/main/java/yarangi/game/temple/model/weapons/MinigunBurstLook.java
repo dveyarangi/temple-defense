@@ -18,6 +18,7 @@ public class MinigunBurstLook implements Look <Projectile>
 	private Color color;
 
 //	private static GLU glu = new GLU();
+	private IVeil veil;
 	
 	public MinigunBurstLook(Minigun cannon)
 	{
@@ -39,7 +40,9 @@ public class MinigunBurstLook implements Look <Projectile>
 	}
 
 	public void init(GL gl, Projectile entity, IRenderingContext context) {
-//		veil = context.getPlugin( BlurVeil.NAME );
+		veil = context.getPlugin( BlurVeil.NAME );
+		if(veil == null)
+			veil = IVeil.ORIENTING;
 	}
 
 	public void destroy(GL gl, Projectile entity, IRenderingContext context) {
@@ -49,12 +52,11 @@ public class MinigunBurstLook implements Look <Projectile>
 
 	@Override
 	public boolean isCastsShadow() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override
 	public float getPriority() { return 0; }
 	@Override
-	public IVeil getVeil() { return IVeil.ORIENTING; }
+	public IVeil getVeil() { return veil; }
 
 }
