@@ -1,9 +1,7 @@
 package yarangi.game.temple.model.enemies.swarm;
 
 import yarangi.game.temple.model.Integrity;
-import yarangi.game.temple.model.enemies.ElementalVoidLook;
 import yarangi.game.temple.model.enemies.MetaCircleLook;
-import yarangi.game.temple.model.enemies.swarm.agents.DangerBehavior;
 import yarangi.game.temple.model.enemies.swarm.agents.DroneBehavior;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.graphics.quadraturin.objects.Behavior;

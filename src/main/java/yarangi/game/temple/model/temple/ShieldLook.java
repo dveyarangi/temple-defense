@@ -68,6 +68,7 @@ public class ShieldLook implements Look <Shield>
 	@Override
 	public void render(GL gl, double time, Shield entity,
 			IRenderingContext context) {
+		gl.glPushAttrib( GL.GL_COLOR_BUFFER_BIT );
 		gl.glBlendFunc(GL.GL_ONE, GL.GL_ONE);
 		gl.glBlendEquation(GL.GL_FUNC_ADD);
 		float radius = (float)entity.getArea().getMaxRadius();
@@ -97,7 +98,7 @@ public class ShieldLook implements Look <Shield>
 		gl.glPopMatrix();
 		
 		gl.glBindTexture( GL.GL_TEXTURE_2D, 0 );
-
+		gl.glPopAttrib();
 	}
 
 	@Override

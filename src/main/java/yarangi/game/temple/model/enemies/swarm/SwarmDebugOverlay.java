@@ -82,6 +82,7 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 			Vector2D flow = beacon.getFlow().mul(5);
 			Vector2D l = beacon.getFlow().left();
 			
+			gl.glPushAttrib( GL.GL_COLOR_BUFFER_BIT );
 			gl.glBlendEquation( GL.GL_MIN );
 			gl.glBlendFunc( GL.GL_ONE, GL.GL_ONE );
 			gl.glColor4f(0f, 0, 0f, 0f);
@@ -122,6 +123,7 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 				gl.glEnd();
 			}*/
 			gl.glEnable( GL.GL_DEPTH_TEST );
+			gl.glPopAttrib();
 		}
 	}
 	

@@ -57,6 +57,8 @@ public class MetaCircleLook implements Look <Entity>
 	@Override
 	public void render(GL gl, double time, Entity entity,
 			IRenderingContext context) {
+		
+		gl.glPushAttrib( GL.GL_COLOR_BUFFER_BIT );
 		gl.glBlendFunc(GL.GL_ONE, GL.GL_ONE);
 		gl.glBlendEquation(GL.GL_FUNC_ADD);
 		
@@ -72,7 +74,7 @@ public class MetaCircleLook implements Look <Entity>
 		gl.glEnd();
 		
 		gl.glBindTexture( GL.GL_TEXTURE_2D, 0 );
-
+		gl.glPopAttrib();
 	}
 
 	@Override

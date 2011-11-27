@@ -8,13 +8,9 @@ import yarangi.game.temple.ai.IntellectCore;
 import yarangi.game.temple.controllers.bots.BotInterface;
 import yarangi.game.temple.model.temple.BattleCommander;
 import yarangi.game.temple.model.temple.BattleInterface;
-import yarangi.game.temple.model.temple.ObserverBehavior;
-import yarangi.game.temple.model.temple.ObserverEntity;
-import yarangi.game.temple.model.temple.ObserverLook;
 import yarangi.game.temple.model.temple.StructureInterface;
 import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.game.temple.model.terrain.Tile;
-import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.actions.ActionController;
 import yarangi.graphics.quadraturin.actions.DefaultActionFactory;
@@ -22,9 +18,6 @@ import yarangi.graphics.quadraturin.events.CursorListener;
 import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.ILayerObject;
-import yarangi.graphics.quadraturin.objects.Sensor;
-import yarangi.math.Vector2D;
-import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
 import yarangi.spatial.IAreaChunk;
 import yarangi.spatial.ISpatialSensor;
@@ -36,13 +29,7 @@ public class TempleController extends Entity implements CursorListener
 	
 	private Scene scene;
 	
-	
-	private Vector2D cursorLocation;
-	
 	private ILayerObject highlighted;
-
-
-	private ObserverEntity cursor;
 	
 	private BattleInterface battleInterface;
 	
@@ -62,15 +49,6 @@ public class TempleController extends Entity implements CursorListener
 		setLook(new ControlLook());
 		setBehavior(new ControlBehavior());
 
-		cursor = new ObserverEntity(this);		
-		cursor.setBehavior(new ObserverBehavior(0, 1, null, 0));
-		cursor.setSensor(new Sensor(64, 1, null, true));
-		cursor.setLook(new ObserverLook(new Color(1.0f,1.0f,0.5f,1f)));
-		cursor.setArea(new AABB(0, 0, 10, 0));
-	
-		
-		
-		scene.addEntity(cursor);
 		
 		battleInterface = new BattleCommander(this, core);
 		structureInterface = new StructureInterface();
@@ -94,23 +72,8 @@ public class TempleController extends Entity implements CursorListener
 
 	public void onCursorMotion(ICursorEvent event) 
 	{
-		cursorLocation = event.getWorldLocation();
 		highlighted = event.getEntity();
-		
-		if(cursorLocation != null)
-		{
-			cursor.getArea().getRefPoint().setxy(cursorLocation.x(), cursorLocation.y());
-		}
-		else
-		{
-			// TODO: beee
-			cursor.getArea().getRefPoint().setxy(100000, 100000);
-		}
-	}
-	
-	public Vector2D getCursorLocation()
-	{
-		return cursorLocation;
+
 	}
 
 

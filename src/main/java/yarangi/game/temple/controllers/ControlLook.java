@@ -20,10 +20,6 @@ public class ControlLook implements Look <TempleController>
 //		entity.getActionController().display( gl, time, context );
 //		TempleEntity temple = entity.getTemple();
 		
-		Vector2D mousePoint = entity.getCursorLocation();
-		if(mousePoint == null)
-			return;
-		
 //		double controlAngle = Math.atan2(mousePoint.y, mousePoint.x);
 //		double controlRadius = temple.getStructure().getShieldRadius()+1;
 //		System.out.println("hui: " + mousePoint);

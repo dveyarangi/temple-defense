@@ -14,12 +14,9 @@ import yarangi.game.temple.model.enemies.swarm.SwarmDebugOverlay;
 import yarangi.game.temple.model.enemies.swarm.SwarmFactory;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.temple.model.temple.BattleInterface;
-import yarangi.game.temple.model.temple.ShieldBehavior;
 import yarangi.game.temple.model.temple.ObserverBehavior;
-import yarangi.game.temple.model.temple.ObserverEntity;
-import yarangi.game.temple.model.temple.ObserverLook;
-import yarangi.game.temple.model.temple.ShieldBehaviorOld;
 import yarangi.game.temple.model.temple.Shield;
+import yarangi.game.temple.model.temple.ShieldBehavior;
 import yarangi.game.temple.model.temple.ShieldLook;
 import yarangi.game.temple.model.temple.ShieldSensor;
 import yarangi.game.temple.model.temple.StructureInterface;
@@ -32,7 +29,6 @@ import yarangi.game.temple.model.terrain.Matter;
 import yarangi.game.temple.model.terrain.Tile;
 import yarangi.game.temple.model.weapons.Minigun;
 import yarangi.game.temple.model.weapons.MinigunGlowingLook;
-import yarangi.game.temple.model.weapons.MinigunLook;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.game.temple.model.weapons.TrackingBehavior;
 import yarangi.game.temple.model.weapons.Weapon;
@@ -40,19 +36,22 @@ import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.QuadVoices;
 import yarangi.graphics.quadraturin.Scene;
+import yarangi.graphics.quadraturin.config.EkranConfig;
 import yarangi.graphics.quadraturin.config.SceneConfig;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.Dummy;
 import yarangi.graphics.quadraturin.objects.EntityShell;
 import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.objects.Overlay;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.simulations.Body;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
+import yarangi.graphics.quadraturin.ui.Direction;
+import yarangi.graphics.quadraturin.ui.Insets;
+import yarangi.graphics.quadraturin.ui.Overlay;
+import yarangi.graphics.quadraturin.ui.Panel;
 import yarangi.graphics.quadraturin.ui.PanelLook;
 import yarangi.math.Angles;
-import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
 import yarangi.spatial.Circle;
 import yarangi.spatial.ISpatialFilter;
@@ -74,11 +73,11 @@ public class Playground extends Scene
 	
 	private IntellectCore core;
 	
-	public Playground(SceneConfig config, QuadVoices voices)
+	public Playground(SceneConfig sceneConfig, EkranConfig ekranConfig, QuadVoices voices)
 	{
-		super(config, voices);
+		super(sceneConfig, ekranConfig, voices);
 		
-		createUI();
+//		createUI();
 		
 //		BackgroundEntity background = new BackgroundEntity(100, 100, 50);		
 //		addEntity(background);
@@ -118,7 +117,7 @@ public class Playground extends Scene
 			weapon.setLook(new MinigunGlowingLook());
 //			weapon.setLook(new MinigunLook());
 			weapon.setBehavior(new TrackingBehavior());
-			weapon.setSensor( new Sensor(32, 3, 
+			weapon.setSensor( new Sensor(128, 3, 
 					new ISpatialFilter <IEntity> () {
 
 						@Override public boolean accept(IEntity entity) { return entity.getLook() != null && entity.getLook().isCastsShadow(); }}, 
@@ -127,15 +126,14 @@ public class Playground extends Scene
 			bi.addFireable(weapon);
 			structure.addServiceable( weapon );
 			
-			Shield shield = new Shield(bi, weapon.getPort());
+/*			Shield shield = new Shield(bi, weapon.getPort());
 			shield.setArea(new Circle((100+ a%3*100)*Math.cos(Angles.PI_2/maxCannons *a), (100+ a%3*100)*Math.sin(Angles.PI_2/maxCannons * a ),100));
-//			shield.setLook(new ShieldLook());
-			shield.setLook(new ShieldDebugLook());
-//			weapon.setLook(new MinigunLook());
-			shield.setSensor(new ShieldSensor(shield));
+			shield.setLook(new ShieldLook());
+//			shield.setLook(new ShieldDebugLook());
+//			shield.setSensor(new ShieldSensor(shield));
 			shield.setBehavior(new ShieldBehavior());
 			shield.setBody( new Body() );
-			addEntity(shield);
+			addEntity(shield);*/
 		}
 		int maxShields = 3;
 		for(int a = 0; a < maxShields; a ++)
@@ -166,7 +164,7 @@ public class Playground extends Scene
 		
 //		KolbasaFactory.generateKolbasaMaze( this );
 		
-		Swarm swarm = SwarmFactory.createSwarm(config.getWidth(), this, 1);
+		Swarm swarm = SwarmFactory.createSwarm(sceneConfig.getWidth(), this, 1);
 		Behavior <Swarm> swarmBehavior = SwarmFactory.createDefaultBehavior();
 		swarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, Dummy.<Swarm>LOOK() );
 		addEntity(swarmShell);
@@ -301,15 +299,29 @@ public class Playground extends Scene
 			this.addEntity( debugSwarmShell );
 			debugSwarm = true;
 		}
-		System.out.println("debug swarm: " + debugSwarm);
+//		System.out.println("debug swarm: " + debugSwarm);
 	}
 	
 	
 	public void createUI() {
-		Overlay panel1 = new Overlay();
-		panel1.setArea( new AABB(5, 5, 100, 100, 0) );
-		panel1.setLook( new PanelLook( new Color(1f, 1f, 1f, 0.2f) ) );
+		Panel [] mainPanels = this.getUILayer().getBasePanel().split( 
+				new int [] {20, 60, 20 }, Direction.HORIZONTAL );
+		
+		Panel [] leftPanels = mainPanels[0].split( new int [] {60, 40 }, Direction.VERTICAL );
+		
+		Overlay panel1 = new Overlay(leftPanels[0]);
+		leftPanels[0].setInsets( new Insets(5,5,5,5));
+		panel1.setLook( new PanelLook( new Color(0.1f, 0.1f, 0.3f, 0.7f) ) );
+		Overlay panel2 = new Overlay(leftPanels[1]);
+		leftPanels[1].setInsets( new Insets(5,5,5,5));
+		panel2.setLook( new PanelLook( new Color(0.1f, 0.1f, 0.3f, 0.7f) ) );
+		
+		Overlay panel3 = new Overlay(mainPanels[2]);
+		mainPanels[2].setInsets( new Insets(5,5,5,5));
+		panel3.setLook( new PanelLook( new Color(0.1f, 0.1f, 0.3f, 0.7f) ) );
 		
 		this.getUILayer().addEntity( panel1 );
+		this.getUILayer().addEntity( panel2 );
+		this.getUILayer().addEntity( panel3 );
 	}
 }

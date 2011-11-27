@@ -49,7 +49,7 @@ public class ShieldSensor implements ISensor <IEntity>
 			double a2 = Angles.normalize(neighbourAngle + halfSegment);
 			
 			AngleInterval interval = new AngleInterval(a1, a2);
-				System.out.println(a1 + " : " + a2);
+//				System.out.println(a1 + " : " + a2);
 			
 			// storing to exclude from perimeter collision calculations:
 			shield.getExcludedSegments().add( interval );
