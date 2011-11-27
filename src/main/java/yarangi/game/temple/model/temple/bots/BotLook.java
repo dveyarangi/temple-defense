@@ -85,14 +85,11 @@ public class BotLook implements Look<Bot> {
 
 
 	public void destroy(GL gl, Bot entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public boolean isCastsShadow()
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override

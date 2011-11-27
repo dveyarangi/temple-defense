@@ -13,8 +13,6 @@ public class PowerConnectorLook implements Look <PowerConnector>
 
 	@Override
 	public void init(GL gl, PowerConnector entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -46,21 +44,17 @@ public class PowerConnectorLook implements Look <PowerConnector>
 
 	@Override
 	public void destroy(GL gl, PowerConnector entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public float getPriority()
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public boolean isCastsShadow()
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override

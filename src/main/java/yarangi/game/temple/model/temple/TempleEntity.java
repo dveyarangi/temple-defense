@@ -43,12 +43,6 @@ public class TempleEntity extends ObserverEntity implements Serviceable
 	
 	public TempleController getController() { return controller; }
 
-
-	public BattleInterface getCommandPlatform() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public Area getServicePoint()
 	{

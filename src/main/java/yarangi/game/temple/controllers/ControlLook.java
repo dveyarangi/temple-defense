@@ -99,18 +99,13 @@ public class ControlLook implements Look <TempleController>
 	}
 
 	public void init(GL gl, TempleController entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void destroy(GL gl, TempleController entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public boolean isCastsShadow() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

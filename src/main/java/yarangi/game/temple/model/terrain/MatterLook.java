@@ -15,8 +15,6 @@ public class MatterLook implements Look <Matter>
 
 	@Override
 	public void init(GL gl, Matter entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -41,8 +39,6 @@ public class MatterLook implements Look <Matter>
 
 	@Override
 	public void destroy(GL gl, Matter entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

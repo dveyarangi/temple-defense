@@ -167,23 +167,8 @@ public class Tile implements ITile <Color>, IPhysicalObject
 	}
 
 	@Override
-	public int getPassId()
-	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setPassId(int id)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public Body getBody()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 

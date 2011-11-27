@@ -48,26 +48,20 @@ public class ElementalDarknessLook implements Look <ElementalDarkness>
 	}
 
 	public void init(GL gl, ElementalDarkness entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void destroy(GL gl, ElementalDarkness entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public float getPriority()
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public boolean isCastsShadow()
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override

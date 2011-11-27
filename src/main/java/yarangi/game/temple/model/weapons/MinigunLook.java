@@ -76,13 +76,9 @@ public class MinigunLook implements Look<Minigun>
 	
 
 	public void init(GL gl, Minigun entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void destroy(GL gl, Minigun entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 

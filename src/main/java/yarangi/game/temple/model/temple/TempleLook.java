@@ -24,8 +24,7 @@ public class TempleLook extends CircleLightLook<TempleEntity>
 
 	@Override
 	public boolean isCastsShadow() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 	
 /*	public class DrawingObserver implements HexagonObserver

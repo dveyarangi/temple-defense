@@ -2,7 +2,7 @@ package yarangi.game.temple.model.temple;
 
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.ui.Sensor;
+import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.spatial.ISpatialFilter;
 
 public class Core extends Entity 

@@ -113,13 +113,11 @@ public class ShieldLook implements Look <Shield>
 
 	@Override
 	public float getPriority() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public boolean isCastsShadow() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override

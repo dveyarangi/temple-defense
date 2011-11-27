@@ -16,8 +16,6 @@ public class ShieldDebugLook implements Look <Shield>
 	@Override
 	public void init(GL gl, Shield entity, IRenderingContext context)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -29,8 +27,6 @@ public class ShieldDebugLook implements Look <Shield>
 		{
 			drawSegment(gl, segment, entity.getArea().getRefPoint(), entity.getArea().getMaxRadius());
 		}
-		
-		// TODO Auto-generated method stub
 		
 	}
 	

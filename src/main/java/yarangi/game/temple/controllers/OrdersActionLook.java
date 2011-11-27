@@ -15,8 +15,6 @@ public class OrdersActionLook implements Look <OrdersActionController>
 	@Override
 	public void init(GL gl, OrdersActionController entity, IRenderingContext context)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -56,14 +54,11 @@ public class OrdersActionLook implements Look <OrdersActionController>
 	@Override
 	public void destroy(GL gl, OrdersActionController entity, IRenderingContext context)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public boolean isCastsShadow()
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override

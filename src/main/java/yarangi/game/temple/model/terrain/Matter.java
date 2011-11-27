@@ -23,13 +23,11 @@ public  class Matter extends Entity implements Damageable
 
 	@Override
 	public Integrity getIntegrity() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void hit(Damage damage) {
-		// TODO Auto-generated method stub
 		
 	}
 

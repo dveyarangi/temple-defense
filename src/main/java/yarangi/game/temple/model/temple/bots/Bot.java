@@ -42,8 +42,7 @@ public class Bot extends Entity implements Serviceable
 	@Override
 	public Area getServicePoint()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getArea();
 	}
 	
 	public Port getPort() { return port; }

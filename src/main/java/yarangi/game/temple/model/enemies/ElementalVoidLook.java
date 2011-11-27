@@ -29,13 +29,9 @@ public class ElementalVoidLook implements Look <SwarmAgent>
 	}
 
 	public void init(GL gl, SwarmAgent entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void destroy(GL gl, SwarmAgent entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

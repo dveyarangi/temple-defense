@@ -11,8 +11,6 @@ public class CrystalMatterLook implements Look <CrystalMatter>
 
 	@Override
 	public void init(GL gl, CrystalMatter entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -84,14 +82,11 @@ public class CrystalMatterLook implements Look <CrystalMatter>
 
 	@Override
 	public void destroy(GL gl, CrystalMatter entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public boolean isCastsShadow()
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override

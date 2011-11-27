@@ -87,7 +87,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 		beh.link(droneState.getId(), new IBehaviorCondition<SwarmAgent>()
 		{
 			@Override public IBehaviorState<SwarmAgent> nextState(SwarmAgent entity) {
-				return droneState; // TODO: always the same for now
+				return droneState;
 			}
 		});
 		

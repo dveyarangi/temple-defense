@@ -4,7 +4,8 @@ import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Vector2D;
 
 /**
- * TODO:
+ * 
+ * Targeting AI interface
  * 
  * @author dveyarangi
  *

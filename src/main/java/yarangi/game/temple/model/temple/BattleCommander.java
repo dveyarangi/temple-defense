@@ -46,7 +46,6 @@ public class BattleCommander implements BattleInterface
 	
 /*	@Override
 	public Vector2D getGuarded(Weapon entity) {
-		// TODO Auto-generated method stub
 		return guarded;
 	}*/
 

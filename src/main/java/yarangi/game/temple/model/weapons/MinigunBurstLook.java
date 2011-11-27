@@ -46,8 +46,6 @@ public class MinigunBurstLook implements Look <Projectile>
 	}
 
 	public void destroy(GL gl, Projectile entity, IRenderingContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

@@ -10,7 +10,6 @@ public class GridyTerrainBehavior implements Behavior<GridyTerrainMap<?>>
 	public boolean behave(double time, GridyTerrainMap<?> grid, boolean isVisible)
 	{
 		grid.fireGridModified();
-		// TODO Auto-generated method stub
 		return false;
 	}
 
