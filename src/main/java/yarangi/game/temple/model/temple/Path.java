@@ -2,24 +2,24 @@ package yarangi.game.temple.model.temple;
 
 import java.util.LinkedList;
 
-import yarangi.graphics.quadraturin.objects.IVeilEntity;
+import yarangi.graphics.quadraturin.objects.ILayerObject;
 
 public class Path
 {
-	private IVeilEntity origin;
-	private IVeilEntity target;
+	private ILayerObject origin;
+	private ILayerObject target;
 	private LinkedList <PathNode> nodes;
-	public Path(IVeilEntity origin, IVeilEntity target, LinkedList<PathNode> nodes)
+	public Path(ILayerObject origin, ILayerObject target, LinkedList<PathNode> nodes)
 	{
 		this.origin = origin;
 		this.target = target;
 		this.nodes = nodes;
 	}
-	protected IVeilEntity getOrigin()
+	protected ILayerObject getOrigin()
 	{
 		return origin;
 	}
-	protected IVeilEntity getTarget()
+	protected ILayerObject getTarget()
 	{
 		return target;
 	}

@@ -45,10 +45,12 @@ import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.Dummy;
 import yarangi.graphics.quadraturin.objects.EntityShell;
 import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.graphics.quadraturin.objects.Overlay;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.simulations.Body;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
+import yarangi.graphics.quadraturin.ui.PanelLook;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
@@ -75,6 +77,8 @@ public class Playground extends Scene
 	public Playground(SceneConfig config, QuadVoices voices)
 	{
 		super(config, voices);
+		
+		createUI();
 		
 //		BackgroundEntity background = new BackgroundEntity(100, 100, 50);		
 //		addEntity(background);
@@ -298,5 +302,14 @@ public class Playground extends Scene
 			debugSwarm = true;
 		}
 		System.out.println("debug swarm: " + debugSwarm);
+	}
+	
+	
+	public void createUI() {
+		Overlay panel1 = new Overlay();
+		panel1.setArea( new AABB(5, 5, 100, 100, 0) );
+		panel1.setLook( new PanelLook( new Color(1f, 1f, 1f, 0.2f) ) );
+		
+		this.getUILayer().addEntity( panel1 );
 	}
 }

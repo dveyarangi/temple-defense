@@ -21,7 +21,7 @@ import yarangi.graphics.quadraturin.actions.DefaultActionFactory;
 import yarangi.graphics.quadraturin.events.CursorListener;
 import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.objects.Entity;
-import yarangi.graphics.quadraturin.objects.IVeilEntity;
+import yarangi.graphics.quadraturin.objects.ILayerObject;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
@@ -39,7 +39,7 @@ public class TempleController extends Entity implements CursorListener
 	
 	private Vector2D cursorLocation;
 	
-	private IVeilEntity highlighted;
+	private ILayerObject highlighted;
 
 
 	private ObserverEntity cursor;
@@ -114,7 +114,7 @@ public class TempleController extends Entity implements CursorListener
 	}
 
 
-	public IVeilEntity getHighlighted() { return highlighted; }
+	public ILayerObject getHighlighted() { return highlighted; }
 	
 
 //	public IPhysicalObject getTarget(Fireable fireable) {

@@ -4,7 +4,7 @@ import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.Damageable;
 import yarangi.game.temple.model.Integrity;
 import yarangi.graphics.quadraturin.objects.Entity;
-import yarangi.graphics.quadraturin.objects.IVeilEntity;
+import yarangi.graphics.quadraturin.objects.ILayerObject;
 import yarangi.spatial.Area;
 
 public abstract class GenericEnemy extends Entity implements Damageable
@@ -12,10 +12,10 @@ public abstract class GenericEnemy extends Entity implements Damageable
 
 	private Integrity integrity;
 	
-	private IVeilEntity target;
+	private ILayerObject target;
 	
 	
-	public GenericEnemy(Area area, IVeilEntity target, Integrity integrity) {
+	public GenericEnemy(Area area, ILayerObject target, Integrity integrity) {
 		super();
 		this.target = target;
 		this.integrity = integrity;
@@ -23,7 +23,7 @@ public abstract class GenericEnemy extends Entity implements Damageable
 		setArea(area);
 	}
 	
-	public IVeilEntity getTarget() { return target; }
+	public ILayerObject getTarget() { return target; }
 
 	public boolean isCollidable() {
 		return true;
