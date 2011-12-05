@@ -10,7 +10,7 @@ import yarangi.game.temple.model.resource.Port;
 import yarangi.game.temple.model.resource.Resource;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.QServices;
+import yarangi.graphics.quadraturin.Q;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.graphics.veils.IsoheightVeil;
 import yarangi.numbers.RandomUtil;
@@ -38,7 +38,7 @@ public class ShieldLook implements Look <Shield>
 		veil = context.<IsoheightVeil> getPlugin( IsoheightVeil.NAME );
 		if(veil == null)
 		{
-			QServices.rendering.warn( "Plugin [" + IsoheightVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
+			Q.rendering.warn( "Plugin [" + IsoheightVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
 			veil = IVeil.ORIENTING;
 		}
 		

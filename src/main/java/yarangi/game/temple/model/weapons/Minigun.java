@@ -20,35 +20,48 @@ public class Minigun extends Weapon
 	public static final double projectileSpeed = 2;
 	public static final double projectileHitRadius = 3;
 	public static final double trackingSpeed = BASE_TRACKING_SPEED;
-	public static final double effectiveRangeSquare = 10000;
-	public static final double maxRangeSquare = 100;
-	public static final double RELOADING_TIME = 5;
+	public static final double effectiveRangeSquare = 40000;
+	public static final double maxRangeSquare = 200;
+	public static final double RELOADING_TIME = 20;
 	public static final double ACCURACY = 0.2;
 	public static final Damage DAMAGE = new Damage(10, 0.1, 0, 0);
 	public static final double resourceCapacity = 1000;
-	public static final double resourceConsumption = 20;
+	public static final double resourceConsumption = 50;
 	public static final Resource.Type resourceType = Resource.Type.ENERGY;
 
 	
-	private static final WeaponProperties PROPS = new WeaponProperties(
+	public static final WeaponProperties PROPS1 = new WeaponProperties(
 			BASE_TRACKING_SPEED, 
 			CANNON_TRACKING_HALF_WIDTH, 
 			1, 
-			RELOADING_TIME, 
-			effectiveRangeSquare,
-			projectileSpeed, 
-			maxRangeSquare, 
+			10, // reloading time
+			40000, // projectile range square
+			10,  // prjectile speed
+			200, // tracking range
 			ACCURACY, 
 			projectileHitRadius, 
 			DAMAGE,
-			resourceCapacity, resourceConsumption, resourceType
+			resourceCapacity, 1, resourceType
+			);
+	public static final WeaponProperties PROPS2 = new WeaponProperties(
+			BASE_TRACKING_SPEED, 
+			CANNON_TRACKING_HALF_WIDTH, 
+			1, 
+			10, 
+			40000,
+			2, 
+			200, 
+			ACCURACY, 
+			projectileHitRadius, 
+			DAMAGE,
+			resourceCapacity, 1, resourceType
 			);
 	
 	
 	private Behavior <Projectile> shellBehavior;
 	
-	public Minigun(BattleInterface bi) {
-		super(bi, PROPS);
+	public Minigun(BattleInterface bi, WeaponProperties props) {
+		super(bi, props);
 		shellBehavior = new SimpleProjectileBehavior(bi);
 		
 
@@ -87,7 +100,7 @@ public class Minigun extends Weapon
 		Projectile shell = new Projectile( speed, this.getWeaponProperties());
 		shell.setLook(new MinigunBurstLook(this));
 		shell.setBehavior(shellBehavior);
-		shell.setArea(new AABB(location.x(), location.y(), getWeaponProperties().getProjectileHitRadius(), firingAngle));
+		shell.setArea(AABB.createSquare(location.x(), location.y(), getWeaponProperties().getProjectileHitRadius(), firingAngle));
 		shell.setBody(new Body());
 		shell.getBody().setMaxSpeed(speedScalar);
 		shell.getBody().addVelocity(speed.x(), speed.y());

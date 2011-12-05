@@ -15,7 +15,8 @@
  					"isoheight" : "shaders/isoheight.glsl"
 			  	}
 			},
-			{ "factoryClass" : "yarangi.graphics.veils.IsoheightVeil",
+			{ "comment" : 
+			[{ "factoryClass" : "yarangi.graphics.veils.IsoheightVeil",
 			  "properties" : {
 			  	}
 			},
@@ -23,6 +24,7 @@
 			  "properties" : {
 			  	}
 			}
+			]}
 		 ]
 			  		
 	},

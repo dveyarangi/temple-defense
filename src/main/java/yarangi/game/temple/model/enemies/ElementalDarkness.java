@@ -17,7 +17,7 @@ public class ElementalDarkness extends GenericEnemy
 	
 	public ElementalDarkness(double x, double y, double a) 
 	{
-		super(new AABB(x, y, SIZE, a), null, new Integrity(1000, 0, new double [] { 0,0,0,0}));
+		super(AABB.createSquare(x, y, SIZE, a), null, new Integrity(1000, 0, new double [] { 0,0,0,0}));
 		setLook(/*new SpriteLook <ElementalDarkness> (*/new ElementalDarknessLook()/*, 64, 64, false)*/);
 		setBehavior(new ElementalDarknessBehavior());
 		

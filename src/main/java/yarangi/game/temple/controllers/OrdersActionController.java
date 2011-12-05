@@ -71,9 +71,9 @@ public class OrdersActionController extends ActionController
 				// TODO: test olnly 
 				terrain.query(new ConsumingSensor(terrain, false,target.x(), target.y(), 10  ), target.x(), target.y(), 10 );
 				
-				if(dragged != null || cursor.getEntity() == null)
+				if(dragged != null || cursor.getEntity() == null || !(cursor.getEntity() instanceof IEntity))
 					return;
-				dragged = cursor.getEntity();
+				dragged = (IEntity)cursor.getEntity();
 				target = cursor.getWorldLocation();
 			}
 			
@@ -133,12 +133,6 @@ public class OrdersActionController extends ActionController
 	@Override
 	public ISpatialFilter<IEntity> getPickingFilter() { return filter; }
 
-
-	@Override
-	public void onCursorMotion(ICursorEvent event)
-	{
-		hovered = event.getEntity();
-	}
 
 	public IEntity getDragged() { return dragged; }
 	public Vector2D getTarget() { return target; }

@@ -6,7 +6,7 @@ import yarangi.game.temple.model.resource.Resource;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.QServices;
+import yarangi.graphics.quadraturin.Q;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.graphics.veils.BlurVeil;
 import yarangi.math.Vector2D;
@@ -36,7 +36,7 @@ public class BotLook implements Look<Bot> {
 		veil = context.<BlurVeil>getPlugin( BlurVeil.NAME );
 		if(veil == null)
 		{
-			QServices.rendering.warn( "Plugin [" + BlurVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
+			Q.rendering.warn( "Plugin [" + BlurVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
 			veil = IVeil.ORIENTING;
 		}
 		for(int idx = 0; idx < tail.length; idx ++)

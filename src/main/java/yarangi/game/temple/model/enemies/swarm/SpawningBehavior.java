@@ -56,7 +56,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 			agent.setLook(agentLook);
 			agent.setBehavior(createAgentBehavior());
 	//		System.out.println("spawning agent at " + swarm.getArea().getRefPoint());
-			agent.setArea(new AABB(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
+			agent.setArea(AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
 								   source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle));
 			agent.setSensor(new Sensor(10, 5, new AgentSensorFilter(), true));
 			agent.setBody(new Body());

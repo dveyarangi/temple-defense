@@ -87,7 +87,9 @@ public class SwarmFactory
 					{
 						terrain.query( new ConsumingSensor(terrain, false,
 								source.getArea().getRefPoint().x(), source.getArea().getRefPoint().y(), 30*source.getArea().getMaxRadius() ), 
-								new AABB(source.getArea().getRefPoint().x(), source.getArea().getRefPoint().y(), 30*source.getArea().getMaxRadius(), 0));
+								AABB.createSquare(source.getArea().getRefPoint().x(), 
+										source.getArea().getRefPoint().y(), 
+										30*source.getArea().getMaxRadius(), 0));
 //						swarm.setUnpassable(target.getArea().getRefPoint().x(), target.getArea().getRefPoint().y());
 						
 						swarm.setDanger(source, source.getIntegrity().hit(MATTER_DAMAGE));

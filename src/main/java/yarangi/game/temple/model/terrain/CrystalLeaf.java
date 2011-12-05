@@ -100,6 +100,6 @@ public class CrystalLeaf extends MatterBranch
 		return leaf;
 	}
 
-	public Area getArea() { return new AABB(0,0,0,0);}
+	public Area getArea() { return AABB.createSquare(0,0,0,0);}
 
 }

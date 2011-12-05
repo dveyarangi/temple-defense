@@ -16,7 +16,7 @@ public class ElementalVoid extends GenericEnemy
 //	private double mass = 1; 
 	
 	public ElementalVoid(double x, double y, double a, double size, ILayerObject target) {
-		super(new AABB(x, y, size, a), target, 
+		super(AABB.createSquare(x, y, size, a), target, 
 				new Integrity(1000,  0, new double [] { 0,0,0,0})
 		);
 

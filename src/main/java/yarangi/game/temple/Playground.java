@@ -77,7 +77,7 @@ public class Playground extends Scene
 	{
 		super(sceneConfig, ekranConfig, voices);
 		
-//		createUI();
+		createUI();
 		
 //		BackgroundEntity background = new BackgroundEntity(100, 100, 50);		
 //		addEntity(background);
@@ -100,20 +100,18 @@ public class Playground extends Scene
 		temple.setLook(new TempleLook( ));
 		temple.setBehavior(new ObserverBehavior(0,512,null,0));
 		temple.setSensor(new Sensor(512, 3, null, true));
-		temple.setArea(new AABB(0,0,10, 0));
+		temple.setArea(AABB.createSquare(0,0,10, 0));
 		temple.setBody(new Body());
 		addEntity(temple);
 		structure.addServiceable( temple );
-		
-		voices.addCursorListener(controller);
 
 		BattleInterface bi = controller.getBattleInterface();
 		
 		float maxCannons = 9;
 		for(int a = 0; a < maxCannons; a ++)
 		{
-			Weapon weapon = new Minigun(bi);
-			weapon.setArea(new AABB((100+ a%3*100)*Math.cos(Angles.PI_2/maxCannons *a), (100+ a%3*100)*Math.sin(Angles.PI_2/maxCannons * a ),5,0));
+			Weapon weapon = new Minigun(bi, a%2 == 0 ? Minigun.PROPS1 : Minigun.PROPS2);
+			weapon.setArea(AABB.createSquare((100+ a%3*100)*Math.cos(Angles.PI_2/maxCannons *a), (100+ a%3*100)*Math.sin(Angles.PI_2/maxCannons * a ),5,0));
 			weapon.setLook(new MinigunGlowingLook());
 //			weapon.setLook(new MinigunLook());
 			weapon.setBehavior(new TrackingBehavior());
@@ -164,7 +162,7 @@ public class Playground extends Scene
 		
 //		KolbasaFactory.generateKolbasaMaze( this );
 		
-		Swarm swarm = SwarmFactory.createSwarm(sceneConfig.getWidth(), this, 1);
+		Swarm swarm = SwarmFactory.createSwarm(sceneConfig.getWidth(), this, 5);
 		Behavior <Swarm> swarmBehavior = SwarmFactory.createDefaultBehavior();
 		swarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, Dummy.<Swarm>LOOK() );
 		addEntity(swarmShell);
@@ -217,7 +215,7 @@ public class Playground extends Scene
 			{
 				if( target instanceof SwarmAgent)
 				{
-					botInterface.changeTransferRate(-0.5);
+//					botInterface.changeTransferRate(-0.5);
 					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(1,0,0,0), 4 );
 					return true;
 				}
@@ -309,14 +307,14 @@ public class Playground extends Scene
 		
 		Panel [] leftPanels = mainPanels[0].split( new int [] {60, 40 }, Direction.VERTICAL );
 		
-		Overlay panel1 = new Overlay(leftPanels[0]);
+		Overlay panel1 = new Overlay(leftPanels[0], true);
 		leftPanels[0].setInsets( new Insets(5,5,5,5));
 		panel1.setLook( new PanelLook( new Color(0.1f, 0.1f, 0.3f, 0.7f) ) );
-		Overlay panel2 = new Overlay(leftPanels[1]);
+		Overlay panel2 = new Overlay(leftPanels[1], true);
 		leftPanels[1].setInsets( new Insets(5,5,5,5));
 		panel2.setLook( new PanelLook( new Color(0.1f, 0.1f, 0.3f, 0.7f) ) );
 		
-		Overlay panel3 = new Overlay(mainPanels[2]);
+		Overlay panel3 = new Overlay(mainPanels[2], true);
 		mainPanels[2].setInsets( new Insets(5,5,5,5));
 		panel3.setLook( new PanelLook( new Color(0.1f, 0.1f, 0.3f, 0.7f) ) );
 		

@@ -7,7 +7,7 @@ import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.CircleLightLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.QServices;
+import yarangi.graphics.quadraturin.Q;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.graphics.veils.IsoheightVeil;
 import yarangi.math.Angles;
@@ -30,7 +30,7 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 		
 		if(veil == null)
 		{
-			QServices.rendering.warn( "Plugin [" + IsoheightVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
+			Q.rendering.warn( "Plugin [" + IsoheightVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
 			veil = IVeil.ORIENTING;
 		}
 
@@ -46,6 +46,17 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 //		this.setColor(new Color( 1.0f, P, P, 1.0f));
 				
 		super.render( gl, time, cannon, context );		
+		
+//		gl.glColor4f((float)((1-P)/4+P*0.3),  (float)(P*0.3), (float)(P),1);
+//		gl.glColor4f((float)((1-resourcePercent)*1.0), (float)(resourcePercent*1.0), 2f*(float)(0.5-Math.abs(resourcePercent-0.5)),0.5f);
+		gl.glBegin(GL.GL_POLYGON);
+		for(double a = 0; a <= 6; a ++)
+		{
+			gl.glVertex3f((float)(0. + cannon.getArea().getMaxRadius()*Math.cos(a*Angles.PI_div_3)), 
+					(float)(0f + cannon.getArea().getMaxRadius()*Math.sin(a*Angles.PI_div_3)), -0.1f);
+		}
+		gl.glEnd();
+
 		
 		gl.glColor4f(0.0f, 1.0f, 0f,0.2f);
 		Vector2D trackPoint = cannon.getBattleInterface().acquireTrackPoint(cannon);
@@ -71,7 +82,7 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 	public IVeil getVeil() { return veil; }
 
 	@Override
-	public boolean isCastsShadow() { return false; }
+	public boolean isCastsShadow() { return true; }
 	@Override
 	public float getPriority() { return 0; }
 

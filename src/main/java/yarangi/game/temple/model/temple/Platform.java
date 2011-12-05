@@ -23,7 +23,7 @@ public abstract class Platform extends Entity implements Damageable
 	{
 		super();
 		
-		setArea(new AABB(hexagon.getX(), hexagon.getY(), 1, /*Angles.toDegrees(Math.atan2(hexagon.getY(), hexagon.getX()))*/0));
+		setArea(AABB.createSquare(hexagon.getX(), hexagon.getY(), 1, /*Angles.toDegrees(Math.atan2(hexagon.getY(), hexagon.getX()))*/0));
 		
 		this.hexagon = hexagon;
 
