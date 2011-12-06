@@ -305,21 +305,21 @@ public class Playground extends Scene
 		Panel [] mainPanels = this.getUILayer().getBasePanel().split( 
 				new int [] {20, 60, 20 }, Direction.HORIZONTAL );
 		
-		Panel [] leftPanels = mainPanels[0].split( new int [] {60, 40 }, Direction.VERTICAL );
+		Panel [] leftPanels = mainPanels[0].split( new int [] {10, 90 }, Direction.VERTICAL );
 		
 		Overlay panel1 = new Overlay(leftPanels[0], true);
 		leftPanels[0].setInsets( new Insets(5,5,5,5));
-		panel1.setLook( new PanelLook( new Color(0.1f, 0.1f, 0.3f, 0.7f) ) );
-		Overlay panel2 = new Overlay(leftPanels[1], true);
-		leftPanels[1].setInsets( new Insets(5,5,5,5));
-		panel2.setLook( new PanelLook( new Color(0.1f, 0.1f, 0.3f, 0.7f) ) );
+		panel1.setLook( new PanelLook( new Color(0.1f, 0.3f, 0.3f, 0.7f) ) );
+//		Overlay panel2 = new Overlay(leftPanels[1], true);
+//		leftPanels[1].setInsets( new Insets(5,5,5,5));
+//		panel2.setLook( new PanelLook( new Color(0.1f, 0.3f, 0.3f, 0.7f) ) );
 		
-		Overlay panel3 = new Overlay(mainPanels[2], true);
-		mainPanels[2].setInsets( new Insets(5,5,5,5));
-		panel3.setLook( new PanelLook( new Color(0.1f, 0.1f, 0.3f, 0.7f) ) );
+//		Overlay panel3 = new Overlay(mainPanels[2], true);
+//		mainPanels[2].setInsets( new Insets(5,5,5,5));
+//		panel3.setLook( new PanelLook( new Color(0.1f, 0.3f, 0.3f, 0.7f) ) );
 		
 		this.getUILayer().addEntity( panel1 );
-		this.getUILayer().addEntity( panel2 );
-		this.getUILayer().addEntity( panel3 );
+//		this.getUILayer().addEntity( panel2 );
+//		this.getUILayer().addEntity( panel3 );
 	}
 }

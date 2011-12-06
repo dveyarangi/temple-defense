@@ -1,10 +1,11 @@
 package yarangi.game.temple.model;
 
 import yarangi.graphics.colors.Color;
+import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 
-public class ExplodingBehavior implements IBehaviorState <Entity>  
+public class ExplodingBehavior implements Behavior <Entity>  
 {
 	private double explosionTime;
 	private double timeLeft;
@@ -22,7 +23,7 @@ public class ExplodingBehavior implements IBehaviorState <Entity>
 	public Color getActiveColor() { return color; }
 	
 	@Override
-	public double behave(double time, Entity entity, boolean isVisible)
+	public boolean behave(double time, Entity entity, boolean isVisible)
 	{
 		
 		float ratio;
