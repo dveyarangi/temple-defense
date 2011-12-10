@@ -5,16 +5,16 @@ import yarangi.graphics.quadraturin.simulations.Body;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.graphics.quadraturin.terrain.ITile;
 import yarangi.spatial.Area;
-import yarangi.spatial.Point;
+import yarangi.spatial.PointArea;
 
-public class Tile implements ITile <Color>, IPhysicalObject
+public class Bitmap implements IPhysicalObject
 {
 	
 	private byte [] pixels;
 	
 	private int pixelCount;
 	
-	private Point area;
+	private PointArea area;
 	
 	private int pixelNum;
 	
@@ -28,10 +28,10 @@ public class Tile implements ITile <Color>, IPhysicalObject
 	 * @param y
 	 * @param pixels array of pixel color components (r,g,b,a); size = width*height*4
 	 */
-	public Tile(double cx, double cy, int size, double pixelsize)
+	public Bitmap(double cx, double cy, int size, double pixelsize)
 	{
 		
-		area = new Point(cx, cy);
+		area = new PointArea(cx, cy);
 		
 		this.pixels = new byte[size*size*4];
 		
@@ -57,14 +57,12 @@ public class Tile implements ITile <Color>, IPhysicalObject
 		return pixels[offset] != 0 || pixels[offset+1] != 0 || pixels[offset+2] != 0 || pixels[offset+3] != 0;
 	}
 	
-	@Override
 	public Color at(int x, int y)
 	{
 		int offset = 4 * (x + pixelNum * y);
 		return new Color(pixels[offset], pixels[offset+1], pixels[offset+2], pixels[offset+3]);
 	}
-
-	@Override
+	
 	public void put(Color p, int x, int y)
 	{
 		int offset = 4 * (x + pixelNum * y);
@@ -178,7 +176,6 @@ public class Tile implements ITile <Color>, IPhysicalObject
 		return pixelCount != 0;
 	}
 
-	@Override
 	public int getSize()
 	{
 		return pixelNum;

@@ -1,29 +1,21 @@
 package yarangi.game.temple.model.enemies.swarm;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
-import yarangi.game.temple.model.terrain.Tile;
-import yarangi.graphics.colors.Color;
+import yarangi.game.temple.model.terrain.Bitmap;
 import yarangi.graphics.quadraturin.Scene;
-import yarangi.graphics.quadraturin.terrain.Cell;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.math.FastMath;
 import yarangi.math.Vector2D;
-import yarangi.spatial.IGrid;
-import yarangi.spatial.IGridListener;
+import yarangi.spatial.GridMap;
+import yarangi.spatial.Tile;
 
-public class Swarm implements IGrid <Cell<Beacon>>
+public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 {
 	private int WSIZE ;
-	/**
-	 * TODO: replace with GridMap.
-	 */
-	private AStarNode [][] beacons;
 	
 //	private Vector2D [][] flows;
 	
@@ -46,43 +38,24 @@ public class Swarm implements IGrid <Cell<Beacon>>
 	
 	static final double DANGER_FACTOR_DECAY = 1./100.;
 	static final double OMNISCIENCE_PERIOD = 100.;
-	final GridyTerrainMap<Tile> terrain;
+	final GridyTerrainMap<Bitmap> terrain;
 	
-	private IGridListener <Cell<Beacon>> listener;
-	
-	private Set <Cell<Beacon>> modifiedCells;
 	/**
 	 * 
 	 * @param worldSize
-	 * @param _scene
+	 * @param scene
 	 */
-	public Swarm(int worldSize, Scene _scene)
+	public Swarm(int worldSize, int cellsize, Scene scene)
 	{
+		super(cellsize, worldSize, worldSize);
+		halfSize = worldSize / 2;
+		this.scene = scene;
+		
 		WSIZE = (int)((float)worldSize / (float)cellsize);
 		
-//		setLook(Dummy.LOOK);
-		beacons = new AStarNode[WSIZE][WSIZE];
-		halfSize = worldSize / 2;
-		this.scene = _scene;
-		
-		terrain = (GridyTerrainMap<Tile>)_scene.getWorldLayer().<Tile>getTerrain();
+		terrain = (GridyTerrainMap<Bitmap>)scene.getWorldLayer().<Bitmap>getTerrain();
 		
 		this.toNodeIdx = (double)WSIZE / (double)(worldSize);
-		
-		for(int i = 0; i < WSIZE; i ++)
-		for(int j = 0; j < WSIZE; j ++)
-		{
-			AStarNode node = new AStarNode(i, j); 
-			double tx = toBeaconCoord(i);
-			double ty = toBeaconCoord(j);
-//			Vector2D toCenter = new Vector2D(-tx, -ty).normalize();
-			if(tx != 0 || ty != 0)
-				node.setFlow(/*toCenter.x(), toCenter.y()*/ 0,0);
-			beacons[i][j] = node; 
-//			System.out.println(beacons[i][j].getFlow());
-		}
-		
-		modifiedCells =  new HashSet <Cell<Beacon>> ();
 	}
 
 	public void addSpawnNode(double x, double y)
@@ -129,7 +102,7 @@ public class Swarm implements IGrid <Cell<Beacon>>
 //		System.out.println(px + " : " + py + " ::: " + beacons[px][py].getFlow());
 //		System.out.println("push: " + flow + ", flow: " + beacons[px][py].getFlow() + ", res: " + flow.plus(beacons[px][py].getFlow()).normal());
 //		flow.normalize();
-		flow.add(beacons[px][py].getFlow().mul(0.5));
+		flow.add(getContentByIndex(px, py).getFlow().mul(0.5));
 		flow.normalize();
 		return flow;
 	}
@@ -137,7 +110,7 @@ public class Swarm implements IGrid <Cell<Beacon>>
 	protected double getDanger(int i, int j)
 	{
 		if(i >= 0 && i < WSIZE && j >= 0 && j < WSIZE)
-			return beacons[i][j].getDangerFactor();
+			return getContentByIndex(i, j).getDangerFactor();
 		return MAX_DANGER_FACTOR;
 	}
 	
@@ -149,12 +122,12 @@ public class Swarm implements IGrid <Cell<Beacon>>
 	{
 		return FastMath.round((v + halfSize) * toNodeIdx);
 	}
-	final public int getCellSize() { return cellsize;}
+	
 	final public int getWorldSize() { return WSIZE; }
 
 	final public Vector2D getTarget() { return target; }
 
-	final protected AStarNode [][] getBeacons() { return beacons; }
+	final protected AStarNode getBeaconByIndex(int x, int y) { return (AStarNode)getContentByIndex( x, y ); }
 
 	final public void addAgent(SwarmAgent agent) {
 		scene.addEntity(agent);
@@ -171,9 +144,9 @@ public class Swarm implements IGrid <Cell<Beacon>>
 		
 		if(x >= 0 && x < WSIZE && y >= 0 && y < WSIZE)
 		{
-			Beacon beacon = beacons[x][y];
+			Beacon beacon = getContentByIndex( x, y );
 			beacon.update(damage);
-			cellModified( beacon.getX(), beacon.getY() );
+			setModified( beacon.getX(), beacon.getY() );
 			int i, j;
 			for(int dx = -2; dx <= 2; dx ++)
 				for(int dy = -2; dy <= 2; dy ++)
@@ -186,7 +159,7 @@ public class Swarm implements IGrid <Cell<Beacon>>
 					j = y + dy;
 					if(j < 0 || j >= WSIZE) continue;
 					
-					beacon = beacons[i][j];
+					beacon = getContentByIndex( i, j );
 					beacon.update( damage/(dx+dy) );
 					
 				}
@@ -281,13 +254,13 @@ public class Swarm implements IGrid <Cell<Beacon>>
 
 	public IBeacon getBeacon(Vector2D point)
 	{
-		return beacons[toBeaconIdx( point.x() )][ toBeaconIdx( point.y() )];
+		return getContentByCoord(point.x(), point.y());
 	}
 
 	public boolean isOmniUnpassable(int x, int y)
 	{
-		Cell <Tile> cell = terrain.getCell( toBeaconCoord( x ), toBeaconCoord( y ) );
-		return cell != null && !cell.getProperties().isEmpty();
+		Tile <Bitmap> tile = terrain.getTile( toBeaconCoord( x ), toBeaconCoord( y ) );
+		return tile != null && !tile.get().isEmpty();
 //		return !terrain.getCell( toBeaconCoord( x ), toBeaconCoord( y ) ).getProperties().isEmpty();
 				
 	}
@@ -299,27 +272,41 @@ public class Swarm implements IGrid <Cell<Beacon>>
 	@Override public float getMinY() { return -halfSize; }
 
 	@Override public float getMaxY() { return halfSize; }
-	
-	public void cellModified(int i, int j)
+
+	@Override
+	protected Tile<Beacon> createEmptyCell(int idx, double x, double y)
 	{
-		if(listener == null)
-			return;
-		modifiedCells.add( new Cell<Beacon> (toBeaconCoord( i ), toBeaconCoord( j ), getCellSize(), beacons[i][j]) );
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	void fireGridModification()
+	@Override
+	protected Tile<Beacon>[] createMap(int cellSize, int width, int height)
 	{
-		if(listener == null)
-			return;
+		Tile<Beacon>[] beacons = (Tile<Beacon>[]) new Tile [width*height];
+		for(int i = 0; i < width; i ++)
+			for(int j = 0; j < height; j ++)
+			{
+				AStarNode node = new AStarNode(i, j); 
+				double tx = toBeaconCoord(i);
+				double ty = toBeaconCoord(j);
+//				Vector2D toCenter = new Vector2D(-tx, -ty).normalize();
+				if(tx != 0 || ty != 0)
+					node.setFlow(/*toCenter.x(), toCenter.y()*/ 0,0);
+				Tile <Beacon> tile = new Tile<Beacon>(tx, ty, getCellSize(), getCellSize());
+				tile.put( node );
+				beacons[i + width * j] = tile; 
+//				System.out.println(beacons[i][j].getFlow());
+			}
 		
-		listener.cellsModified( modifiedCells );
-		modifiedCells = new HashSet <Cell<Beacon>> ();
+		return beacons;
+		
 	}
-	
-	public void setModificationListener(IGridListener <Cell<Beacon>>listener)
+
+	@Override
+	protected int indexAtTile(int i, int j)
 	{
-		this.listener = listener;
-		modifiedCells = new HashSet <Cell<Beacon>> ();
+		return i + WSIZE * j;
 	}
 
 }

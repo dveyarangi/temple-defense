@@ -10,7 +10,7 @@ import yarangi.game.temple.model.temple.BattleCommander;
 import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.temple.StructureInterface;
 import yarangi.game.temple.model.temple.TempleEntity;
-import yarangi.game.temple.model.terrain.Tile;
+import yarangi.game.temple.model.terrain.Bitmap;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.actions.ActionController;
 import yarangi.graphics.quadraturin.actions.DefaultActionFactory;
@@ -19,8 +19,8 @@ import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.ILayerObject;
 import yarangi.spatial.Area;
-import yarangi.spatial.IAreaChunk;
 import yarangi.spatial.ISpatialSensor;
+import yarangi.spatial.Tile;
  
 public class TempleController extends Entity implements CursorListener
 {
@@ -99,13 +99,13 @@ public class TempleController extends Entity implements CursorListener
 
 	public void objectObserved(Entity object) { battleInterface.objectObserved(object); }
 
-	class LOSSensor implements ISpatialSensor <Tile> 
+	class LOSSensor implements ISpatialSensor <Tile<Bitmap>, Bitmap> 
 	{
 		private boolean hasLOS = true;
 		public boolean hasLOS() { return hasLOS; }
 
 		@Override
-		public boolean objectFound(IAreaChunk chunk, Tile object)
+		public boolean objectFound(Tile<Bitmap> chunk, Bitmap object)
 		{
 			if(object.isAlive())
 //			if(object instanceof Tile)
@@ -125,8 +125,8 @@ public class TempleController extends Entity implements CursorListener
 	{
 		LOSSensor sensor = new LOSSensor();
 //		scene.getEntityIndex().query( sensor, x, y, x2-x, y2-y );
-		if(scene.getWorldLayer().<Tile>getTerrain() != null)
-			scene.getWorldLayer().<Tile>getTerrain().query( sensor, x, y, x2-x, y2-y );
+		if(scene.getWorldLayer().<Bitmap>getTerrain() != null)
+			scene.getWorldLayer().<Bitmap>getTerrain().query( sensor, x, y, x2-x, y2-y );
 		
 		return sensor.hasLOS();
 	}

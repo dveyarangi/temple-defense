@@ -6,7 +6,7 @@ class ShiftBehavior implements IBehaviorState<Swarm>
 {
 
 	@Override
-	public double behave(double time, Swarm swarm, boolean isVisible) {
+	public double behave(double time, Swarm swarm) {
 		swarm.nextNode();
 		return 0;
 	}

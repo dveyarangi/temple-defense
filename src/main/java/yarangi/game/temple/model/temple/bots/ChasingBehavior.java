@@ -17,7 +17,7 @@ public class ChasingBehavior implements IBehaviorState <Bot>
 		this.target = target;
 		satelliting = new SatelliteBehavior( target.getServicePoint() );
 	}
-	public double behave(double time, Bot bot, boolean isVisible) 
+	public double behave(double time, Bot bot) 
 	{
 	
 

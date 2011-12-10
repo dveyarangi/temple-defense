@@ -4,7 +4,7 @@ import yarangi.graphics.quadraturin.Scene;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
-import yarangi.spatial.Polygon;
+import yarangi.spatial.PolygonArea;
 
 public class KolbasaFactory
 {
@@ -61,11 +61,11 @@ public class KolbasaFactory
 		}
 	}
 	
-	public static Polygon generatePerimeter(PolyLine line, double radius, double accuracy)
+	public static PolygonArea generatePerimeter(PolyLine line, double radius, double accuracy)
 	{
 		Vector2D refPoint = line.getPoint(0);
 		
-		Polygon poly = new Polygon( refPoint.x(), refPoint.y() );
+		PolygonArea poly = new PolygonArea( refPoint.x(), refPoint.y() );
 		
 		Vector2D nextDir = line.getPoint(1).minus( line.getPoint(0) );
 		Vector2D currDir = nextDir;

@@ -1,7 +1,7 @@
 package yarangi.game.temple.model.terrain;
 
 import yarangi.math.Vector2D;
-import yarangi.spatial.Polygon;
+import yarangi.spatial.PolygonArea;
 
 public class KolbasaMatter
 {

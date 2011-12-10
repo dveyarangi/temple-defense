@@ -1,17 +1,16 @@
 package yarangi.game.temple.model.terrain;
 
 import yarangi.graphics.colors.Color;
-import yarangi.graphics.quadraturin.terrain.Cell;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
-import yarangi.spatial.IAreaChunk;
 import yarangi.spatial.ISpatialSensor;
+import yarangi.spatial.Tile;
 
-public class ConsumingSensor implements ISpatialSensor <Tile>
+public class ConsumingSensor implements ISpatialSensor <Tile <Bitmap>, Bitmap>
 {
 	double ox, oy, radiusSquare;
 	boolean draw = false;
-	GridyTerrainMap<Tile> terrain;
-	public ConsumingSensor (GridyTerrainMap<Tile> terrain, boolean draw, double ox, double oy, double radiusSquare)
+	GridyTerrainMap<Bitmap> terrain;
+	public ConsumingSensor (GridyTerrainMap<Bitmap> terrain, boolean draw, double ox, double oy, double radiusSquare)
 	{
 		this.terrain = terrain;
 		this.ox = ox;
@@ -23,28 +22,28 @@ public class ConsumingSensor implements ISpatialSensor <Tile>
 	 * @param chunk - current cell
 	 */
 	@Override
-	public boolean objectFound(IAreaChunk chunk, Tile tile)
+	public boolean objectFound(Tile <Bitmap> tile, Bitmap bitmap)
 	{
 //		System.out.println(chunk + " : " + tile);
-		int pixelsBefore = tile.getPixelCount();
+		int pixelsBefore = bitmap.getPixelCount();
 		if(pixelsBefore == 0 && !draw)
 			return false;
-		for(int i = 0; i < tile.getSize(); i ++)
-			for(int j = 0; j < tile.getSize(); j ++)
+		for(int i = 0; i < bitmap.getSize(); i ++)
+			for(int j = 0; j < bitmap.getSize(); j ++)
 			{
-				double dx = chunk.getMinX() + i * tile.getPixelSize() - ox;
-				double dy = chunk.getMinY() + j * tile.getPixelSize() - oy;
+				double dx = tile.getMinX() + i * bitmap.getPixelSize() - ox;
+				double dy = tile.getMinY() + j * bitmap.getPixelSize() - oy;
 				if((dx*dx) + (dy*dy) > radiusSquare)
 					continue;
 
 				if(draw)
-					((Tile)tile).put((new Color(0,1,1,1)), i, j );
+					bitmap.put((new Color(0,1,1,1)), i, j );
 				else
-					tile.remove( i, j );
+					bitmap.remove( i, j );
 			}
 		
-		if(tile.getPixelCount() != pixelsBefore)
-			terrain.setModified( (Cell<Tile>)chunk );
+		if(bitmap.getPixelCount() != pixelsBefore)
+			terrain.setModified( tile );
 		
 		return false;
 	}

@@ -37,7 +37,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 
 	}
 	@Override
-	public double behave(double time, final Swarm swarm, boolean isVisible) 
+	public double behave(double time, final Swarm swarm) 
 	{
 		timeToSpawn -= time;
 		if(timeToSpawn > 0)

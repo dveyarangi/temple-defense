@@ -4,8 +4,8 @@ import javax.media.opengl.GL;
 
 import yarangi.graphics.grid.TileGridLook;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.terrain.Cell;
 import yarangi.math.Vector2D;
+import yarangi.spatial.Tile;
 
 public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 {
@@ -16,15 +16,16 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 	public float getPriority() { return 1; }
 
 	@Override
-	protected void renderTile(GL gl, Cell<Beacon> cell, Swarm swarm)
+	protected void renderTile(GL gl, Tile<Beacon> tile, Swarm swarm)
 	{
-        if(cell == null)
+        if(tile == null)
         	return;
+        
 		float size = swarm.getCellSize();
 		float hsize = swarm.getCellSize()/2;
-        Beacon beacon = cell.getProperties();
-        double x = cell.getX();
-        double y = cell.getY();
+        Beacon beacon = tile.get();
+        double x = tile.getX();
+        double y = tile.getY();
 		float curr = toAlpha(beacon);
 //		float topLeft     = toAlpha(entity.getBeacons()[i-1][j+1]);
 //		float top         = toAlpha(entity.getBeacons()[i]  [j+1]);

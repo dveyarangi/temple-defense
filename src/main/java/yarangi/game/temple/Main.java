@@ -1,5 +1,7 @@
 package yarangi.game.temple;
 
+import yarangi.graphics.quadraturin.Q;
+import yarangi.graphics.quadraturin.Stage;
 import yarangi.graphics.quadraturin.Swing2DContainer;
 import yarangi.graphics.shaders.ShaderFactory;
 
@@ -10,13 +12,10 @@ public class Main
 	{
 		
 		// creating frame: 
-		Swing2DContainer container = new Swing2DContainer();
-	    
-	    // starting engine
-	    container.start();
+	    Stage stage = Q.go();
 	    
 	    // actualizing playground scene
-	    container.activateScene("playground");
+	    stage.setScene("playground");
 	    
 	}
 }

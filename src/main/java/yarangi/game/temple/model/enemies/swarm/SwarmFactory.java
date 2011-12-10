@@ -6,7 +6,7 @@ import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.temple.model.temple.TempleEntity;
 import yarangi.game.temple.model.terrain.ConsumingSensor;
 import yarangi.game.temple.model.terrain.Matter;
-import yarangi.game.temple.model.terrain.Tile;
+import yarangi.game.temple.model.terrain.Bitmap;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.Scene;
@@ -31,7 +31,7 @@ public class SwarmFactory
 	public static Swarm createSwarm(int worldSize, final Scene scene, int nodes)
 	{
 		
-		final Swarm swarm = new Swarm (worldSize, scene);
+		final Swarm swarm = new Swarm (worldSize, 8, scene);
 		
 /*		PickingSensor <IEntity> sensor = new PickingSensor<IEntity>( null );
 		double r , a;
@@ -55,7 +55,7 @@ public class SwarmFactory
 			swarm.addSpawnNode(r*Math.cos(a), r*Math.sin(a));
 		}
 		
-		final GridyTerrainMap <Tile> terrain = (GridyTerrainMap <Tile>)scene.getWorldLayer().<Tile>getTerrain();
+		final GridyTerrainMap <Bitmap> terrain = (GridyTerrainMap <Bitmap>)scene.getWorldLayer().<Bitmap>getTerrain();
 		ICollisionHandler <SwarmAgent> agentCollider = new ICollisionHandler <SwarmAgent> (){
 
 			@Override
@@ -83,7 +83,7 @@ public class SwarmFactory
 						return true;
 					}
 					else
-					if( target instanceof Tile || target instanceof Matter)
+					if( target instanceof Bitmap || target instanceof Matter)
 					{
 						terrain.query( new ConsumingSensor(terrain, false,
 								source.getArea().getRefPoint().x(), source.getArea().getRefPoint().y(), 30*source.getArea().getMaxRadius() ), 

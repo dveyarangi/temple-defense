@@ -26,7 +26,7 @@ import yarangi.game.temple.model.temple.bots.Bot;
 import yarangi.game.temple.model.temple.bots.BotFactory;
 import yarangi.game.temple.model.temple.debug.ShieldDebugLook;
 import yarangi.game.temple.model.terrain.Matter;
-import yarangi.game.temple.model.terrain.Tile;
+import yarangi.game.temple.model.terrain.Bitmap;
 import yarangi.game.temple.model.weapons.Minigun;
 import yarangi.game.temple.model.weapons.MinigunGlowingLook;
 import yarangi.game.temple.model.weapons.Projectile;
@@ -53,9 +53,9 @@ import yarangi.graphics.quadraturin.ui.Panel;
 import yarangi.graphics.quadraturin.ui.PanelLook;
 import yarangi.math.Angles;
 import yarangi.spatial.AABB;
-import yarangi.spatial.Circle;
+import yarangi.spatial.CircleArea;
 import yarangi.spatial.ISpatialFilter;
-import yarangi.spatial.Point;
+import yarangi.spatial.PointArea;
 
 public class Playground extends Scene
 {
@@ -89,7 +89,7 @@ public class Playground extends Scene
 		TempleController controller = new TempleController(this, core);
 		
 //		TempleControlProps c = new TempleControlProps();
-		controller.setArea(new Point(0,0));
+		controller.setArea(new PointArea(0,0));
 		controller.setLook(new ControlLook());
 		controller.setBehavior(new ControlBehavior());
 		addEntity(controller);
@@ -165,10 +165,11 @@ public class Playground extends Scene
 		Swarm swarm = SwarmFactory.createSwarm(sceneConfig.getWidth(), this, 5);
 		Behavior <Swarm> swarmBehavior = SwarmFactory.createDefaultBehavior();
 		swarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, Dummy.<Swarm>LOOK() );
-		addEntity(swarmShell);
+//		addEntity(swarmShell);
 		
 		SwarmDebugOverlay swarmDebugLook = new SwarmDebugOverlay();
 		debugSwarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, swarmDebugLook );
+		addEntity(debugSwarmShell);
 		
 		ICollisionHandler<Projectile> projectileCollider = new ICollisionHandler <Projectile> ()
 		{
@@ -176,7 +177,7 @@ public class Playground extends Scene
 			@Override
 			public boolean setImpactWith(Projectile source, IPhysicalObject target)
 			{
-				if( target instanceof Tile || target instanceof Matter || target instanceof TempleEntity)
+				if( target instanceof Bitmap || target instanceof Matter || target instanceof TempleEntity)
 				{
 					source.markDead();
 					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(1,0,0,0), 4 );

@@ -1,13 +1,13 @@
 package yarangi.game.temple.model.terrain;
 
 import yarangi.graphics.quadraturin.Scene;
-import yarangi.spatial.Polygon;
+import yarangi.spatial.PolygonArea;
 
 public class PolygonalMatterFactory
 {
 	public static void createTestPolygons(Scene scene)
 	{
-		Polygon poly = new Polygon(-180, -180);
+		PolygonArea poly = new PolygonArea(-180, -180);
 		poly.add(0, 60);
 		poly.add(60, 0);
 		poly.add(120, -20);
@@ -19,7 +19,7 @@ public class PolygonalMatterFactory
 		poly.add(-110, 40);
 		scene.addEntity(new Matter(poly));
 
-		poly = new Polygon(-180, -180);
+		poly = new PolygonArea(-180, -180);
 
 		poly.add(-110, 40);
 		poly.add(-120, 80);
@@ -31,7 +31,7 @@ public class PolygonalMatterFactory
 		poly.add(0, 60);
 		
 		scene.addEntity(new Matter(poly));
-		poly = new Polygon(-100, 100);
+		poly = new PolygonArea(-100, 100);
 		poly.add(0, 30);
 		poly.add(20, 100);
 		poly.add(40, 150);
@@ -47,7 +47,7 @@ public class PolygonalMatterFactory
 		
 		scene.addEntity(
 				new Matter(poly));
-		poly = new Polygon(200, -200);
+		poly = new PolygonArea(200, -200);
 		poly.add(0, 60);
 		poly.add(60, 70);
 		poly.add(100, 120);
@@ -59,7 +59,7 @@ public class PolygonalMatterFactory
 		poly.add(-110, 40);
 		poly.add(-90, 40);
 		scene.addEntity(new Matter(poly));
-		poly = new Polygon(250, 50);
+		poly = new PolygonArea(250, 50);
 		poly.add(0, 60);
 		poly.add(50, 80);
 		poly.add(80, 90);
@@ -75,7 +75,7 @@ public class PolygonalMatterFactory
 		poly.add(-60, -20);
 //		poly.add(-90, -120);
 		scene.addEntity(new Matter(poly));
-		 poly = new Polygon(200, 300);
+		 poly = new PolygonArea(200, 300);
 		poly.add(0, 60);
 		poly.add(60, 0);
 		poly.add(120, -20);

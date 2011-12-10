@@ -30,7 +30,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 	}
 
 	@Override
-	public double behave(double time, final Swarm swarm, boolean isVisible) 
+	public double behave(double time, final Swarm swarm) 
 	{
 		if(future != null && !future.isDone())
 			return 0;
@@ -62,7 +62,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 	public void markPath(int ox, int oy, int tx, int ty, Swarm swarm)
 	{
 		int WSIZE = swarm.getWorldSize();
-		AStarNode [][] beacons = swarm.getBeacons();
+//		AStarNode [][] beacons = swarm.getBeacons();
 		PriorityQueue <AStarNode> openNodes = 
 					new PriorityQueue <AStarNode> (1000, new Comparator <AStarNode> () {
 			@Override
@@ -111,7 +111,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 					y = cy + dy;
 					if(y < 0 || y >= WSIZE) continue;
 					
-					temp = beacons[x][y];
+					temp = swarm.getBeaconByIndex( x, y );
 					if(temp.isClosed())
 						continue;
 				
@@ -179,7 +179,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 		
 		// TODO: set target beacon if null (not supposed to happen)
 		
-			AStarNode node = beacons[tx][ty];
+			AStarNode node = swarm.getBeaconByIndex( tx, ty );
 			while(node.origin != null)
 			{
 				
@@ -199,13 +199,13 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 							if(y < 0 || y >= WSIZE) continue;
 							
 							double d = Math.hypot(dx, dy)+1;
-							beacons[x][y].addFlow(flow.x()/(10*d), flow.y()/(10*d));
+							swarm.getBeaconByIndex( x, y ).addFlow(flow.x()/(10*d), flow.y()/(10*d));
 //							System.out.println(x + " " + y + " ::: " + beacons[x][y].getFlow());
 						}
 				node = node.origin;
 				node.addFlow(flow.x(), flow.y());
 				
-				swarm.cellModified( node.getX(), node.getY() );
+				swarm.setModified( node.getX(), node.getY() );
 			}	
 		}
 //		System.out.println("pathing end");
@@ -223,7 +223,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 			node.reset();
 		}
 		
-		swarm.fireGridModification();
+		swarm.fireGridModified();
 	}
 	public int getId() { return this.getClass().hashCode(); }
 }

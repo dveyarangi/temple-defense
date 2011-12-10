@@ -3,7 +3,6 @@ package yarangi.game.temple.model;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.Entity;
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 
 public class ExplodingBehavior implements Behavior <Entity>  
 {
@@ -44,7 +43,7 @@ public class ExplodingBehavior implements Behavior <Entity>
 		if(timeLeft <= 0)
 			entity.markDead();
 
-		return 0;
+		return true;
 
 	}
 	

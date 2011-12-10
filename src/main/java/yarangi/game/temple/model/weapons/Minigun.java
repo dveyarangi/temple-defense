@@ -41,7 +41,7 @@ public class Minigun extends Weapon
 			ACCURACY, 
 			projectileHitRadius, 
 			DAMAGE,
-			resourceCapacity, 1, resourceType
+			resourceCapacity, 20, resourceType
 			);
 	public static final WeaponProperties PROPS2 = new WeaponProperties(
 			BASE_TRACKING_SPEED, 
@@ -54,7 +54,7 @@ public class Minigun extends Weapon
 			ACCURACY, 
 			projectileHitRadius, 
 			DAMAGE,
-			resourceCapacity, 1, resourceType
+			resourceCapacity, 10, resourceType
 			);
 	
 	

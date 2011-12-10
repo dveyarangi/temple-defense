@@ -6,7 +6,7 @@ import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 class TargetingBehavior implements IBehaviorState<SwarmAgent> {
 
 	@Override
-	public double behave(double time, SwarmAgent entity, boolean isVisible) 
+	public double behave(double time, SwarmAgent entity) 
 	{
 		return 0;
 		

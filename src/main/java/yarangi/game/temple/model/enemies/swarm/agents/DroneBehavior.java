@@ -10,7 +10,7 @@ public class DroneBehavior implements IBehaviorState <SwarmAgent>
 	double da = RandomUtil.getRandomGaussian(0, 0.1);
 
 	@Override
-	public double behave(double time, SwarmAgent agent, boolean isVisible) {
+	public double behave(double time, SwarmAgent agent) {
 		agent.getArea().setOrientation( agent.getArea().getOrientation()+da );
 		Swarm swarm = agent.getSwarm();
 		Vector2D flow = swarm.getFlow(agent.getArea().getRefPoint());

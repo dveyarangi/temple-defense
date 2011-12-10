@@ -20,7 +20,7 @@ public class QueryingBehavior implements IBehaviorState <Bot>
 	}
 
 	@Override
-	public double behave(double time, Bot bot, boolean isVisible)
+	public double behave(double time, Bot bot)
 	{
 		IOrder order = bot.getOrder();
 		

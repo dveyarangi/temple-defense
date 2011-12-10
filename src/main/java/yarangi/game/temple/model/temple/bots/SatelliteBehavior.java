@@ -21,7 +21,7 @@ public class SatelliteBehavior implements IBehaviorState <Bot>
 	}
 
 	@Override
-	public double behave(double time, Bot bot, boolean isVisible)
+	public double behave(double time, Bot bot)
 	{
 		Vector2D botLocation = bot.getArea().getRefPoint();
 		Vector2D hostLocation = host.getRefPoint();

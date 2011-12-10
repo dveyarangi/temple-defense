@@ -4,17 +4,17 @@ import javax.media.opengl.GL;
 
 import yarangi.graphics.grid.TileGridLook;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.terrain.Cell;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.graphics.textures.TextureUtils;
+import yarangi.spatial.Tile;
 
-public class GridyTerrainLook extends TileGridLook<Tile, GridyTerrainMap<Tile>>
+public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap<Bitmap>>
 {
 
 	@Override
-	protected void renderTile(GL gl, Cell<Tile> cell, GridyTerrainMap<Tile> grid)
+	protected void renderTile(GL gl, Tile<Bitmap> tile, GridyTerrainMap<Bitmap> grid)
 	{
-		Tile chunk = cell.getProperties();
+		Bitmap chunk = tile.get();
 		if(chunk == null)
 			return;
 		
@@ -27,10 +27,10 @@ public class GridyTerrainLook extends TileGridLook<Tile, GridyTerrainMap<Tile>>
 		gl.glDisable( GL.GL_DEPTH_TEST );
 		gl.glColor3f( 0,0,0 );
 		gl.glBegin( GL.GL_QUADS );
-		gl.glVertex2f( (float)cell.getMinX(), (float)cell.getMinY());
-		gl.glVertex2f( (float)cell.getMaxX(), (float)cell.getMinY());
-		gl.glVertex2f( (float)cell.getMaxX(), (float)cell.getMaxY());
-		gl.glVertex2f( (float)cell.getMinX(), (float)cell.getMaxY());
+		gl.glVertex2f( (float)tile.getMinX(), (float)tile.getMinY());
+		gl.glVertex2f( (float)tile.getMaxX(), (float)tile.getMinY());
+		gl.glVertex2f( (float)tile.getMaxX(), (float)tile.getMaxY());
+		gl.glVertex2f( (float)tile.getMinX(), (float)tile.getMaxY());
 		gl.glEnd();
 		
 		
@@ -43,10 +43,10 @@ public class GridyTerrainLook extends TileGridLook<Tile, GridyTerrainMap<Tile>>
 		gl.glColor3f( 0,0,0 );
 		gl.glBegin( GL.GL_QUADS );
 //		System.out.println(cell.getMinX() + " : " + cell.getMaxX());
-			gl.glTexCoord2f( 0, 0 ); gl.glVertex2f( (float)cell.getMinX(), (float)cell.getMinY());
-			gl.glTexCoord2f( 1, 0 ); gl.glVertex2f( (float)cell.getMaxX(), (float)cell.getMinY());
-			gl.glTexCoord2f( 1, 1 ); gl.glVertex2f( (float)cell.getMaxX(), (float)cell.getMaxY());
-			gl.glTexCoord2f( 0, 1 ); gl.glVertex2f( (float)cell.getMinX(), (float)cell.getMaxY());
+			gl.glTexCoord2f( 0, 0 ); gl.glVertex2f( (float)tile.getMinX(), (float)tile.getMinY());
+			gl.glTexCoord2f( 1, 0 ); gl.glVertex2f( (float)tile.getMaxX(), (float)tile.getMinY());
+			gl.glTexCoord2f( 1, 1 ); gl.glVertex2f( (float)tile.getMaxX(), (float)tile.getMaxY());
+			gl.glTexCoord2f( 0, 1 ); gl.glVertex2f( (float)tile.getMinX(), (float)tile.getMaxY());
 		gl.glEnd();
 		
 		gl.glBindTexture( GL.GL_TEXTURE_2D, 0 );

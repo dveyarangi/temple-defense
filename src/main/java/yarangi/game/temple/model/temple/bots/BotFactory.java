@@ -10,7 +10,7 @@ import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.graphics.quadraturin.simulations.Body;
 import yarangi.numbers.RandomUtil;
-import yarangi.spatial.Point;
+import yarangi.spatial.PointArea;
 
 public class BotFactory
 {
@@ -23,7 +23,7 @@ public class BotFactory
 		port.setCapacity( Resource.Type.ENERGY, 0, BOT_CAPACITY );
 		port.setCapacity( Resource.Type.MATTER, 0, BOT_CAPACITY );
 		Bot bot = new Bot (port);
-		bot.setArea( new Point(controller.getTemple().getArea().getRefPoint()) );
+		bot.setArea( new PointArea(controller.getTemple().getArea().getRefPoint()) );
 		bot.setLook( new BotLook(20) );
 		bot.setBehavior( createBotBehavoir( controller ) );
 		bot.setBody( new Body(1, 7+RandomUtil.getRandomGaussian( 0, 1 )) );
