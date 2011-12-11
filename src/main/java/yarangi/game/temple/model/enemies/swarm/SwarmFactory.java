@@ -1,14 +1,11 @@
 package yarangi.game.temple.model.enemies.swarm;
 
 import yarangi.game.temple.model.Damage;
-import yarangi.game.temple.model.EffectUtils;
+import yarangi.game.temple.model.enemies.swarm.agents.Seeder;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.temple.model.temple.TempleEntity;
-import yarangi.game.temple.model.terrain.ConsumingSensor;
-import yarangi.game.temple.model.terrain.Matter;
 import yarangi.game.temple.model.terrain.Bitmap;
 import yarangi.game.temple.model.weapons.Projectile;
-import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
@@ -19,7 +16,6 @@ import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
-import yarangi.spatial.AABB;
 
 public class SwarmFactory 
 {
@@ -56,56 +52,9 @@ public class SwarmFactory
 		}
 		
 		final GridyTerrainMap <Bitmap> terrain = (GridyTerrainMap <Bitmap>)scene.getWorldLayer().<Bitmap>getTerrain();
-		ICollisionHandler <SwarmAgent> agentCollider = new ICollisionHandler <SwarmAgent> (){
-
-			@Override
-			public boolean setImpactWith(SwarmAgent source, IPhysicalObject target)
-			{
-				if(target instanceof Projectile)
-					{
-						Projectile p = (Projectile) target;
-						
-						swarm.setDanger(source, source.getIntegrity().hit(p.getDamage()));
-						
-						if(source.getIntegrity().getHitPoints() <= 0)
-						{
-							source.markDead();
-							EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(0,1,0,1), 32);
-							return true;
-						}
-
-					}
-					else
-					if(target instanceof TempleEntity)
-					{
-						source.markDead();
-						EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(1,0,0,1), 64);
-						return true;
-					}
-					else
-					if( target instanceof Bitmap || target instanceof Matter)
-					{
-						terrain.query( new ConsumingSensor(terrain, false,
-								source.getArea().getRefPoint().x(), source.getArea().getRefPoint().y(), 30*source.getArea().getMaxRadius() ), 
-								AABB.createSquare(source.getArea().getRefPoint().x(), 
-										source.getArea().getRefPoint().y(), 
-										30*source.getArea().getMaxRadius(), 0));
-//						swarm.setUnpassable(target.getArea().getRefPoint().x(), target.getArea().getRefPoint().y());
-						
-						swarm.setDanger(source, source.getIntegrity().hit(MATTER_DAMAGE));
-//						if(source.getIntegrity().getHitPoints() <= 0)
-						{
-							source.markDead();
-							EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(0,1,0,1), 32);
-							return true;
-						}
-					}
-				
-					return false;
-				}
-
-			};	
-			scene.getCollisionManager().registerHandler(SwarmAgent.class, agentCollider);
+		
+		scene.getCollisionManager().registerHandler(SwarmAgent.class, new AgentCollisionHandler<SwarmAgent>(swarm));
+		scene.getCollisionManager().registerHandler(Seeder.class, new AgentCollisionHandler<Seeder>(swarm));
 
 
 		return swarm;
@@ -117,7 +66,7 @@ public class SwarmFactory
 //		swarm.setArea(new Point(0, 0));
 		final IBehaviorState<Swarm> rotating = new RotatingBehavior();
 		final IBehaviorState<Swarm> pathing = new PathingBehavior(1);
-		final IBehaviorState<Swarm> spawning = new SpawningBehavior(2);
+		final IBehaviorState<Swarm> spawning = new SpawningBehavior(10);
 		final IBehaviorState<Swarm> shifting = new ShiftBehavior();
 		
 		FSMBehavior <Swarm> behavior = new FSMBehavior <Swarm> (shifting);
@@ -143,4 +92,60 @@ public class SwarmFactory
 		
 		return behavior;
 	}
+	
+	static class  AgentCollisionHandler <E extends SwarmAgent> implements ICollisionHandler <E>
+	{
+		private Swarm swarm;
+		public AgentCollisionHandler(Swarm swarm)
+		{
+			this.swarm = swarm; 
+		}
+		@Override
+		public boolean setImpactWith(E source, IPhysicalObject target)
+		{
+			if(target instanceof Projectile)
+				{
+					Projectile p = (Projectile) target;
+					
+					swarm.setDanger(source, source.getIntegrity().hit(p.getDamage()));
+					
+					if(source.getIntegrity().getHitPoints() <= 0)
+					{
+						source.markDead();
+//						EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(0,1,0,1), 32);
+						return true;
+					}
+
+				}
+				else
+				if(target instanceof TempleEntity)
+				{
+					source.markDead();
+//					EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(1,0,0,1), 64);
+					return true;
+				}
+				/*				else
+				if( target instanceof Bitmap || target instanceof Matter)
+				{
+					terrain.query( new ConsumingSensor(terrain, false,
+							source.getArea().getRefPoint().x(), source.getArea().getRefPoint().y(), 30*source.getArea().getMaxRadius() ), 
+							AABB.createSquare(source.getArea().getRefPoint().x(), 
+									source.getArea().getRefPoint().y(), 
+									30*source.getArea().getMaxRadius(), 0));
+//					swarm.setUnpassable(target.getArea().getRefPoint().x(), target.getArea().getRefPoint().y());
+					
+					swarm.setDanger(source, source.getIntegrity().hit(MATTER_DAMAGE));
+//					if(source.getIntegrity().getHitPoints() <= 0)
+					{
+						source.markDead();
+						EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(0,1,0,1), 32);
+						return true;
+					}
+				}*/
+			
+				return false;
+			}
+
+		};	
+
 }

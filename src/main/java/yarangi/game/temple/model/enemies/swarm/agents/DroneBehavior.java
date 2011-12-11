@@ -2,6 +2,7 @@ package yarangi.game.temple.model.enemies.swarm.agents;
 
 import yarangi.game.temple.model.enemies.swarm.Swarm;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
+import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 
@@ -11,9 +12,9 @@ public class DroneBehavior implements IBehaviorState <SwarmAgent>
 
 	@Override
 	public double behave(double time, SwarmAgent agent) {
-		agent.getArea().setOrientation( agent.getArea().getOrientation()+da );
 		Swarm swarm = agent.getSwarm();
 		Vector2D flow = swarm.getFlow(agent.getArea().getRefPoint());
+		agent.getArea().setOrientation( Angles.TO_DEG * agent.getBody().getVelocity().getAngle() );
 		
 //		System.out.println(flow);
 		if(flow != null) {

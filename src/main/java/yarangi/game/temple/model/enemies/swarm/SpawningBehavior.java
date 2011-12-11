@@ -3,6 +3,9 @@ package yarangi.game.temple.model.enemies.swarm;
 import yarangi.game.temple.model.Integrity;
 import yarangi.game.temple.model.enemies.MetaCircleLook;
 import yarangi.game.temple.model.enemies.swarm.agents.DroneBehavior;
+import yarangi.game.temple.model.enemies.swarm.agents.Seeder;
+import yarangi.game.temple.model.enemies.swarm.agents.SeederBehavior;
+import yarangi.game.temple.model.enemies.swarm.agents.SeederLook;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.IEntity;
@@ -51,8 +54,8 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 			double angle = RandomUtil.getRandomDouble(Angles.PI_2);
 	//			double radius = RandomUtil.getRandomGaussian(800, 0);
 			double size = RandomUtil.getRandomDouble(1)+1;
-			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(10, 0, new double [] {0,0,0,0}), false);
 			Vector2D source = swarm.getSource();
+/*			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(10, 0, new double [] {0,0,0,0}), false);
 			agent.setLook(agentLook);
 			agent.setBehavior(createAgentBehavior());
 	//		System.out.println("spawning agent at " + swarm.getArea().getRefPoint());
@@ -61,8 +64,19 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 			agent.setSensor(new Sensor(10, 5, new AgentSensorFilter(), true));
 			agent.setBody(new Body());
 			agent.getBody().setMaxSpeed( size);
-			swarm.addAgent(agent);
+			swarm.addAgent(agent);*/
 //			System.out.println("Agent spawn at " + agent.getArea().getRefPoint());
+			
+			Seeder seeder = new Seeder(swarm, new Integrity(10, 0, new double [] {0,0,0,0}), 
+								AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
+												  source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle));
+			
+			seeder.setBehavior(createSeederBehavior());
+			seeder.setLook(new SeederLook());
+			seeder.setBody(new Body());
+			seeder.getBody().setMaxSpeed( size/2 );
+			
+			swarm.addAgent(seeder);
 		}
 		return 0;
 	}
@@ -88,6 +102,23 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 		{
 			@Override public IBehaviorState<SwarmAgent> nextState(SwarmAgent entity) {
 				return droneState;
+			}
+		});
+		
+		return beh;
+	}
+	
+	public Behavior <Seeder> createSeederBehavior()
+	{
+		final IBehaviorState<Seeder> seederState = new SeederBehavior();
+//		final IBehaviorState<SwarmAgent> dangerState = new DangerBehavior();
+		
+		FSMBehavior <Seeder> beh = new FSMBehavior<Seeder>(seederState);
+		
+		beh.link(seederState.getId(), new IBehaviorCondition<Seeder>()
+		{
+			@Override public IBehaviorState<Seeder> nextState(Seeder entity) {
+				return seederState;
 			}
 		});
 		
