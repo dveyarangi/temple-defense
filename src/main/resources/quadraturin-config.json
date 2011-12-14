@@ -82,7 +82,7 @@
 			    	"minZoom"  : 0.1
 			    },
 			    
-				"sceneClass" : "yarangi.game.temple.Playground",
+				"sceneClass" : "yarangi.game.harmonium.Playground",
 				
 		    	"engine" : {
 		    		"engineClass" : "yarangi.graphics.quadraturin.simulations.StupidInteractions",
@@ -90,7 +90,7 @@
 	    		},
 		    		
 		    	"terrain" : {
-		    	    "factoryClass"  : "yarangi.game.temple.model.terrain.stone.StoneFactory",
+		    	    "factoryClass"  : "yarangi.game.harmonium.environment.terrain.stone.StoneFactory",
 		    	    "cellsize" : 8
 	    	    }
 			}
