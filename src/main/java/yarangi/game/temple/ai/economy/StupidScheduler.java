@@ -1,4 +1,4 @@
-package yarangi.game.temple.controllers.bots;
+package yarangi.game.temple.ai.economy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import yarangi.game.temple.model.temple.Serviceable;
 import yarangi.game.temple.model.temple.bots.Bot;
 import yarangi.numbers.RandomUtil;
 
-public class BotInterface
+public class StupidScheduler implements IOrderScheduler
 {
 	
 	public static double MAX_TRANSFER_RATE = 10;
@@ -24,6 +24,10 @@ public class BotInterface
 	
 	private List <Bot> bots = new ArrayList <Bot> ();
 	
+	/* (non-Javadoc)
+	 * @see yarangi.game.temple.controllers.bots.ITempleNode#requestResource(yarangi.game.temple.model.temple.Serviceable, yarangi.game.temple.model.temple.Serviceable, yarangi.game.temple.model.resource.Resource.Type, double, int)
+	 */
+	@Override
 	public int requestResource(Serviceable requester, Serviceable provider, Resource.Type type, double amount, int priority)
 	{
 		ResourceRequest request = new ResourceRequest(requester, provider, type, amount);
@@ -35,6 +39,10 @@ public class BotInterface
 		return handle;
 	}
 	
+	/* (non-Javadoc)
+	 * @see yarangi.game.temple.controllers.bots.ITempleNode#getOrder(yarangi.game.temple.model.temple.bots.Bot)
+	 */
+	@Override
 	public IOrder getOrder(Bot bot)
 	{
 		if(requestsQueue.size() == 0 )
@@ -54,6 +62,10 @@ public class BotInterface
 		return new GatheringOrder(request, request.getType(), amount);
 	}
 	
+	/* (non-Javadoc)
+	 * @see yarangi.game.temple.controllers.bots.ITempleNode#fulfill(yarangi.game.temple.controllers.orders.IOrder)
+	 */
+	@Override
 	public void fulfill(IOrder order)
 	{
 		if(order.isClosed())
@@ -73,6 +85,10 @@ public class BotInterface
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see yarangi.game.temple.controllers.bots.ITempleNode#reject(yarangi.game.temple.controllers.orders.IOrder)
+	 */
+	@Override
 	public void reject(IOrder order)
 	{
 		if(order instanceof GatheringOrder)
@@ -84,13 +100,25 @@ public class BotInterface
 
 	}
 
+	/* (non-Javadoc)
+	 * @see yarangi.game.temple.controllers.bots.ITempleNode#add(yarangi.game.temple.model.temple.bots.Bot)
+	 */
+	@Override
 	public void add(Bot bot)
 	{
 		bots.add( bot );
 	}
 	
+	/* (non-Javadoc)
+	 * @see yarangi.game.temple.controllers.bots.ITempleNode#getBotsList()
+	 */
+	@Override
 	public List <Bot> getBotsList() { return bots; }
 
+	/* (non-Javadoc)
+	 * @see yarangi.game.temple.controllers.bots.ITempleNode#changeTransferRate(double)
+	 */
+	@Override
 	public double changeTransferRate(double d)
 	{
 		double transferRate = 1;

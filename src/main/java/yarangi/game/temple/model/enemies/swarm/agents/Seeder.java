@@ -22,14 +22,14 @@ public class Seeder extends SwarmAgent
 		
 		setArea(area);
 		
-		Vector2D p1 = new Vector2D(area.getMaxRadius(), 0);
-		Vector2D p4 = new Vector2D(-area.getMaxRadius(), 0);
+		Vector2D p1 = Vector2D.R(area.getMaxRadius(), 0);
+		Vector2D p4 = Vector2D.R(-area.getMaxRadius(), 0);
 		
-		leftOffset = new Vector2D(PIVOT_COEF*area.getMaxRadius(), area.getMaxRadius()*WIDTH_COEF); 
-		rightOffset = new Vector2D(PIVOT_COEF*area.getMaxRadius(), -area.getMaxRadius()*WIDTH_COEF); 
+		leftOffset = Vector2D.R(PIVOT_COEF*area.getMaxRadius(), area.getMaxRadius()*WIDTH_COEF); 
+		rightOffset = Vector2D.R(PIVOT_COEF*area.getMaxRadius(), -area.getMaxRadius()*WIDTH_COEF); 
 		
-		left = new Bezier4Curve(p1, new Vector2D(leftOffset), new Vector2D(leftOffset), p4);
-		right = new Bezier4Curve(p1, new Vector2D(rightOffset), new Vector2D(rightOffset), p4);
+		left = new Bezier4Curve(p1, Vector2D.COPY(leftOffset), Vector2D.COPY(leftOffset), p4);
+		right = new Bezier4Curve(p1, Vector2D.COPY(rightOffset), Vector2D.COPY(rightOffset), p4);
 		
 
 	}

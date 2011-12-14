@@ -12,7 +12,7 @@ public class Bot extends Entity implements Serviceable
 	private static final long serialVersionUID = -19945327419649387L;
 	
 	private Serviceable currTarget;
-	private double enginePower = 3;
+	private double enginePower = 5;
 	
 	private IOrder order;
 

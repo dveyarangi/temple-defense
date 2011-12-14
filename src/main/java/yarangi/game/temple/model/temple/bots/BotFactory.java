@@ -14,7 +14,7 @@ import yarangi.spatial.PointArea;
 
 public class BotFactory
 {
-	public static final double BOT_CAPACITY = 240;
+	public static final double BOT_CAPACITY = 500;
 	
 	public static Bot createBot(final TempleController controller)
 	{
@@ -24,9 +24,9 @@ public class BotFactory
 		port.setCapacity( Resource.Type.MATTER, 0, BOT_CAPACITY );
 		Bot bot = new Bot (port);
 		bot.setArea( new PointArea(controller.getTemple().getArea().getRefPoint()) );
-		bot.setLook( new BotLook(20) );
+		bot.setLook( new BotLook(100) );
 		bot.setBehavior( createBotBehavoir( controller ) );
-		bot.setBody( new Body(1, 7+RandomUtil.getRandomGaussian( 0, 1 )) );
+		bot.setBody( new Body(1, 10) );
 		return bot;
 	}
 	

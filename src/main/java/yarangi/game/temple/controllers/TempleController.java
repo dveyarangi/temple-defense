@@ -4,13 +4,13 @@ import javax.media.opengl.GL;
 
 import yarangi.game.temple.Debug;
 import yarangi.game.temple.Playground;
-import yarangi.game.temple.ai.IntellectCore;
-import yarangi.game.temple.controllers.bots.BotInterface;
+import yarangi.game.temple.ai.economy.StupidScheduler;
+import yarangi.game.temple.ai.economy.IOrderScheduler;
+import yarangi.game.temple.ai.weapons.IntellectCore;
 import yarangi.game.temple.model.temple.BattleCommander;
 import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.temple.StructureInterface;
 import yarangi.game.temple.model.temple.TempleEntity;
-import yarangi.game.temple.model.terrain.Bitmap;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.actions.ActionController;
 import yarangi.graphics.quadraturin.actions.DefaultActionFactory;
@@ -18,6 +18,7 @@ import yarangi.graphics.quadraturin.events.CursorListener;
 import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.ILayerObject;
+import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.spatial.Area;
 import yarangi.spatial.ISpatialSensor;
 import yarangi.spatial.Tile;
@@ -35,7 +36,7 @@ public class TempleController extends Entity implements CursorListener
 	
 	private StructureInterface structureInterface;
 	
-	private BotInterface botInterface;
+	private IOrderScheduler botInterface;
 	
 	private ActionController actionController;
 
@@ -52,7 +53,7 @@ public class TempleController extends Entity implements CursorListener
 		
 		battleInterface = new BattleCommander(this, core);
 		structureInterface = new StructureInterface();
-		botInterface = new BotInterface();
+		botInterface = new StupidScheduler();
 		
 		actionController = new OrdersActionController(scene);
 		DefaultActionFactory.appendNavActions(scene, actionController);
@@ -145,7 +146,7 @@ public class TempleController extends Entity implements CursorListener
 
 
 
-	public BotInterface getBotInterface()
+	public IOrderScheduler getBotInterface()
 	{
 		return botInterface;
 	}	

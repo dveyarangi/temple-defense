@@ -1,4 +1,4 @@
-package yarangi.game.temple.ai;
+package yarangi.game.temple.ai.weapons;
 
 import org.apache.log4j.Logger;
 
@@ -104,7 +104,7 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 		Vector2D relativeTarget = target.getArea().getRefPoint().minus(sourceLocation);
 		double [] res = run(createInput(relativeTarget, target.getBody().getVelocity(), /*sourceLocation,*/ projectileVelocity));
 //		System.out.println(res[0] + " : " + res[1]);
-		return new Vector2D(res[0], res[1]).plus(sourceLocation);
+		return Vector2D.R(res[0], res[1]).plus(sourceLocation);
 //		return Math.atan2(res[1], res[0]);
 	}
 	private double [] createInput(Vector2D targetLocation, Vector2D targetVelocity, Vector2D projectileVelocity)

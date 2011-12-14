@@ -11,9 +11,9 @@ import java.util.Set;
 import javax.media.opengl.GL;
 
 import yarangi.game.temple.actions.Fireable;
-import yarangi.game.temple.ai.IFeedbackBeacon;
-import yarangi.game.temple.ai.IntellectCore;
-import yarangi.game.temple.ai.LinearFeedbackBeacon;
+import yarangi.game.temple.ai.weapons.IFeedbackBeacon;
+import yarangi.game.temple.ai.weapons.IntellectCore;
+import yarangi.game.temple.ai.weapons.LinearFeedbackBeacon;
 import yarangi.game.temple.controllers.TempleController;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.temple.model.resource.Resource;
@@ -73,9 +73,9 @@ public class BattleCommander implements BattleInterface
 		if(target == null)
 			return null;
 		
-		double speed = fireable.getWeaponProperties().getProjectileSpeed();
+		double speed = fireable.getProps().getProjectileSpeed();
 		double angle = fireable.getArea().getOrientation();
-		return core.pickTrackPoint(fireable.getArea().getRefPoint(), new Vector2D(speed, angle, true), target);
+		return core.pickTrackPoint(fireable.getArea().getRefPoint(), Vector2D.POLAR(speed, angle), target);
 //
 	}
 	
@@ -98,7 +98,7 @@ public class BattleCommander implements BattleInterface
 				{
 					Vector2D weaponLoc = fireables.get(idx).getArea().getRefPoint();
 					double d = Geometry.calcHypotSquare(weaponLoc.x(), weaponLoc.y(), objectLoc.x(), objectLoc.y());
-					if(d < fireables.get(idx).getWeaponProperties().getEffectiveRange())
+					if(d < fireables.get(idx).getProps().getEffectiveRange())
 						if(controller.testLOS(weaponLoc.x(), weaponLoc.y(), objectLoc.x(), objectLoc.y()))
 
 						found[idx] = true;
@@ -129,7 +129,7 @@ public class BattleCommander implements BattleInterface
 				continue;
 			
 			Vector2D weaponLoc = fireable.getArea().getRefPoint();
-			double range = fireable.getWeaponProperties().getEffectiveRange();
+			double range = fireable.getProps().getEffectiveRange();
 			double minDistance = Double.MAX_VALUE;
 			
 			it = observedEntities.iterator();
@@ -181,12 +181,12 @@ public class BattleCommander implements BattleInterface
 	{
 		if(!observedEntities.isEmpty())
 		{
-			double speed = weapon.getWeaponProperties().getProjectileSpeed();
+			double speed = weapon.getProps().getProjectileSpeed();
 			double angle = weapon.getArea().getOrientation();
 			
 //			return core.pickTrackPoint(fireable.getAABB(), new Vector2D(speed, angle, true), target);
 			if(getTarget(weapon) != null)
-			return new LinearFeedbackBeacon(weapon, getTarget(weapon), new Vector2D(speed, angle, true));
+			return new LinearFeedbackBeacon(weapon, getTarget(weapon), Vector2D.POLAR(speed, angle));
 		}
 		return null;
 	}

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import yarangi.game.temple.model.terrain.ConsumingSensor;
-import yarangi.game.temple.model.terrain.Bitmap;
 import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.ViewPoint2D;
@@ -16,6 +15,7 @@ import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.events.UserActionEvent;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.math.Vector2D;
 import yarangi.spatial.ISpatialFilter;
@@ -33,7 +33,7 @@ public class OrdersActionController extends ActionController
 	
 	private Look look = new OrdersActionLook();
 	
-	private GridyTerrainMap<Bitmap> terrain;
+	private GridyTerrainMap terrain;
 	
 	private ICameraMan cameraMan;
 	
@@ -58,7 +58,7 @@ public class OrdersActionController extends ActionController
 		
 		cameraMan = new CameraMover( (ViewPoint2D) scene.getViewPoint() );
 		
-		terrain = (GridyTerrainMap<Bitmap>)scene.getWorldLayer().<Bitmap>getTerrain();
+		terrain = (GridyTerrainMap)scene.getWorldLayer().<Bitmap>getTerrain();
 //		actions.put("cursor-moved", temple.getController());
 		actions.put("mouse-left-drag", new IAction()
 		{

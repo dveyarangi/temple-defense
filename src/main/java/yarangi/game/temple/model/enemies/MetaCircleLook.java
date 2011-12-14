@@ -62,7 +62,7 @@ public class MetaCircleLook implements Look <Entity>
 		gl.glBlendFunc(GL.GL_ONE, GL.GL_ONE);
 		gl.glBlendEquation(GL.GL_FUNC_ADD);
 		
-		float radius = 2f*(float)(entity.getArea().getMaxRadius());
+		float radius = (float)(entity.getArea().getMaxRadius());
 		texture.bind();
 		
 		

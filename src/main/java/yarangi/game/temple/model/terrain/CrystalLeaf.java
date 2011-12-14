@@ -54,16 +54,16 @@ public class CrystalLeaf extends MatterBranch
 		baseLead = location ;//.plus(direction.mul((1-LEAF_END_OFFSET)*length));
 		Vector2D baseSpan = direction.mul(2*(1-LEAF_END_OFFSET)*length*WIDTH_COEF);
 		
-		leftBase  = new Vector2D(baseLead).plus(baseSpan.left());
-		rightBase = new Vector2D(baseLead).plus(baseSpan.right());
+		leftBase  = Vector2D.COPY( baseLead ).add(baseSpan.left());
+		rightBase = Vector2D.COPY( baseLead ).add(baseSpan.right());
 		
 		// roof shape
 		roof = location.plus(direction.mul(length));
 		roofLead = location.plus(direction.mul(LEAF_END_OFFSET*length));
 		Vector2D roofSpan = direction.mul(length*WIDTH_COEF);
 		
-		leftRoof  = new Vector2D(roofLead).plus(roofSpan.left());
-		rightRoof = new Vector2D(roofLead).plus(roofSpan.right());
+		leftRoof  = Vector2D.COPY( baseLead ).add(roofSpan.left());
+		rightRoof = Vector2D.COPY( baseLead ).add(roofSpan.right());
 		
 		this.leftPerimeter = leftRoof.minus(leftBase);
 		this.rightPerimeter = rightRoof.minus(rightBase);
@@ -93,7 +93,7 @@ public class CrystalLeaf extends MatterBranch
 		//
 		Vector2D location = getLocation().plus(getDirection().mul(getLength()*offset));
 		
-		CrystalLeaf leaf = new CrystalLeaf(location, new Vector2D(1, getDirection().getAngle()+angle, true), length);
+		CrystalLeaf leaf = new CrystalLeaf(location, Vector2D.UNIT(getDirection().getAngle()+angle), length);
 		
 		add(leaf, offset);
 		

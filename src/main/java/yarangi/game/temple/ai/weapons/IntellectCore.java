@@ -1,4 +1,4 @@
-package yarangi.game.temple.ai;
+package yarangi.game.temple.ai.weapons;
 
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Vector2D;

@@ -1,7 +1,7 @@
 package yarangi.game.temple.model.weapons;
 
 import yarangi.game.temple.actions.Fireable;
-import yarangi.game.temple.ai.NetCore;
+import yarangi.game.temple.ai.weapons.NetCore;
 import yarangi.game.temple.model.resource.Port;
 import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.temple.Serviceable;
@@ -73,7 +73,7 @@ public abstract class Weapon extends Entity implements Fireable, Serviceable
 		this.timeToReload = props.getCannonReloadingTime();
 	}
 	
-	public WeaponProperties getWeaponProperties() { return props; }
+	public WeaponProperties getProps() { return props; }
 	
 	public NetCore getCore() { return core; }
 

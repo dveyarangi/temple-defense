@@ -22,7 +22,7 @@ public class PolyLine
 	
 	public void addPoint(double x, double y)
 	{
-		addPoint( new Vector2D(x, y) );
+		addPoint( Vector2D.R(x, y) );
 	}
 	public int size() { return points.size(); }
 	

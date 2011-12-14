@@ -39,7 +39,7 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 
 	public void render(GL gl, double time, Minigun cannon, IRenderingContext context) 
 	{
-		Resource.Type type = cannon.getWeaponProperties().getResourceType();
+		Resource.Type type = cannon.getProps().getResourceType();
 		float P = (float)(cannon.getPort().get( type ).getAmount() / cannon.getPort().getCapacity( type ));
 		this.setColor(new Color( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (float)(P),1));
 //		this.setColor(new Color( P*0.2f+(1-P)*0.8f, 0.5f+0.5f*P, 1f*P, 1.0f));
@@ -58,6 +58,7 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 		gl.glEnd();
 
 		
+		gl.glEnable(GL.GL_BLEND);
 		gl.glColor4f(0.0f, 1.0f, 0f,0.2f);
 		Vector2D trackPoint = cannon.getBattleInterface().acquireTrackPoint(cannon);
 		
@@ -70,11 +71,11 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 			gl.glEnd();
 			
 			gl.glBegin(GL.GL_QUADS);
-			gl.glVertex3f((float)(relTrack.x()-3), (float)(relTrack.y()-3), 0);
-			gl.glVertex3f((float)(relTrack.x()-3), (float)(relTrack.y()+3), 0);
-			gl.glVertex3f((float)(relTrack.x()+3), (float)(relTrack.y()+3), 0);
-			gl.glVertex3f((float)(relTrack.x()+3), (float)(relTrack.y()-3), 0);
-			gl.glVertex3f((float)(relTrack.x()-3), (float)(relTrack.y()-3), 0);
+			gl.glVertex3f((float)(relTrack.x()-0.3), (float)(relTrack.y()-0.3), 0);
+			gl.glVertex3f((float)(relTrack.x()-0.3), (float)(relTrack.y()+0.3), 0);
+			gl.glVertex3f((float)(relTrack.x()+0.3), (float)(relTrack.y()+0.3), 0);
+			gl.glVertex3f((float)(relTrack.x()+0.3), (float)(relTrack.y()-0.3), 0);
+			gl.glVertex3f((float)(relTrack.x()-0.3), (float)(relTrack.y()-0.3), 0);
 			gl.glEnd();
 		}
 

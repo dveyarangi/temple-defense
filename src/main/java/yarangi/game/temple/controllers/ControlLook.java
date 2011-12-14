@@ -74,11 +74,11 @@ public class ControlLook implements Look <TempleController>
 				gl.glVertex3f((float)(mousePoint.x+width*Math.cos(a)),(float)(mousePoint.y+width*Math.sin(a)),0);
 		gl.glEnd();*/
 		
-		Collection <IEntity> targets = entity.getBattleInterface().getTargets().values();
+/*		Collection <IEntity> targets = entity.getBattleInterface().getTargets().values();
 		
 //		gl.glBegin(GL.GL_LINE_STRIP);
 		Vector2D targetLoc;
-		Vector2D controlLoc = new Vector2D(0,0);
+		Vector2D controlLoc = Vector2D.ZERO();
 		for(IEntity t : targets)
 		{
 			if(t == null)
@@ -94,7 +94,7 @@ public class ControlLook implements Look <TempleController>
 							  (float)((targetLoc.y()-controlLoc.y()) + size*Math.sin(a*Angles.PI_div_3)),1);
 			}
 			gl.glEnd();
-		}
+		}*/
 
 	}
 

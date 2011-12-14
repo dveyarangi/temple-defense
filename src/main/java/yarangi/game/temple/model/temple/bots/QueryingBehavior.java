@@ -1,6 +1,6 @@
 package yarangi.game.temple.model.temple.bots;
 
-import yarangi.game.temple.controllers.bots.BotInterface;
+import yarangi.game.temple.ai.economy.IOrderScheduler;
 import yarangi.game.temple.controllers.orders.EOrderState;
 import yarangi.game.temple.controllers.orders.IOrder;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
@@ -12,9 +12,9 @@ import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
  */
 public class QueryingBehavior implements IBehaviorState <Bot>
 {
-	private BotInterface controller;
+	private IOrderScheduler controller;
 	
-	public QueryingBehavior (BotInterface controller)
+	public QueryingBehavior (IOrderScheduler controller)
 	{
 		this.controller = controller;
 	}

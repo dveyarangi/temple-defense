@@ -7,7 +7,7 @@ public class CrystalFactory
 {
 	public static CrystalMatter generateStar(double x, double y, double radius)
 	{
-		CrystalMatter matter = new CrystalMatter(new Vector2D(x, y), 0, radius);
+		CrystalMatter matter = new CrystalMatter(Vector2D.R(x, y), 0, radius);
 		
 		CrystalLeaf leaf1 = matter.getRoot();
 		CrystalLeaf leaf2 = matter.getRoot().addLeaf(2*Angles.PI_div_3, radius, 0);
@@ -25,7 +25,7 @@ public class CrystalFactory
 	
 	public static CrystalMatter generateRandom(double x, double y, double radius, int branching)
 	{
-		CrystalMatter matter = new CrystalMatter(new Vector2D(x, y), 0, radius);
+		CrystalMatter matter = new CrystalMatter(Vector2D.R(x, y), 0, radius);
 		
 		CrystalLeaf leaf1 = matter.getRoot();
 		CrystalLeaf leaf2 = matter.getRoot().addLeaf(2*Angles.PI_div_3, radius, 0);

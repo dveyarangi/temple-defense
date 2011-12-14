@@ -2,11 +2,11 @@ package yarangi.game.temple.model.terrain.fractal;
 
 import yarangi.game.temple.model.terrain.GridyTerrainBehavior;
 import yarangi.game.temple.model.terrain.GridyTerrainLook;
-import yarangi.game.temple.model.terrain.Bitmap;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.objects.Dummy;
 import yarangi.graphics.quadraturin.objects.EntityShell;
 import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.graphics.quadraturin.terrain.ITerrainFactory;
 
@@ -33,7 +33,7 @@ public class MandelbrotFactory implements ITerrainFactory
 	
 	public EntityShell <GridyTerrainMap> generateTerrain(float width, float height, int cellsize)
 	{
-		GridyTerrainMap <Bitmap> terrain = new GridyTerrainMap <Bitmap>( width, height, cellsize, 1 );
+		GridyTerrainMap terrain = new GridyTerrainMap( width, height, cellsize, 1 );
 		int startIt = 215;
 		int endIt = 250;
 		double xstart = centerx - scale * width;

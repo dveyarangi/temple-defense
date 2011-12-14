@@ -1,7 +1,7 @@
 package yarangi.game.temple.model.weapons;
 
-import yarangi.game.temple.ai.IFeedbackBeacon;
-import yarangi.game.temple.ai.IFeedbackCarrier;
+import yarangi.game.temple.ai.weapons.IFeedbackBeacon;
+import yarangi.game.temple.ai.weapons.IFeedbackCarrier;
 import yarangi.game.temple.model.Damage;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.math.Vector2D;

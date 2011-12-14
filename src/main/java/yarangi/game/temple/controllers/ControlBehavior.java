@@ -1,6 +1,7 @@
 package yarangi.game.temple.controllers;
 
-import yarangi.game.temple.controllers.bots.BotInterface;
+import yarangi.game.temple.ai.economy.StupidScheduler;
+import yarangi.game.temple.ai.economy.IOrderScheduler;
 import yarangi.game.temple.model.temple.BattleInterface;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.game.temple.model.weapons.Weapon;
@@ -30,11 +31,11 @@ public class ControlBehavior implements Behavior <TempleController>
 		}
 		bi.clearObservedObjects();
 		
-		BotInterface bots = ctrl.getBotInterface();
+		IOrderScheduler bots = ctrl.getBotInterface();
 		double transferRate = bots.changeTransferRate( 0.01 * time );
 		
 		// temple heart-beat:
-		ctrl.getTemple().setHealth((transferRate-BotInterface.MIN_TRANSFER_RATE)/(BotInterface.MAX_TRANSFER_RATE-BotInterface.MIN_TRANSFER_RATE));
+		ctrl.getTemple().setHealth((transferRate-StupidScheduler.MIN_TRANSFER_RATE)/(StupidScheduler.MAX_TRANSFER_RATE-StupidScheduler.MIN_TRANSFER_RATE));
 	
 		return false;
 	}

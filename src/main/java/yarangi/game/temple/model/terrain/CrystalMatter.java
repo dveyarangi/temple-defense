@@ -10,7 +10,7 @@ public class CrystalMatter extends Matter
 
 	public CrystalMatter(Vector2D loc, double rootAngle, double rootLength) {
 		super(null);
-		root = new CrystalLeaf(loc, new Vector2D(1,rootAngle, true), rootLength);
+		root = new CrystalLeaf(loc, Vector2D.UNIT(rootAngle), rootLength);
 		
 		setLook(new CrystalMatterLook());
 		setBehavior(Dummy.BEHAVIOR);

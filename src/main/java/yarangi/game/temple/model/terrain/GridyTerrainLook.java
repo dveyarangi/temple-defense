@@ -4,15 +4,16 @@ import javax.media.opengl.GL;
 
 import yarangi.graphics.grid.TileGridLook;
 import yarangi.graphics.quadraturin.IVeil;
+import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.graphics.textures.TextureUtils;
 import yarangi.spatial.Tile;
 
-public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap<Bitmap>>
+public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap>
 {
 
 	@Override
-	protected void renderTile(GL gl, Tile<Bitmap> tile, GridyTerrainMap<Bitmap> grid)
+	protected void renderTile(GL gl, Tile<Bitmap> tile, GridyTerrainMap grid)
 	{
 		Bitmap chunk = tile.get();
 		if(chunk == null)

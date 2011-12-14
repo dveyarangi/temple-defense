@@ -2,12 +2,12 @@ package yarangi.game.temple;
 
 import javax.media.opengl.GL;
 
-import yarangi.game.temple.ai.IntellectCore;
-import yarangi.game.temple.ai.NetCore;
+import yarangi.game.temple.ai.economy.IOrderScheduler;
+import yarangi.game.temple.ai.weapons.IntellectCore;
+import yarangi.game.temple.ai.weapons.NetCore;
 import yarangi.game.temple.controllers.ControlBehavior;
 import yarangi.game.temple.controllers.ControlLook;
 import yarangi.game.temple.controllers.TempleController;
-import yarangi.game.temple.controllers.bots.BotInterface;
 import yarangi.game.temple.model.EffectUtils;
 import yarangi.game.temple.model.enemies.swarm.Swarm;
 import yarangi.game.temple.model.enemies.swarm.SwarmDebugOverlay;
@@ -26,7 +26,6 @@ import yarangi.game.temple.model.temple.bots.Bot;
 import yarangi.game.temple.model.temple.bots.BotFactory;
 import yarangi.game.temple.model.temple.debug.ShieldDebugLook;
 import yarangi.game.temple.model.terrain.Matter;
-import yarangi.game.temple.model.terrain.Bitmap;
 import yarangi.game.temple.model.weapons.Minigun;
 import yarangi.game.temple.model.weapons.MinigunGlowingLook;
 import yarangi.game.temple.model.weapons.Projectile;
@@ -46,6 +45,9 @@ import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.simulations.Body;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
+import yarangi.graphics.quadraturin.terrain.Bitmap;
+import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
+import yarangi.graphics.quadraturin.terrain.ITileMap;
 import yarangi.graphics.quadraturin.ui.Direction;
 import yarangi.graphics.quadraturin.ui.Insets;
 import yarangi.graphics.quadraturin.ui.Overlay;
@@ -111,11 +113,11 @@ public class Playground extends Scene
 		for(int a = 0; a < maxCannons; a ++)
 		{
 			Weapon weapon = new Minigun(bi, a%2 == 0 ? Minigun.PROPS1 : Minigun.PROPS2);
-			weapon.setArea(AABB.createSquare((100+ a%3*100)*Math.cos(Angles.PI_2/maxCannons *a), (100+ a%3*100)*Math.sin(Angles.PI_2/maxCannons * a ),5,0));
+			weapon.setArea(AABB.createSquare((100+ a%3*100)*Math.cos(Angles.PI_2/maxCannons *a), (100+ a%3*100)*Math.sin(Angles.PI_2/maxCannons * a ),1,0));
 			weapon.setLook(new MinigunGlowingLook());
 //			weapon.setLook(new MinigunLook());
 			weapon.setBehavior(new TrackingBehavior());
-			weapon.setSensor( new Sensor(128, 3, 
+			weapon.setSensor( new Sensor(64, 3, 
 					new ISpatialFilter <IEntity> () {
 
 						@Override public boolean accept(IEntity entity) { return entity.getLook() != null && entity.getLook().isCastsShadow(); }}, 
@@ -163,13 +165,15 @@ public class Playground extends Scene
 //		KolbasaFactory.generateKolbasaMaze( this );
 		
 		Swarm swarm = SwarmFactory.createSwarm(sceneConfig.getWidth(), this, 5);
-		Behavior <Swarm> swarmBehavior = SwarmFactory.createDefaultBehavior();
-		swarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, Dummy.<Swarm>LOOK() );
-//		addEntity(swarmShell);
+		Behavior <Swarm> swarmBehavior = SwarmFactory.
 		
-		SwarmDebugOverlay swarmDebugLook = new SwarmDebugOverlay();
-		debugSwarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, swarmDebugLook );
-		addEntity(debugSwarmShell);
+		createDefaultBehavior((GridyTerrainMap)getWorldLayer().<Bitmap>getTerrain());
+		swarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, Dummy.<Swarm>LOOK() );
+		addEntity(swarmShell);
+		
+//		SwarmDebugOverlay swarmDebugLook = new SwarmDebugOverlay();
+//		debugSwarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, swarmDebugLook );
+//		addEntity(debugSwarmShell);
 		
 		ICollisionHandler<Projectile> projectileCollider = new ICollisionHandler <Projectile> ()
 		{
@@ -198,7 +202,7 @@ public class Playground extends Scene
 		
 				
 		
-		final BotInterface botInterface = controller.getBotInterface();
+		final IOrderScheduler botInterface = controller.getBotInterface();
 		
 		for(int i = 0; i < 9; i ++)
 		{

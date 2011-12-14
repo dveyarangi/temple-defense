@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
-import yarangi.game.temple.model.terrain.Bitmap;
 import yarangi.graphics.quadraturin.Scene;
+import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.math.FastMath;
 import yarangi.math.Vector2D;
@@ -38,7 +38,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	
 	static final double DANGER_FACTOR_DECAY = 1./100.;
 	static final double OMNISCIENCE_PERIOD = 100.;
-	final GridyTerrainMap<Bitmap> terrain;
+	final GridyTerrainMap terrain;
 	
 	/**
 	 * 
@@ -53,14 +53,14 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 		
 		WSIZE = (int)((float)worldSize / (float)cellsize);
 		
-		terrain = (GridyTerrainMap<Bitmap>)scene.getWorldLayer().<Bitmap>getTerrain();
+		terrain = (GridyTerrainMap)scene.getWorldLayer().<Bitmap>getTerrain();
 		
 		this.toNodeIdx = (double)WSIZE / (double)(worldSize);
 	}
 
 	public void addSpawnNode(double x, double y)
 	{
-		spawnNodes.add(new SpawnNode(new Vector2D(x, y)));
+		spawnNodes.add(new SpawnNode(Vector2D.R(x, y)));
 		nodeIterator = spawnNodes.iterator();
 	}
 	
@@ -77,11 +77,11 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 			if(py < 0) fy = 1;
 			if(px >= WSIZE) fx = -1;
 			if(py >= WSIZE) fy = -1;
-			return new Vector2D(fx, fy); 
+			return Vector2D.R(fx, fy); 
 		}
 		
 		int x, y, dx, dy;
-		Vector2D flow = new Vector2D(0, 0);
+		Vector2D flow = Vector2D.ZERO();
 		
 /*		for(dx = -1; dx <= 1; dx ++)
 			for(dy = -1; dy <= 1; dy ++)

@@ -1,8 +1,6 @@
 package yarangi.game.temple.model.enemies;
 
 import yarangi.game.temple.model.Integrity;
-import yarangi.graphics.curves.BezierBubble;
-import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
 import yarangi.spatial.AABB;
@@ -13,7 +11,7 @@ public class ElementalDarkness extends GenericEnemy
 	public static final int SIZE = 40;
 
 	
-	private BezierBubble bubble;
+//	private BezierBubble bubble;
 	
 	public ElementalDarkness(double x, double y, double a) 
 	{
@@ -30,9 +28,9 @@ public class ElementalDarkness extends GenericEnemy
 		
 		
 	}
-	public BezierBubble getCurve() {
+/*	public BezierBubble getCurve() {
 		return bubble;
-	}
+	}*/
 
 
 }

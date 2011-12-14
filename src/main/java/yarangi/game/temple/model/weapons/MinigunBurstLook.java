@@ -1,14 +1,13 @@
 package yarangi.game.temple.model.weapons;
 
 import javax.media.opengl.GL;
-import javax.media.opengl.glu.GLU;
 
+import yarangi.game.temple.model.resource.Port;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.graphics.veils.BlurVeil;
-import yarangi.spatial.Area;
 
 public class MinigunBurstLook implements Look <Projectile> 
 {
@@ -20,9 +19,9 @@ public class MinigunBurstLook implements Look <Projectile>
 //	private static GLU glu = new GLU();
 	private IVeil veil;
 	
-	public MinigunBurstLook(Minigun cannon)
+	public MinigunBurstLook(Port port, WeaponProperties weapon)
 	{
-		double resourcePercent = cannon.getPort().get( cannon.getWeaponProperties().getResourceType() ).getAmount() / cannon.getPort().getCapacity( cannon.getWeaponProperties().getResourceType() );
+		double resourcePercent = port.get( weapon.getResourceType() ).getAmount() / port.getCapacity( weapon.getResourceType() );
 		this.color = new Color( 0.3f, 1.0f, (float)resourcePercent,1);
 //		this.color = new Color( (float)((1-resourcePercent)+resourcePercent*0.1),  (float)(resourcePercent*0.5), (float)(resourcePercent),1);
 	}
@@ -31,11 +30,11 @@ public class MinigunBurstLook implements Look <Projectile>
 	{
 		color.apply( gl );
 		gl.glBegin(GL.GL_POLYGON);
-			gl.glVertex3f(0.7f, 0.7f, 0);
-			gl.glVertex3f(-0.7f, 0.7f, 0);
-			gl.glVertex3f(-0.7f, -0.7f, 0);
-			gl.glVertex3f(0.7f, -0.7f, 0);
-			gl.glVertex3f(0.7f, 0.7f, 0);
+			gl.glVertex3f(0.2f, 0.2f, 0);
+			gl.glVertex3f(-0.2f, 0.2f, 0);
+			gl.glVertex3f(-0.2f, -0.2f, 0);
+			gl.glVertex3f(0.2f, -0.2f, 0);
+			gl.glVertex3f(0.2f, 0.2f, 0);
 		gl.glEnd();
 	}
 

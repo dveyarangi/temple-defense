@@ -40,7 +40,7 @@ public class MinigunLook implements Look<Minigun>
 //		AABB target = cannon.getTrackingPoint()
 		Area area = cannon.getArea();
 		Vector2D loc = area.getRefPoint();
-		Resource.Type type = cannon.getWeaponProperties().getResourceType();
+		Resource.Type type = cannon.getProps().getResourceType();
 		double resourcePercent = cannon.getPort().get( type ).getAmount() / cannon.getPort().getCapacity( type );
 		gl.glColor4f((float)((1-resourcePercent)/4+resourcePercent*0.3),  (float)(resourcePercent*0.3), (float)(resourcePercent),1);
 //		gl.glColor4f((float)((1-resourcePercent)*1.0), (float)(resourcePercent*1.0), 2f*(float)(0.5-Math.abs(resourcePercent-0.5)),0.5f);
@@ -52,6 +52,7 @@ public class MinigunLook implements Look<Minigun>
 		}
 		gl.glEnd();
 		
+		gl.glEnable(GL.GL_BLEND);
 		gl.glColor4f(0.0f, 1.0f, 0f,0.2f);
 		Vector2D trackPoint = cannon.getBattleInterface().acquireTrackPoint(cannon);
 		
@@ -64,11 +65,11 @@ public class MinigunLook implements Look<Minigun>
 			gl.glEnd();
 			
 			gl.glBegin(GL.GL_QUADS);
-			gl.glVertex3f((float)(relTrack.x()-3), (float)(relTrack.y()-3), 0);
-			gl.glVertex3f((float)(relTrack.x()-3), (float)(relTrack.y()+3), 0);
-			gl.glVertex3f((float)(relTrack.x()+3), (float)(relTrack.y()+3), 0);
-			gl.glVertex3f((float)(relTrack.x()+3), (float)(relTrack.y()-3), 0);
-			gl.glVertex3f((float)(relTrack.x()-3), (float)(relTrack.y()-3), 0);
+			gl.glVertex3f((float)(relTrack.x()-0.5), (float)(relTrack.y()-0.5), 0);
+			gl.glVertex3f((float)(relTrack.x()-0.5), (float)(relTrack.y()+0.5), 0);
+			gl.glVertex3f((float)(relTrack.x()+0.5), (float)(relTrack.y()+0.5), 0);
+			gl.glVertex3f((float)(relTrack.x()+0.5), (float)(relTrack.y()-0.5), 0);
+			gl.glVertex3f((float)(relTrack.x()-0.5), (float)(relTrack.y()-0.5), 0);
 			gl.glEnd();
 		}
 	}

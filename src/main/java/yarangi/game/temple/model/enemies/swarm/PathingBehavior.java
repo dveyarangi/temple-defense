@@ -186,7 +186,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 //				System.out.println(node.getX() + " : " + node.getY());
 				cx = node.origin.getX();
 				cy = node.origin.getY();
-				Vector2D flow = new Vector2D(node.getX()-node.origin.getX(), node.getY()-node.origin.getY()).normalize();//.mul(0.1);
+				Vector2D flow = Vector2D.R(node.getX()-node.origin.getX(), node.getY()-node.origin.getY()).normalize();//.mul(0.1);
 //				node.origin.setFlow(flow);
 				for(int dx = -flowRadius; dx <= flowRadius; dx ++)
 					for(int dy = -flowRadius; dy <= flowRadius; dy ++)

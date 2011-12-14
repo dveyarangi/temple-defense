@@ -90,7 +90,7 @@
 	    		},
 		    		
 		    	"terrain" : {
-		    	    "factoryClass"  : "yarangi.game.temple.model.terrain.fractal.MandelbrotFactory",
+		    	    "factoryClass"  : "yarangi.game.temple.model.terrain.stone.StoneFactory",
 		    	    "cellsize" : 8
 	    	    }
 			}

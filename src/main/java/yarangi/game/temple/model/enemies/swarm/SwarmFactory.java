@@ -4,7 +4,6 @@ import yarangi.game.temple.model.Damage;
 import yarangi.game.temple.model.enemies.swarm.agents.Seeder;
 import yarangi.game.temple.model.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.temple.model.temple.TempleEntity;
-import yarangi.game.temple.model.terrain.Bitmap;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.objects.Behavior;
@@ -13,6 +12,7 @@ import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
+import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
@@ -51,7 +51,7 @@ public class SwarmFactory
 			swarm.addSpawnNode(r*Math.cos(a), r*Math.sin(a));
 		}
 		
-		final GridyTerrainMap <Bitmap> terrain = (GridyTerrainMap <Bitmap>)scene.getWorldLayer().<Bitmap>getTerrain();
+		final GridyTerrainMap terrain = (GridyTerrainMap)scene.getWorldLayer().<Bitmap>getTerrain();
 		
 		scene.getCollisionManager().registerHandler(SwarmAgent.class, new AgentCollisionHandler<SwarmAgent>(swarm));
 		scene.getCollisionManager().registerHandler(Seeder.class, new AgentCollisionHandler<Seeder>(swarm));
@@ -61,12 +61,12 @@ public class SwarmFactory
 	}
 	
 //	};
-	public static Behavior <Swarm> createDefaultBehavior()
+	public static Behavior <Swarm> createDefaultBehavior(GridyTerrainMap terrain)
 	{
 //		swarm.setArea(new Point(0, 0));
 		final IBehaviorState<Swarm> rotating = new RotatingBehavior();
 		final IBehaviorState<Swarm> pathing = new PathingBehavior(1);
-		final IBehaviorState<Swarm> spawning = new SpawningBehavior(10);
+		final IBehaviorState<Swarm> spawning = new SpawningBehavior(terrain, 6);
 		final IBehaviorState<Swarm> shifting = new ShiftBehavior();
 		
 		FSMBehavior <Swarm> behavior = new FSMBehavior <Swarm> (shifting);

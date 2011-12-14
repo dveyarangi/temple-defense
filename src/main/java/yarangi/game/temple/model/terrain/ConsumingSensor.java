@@ -1,6 +1,7 @@
 package yarangi.game.temple.model.terrain;
 
 import yarangi.graphics.colors.Color;
+import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.spatial.ISpatialSensor;
 import yarangi.spatial.Tile;
@@ -9,8 +10,8 @@ public class ConsumingSensor implements ISpatialSensor <Tile <Bitmap>, Bitmap>
 {
 	double ox, oy, radiusSquare;
 	boolean draw = false;
-	GridyTerrainMap<Bitmap> terrain;
-	public ConsumingSensor (GridyTerrainMap<Bitmap> terrain, boolean draw, double ox, double oy, double radiusSquare)
+	GridyTerrainMap terrain;
+	public ConsumingSensor (GridyTerrainMap terrain, boolean draw, double ox, double oy, double radiusSquare)
 	{
 		this.terrain = terrain;
 		this.ox = ox;

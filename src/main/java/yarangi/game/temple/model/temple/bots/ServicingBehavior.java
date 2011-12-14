@@ -1,6 +1,6 @@
 package yarangi.game.temple.model.temple.bots;
 
-import yarangi.game.temple.controllers.bots.BotInterface;
+import yarangi.game.temple.ai.economy.IOrderScheduler;
 import yarangi.game.temple.controllers.orders.IOrder;
 import yarangi.game.temple.model.resource.GatheringOrder;
 import yarangi.game.temple.model.temple.Serviceable;
@@ -8,8 +8,8 @@ import yarangi.game.temple.model.temple.Serviceable;
 public class ServicingBehavior extends SatelliteBehavior
 {
 	private double TRANSFER_RATE = 5;
-	private BotInterface controller;
-	public ServicingBehavior(BotInterface controller, Serviceable serviceable)
+	private IOrderScheduler controller;
+	public ServicingBehavior(IOrderScheduler controller, Serviceable serviceable)
 	{
 		super(serviceable.getServicePoint());
 		this.controller = controller;
@@ -18,7 +18,6 @@ public class ServicingBehavior extends SatelliteBehavior
 	@Override
 	public double behave(double time, Bot bot)
 	{
-
 //		bot.getBody().setMaxSpeed(7+RandomUtil.getRandomGaussian( 0, 1 ) );
 		super.behave( time, bot);
 		IOrder order = bot.getOrder();

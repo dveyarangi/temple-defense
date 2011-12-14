@@ -35,9 +35,9 @@ public class Minigun extends Weapon
 			CANNON_TRACKING_HALF_WIDTH, 
 			1, 
 			10, // reloading time
-			40000, // projectile range square
-			10,  // prjectile speed
-			200, // tracking range
+			10000, // projectile range square
+			1,  // prjectile speed
+			100, // tracking range
 			ACCURACY, 
 			projectileHitRadius, 
 			DAMAGE,
@@ -48,9 +48,9 @@ public class Minigun extends Weapon
 			CANNON_TRACKING_HALF_WIDTH, 
 			1, 
 			10, 
-			40000,
+			10000,
 			2, 
-			200, 
+			100, 
 			ACCURACY, 
 			projectileHitRadius, 
 			DAMAGE,
@@ -58,12 +58,8 @@ public class Minigun extends Weapon
 			);
 	
 	
-	private Behavior <Projectile> shellBehavior;
-	
 	public Minigun(BattleInterface bi, WeaponProperties props) {
 		super(bi, props);
-		shellBehavior = new SimpleProjectileBehavior(bi);
-		
 
 	}
 
@@ -74,15 +70,9 @@ public class Minigun extends Weapon
 		if(! this.powerUp())
 			return null; // not enough resources
 
-		
-		Area area = getArea();
-		
-		double fireAngle = Angles.toRadians(RandomUtil.getRandomGaussian(
-				getArea().getOrientation(), getWeaponProperties().getProjectileTrajectoryAccuracy())) + area.getOrientation();
-
 		reload();
 		
-		return createProjectile( area.getRefPoint(), fireAngle );
+		return WeaponFactory.createProjectile( this );
 	}
 
 	/**
@@ -92,20 +82,4 @@ public class Minigun extends Weapon
 	}
 
 	
-	private Projectile createProjectile(Vector2D location, double firingAngle)
-	{
-		double speedScalar = getWeaponProperties().getProjectileSpeed();
-		
-		Vector2D speed = new Vector2D(speedScalar, firingAngle, true);
-		Projectile shell = new Projectile( speed, this.getWeaponProperties());
-		shell.setLook(new MinigunBurstLook(this));
-		shell.setBehavior(shellBehavior);
-		shell.setArea(AABB.createSquare(location.x(), location.y(), getWeaponProperties().getProjectileHitRadius(), firingAngle));
-		shell.setBody(new Body());
-		shell.getBody().setMaxSpeed(speedScalar);
-		shell.getBody().addVelocity(speed.x(), speed.y());
-//		System.out.println("proj velocity " + v + " : " + getVelocity()+ " (" + a + ")");
-		shell.getBody().setMass(0.001);
-		return shell;
-	}
 }

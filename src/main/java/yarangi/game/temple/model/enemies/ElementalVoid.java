@@ -11,7 +11,7 @@ import yarangi.spatial.AABB;
 public class ElementalVoid extends GenericEnemy 
 {
 	
-	public Vector2D force = new Vector2D(0,0);
+	public Vector2D force = Vector2D.ZERO();
 	
 //	private double mass = 1; 
 	

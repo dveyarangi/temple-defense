@@ -8,7 +8,7 @@ final public class PathNode
 	
 	public PathNode(double x, double y)
 	{
-		loc = new Vector2D(x, y);
+		loc = Vector2D.R(x, y);
 	}
 	
 	public Vector2D getLocation() { return loc; }

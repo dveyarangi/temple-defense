@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.media.opengl.GL;
 
 import yarangi.game.temple.actions.Fireable;
-import yarangi.game.temple.ai.IFeedbackBeacon;
+import yarangi.game.temple.ai.weapons.IFeedbackBeacon;
 import yarangi.game.temple.model.resource.Resource;
 import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.quadraturin.objects.IEntity;

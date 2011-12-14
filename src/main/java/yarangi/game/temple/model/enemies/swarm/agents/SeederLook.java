@@ -24,21 +24,20 @@ public class SeederLook implements Look <Seeder>
 		Bezier4Curve right = seeder.getRightEdge();
 		
 		Vector2D point;
+		gl.glDisable(GL.GL_BLEND);
+		gl.glColor4f(0.3f, 0.3f, 0.3f, 1.0f);
 		
-		gl.glColor4f(1, 1, 1, 1);
-		
-		gl.glBegin(GL.GL_LINE_STRIP);
+		gl.glBegin(GL.GL_POLYGON);
 		for(float t = 0; t <= 1.09; t += 0.1) {
 			point = left.at(t);
 			gl.glVertex2f((float) point.x(), (float)point.y());
 		}
-		gl.glEnd();
+//		gl.glEnd();
 		
-		gl.glBegin(GL.GL_LINE_STRIP);
-		for(float t = 0; t <= 1.09; t += 0.1) {
+//		gl.glBegin(GL.GL_LINE_STRIP);
+		for(float t = 1; t > -.09; t -= 0.1) {
 			point = right.at(t);
 			gl.glVertex2f((float) point.x(), (float)point.y());
-			System.out.println(t + " : " + point + " : " + right.p4());
 		}
 		gl.glEnd();
 /*		gl.glColor4f(0, 1, 0, 1);
@@ -54,6 +53,7 @@ public class SeederLook implements Look <Seeder>
 		gl.glVertex2f((float) left.p3().x(), (float)left.p3().y());
 		gl.glVertex2f((float) left.p4().x(), (float)left.p4().y());
 		gl.glEnd();*/
+		gl.glEnable(GL.GL_BLEND);
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class SeederLook implements Look <Seeder>
 
 	@Override
 	public float getPriority() {
-		return 0;
+		return -0.1f;
 	}
 
 	@Override

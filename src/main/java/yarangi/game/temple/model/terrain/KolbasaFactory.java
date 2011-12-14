@@ -37,7 +37,7 @@ public class KolbasaFactory
 				if(line == null)
 					continue;
 					
-				line.addPoint( new Vector2D(levelRadius * Math.cos(a), levelRadius * Math.sin(a)) );
+				line.addPoint( Vector2D.POLAR(levelRadius, a) );
 				
 				if(line.size() >= maxSpan)
 				{
@@ -51,7 +51,7 @@ public class KolbasaFactory
 					else
 					{
 						line = new PolyLine();
-						line.addPoint( new Vector2D(levelRadius * Math.cos(a), levelRadius * Math.sin(a)) );
+						line.addPoint( Vector2D.POLAR(levelRadius, a) );
 					}
 				}
 			}

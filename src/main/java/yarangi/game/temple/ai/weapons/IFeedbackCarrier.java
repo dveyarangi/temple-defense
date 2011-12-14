@@ -1,4 +1,4 @@
-package yarangi.game.temple.ai;
+package yarangi.game.temple.ai.weapons;
 
 public interface IFeedbackCarrier {
 	public void setFeedback(IFeedbackBeacon beacon);

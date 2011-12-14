@@ -25,13 +25,13 @@ public class ElementalDarknessLook implements Look <ElementalDarkness>
 		gl.glBegin(GL.GL_LINE_STRIP);
 		Vector2D point;
 
-		for(float t = 0; t <= entity.getCurve().getMax(); t += 0.01 /* TODO: LOD */)
-		{
-			point = entity.getCurve().pointAt(t);
-//			gl.glColor4f(1f, 1f, 1f, /*(float)(0.5*integrity.getHitPoints()/integrity.getMaxHitPoints())*/ 1f);
-//			gl.glColor4f(1f, 1f, 1f, /*(float)(0.5*integrity.getHitPoints()/integrity.getMaxHitPoints())*/ 1f);
-			gl.glVertex3f((float)point.x(), (float) point.y(), 0);
-		}
+//		for(float t = 0; t <= entity.getCurve().getMax(); t += 0.01 /* TODO: LOD */)
+//		{
+//			point = entity.getCurve().pointAt(t);
+////			gl.glColor4f(1f, 1f, 1f, /*(float)(0.5*integrity.getHitPoints()/integrity.getMaxHitPoints())*/ 1f);
+////			gl.glColor4f(1f, 1f, 1f, /*(float)(0.5*integrity.getHitPoints()/integrity.getMaxHitPoints())*/ 1f);
+//			gl.glVertex3f((float)point.x(), (float) point.y(), 0);
+//		}
 		gl.glEnd();
 		gl.glLineWidth(1);
 		

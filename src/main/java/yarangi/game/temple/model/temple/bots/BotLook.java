@@ -17,8 +17,8 @@ public class BotLook implements Look<Bot> {
 
 	
 	private Vector2D [] tail;
-	private static int SKIP = 3;
 	private int step = 0;
+	private int headIdx = 0;
 	IVeil veil;
 	
 	private Color color = new Color(RandomUtil.getRandomGaussian( 0.8f, 0.2f ), 
@@ -40,7 +40,7 @@ public class BotLook implements Look<Bot> {
 			veil = IVeil.ORIENTING;
 		}
 		for(int idx = 0; idx < tail.length; idx ++)
-			tail[idx] = new Vector2D(bot.getArea().getRefPoint());
+			tail[idx] = Vector2D.COPY(bot.getArea().getRefPoint());
 		
 	}
 
@@ -52,6 +52,7 @@ public class BotLook implements Look<Bot> {
 		else
 			gl.glColor3f(0.0f, 1.0f, 0.2f);*/
 		
+		gl.glDisable(GL.GL_DEPTH_TEST);
 		double resourcePercent = bot.getPort().get( Resource.Type.ENERGY ).getAmount() / bot.getPort().getCapacity( Resource.Type.ENERGY );
 		gl.glColor4f((float)(1-resourcePercent), (float)(1.0),(float)(1-resourcePercent),0.3f);
 //		gl.glColor4f(0,1,0,(float)(0.2+resourcePercent*0.5));
@@ -67,18 +68,22 @@ public class BotLook implements Look<Bot> {
 		gl.glEnd();
 
 		gl.glBegin(GL.GL_LINE_STRIP);
-		for(int idx = 0; idx < tail.length; idx ++)
+
+		headIdx --;
+		if(headIdx < 0)
+			headIdx =  tail.length-1;
+		
+		tail[headIdx] = Vector2D.COPY(bot.getArea().getRefPoint());
+		
+		for(int idx = headIdx; idx < tail.length; idx ++)
+			gl.glVertex2f((float)(tail[idx].x()-bx), (float)(tail[idx].y()-by)); 
+		for(int idx = 0; idx < headIdx; idx ++)
 			gl.glVertex2f((float)(tail[idx].x()-bx), (float)(tail[idx].y()-by)); 
 		gl.glEnd();
+		gl.glEnable(GL.GL_DEPTH_TEST);
 
-		if(step % SKIP == 0)
-		{
-		for(int idx = tail.length-1; idx > 0; idx --)
-			tail[idx] = tail[idx-1];
-			step = 0;
-		}
-		step ++;
-		tail[0] = new Vector2D(bot.getArea().getRefPoint());
+
+		
 
 
 	}

@@ -1,4 +1,4 @@
-package yarangi.game.temple.ai;
+package yarangi.game.temple.ai.weapons;
 
 import java.lang.ref.WeakReference;
 
@@ -22,16 +22,16 @@ public class LinearFeedbackBeacon implements IFeedbackBeacon
 	
 	public LinearFeedbackBeacon(IEntity source, IEntity target, Vector2D projectileVelocity)
 	{
-		this.sourceLocationMemo = new Vector2D(source.getArea().getRefPoint());
+		this.sourceLocationMemo = Vector2D.COPY(source.getArea().getRefPoint());
 		
 		this.target = new WeakReference<IEntity>( target );
 		this.projectileVelocity = projectileVelocity;
-		targetInitLoc = targetLocationMemo = new Vector2D(target.getArea().getRefPoint());
+		targetInitLoc = targetLocationMemo = Vector2D.COPY(target.getArea().getRefPoint());
 		Vector2D sourceLoc = source.getArea().getRefPoint();
 
 		this.distance = Geometry.calcHypotSquare(sourceLoc, targetLocationMemo);
 		
-		this.velocity = new Vector2D(target.getBody().getVelocity());
+		this.velocity = Vector2D.COPY(target.getBody().getVelocity());
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class LinearFeedbackBeacon implements IFeedbackBeacon
 		double offset = Math.abs(toTarget-toBeacon);
 		if(offset < distance)
 			return false;
-		targetLocationMemo = new Vector2D(targetLoc);
+		targetLocationMemo = Vector2D.COPY(targetLoc);
 
 		// updating feedback parameters:
 		distance = offset;

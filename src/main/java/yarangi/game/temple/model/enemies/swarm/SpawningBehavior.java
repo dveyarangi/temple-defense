@@ -15,6 +15,7 @@ import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.graphics.quadraturin.simulations.Body;
+import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
@@ -31,11 +32,13 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	public static final double AGENT_HEALTH = AGENT_INTEGRITY.getMaxHitPoints();
 	
 	public Look agentLook = new MetaCircleLook();
+	private GridyTerrainMap terrain;
 	
 //	public Integrity integrity = new Integrity(30, 0, new double [] {0,0,0,0});
-	public SpawningBehavior(double spawnInterval)
+	public SpawningBehavior(GridyTerrainMap terrain, double spawnInterval)
 	{
 		
+		this.terrain = terrain;
 		this.spawnInterval = spawnInterval;
 
 	}
@@ -55,7 +58,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	//			double radius = RandomUtil.getRandomGaussian(800, 0);
 			double size = RandomUtil.getRandomDouble(1)+1;
 			Vector2D source = swarm.getSource();
-/*			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(10, 0, new double [] {0,0,0,0}), false);
+			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(10, 0, new double [] {0,0,0,0}), false);
 			agent.setLook(agentLook);
 			agent.setBehavior(createAgentBehavior());
 	//		System.out.println("spawning agent at " + swarm.getArea().getRefPoint());
@@ -63,20 +66,22 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 								   source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle));
 			agent.setSensor(new Sensor(10, 5, new AgentSensorFilter(), true));
 			agent.setBody(new Body());
-			agent.getBody().setMaxSpeed( size);
-			swarm.addAgent(agent);*/
+			agent.getBody().setMaxSpeed( size/2);
+			swarm.addAgent(agent);
 //			System.out.println("Agent spawn at " + agent.getArea().getRefPoint());
 			
-			Seeder seeder = new Seeder(swarm, new Integrity(10, 0, new double [] {0,0,0,0}), 
-								AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
-												  source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle));
-			
-			seeder.setBehavior(createSeederBehavior());
-			seeder.setLook(new SeederLook());
-			seeder.setBody(new Body());
-			seeder.getBody().setMaxSpeed( size/2 );
-			
-			swarm.addAgent(seeder);
+			if(RandomUtil.oneOf( 1 )) {
+				Seeder seeder = new Seeder(swarm, new Integrity(10, 0, new double [] {0,0,0,0}), 
+									AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
+													  source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle));
+				
+				seeder.setBehavior(createSeederBehavior());
+				seeder.setLook(new SeederLook());
+				seeder.setBody(new Body());
+				seeder.getBody().setMaxSpeed( size/2 );
+				
+				swarm.addAgent(seeder);
+			}
 		}
 		return 0;
 	}
@@ -93,7 +98,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	
 	public Behavior <SwarmAgent> createAgentBehavior()
 	{
-		final IBehaviorState<SwarmAgent> droneState = new DroneBehavior();
+		final IBehaviorState<SwarmAgent> droneState = new DroneBehavior(1);
 //		final IBehaviorState<SwarmAgent> dangerState = new DangerBehavior();
 		
 		FSMBehavior <SwarmAgent> beh = new FSMBehavior<SwarmAgent>(droneState);
@@ -110,7 +115,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	
 	public Behavior <Seeder> createSeederBehavior()
 	{
-		final IBehaviorState<Seeder> seederState = new SeederBehavior();
+		final IBehaviorState<Seeder> seederState = new SeederBehavior(terrain);
 //		final IBehaviorState<SwarmAgent> dangerState = new DangerBehavior();
 		
 		FSMBehavior <Seeder> beh = new FSMBehavior<Seeder>(seederState);

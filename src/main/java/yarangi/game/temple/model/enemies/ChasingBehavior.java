@@ -19,7 +19,7 @@ public class ChasingBehavior implements Behavior <GenericEnemy>
 			return false;
 		}
 	
-		Vector2D targetLocation = bubble.getTarget().isAlive() ? bubble.getTarget().getArea().getRefPoint() : new Vector2D(0,0);  
+		Vector2D targetLocation = bubble.getTarget().isAlive() ? bubble.getTarget().getArea().getRefPoint() : Vector2D.ZERO();  
 		Vector2D bubbleLocation = bubble.getArea().getRefPoint();
 		
 		double distanceToTarget = Geometry.calcHypot(targetLocation, bubbleLocation);

@@ -3,7 +3,7 @@ package yarangi.game.temple.model.temple;
 import java.util.HashSet;
 import java.util.Set;
 
-import yarangi.game.temple.ai.IFeedbackBeacon;
+import yarangi.game.temple.ai.weapons.IFeedbackBeacon;
 import yarangi.game.temple.model.weapons.Projectile;
 import yarangi.game.temple.model.weapons.Weapon;
 import yarangi.graphics.quadraturin.objects.Behavior;
