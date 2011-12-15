@@ -98,7 +98,7 @@ public class BattleCommander implements BattleInterface
 				{
 					Vector2D weaponLoc = fireables.get(idx).getArea().getRefPoint();
 					double d = Geometry.calcHypotSquare(weaponLoc.x(), weaponLoc.y(), objectLoc.x(), objectLoc.y());
-					if(d < fireables.get(idx).getProps().getEffectiveRange())
+					if(d < fireables.get(idx).getProps().getEffectiveRangeSquare())
 						if(controller.testLOS(weaponLoc.x(), weaponLoc.y(), objectLoc.x(), objectLoc.y()))
 
 						found[idx] = true;
@@ -129,7 +129,7 @@ public class BattleCommander implements BattleInterface
 				continue;
 			
 			Vector2D weaponLoc = fireable.getArea().getRefPoint();
-			double range = fireable.getProps().getEffectiveRange();
+			double range = fireable.getProps().getEffectiveRangeSquare();
 			double minDistance = Double.MAX_VALUE;
 			
 			it = observedEntities.iterator();

@@ -1,11 +1,16 @@
 package yarangi.game.harmonium.temple.weapons;
 
+import yarangi.game.harmonium.enemies.IEnemy;
+import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.graphics.quadraturin.objects.ISensor;
+import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.simulations.Body;
-import yarangi.math.Angles;
+import yarangi.math.BitUtils;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
+import yarangi.spatial.ISpatialFilter;
 
 public class WeaponFactory
 {
@@ -34,6 +39,22 @@ public class WeaponFactory
 //		System.out.println("proj velocity " + v + " : " + getVelocity()+ " (" + a + ")");
 		shell.getBody().setMass(0.001);
 		return shell;
+	}
+	
+
+	public static ISpatialFilter <IEntity> ENEMY_SENSOR = new ISpatialFilter <IEntity> () {
+
+		@Override public boolean accept(IEntity entity) 
+		{ 
+			return (entity instanceof IEnemy);
+		}
+		
+	};
+	
+
+	public static ISensor<?> createSensor(Weapon weapon)
+	{
+		return new Sensor(BitUtils.po2Ceiling( (int)Math.sqrt(weapon.getProps().getEffectiveRangeSquare())), 3, ENEMY_SENSOR, false);
 	}
 
 }

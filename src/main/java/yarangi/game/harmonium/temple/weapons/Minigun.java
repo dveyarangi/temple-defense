@@ -17,7 +17,7 @@ public class Minigun extends Weapon
 	public static final double maxRangeSquare = 200;
 	public static final double RELOADING_TIME = 20;
 	public static final double ACCURACY = 0.2;
-	public static final Damage DAMAGE = new Damage(10, 0.1, 0, 0);
+	public static final Damage DAMAGE = new Damage(5, 0.1, 0, 0);
 	public static final double resourceCapacity = 1000;
 	public static final double resourceConsumption = 50;
 	public static final Resource.Type resourceType = Resource.Type.ENERGY;
@@ -27,10 +27,10 @@ public class Minigun extends Weapon
 			BASE_TRACKING_SPEED, 
 			CANNON_TRACKING_HALF_WIDTH, 
 			1, 
-			10, // reloading time
-			10000, // projectile range square
-			1,  // prjectile speed
-			100, // tracking range
+			3, // reloading time
+			2500, // projectile range square
+			5,  // prjectile speed
+			50, // tracking range
 			ACCURACY, 
 			projectileHitRadius, 
 			DAMAGE,
@@ -47,7 +47,20 @@ public class Minigun extends Weapon
 			ACCURACY, 
 			projectileHitRadius, 
 			DAMAGE,
-			resourceCapacity, 10, resourceType
+			resourceCapacity, 40, resourceType
+			);
+	public static final WeaponProperties PROPS3 = new WeaponProperties(
+			BASE_TRACKING_SPEED, 
+			CANNON_TRACKING_HALF_WIDTH, 
+			1, 
+			20, 
+			40000,
+			2, 
+			200, 
+			ACCURACY, 
+			projectileHitRadius, 
+			DAMAGE,
+			resourceCapacity, 50, resourceType
 			);
 	
 	
