@@ -43,15 +43,15 @@ public class SeederBehavior implements IBehaviorState <Seeder>
 		right.p3().sety(seeder.getRightOffset().y() - phaseOffset);
 
 		lifeTime += time;
-/*		if(lifeTime - lastSeedTime > SEED_INTERVAL)
+		if(lifeTime - lastSeedTime > SEED_INTERVAL)
 		{
 			lastSeedTime = lifeTime;
 			
 			Tile <Bitmap> tile = terrain.setPixel( seeder.getArea().getRefPoint().x(), seeder.getArea().getRefPoint().y(), 
 					new Color(0.1f, 0.1f, 0.051f, 1.0f) );
 			if(tile != null)
-			terrain.setModified( tile );
-		}*/
+				terrain.setModified( tile );
+		}
 		
 		return 0;
 	}
