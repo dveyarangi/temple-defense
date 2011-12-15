@@ -26,6 +26,8 @@ import yarangi.game.harmonium.temple.weapons.MinigunGlowingLook;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.game.harmonium.temple.weapons.TrackingBehavior;
 import yarangi.game.harmonium.temple.weapons.Weapon;
+import yarangi.game.harmonium.temple.weapons.WeaponFactory;
+import yarangi.game.harmonium.temple.weapons.WeaponProperties;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.QuadVoices;
@@ -105,16 +107,18 @@ public class Playground extends Scene
 		float maxCannons = 9;
 		for(int a = 0; a < maxCannons; a ++)
 		{
-			Weapon weapon = new Minigun(bi, a%2 == 0 ? Minigun.PROPS1 : Minigun.PROPS2);
-			weapon.setArea(AABB.createSquare((100+ a%3*100)*Math.cos(Angles.PI_2/maxCannons *a), (100+ a%3*100)*Math.sin(Angles.PI_2/maxCannons * a ),1,0));
+			WeaponProperties props = null;
+			switch(a%3) {
+			case 0: props = Minigun.PROPS1; break;
+			case 1: props = Minigun.PROPS2; break;
+			case 2: props = Minigun.PROPS2; break;
+			}
+			Weapon weapon = new Minigun(bi, props);
+			weapon.setArea(AABB.createSquare((50+ a%3*30)*Math.cos(Angles.PI_2/maxCannons *a), (50+ a%3*30)*Math.sin(Angles.PI_2/maxCannons * a ),1,0));
 			weapon.setLook(new MinigunGlowingLook());
 //			weapon.setLook(new MinigunLook());
 			weapon.setBehavior(new TrackingBehavior());
-			weapon.setSensor( new Sensor(64, 3, 
-					new ISpatialFilter <IEntity> () {
-
-						@Override public boolean accept(IEntity entity) { return entity.getLook() != null && entity.getLook().isCastsShadow(); }}, 
-					false)  );
+			weapon.setSensor( WeaponFactory.createSensor(weapon));
 			addEntity(weapon);
 			bi.addFireable(weapon);
 			structure.addServiceable( weapon );
@@ -174,12 +178,12 @@ public class Playground extends Scene
 			@Override
 			public boolean setImpactWith(Projectile source, IPhysicalObject target)
 			{
-				if( target instanceof Bitmap || target instanceof Matter || target instanceof TempleEntity)
+/*				if( target instanceof Bitmap || target instanceof Matter || target instanceof TempleEntity)
 				{
 					source.markDead();
 					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(1,0,0,0), 4 );
 					return true;
-				}
+				}*/
 				if(target instanceof SwarmAgent)
 				{
 					source.markDead();
