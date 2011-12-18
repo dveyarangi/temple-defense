@@ -36,7 +36,7 @@ public class TempleEntity extends ObserverEntity implements Serviceable
 	public TempleStructure getStructure() { return structure; }
 
 	@Override
-	public Area getServicePoint()
+	public Area getServiceArea()
 	{
 		return getArea();
 	}

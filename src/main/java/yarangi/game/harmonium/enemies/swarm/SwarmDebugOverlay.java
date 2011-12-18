@@ -1,5 +1,7 @@
 package yarangi.game.harmonium.enemies.swarm;
 
+import java.awt.Point;
+
 import javax.media.opengl.GL;
 
 import yarangi.graphics.grid.TileGridLook;
@@ -135,5 +137,10 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 	}
 	@Override
 	public IVeil getVeil() { return IVeil.ORIENTING; }
+	@Override
+	protected Point getFBODimensions(Swarm grid)
+	{
+		return new Point(grid.getWorldSize(), grid.getWorldSize());
+	}
 
 }

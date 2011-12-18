@@ -110,7 +110,7 @@ public class TempleController extends Entity implements CursorListener
 			if(object.isAlive())
 //			if(object instanceof Tile)
 			{
-				hasLOS = false;
+//				hasLOS = false;
 				return true;
 			}
 			return false;

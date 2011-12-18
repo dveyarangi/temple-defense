@@ -81,7 +81,7 @@ public abstract class Weapon extends Entity implements Fireable, Serviceable
 		return battleInterface;
 	}
 	@Override
-	public Area getServicePoint()
+	public Area getServiceArea()
 	{
 		return getArea();
 	}
@@ -104,7 +104,7 @@ public abstract class Weapon extends Entity implements Fireable, Serviceable
 			if(resourceToRequest > 0)
 			{
 				this.requestedAmount += resourceToRequest;
-				System.out.println(requestedAmount + " : " + amountRemaining + " : " + resourceToRequest);
+//				System.out.println(requestedAmount + " : " + amountRemaining + " : " + resourceToRequest);
 				getBattleInterface().requestResource( this, props.getResourceType(), resourceToRequest);
 			}
 			

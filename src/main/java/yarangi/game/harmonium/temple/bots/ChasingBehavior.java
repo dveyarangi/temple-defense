@@ -15,19 +15,19 @@ public class ChasingBehavior implements IBehaviorState <Bot>
 	{
 		
 		this.target = target;
-		satelliting = new SatelliteBehavior( target.getServicePoint() );
+		satelliting = new SatelliteBehavior( target.getServiceArea() );
 	}
 	public double behave(double time, Bot bot) 
 	{
 	
 
-		Vector2D targetLocation = target.getServicePoint().getRefPoint();
+		Vector2D targetLocation = target.getServiceArea().getRefPoint();
 		
 		double distanceToTarget = Geometry.calcHypotSquare(targetLocation, bot.getArea().getRefPoint());
 		
 		Vector2D botLocation = bot.getArea().getRefPoint();
-		Vector2D hostLocation = target.getServicePoint().getRefPoint();
-		double satelliteDistanceSquare = 2*target.getServicePoint().getMaxRadius()*target.getServicePoint().getMaxRadius();
+		Vector2D hostLocation = target.getServiceArea().getRefPoint();
+		double satelliteDistanceSquare = 2*target.getServiceArea().getMaxRadius()*target.getServiceArea().getMaxRadius();
 		
 			
 		Vector2D attractionDir = hostLocation.minus(botLocation).normalize();
@@ -51,7 +51,7 @@ public class ChasingBehavior implements IBehaviorState <Bot>
 //			System.out.println(bot.getArea() + " : " + offset);
 		bot.getBody().setForce( force.x(), force.y() );
 		
-		if (distanceToTarget < 8 * target.getServicePoint().getMaxRadius()*target.getServicePoint().getMaxRadius())
+		if (distanceToTarget < 8 * target.getServiceArea().getMaxRadius()*target.getServiceArea().getMaxRadius())
 		{
 			return 0; // proceed to next state
 		}

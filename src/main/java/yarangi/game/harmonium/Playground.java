@@ -277,12 +277,6 @@ public class Playground extends Scene
 		core.shutdown();
 	}
 
-	public void preDisplay(GL gl, double time, boolean useNames)
-	{
-		super.preDisplay(gl, time, false);
-	      gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
-	}
-	
 	public String toString() { return "playground scene"; }
 	
 	public void toggleSwarmOverlay()

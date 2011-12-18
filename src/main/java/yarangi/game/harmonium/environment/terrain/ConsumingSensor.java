@@ -29,7 +29,7 @@ public class ConsumingSensor implements ISpatialSensor <Tile <Bitmap>, Bitmap>
 		int pixelsBefore = bitmap.getPixelCount();
 		if(pixelsBefore == 0 && !draw)
 			return false;
-		for(int i = 0; i < bitmap.getSize(); i ++)
+/*		for(int i = 0; i < bitmap.getSize(); i ++)
 			for(int j = 0; j < bitmap.getSize(); j ++)
 			{
 				double dx = tile.getMinX() + i * bitmap.getPixelSize() - ox;
@@ -41,7 +41,7 @@ public class ConsumingSensor implements ISpatialSensor <Tile <Bitmap>, Bitmap>
 					bitmap.put((new Color(0,1,1,1)), i, j );
 				else
 					bitmap.remove( i, j );
-			}
+			}*/
 		
 		if(bitmap.getPixelCount() != pixelsBefore)
 			terrain.setModified( tile );

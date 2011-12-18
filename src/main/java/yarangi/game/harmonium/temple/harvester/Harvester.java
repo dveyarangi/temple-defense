@@ -22,7 +22,7 @@ public class Harvester extends Entity implements Serviceable
 	
 
 	@Override
-	public Area getServicePoint()
+	public Area getServiceArea()
 	{
 		return getArea(); 
 	}

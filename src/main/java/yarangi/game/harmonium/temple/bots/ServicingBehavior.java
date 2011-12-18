@@ -10,7 +10,7 @@ public class ServicingBehavior extends SatelliteBehavior
 	private IBotInterface controller;
 	public ServicingBehavior(IBotInterface controller, Serviceable serviceable)
 	{
-		super(serviceable.getServicePoint());
+		super(serviceable.getServiceArea());
 		this.controller = controller;
 	}
 	
