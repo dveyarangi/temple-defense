@@ -54,7 +54,7 @@ public class SeederBehavior implements IBehaviorState <Seeder>
 		{
 			lastSeedTime = lifeTime;
 			
-			terrain.apply( seeder.getArea().getRefPoint().x()-MASK_WIDTH/2, seeder.getArea().getRefPoint().y()-MASK_WIDTH/2, false, MASK_WIDTH, SEED_MASK );
+//			terrain.apply( seeder.getArea().getRefPoint().x()-MASK_WIDTH/2, seeder.getArea().getRefPoint().y()-MASK_WIDTH/2, false, MASK_WIDTH, SEED_MASK );
 			
 //			Tile <Bitmap> tile = terrain.setPixel( seeder.getArea().getRefPoint().x(), seeder.getArea().getRefPoint().y(), 
 //					new Color(0.2f, 0.2f, 0.2f, 1.0f) );

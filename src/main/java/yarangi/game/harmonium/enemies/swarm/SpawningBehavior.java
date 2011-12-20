@@ -60,7 +60,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 			Vector2D source = swarm.getSource();
 			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(10, 0, new double [] {0,0,0,0}), false);
 			agent.setLook(agentLook);
-			agent.setBehavior(createAgentBehavior());
+			agent.setBehavior(createBoidBehavior());
 	//		System.out.println("spawning agent at " + swarm.getArea().getRefPoint());
 			agent.setArea(AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
 								   source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle));
@@ -96,22 +96,23 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 		
 	}
 	
-	public Behavior <SwarmAgent> createAgentBehavior()
+	public Behavior <SwarmAgent> createBoidBehavior()
 	{
-		final IBehaviorState<SwarmAgent> droneState = new DroneBehavior(1);
+		final IBehaviorState<SwarmAgent> boidState = new BoidBehavior();
 //		final IBehaviorState<SwarmAgent> dangerState = new DangerBehavior();
 		
-		FSMBehavior <SwarmAgent> beh = new FSMBehavior<SwarmAgent>(droneState);
+		FSMBehavior <SwarmAgent> beh = new FSMBehavior<SwarmAgent>(boidState);
 		
-		beh.link(droneState.getId(), new IBehaviorCondition<SwarmAgent>()
+		beh.link(boidState.getId(), new IBehaviorCondition<SwarmAgent>()
 		{
 			@Override public IBehaviorState<SwarmAgent> nextState(SwarmAgent entity) {
-				return droneState;
+				return boidState;
 			}
 		});
 		
 		return beh;
 	}
+
 	
 	public Behavior <Seeder> createSeederBehavior()
 	{
