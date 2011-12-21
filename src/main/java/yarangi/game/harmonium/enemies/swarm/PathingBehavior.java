@@ -15,6 +15,13 @@ import yarangi.math.FastMath;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 
+/**
+ * TODO: requires clean-up and optimization 
+ * TODO: danger factor wear-out is not working
+ * 
+ * @author fimar
+ *
+ */
 public class PathingBehavior implements IBehaviorState<Swarm> 
 {
 	
