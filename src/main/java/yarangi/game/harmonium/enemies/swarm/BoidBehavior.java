@@ -12,55 +12,78 @@ import yarangi.math.Vector2D;
 
 public class BoidBehavior implements IBehaviorState<SwarmAgent> 
 {
-	public static final double CROWDING_COEF = 0.6;
-	public static final double SPREADING_COEF = 0.5;
-	public static final double FLOCKING_COEF = 1.6;
+	public static final double ATTRACTION_COEF = 0.5;
+	public static final double SEPARATION_COEF = 0.25;
+	public static final double FLOCKING_COEF = 0.5;
 	
-	private DroneBehavior droning = new DroneBehavior(1);
+	private DroneBehavior droning = new DroneBehavior(2);
 ///	public static final double FLOCKING_COEF = 1;
 	@Override
 	public double behave(double time, SwarmAgent boid) {
 		
-//		droning.behave( time, boid);
-		
 		ISensor<Entity> sensor = boid.getSensor();
 		
 		Set <Entity> neighbours = sensor.getEntities();
-		if(neighbours.size() == 1)
+		droning.behave( time, boid);
+		if(neighbours.size() <= 1)
+		{
+//			droning.behave( time, boid);
+
 			return 0;
-		
+		}
 		Vector2D loc = boid.getArea().getRefPoint();
 		
+		double separationDistance;
+		
 		Vector2D massCenter = Vector2D.ZERO();
-		Vector2D spreadingVelocity = Vector2D.ZERO();
+		Vector2D Fsep = Vector2D.ZERO();
 		Vector2D flockingVelocity = Vector2D.ZERO();
 		Vector2D otherLoc;
 		
 		double distance;
-		for(Entity entity : neighbours)
+		double dN = 1./(neighbours.size()-1);
+		for(Entity otherBoid : neighbours)
 		{
-			if(entity == boid)
+			if(otherBoid == boid)
 				continue;
 			
-			otherLoc = entity.getArea().getRefPoint();
+			otherLoc = otherBoid.getArea().getRefPoint();
+			separationDistance = 2*(otherBoid.getArea().getMaxRadius() + boid.getArea().getMaxRadius());
+			
 			distance = Geometry.calcHypot( loc, otherLoc );
 			
+			// separation:
+//			if(distance <= separationDistance)
+			{
+				Fsep.add(loc.minus(otherLoc).multiply(separationDistance-distance));
+			}
+			
+			// attraction parameters:
 			massCenter.add(otherLoc);
-			spreadingVelocity.substract(otherLoc.minus(loc).multiply(distance));
-			flockingVelocity.add(entity.getBody().getVelocity());
+			
+			// flocking:
+			flockingVelocity.add(otherBoid.getBody().getVelocity().mul(otherBoid.getArea().getMaxRadius()));
 		}
 		
-		massCenter.multiply(1./(neighbours.size()-1));
-		Vector2D crowdingVelocity = massCenter.substract(loc).multiply(CROWDING_COEF);
-		flockingVelocity.multiply(1./(neighbours.size()-1));
-		flockingVelocity.substract( boid.getBody().getVelocity() );
-		flockingVelocity.multiply(FLOCKING_COEF);
+		massCenter.multiply(dN);
+		double attDistance = Geometry.calcHypot(massCenter, loc);
+		Vector2D Fatt = massCenter.substract(loc).normalize().multiply(ATTRACTION_COEF);
 		
-		spreadingVelocity.multiply( 1./(neighbours.size()-1)*SPREADING_COEF );
+//		flockingVelocity.multiply(dN);
+//		flockingVelocity.substract( boid.getBody().getVelocity() );
+//		flockingVelocity.multiply(FLOCKING_COEF);
 		
-		boid.getBody().setForce( crowdingVelocity.plus(spreadingVelocity).plus(flockingVelocity));
+		Fsep.normalize().multiply( SEPARATION_COEF );
 		
-		return 0;
+		Vector2D Flok = flockingVelocity.normalize().multiply(FLOCKING_COEF); 
+		
+		boid.getBody().addForce( Fatt );
+		boid.getBody().addForce( Fsep );
+		boid.getBody().addForce( Flok );
+		
+//		System.out.println(Fatt + " : " + Fsep + " : " + Flok + ", res:" + boid.getBody().getForce());
+		
+		return -1;
 	}
 	@Override
 	public int getId() {

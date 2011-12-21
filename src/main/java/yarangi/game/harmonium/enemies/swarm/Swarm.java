@@ -80,10 +80,11 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 			return Vector2D.R(fx, fy); 
 		}
 		
-		int x, y, dx, dy;
 		Vector2D flow = Vector2D.ZERO();
 		
-/*		for(dx = -1; dx <= 1; dx ++)
+/*		int x, y, dx, dy;
+		
+		for(dx = -1; dx <= 1; dx ++)
 			for(dy = -1; dy <= 1; dy ++)
 				if(dx != 0 || dy != 0)
 				{
@@ -259,6 +260,8 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 
 	public boolean isOmniUnpassable(int x, int y)
 	{
+		if(terrain == null)
+			return false;
 		Tile <Bitmap> tile = terrain.getTile( toBeaconCoord( x ), toBeaconCoord( y ) );
 		return tile != null && !tile.get().isEmpty();
 //		return !terrain.getCell( toBeaconCoord( x ), toBeaconCoord( y ) ).getProperties().isEmpty();
@@ -276,8 +279,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	@Override
 	protected Tile<Beacon> createEmptyCell(int idx, double x, double y)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new Tile<Beacon>(x, y, getCellSize(), getCellSize());
 	}
 
 	@Override
@@ -290,9 +292,9 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 				AStarNode node = new AStarNode(i, j); 
 				double tx = toBeaconCoord(i);
 				double ty = toBeaconCoord(j);
-//				Vector2D toCenter = new Vector2D(-tx, -ty).normalize();
+				Vector2D toCenter = Vector2D.R(-tx, -ty).normalize();
 				if(tx != 0 || ty != 0)
-					node.setFlow(/*toCenter.x(), toCenter.y()*/ 0,0);
+					node.setFlow(toCenter.x(), toCenter.y());
 				Tile <Beacon> tile = new Tile<Beacon>(tx, ty, getCellSize(), getCellSize());
 				tile.put( node );
 				beacons[i + width * j] = tile; 

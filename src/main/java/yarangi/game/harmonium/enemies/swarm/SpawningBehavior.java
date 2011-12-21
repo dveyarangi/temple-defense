@@ -56,7 +56,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 			timeToSpawn += spawnInterval;
 			double angle = RandomUtil.getRandomDouble(Angles.PI_2);
 	//			double radius = RandomUtil.getRandomGaussian(800, 0);
-			double size = RandomUtil.getRandomDouble(1)+1;
+			double size = Math.abs(RandomUtil.getRandomGaussian(0, 1))+1;
 			Vector2D source = swarm.getSource();
 			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(10, 0, new double [] {0,0,0,0}), false);
 			agent.setLook(agentLook);
@@ -64,13 +64,12 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	//		System.out.println("spawning agent at " + swarm.getArea().getRefPoint());
 			agent.setArea(AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
 								   source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle));
-			agent.setSensor(new Sensor(10, 5, new AgentSensorFilter(), true));
-			agent.setBody(new Body());
-			agent.getBody().setMaxSpeed( size/2);
+			agent.setSensor(new Sensor(50, 1, new AgentSensorFilter(), true));
+			agent.setBody(new Body(1, 3./size));
 			swarm.addAgent(agent);
 //			System.out.println("Agent spawn at " + agent.getArea().getRefPoint());
 			
-			if(RandomUtil.oneOf( 1 )) {
+/*			if(RandomUtil.oneOf( 1 )) {
 				Seeder seeder = new Seeder(swarm, new Integrity(10, 0, new double [] {0,0,0,0}), 
 									AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
 													  source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle));
@@ -78,10 +77,10 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 				seeder.setBehavior(createSeederBehavior());
 				seeder.setLook(new SeederLook());
 				seeder.setBody(new Body());
-				seeder.getBody().setMaxSpeed( size/2 );
+				seeder.getBody().setMaxSpeed( 1 );
 				
 				swarm.addAgent(seeder);
-			}
+			}*/
 		}
 		return 0;
 	}
