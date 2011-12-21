@@ -13,11 +13,18 @@ public class SwarmAgent extends Entity implements Damageable, IEnemy
 	
 	private Integrity integrity;
 	
-	public SwarmAgent(Swarm swarm, Integrity integrity, boolean recon)
+	private double leadership;
+	private double attractiveness;
+	
+	public SwarmAgent(Swarm swarm, Integrity integrity, double leadership, double attractiveness)
 	{
 		this.swarm = swarm;
 		
 		this.integrity = integrity;
+		
+		this.leadership = leadership;
+		
+		this.attractiveness = attractiveness;
 	}
 		
 	public Swarm getSwarm() { return swarm; }
@@ -30,6 +37,18 @@ public class SwarmAgent extends Entity implements Damageable, IEnemy
 	@Override
 	public void hit(Damage damage) {
 		integrity.hit(damage);
+	}
+
+	@Override
+	public double getLeadership()
+	{
+		return leadership;
+	}
+
+	@Override
+	public double getAttractiveness()
+	{
+		return attractiveness;
 	}
 
 }

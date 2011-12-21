@@ -125,7 +125,7 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 				gl.glVertex3f((float)(x+size), (float)(y), 0);
 				gl.glEnd();
 			}*/
-			gl.glEnable( GL.GL_DEPTH_TEST );
+//			gl.glEnable( GL.GL_DEPTH_TEST );
 			gl.glPopAttrib();
 		}
 	}

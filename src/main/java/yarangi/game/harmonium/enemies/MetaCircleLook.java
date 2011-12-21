@@ -15,6 +15,7 @@ import yarangi.graphics.veils.BlurVeil;
 import yarangi.graphics.veils.IsoheightVeil;
 
 import com.sun.opengl.util.texture.Texture;
+import com.sun.opengl.util.texture.TextureData;
 import com.sun.opengl.util.texture.TextureIO;
 
 public class MetaCircleLook implements Look <Entity> 
@@ -40,13 +41,15 @@ public class MetaCircleLook implements Look <Entity>
 		{
 			throw new IllegalArgumentException("file not found");
 		}
-		texture = TextureIO.newTexture(image, false);
+		texture = TextureIO.newTexture(new TextureData(GL.GL_RGBA, GL.GL_RGBA, false, image));
 		texture.setTexParameteri(GL.GL_TEXTURE_MIN_FILTER, GL.GL_LINEAR);
 		
-		texture.setTexParameteri(GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR);		
-		
+		texture.setTexParameteri(GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR);	
+		texture.bind();
+		gl.glTexEnvf(GL.GL_TEXTURE_ENV, GL.GL_TEXTURE_ENV_MODE, GL.GL_REPLACE);
+		gl.glBindTexture( GL.GL_TEXTURE_2D, 0 );
 //		veil = context.getPlugin( IsoheightVeil.NAME );
-		veil = context.<IVeil>getPlugin( IsoheightVeil.NAME );
+//		veil = context.<IVeil>getPlugin( IsoheightVeil.NAME );
 		if(veil == null)
 		{
 			Q.rendering.warn( "Plugin [" + BlurVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
@@ -67,6 +70,7 @@ public class MetaCircleLook implements Look <Entity>
 		
 		
 		gl.glBegin(GL.GL_QUADS);
+		gl.glColor4f( 0,0,0,0 );
 		gl.glTexCoord2f( 0.0f, 0.0f ); gl.glVertex2f(-radius, -radius);
 		gl.glTexCoord2f( 0.0f, 1.0f ); gl.glVertex2f(-radius,  radius);
 		gl.glTexCoord2f( 1.0f, 1.0f ); gl.glVertex2f( radius,  radius);
@@ -75,6 +79,7 @@ public class MetaCircleLook implements Look <Entity>
 		
 		gl.glBindTexture( GL.GL_TEXTURE_2D, 0 );
 		gl.glPopAttrib();
+		gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	@Override

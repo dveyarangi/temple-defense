@@ -58,29 +58,31 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	//			double radius = RandomUtil.getRandomGaussian(800, 0);
 			double size = Math.abs(RandomUtil.getRandomGaussian(0, 1))+1;
 			Vector2D source = swarm.getSource();
-			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(10, 0, new double [] {0,0,0,0}), false);
+			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(10, 0, new double [] {0,0,0,0}), size/100000, 10*size);
 			agent.setLook(agentLook);
 			agent.setBehavior(createBoidBehavior());
 	//		System.out.println("spawning agent at " + swarm.getArea().getRefPoint());
 			agent.setArea(AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
 								   source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle));
-			agent.setSensor(new Sensor(50, 1, new AgentSensorFilter(), true));
-			agent.setBody(new Body(1, 3./size));
+			agent.setSensor(new Sensor(20, 1, new AgentSensorFilter(), true));
+			agent.setBody(new Body(size, 2./size));
 			swarm.addAgent(agent);
 //			System.out.println("Agent spawn at " + agent.getArea().getRefPoint());
 			
-/*			if(RandomUtil.oneOf( 1 )) {
-				Seeder seeder = new Seeder(swarm, new Integrity(10, 0, new double [] {0,0,0,0}), 
-									AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
-													  source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle));
+			if(RandomUtil.oneOf( 5 )) {
+				Seeder seeder = new Seeder(swarm, 
+										new Integrity(10, 0, new double [] {0,0,0,0}), 
+										AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
+													  source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle),
+													  size*100, size*100);
 				
 				seeder.setBehavior(createSeederBehavior());
 				seeder.setLook(new SeederLook());
-				seeder.setBody(new Body());
-				seeder.getBody().setMaxSpeed( 1 );
+				seeder.setBody(new Body(size/10, 3./size));
+//				seeder.getBody().setMaxSpeed( 1 );
 				
 				swarm.addAgent(seeder);
-			}*/
+			}
 		}
 		return 0;
 	}

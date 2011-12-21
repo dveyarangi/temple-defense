@@ -16,9 +16,9 @@ public class Seeder extends SwarmAgent
 	
 	private Vector2D leftOffset, rightOffset;
 	
-	public Seeder(Swarm swarm, Integrity integrity, Area area) 
+	public Seeder(Swarm swarm, Integrity integrity, Area area, double leadership, double attractiveness) 
 	{
-		super(swarm, integrity, true);
+		super(swarm, integrity, leadership, attractiveness);
 		
 		setArea(area);
 		

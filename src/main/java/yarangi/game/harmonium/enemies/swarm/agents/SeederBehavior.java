@@ -16,7 +16,7 @@ public class SeederBehavior implements IBehaviorState <Seeder>
 	
 	private double windingPhase = 0;
 	public static final double WINDING_COEF = 3;
-	public static final double WINDING_SPEED = 0.2;	
+	public static final double WINDING_SPEED = 0.5;	
 	private DroneBehavior drone = new DroneBehavior(100);
 	private GridyTerrainMap terrain;
 	private static double SEED_INTERVAL = 20;
@@ -37,7 +37,7 @@ public class SeederBehavior implements IBehaviorState <Seeder>
 	{
 		drone.behave(time, seeder);
 		
-		windingPhase += WINDING_SPEED * time;
+		windingPhase += WINDING_SPEED * time;// / seeder.getBody().getMass();
 		
 		Bezier4Curve left = seeder.getLeftEdge();
 		Bezier4Curve right = seeder.getRightEdge();
