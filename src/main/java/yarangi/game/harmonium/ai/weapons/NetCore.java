@@ -29,6 +29,8 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 //	private BackpropNetwork network = new BackpropNetwork(1);
 	private String name;
 	
+	private static final float LEARNING_RATE = 0.2f;
+	
 	/** 
 	 * Back-propagate neural network algorithm. 
 	 */
@@ -55,6 +57,7 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 		} catch (Exception e) {
 			log.debug("Cannot load NN core " + name + ", creating new one");
 			network = new BackpropNetwork(2);
+			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
 			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
 			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
 			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
@@ -90,7 +93,7 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 
 			Vector2D toTarget = beacon.getTargetLocationMemo().minus(beacon.getSource());
 //			System.out.println(toTarget + " " + relativeTarget);
-			train(new double [] {toTarget.x(), toTarget.y()}, 0.05);
+			train(new double [] {toTarget.x(), toTarget.y()}, LEARNING_RATE);
 			
 			return true;
 		}

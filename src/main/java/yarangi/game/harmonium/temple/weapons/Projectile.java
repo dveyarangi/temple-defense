@@ -2,7 +2,7 @@ package yarangi.game.harmonium.temple.weapons;
 
 import yarangi.game.harmonium.ai.weapons.IFeedbackBeacon;
 import yarangi.game.harmonium.ai.weapons.IFeedbackCarrier;
-import yarangi.game.harmonium.model.Damage;
+import yarangi.game.harmonium.battle.Damage;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.math.Vector2D;
 

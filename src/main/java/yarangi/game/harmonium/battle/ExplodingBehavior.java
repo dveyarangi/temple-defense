@@ -1,4 +1,4 @@
-package yarangi.game.harmonium.model;
+package yarangi.game.harmonium.battle;
 
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.objects.Behavior;

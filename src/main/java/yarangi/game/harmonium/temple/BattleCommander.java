@@ -10,7 +10,6 @@ import java.util.Set;
 
 import javax.media.opengl.GL;
 
-import yarangi.game.harmonium.actions.Fireable;
 import yarangi.game.harmonium.ai.weapons.IFeedbackBeacon;
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.ai.weapons.LinearFeedbackBeacon;
@@ -33,7 +32,7 @@ public class BattleCommander implements BattleInterface
 	private List <Weapon> fireables = new ArrayList <Weapon> ();
 	private Set <IEntity> observedEntities = new HashSet <IEntity> ();
 	
-	private Map <Fireable, IEntity> targets = new HashMap <Fireable, IEntity> ();
+	private Map <Weapon, IEntity> targets = new HashMap <Weapon, IEntity> ();
 	
 //	private Vector2D guarded = new Vector2D(0,0);
 	
@@ -49,13 +48,13 @@ public class BattleCommander implements BattleInterface
 		return guarded;
 	}*/
 
-	public IEntity getTarget(Fireable fireable) 
+	public IEntity getTarget(Weapon fireable) 
 	{
 		return targets.get(fireable);
 	}
 	
 	@Override
-	public Map <Fireable, IEntity> getTargets()
+	public Map <Weapon, IEntity> getTargets()
 	{
 		return targets;
 	}

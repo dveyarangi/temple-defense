@@ -12,7 +12,7 @@ public class Bot extends Entity implements Serviceable
 	private static final long serialVersionUID = -19945327419649387L;
 	
 	private Serviceable currTarget;
-	private double enginePower = 5;
+	public static double ENGINE_POWER = 5;
 	
 	private IOrder order;
 
@@ -29,7 +29,7 @@ public class Bot extends Entity implements Serviceable
 	{ 
 		this.currTarget = target; 
 	}
-	public double getEnginePower() { return enginePower; }
+	public double getEnginePower() { return ENGINE_POWER; }
 
 	public void setOrder(IOrder order)
 	{

@@ -17,7 +17,7 @@ public class SeederBehavior implements IBehaviorState <Seeder>
 	private double windingPhase = 0;
 	public static final double WINDING_COEF = 3;
 	public static final double WINDING_SPEED = 0.5;	
-	private DroneBehavior drone = new DroneBehavior(100);
+	private DroneBehavior drone = new DroneBehavior(20);
 	private GridyTerrainMap terrain;
 	private static double SEED_INTERVAL = 20;
 	private double lifeTime = 0;

@@ -57,7 +57,7 @@ public class ObserverBehavior implements Behavior <ObserverEntity>
 			}
 			else
 			{
-				if(!(object instanceof ObserverEntity) && !(object instanceof TempleEntity) &&!(object instanceof Weapon))
+				if(!(object instanceof ObserverEntity) && !(object instanceof EnergyCore) &&!(object instanceof Weapon))
 				{
 //					System.out.println(object);
 					controller.getBattleInterface().objectObserved(object);

@@ -38,7 +38,7 @@ public class TempleStructure extends Entity implements Connectable
 	
 	public PowerConnector [] connectors;
 	
-	public TempleStructure(TempleEntity temple, TempleController controller)
+	public TempleStructure(EnergyCore temple, TempleController controller)
 	{
 		super();
 		

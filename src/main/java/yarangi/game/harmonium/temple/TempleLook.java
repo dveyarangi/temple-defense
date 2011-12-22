@@ -6,11 +6,11 @@ import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.CircleLightLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
 
-public class TempleLook extends CircleLightLook<TempleEntity>
+public class TempleLook extends CircleLightLook<EnergyCore>
 {
 	
 	
-	public void render(GL gl, double time,TempleEntity temple, IRenderingContext context) 
+	public void render(GL gl, double time,EnergyCore temple, IRenderingContext context) 
 	{
 		
 		float P = (float)temple.getHealth();

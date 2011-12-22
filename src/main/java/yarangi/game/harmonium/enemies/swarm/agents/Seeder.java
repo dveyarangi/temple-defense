@@ -1,7 +1,7 @@
 package yarangi.game.harmonium.enemies.swarm.agents;
 
+import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
-import yarangi.game.harmonium.model.Integrity;
 import yarangi.graphics.curves.Bezier4Curve;
 import yarangi.math.Vector2D;
 import yarangi.spatial.Area;

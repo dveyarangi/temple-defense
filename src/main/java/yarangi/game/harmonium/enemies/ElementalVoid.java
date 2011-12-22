@@ -1,6 +1,6 @@
 package yarangi.game.harmonium.enemies;
 
-import yarangi.game.harmonium.model.Integrity;
+import yarangi.game.harmonium.battle.Integrity;
 import yarangi.graphics.quadraturin.objects.ILayerObject;
 import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.math.Angles;

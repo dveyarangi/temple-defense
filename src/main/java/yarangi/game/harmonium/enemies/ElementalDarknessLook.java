@@ -2,7 +2,7 @@ package yarangi.game.harmonium.enemies;
 
 import javax.media.opengl.GL;
 
-import yarangi.game.harmonium.model.Integrity;
+import yarangi.game.harmonium.battle.Integrity;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.Look;

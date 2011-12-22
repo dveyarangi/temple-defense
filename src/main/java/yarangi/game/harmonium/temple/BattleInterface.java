@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.media.opengl.GL;
 
-import yarangi.game.harmonium.actions.Fireable;
 import yarangi.game.harmonium.ai.weapons.IFeedbackBeacon;
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.temple.weapons.Weapon;
@@ -20,7 +19,7 @@ public interface BattleInterface
 
 	public void addFireable(Weapon weapon);
 
-	public Map <Fireable, IEntity> getTargets();
+	public Map <Weapon, IEntity> getTargets();
 
 	public List <Weapon> getFireables();
 

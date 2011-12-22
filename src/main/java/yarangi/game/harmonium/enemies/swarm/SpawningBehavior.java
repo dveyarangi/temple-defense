@@ -1,16 +1,16 @@
 package yarangi.game.harmonium.enemies.swarm;
 
+import yarangi.game.harmonium.battle.Integrity;
+import yarangi.game.harmonium.enemies.EnemyFactory;
 import yarangi.game.harmonium.enemies.MetaCircleLook;
-import yarangi.game.harmonium.enemies.swarm.agents.DroneBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.Seeder;
 import yarangi.game.harmonium.enemies.swarm.agents.SeederBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.SeederLook;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
-import yarangi.game.harmonium.model.Integrity;
+import yarangi.game.harmonium.temple.bots.ChasingBehavior;
+import yarangi.game.harmonium.temple.bots.SatelliteBehavior;
 import yarangi.graphics.quadraturin.objects.Behavior;
-import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Look;
-import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
@@ -20,7 +20,6 @@ import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 import yarangi.spatial.AABB;
-import yarangi.spatial.ISpatialFilter;
 
 class SpawningBehavior implements IBehaviorState<Swarm> 
 {
@@ -56,29 +55,29 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 			timeToSpawn += spawnInterval;
 			double angle = RandomUtil.getRandomDouble(Angles.PI_2);
 	//			double radius = RandomUtil.getRandomGaussian(800, 0);
-			double size = Math.abs(RandomUtil.getRandomGaussian(0, 1))+1;
+			double size = Math.abs(RandomUtil.getRandomGaussian(0, 0.2))+0.4;
 			Vector2D source = swarm.getSource();
-			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(10, 0, new double [] {0,0,0,0}), size/100000, 10*size);
+			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(2*size*size*10, 0, new double [] {0,0,0,0}), size/100000, 10*size);
 			agent.setLook(agentLook);
 			agent.setBehavior(createBoidBehavior());
 	//		System.out.println("spawning agent at " + swarm.getArea().getRefPoint());
 			agent.setArea(AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
 								   source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle));
-			agent.setSensor(new Sensor(20, 1, new AgentSensorFilter(), true));
-			agent.setBody(new Body(size, 2./size));
+			agent.setSensor(EnemyFactory.SHORT_SENSOR());
+			agent.setBody(new Body(2*size, 1));
 			swarm.addAgent(agent);
 //			System.out.println("Agent spawn at " + agent.getArea().getRefPoint());
 			
-			if(RandomUtil.oneOf( 5 )) {
+			if(RandomUtil.oneOf( 7 )) {
 				Seeder seeder = new Seeder(swarm, 
-										new Integrity(10, 0, new double [] {0,0,0,0}), 
+										new Integrity(3*size*size*10, 0, new double [] {0,0,0,0}), 
 										AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
 													  source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle),
-													  size*100, size*100);
+													  size*10, size*100);
 				
 				seeder.setBehavior(createSeederBehavior());
 				seeder.setLook(new SeederLook());
-				seeder.setBody(new Body(size/10, 3./size));
+				seeder.setBody(new Body(size, 1));
 //				seeder.getBody().setMaxSpeed( 1 );
 				
 				swarm.addAgent(seeder);
@@ -87,29 +86,32 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 		return 0;
 	}
 	
-	public class AgentSensorFilter implements ISpatialFilter <IEntity>
-	{
-		@Override
-		public boolean accept(IEntity entity)
-		{
-			return entity instanceof SwarmAgent;
-		}
-		
-	}
 	
 	public Behavior <SwarmAgent> createBoidBehavior()
 	{
 		final IBehaviorState<SwarmAgent> boidState = new BoidBehavior();
-//		final IBehaviorState<SwarmAgent> dangerState = new DangerBehavior();
+//		final IBehaviorState<SwarmAgent> attackState = new SatelliteBehavior();
 		
 		FSMBehavior <SwarmAgent> beh = new FSMBehavior<SwarmAgent>(boidState);
 		
-		beh.link(boidState.getId(), new IBehaviorCondition<SwarmAgent>()
+/*		beh.link(boidState.getId(), new IBehaviorCondition<SwarmAgent>()
 		{
 			@Override public IBehaviorState<SwarmAgent> nextState(SwarmAgent entity) {
 				return boidState;
 			}
-		});
+		});*/
+		beh.link(boidState.getId(), new IBehaviorCondition<SwarmAgent>()
+				{
+					@Override public IBehaviorState<SwarmAgent> nextState(SwarmAgent entity) {
+						return new ChasingBehavior<SwarmAgent>(entity.getTarget().getArea(), 4);
+					}
+				});
+		beh.link(ChasingBehavior.getStateId(), new IBehaviorCondition<SwarmAgent>()
+				{
+					@Override public IBehaviorState<SwarmAgent> nextState(SwarmAgent entity) {
+						return new ChasingBehavior<SwarmAgent>(entity.getTarget().getArea(), 4);
+					}
+				});
 		
 		return beh;
 	}

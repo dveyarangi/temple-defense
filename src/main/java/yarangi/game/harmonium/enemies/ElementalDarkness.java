@@ -1,6 +1,6 @@
 package yarangi.game.harmonium.enemies;
 
-import yarangi.game.harmonium.model.Integrity;
+import yarangi.game.harmonium.battle.Integrity;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
 import yarangi.spatial.AABB;

@@ -1,4 +1,4 @@
-package yarangi.game.harmonium.model;
+package yarangi.game.harmonium.battle;
 
 /**
  * 

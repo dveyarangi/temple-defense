@@ -1,7 +1,7 @@
 package yarangi.game.harmonium.temple.weapons;
 
+import yarangi.game.harmonium.battle.Damage;
 import yarangi.game.harmonium.environment.resources.Resource;
-import yarangi.game.harmonium.model.Damage;
 
 /**
  * Unites the characteristics of a cannon and the projectile properties.

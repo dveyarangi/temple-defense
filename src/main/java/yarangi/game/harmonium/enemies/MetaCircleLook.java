@@ -45,10 +45,10 @@ public class MetaCircleLook implements Look <Entity>
 		texture.setTexParameteri(GL.GL_TEXTURE_MIN_FILTER, GL.GL_LINEAR);
 		
 		texture.setTexParameteri(GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR);	
-		texture.bind();
-		gl.glTexEnvf(GL.GL_TEXTURE_ENV, GL.GL_TEXTURE_ENV_MODE, GL.GL_REPLACE);
-		gl.glBindTexture( GL.GL_TEXTURE_2D, 0 );
-//		veil = context.getPlugin( IsoheightVeil.NAME );
+//		texture.bind();
+//		gl.glTexEnvf(GL.GL_TEXTURE_ENV, GL.GL_TEXTURE_ENV_MODE, GL.GL_REPLACE);
+//		gl.glBindTexture( GL.GL_TEXTURE_2D, 0 );
+//		veil = context.getPlugin( BlurVeil.NAME );
 //		veil = context.<IVeil>getPlugin( IsoheightVeil.NAME );
 		if(veil == null)
 		{
@@ -67,10 +67,11 @@ public class MetaCircleLook implements Look <Entity>
 		
 		float radius = (float)(entity.getArea().getMaxRadius());
 		texture.bind();
+		gl.glTexEnvf(GL.GL_TEXTURE_ENV, GL.GL_TEXTURE_ENV_MODE, GL.GL_REPLACE);
 		
 		
 		gl.glBegin(GL.GL_QUADS);
-		gl.glColor4f( 0,0,0,0 );
+		gl.glColor4f( 0,0,0,1 );
 		gl.glTexCoord2f( 0.0f, 0.0f ); gl.glVertex2f(-radius, -radius);
 		gl.glTexCoord2f( 0.0f, 1.0f ); gl.glVertex2f(-radius,  radius);
 		gl.glTexCoord2f( 1.0f, 1.0f ); gl.glVertex2f( radius,  radius);

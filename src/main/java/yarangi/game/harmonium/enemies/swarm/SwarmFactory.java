@@ -1,9 +1,11 @@
 package yarangi.game.harmonium.enemies.swarm;
 
+import yarangi.game.harmonium.battle.Damage;
+import yarangi.game.harmonium.battle.Damageable;
+import yarangi.game.harmonium.battle.ITemple;
 import yarangi.game.harmonium.enemies.swarm.agents.Seeder;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
-import yarangi.game.harmonium.model.Damage;
-import yarangi.game.harmonium.temple.TempleEntity;
+import yarangi.game.harmonium.temple.EnergyCore;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.objects.Behavior;
@@ -23,6 +25,7 @@ public class SwarmFactory
 	
 	public static double agentEnginePower = 0.01;
 	private final static Damage MATTER_DAMAGE = new Damage(12, 0, 0, 0);
+
 	
 	public static Swarm createSwarm(int worldSize, final Scene scene, int nodes)
 	{
@@ -93,7 +96,7 @@ public class SwarmFactory
 		return behavior;
 	}
 	
-	static class  AgentCollisionHandler <E extends SwarmAgent> implements ICollisionHandler <E>
+	static class AgentCollisionHandler <E extends SwarmAgent> implements ICollisionHandler <E>
 	{
 		private Swarm swarm;
 		public AgentCollisionHandler(Swarm swarm)
@@ -103,24 +106,12 @@ public class SwarmFactory
 		@Override
 		public boolean setImpactWith(E source, IPhysicalObject target)
 		{
-			if(target instanceof Projectile)
-				{
-					Projectile p = (Projectile) target;
-					
-					swarm.setDanger(source, source.getIntegrity().hit(p.getDamage()));
-					
-					if(source.getIntegrity().getHitPoints() <= 0)
-					{
-						source.markDead();
-//						EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(0,1,0,1), 32);
-						return true;
-					}
 
-				}
-				else
-				if(target instanceof TempleEntity)
+				if(target instanceof Damageable && target instanceof ITemple)
 				{
-					source.markDead();
+					((Damageable) target).hit( new Damage(0, 0, 0.01, 0) );
+					source.hit( new Damage(0.05, 0, 0, 0) );
+//					source.markDead();
 //					EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(1,0,0,1), 64);
 					return true;
 				}

@@ -10,7 +10,7 @@ import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.temple.BattleCommander;
 import yarangi.game.harmonium.temple.BattleInterface;
 import yarangi.game.harmonium.temple.StructureInterface;
-import yarangi.game.harmonium.temple.TempleEntity;
+import yarangi.game.harmonium.temple.EnergyCore;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.actions.ActionController;
 import yarangi.graphics.quadraturin.actions.DefaultActionFactory;
@@ -26,7 +26,7 @@ import yarangi.spatial.Tile;
 public class TempleController extends Entity implements CursorListener
 {
 
-	private TempleEntity temple;
+	private EnergyCore temple;
 	
 	private Scene scene;
 	
@@ -40,7 +40,7 @@ public class TempleController extends Entity implements CursorListener
 	
 	private ActionController actionController;
 
-	public TempleController(Scene scene, IntellectCore core, TempleEntity temple) 
+	public TempleController(Scene scene, IntellectCore core, EnergyCore temple) 
 	{
 		super();
 
@@ -68,7 +68,7 @@ public class TempleController extends Entity implements CursorListener
 
 	public Scene getScene() { return scene; }
 
-	public TempleEntity getTemple() { return temple; }
+	public EnergyCore getTemple() { return temple; }
 
 	public void onCursorMotion(ICursorEvent event) 
 	{

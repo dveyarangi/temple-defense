@@ -1,4 +1,4 @@
-package yarangi.game.harmonium.model;
+package yarangi.game.harmonium.battle;
 
 import java.util.Arrays;
 
@@ -9,6 +9,8 @@ public class Integrity implements Cloneable
 	
 	private double [] resistances;
 	private double armor;
+	
+	public static Integrity DUMMY() { return new Integrity( 0, 0, new double [] {0,0,0,0} ); }
 	
 	
 	public Integrity(double maxHitPoints, double armor, double [] resistances)

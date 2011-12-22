@@ -52,7 +52,7 @@ public class BotLook implements Look<Bot> {
 		else
 			gl.glColor3f(0.0f, 1.0f, 0.2f);*/
 		
-		gl.glDisable(GL.GL_DEPTH_TEST);
+//		gl.glDisable(GL.GL_DEPTH_TEST);
 		double resourcePercent = bot.getPort().get( Resource.Type.ENERGY ).getAmount() / bot.getPort().getCapacity( Resource.Type.ENERGY );
 		gl.glColor4f((float)(1-resourcePercent), (float)(1.0),(float)(1-resourcePercent),0.3f);
 //		gl.glColor4f(0,1,0,(float)(0.2+resourcePercent*0.5));

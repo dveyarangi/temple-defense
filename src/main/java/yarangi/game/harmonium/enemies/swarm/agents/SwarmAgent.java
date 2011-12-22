@@ -1,11 +1,13 @@
 package yarangi.game.harmonium.enemies.swarm.agents;
 
+import yarangi.game.harmonium.battle.Damage;
+import yarangi.game.harmonium.battle.Damageable;
+import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.enemies.IEnemy;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
-import yarangi.game.harmonium.model.Damage;
-import yarangi.game.harmonium.model.Damageable;
-import yarangi.game.harmonium.model.Integrity;
 import yarangi.graphics.quadraturin.objects.Entity;
+import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.spatial.Area;
 
 public class SwarmAgent extends Entity implements Damageable, IEnemy
 {
@@ -15,6 +17,8 @@ public class SwarmAgent extends Entity implements Damageable, IEnemy
 	
 	private double leadership;
 	private double attractiveness;
+	
+	private IEntity target;
 	
 	public SwarmAgent(Swarm swarm, Integrity integrity, double leadership, double attractiveness)
 	{
@@ -36,7 +40,10 @@ public class SwarmAgent extends Entity implements Damageable, IEnemy
 
 	@Override
 	public void hit(Damage damage) {
-		integrity.hit(damage);
+		double d = integrity.hit(damage);
+		swarm.setDanger(this, d); 
+		if(integrity.getHitPoints() <= 0)
+			markDead();
 	}
 
 	@Override
@@ -49,6 +56,15 @@ public class SwarmAgent extends Entity implements Damageable, IEnemy
 	public double getAttractiveness()
 	{
 		return attractiveness;
+	}
+	
+	public void setTarget(IEntity entity) {
+		this.target = entity;
+	}
+
+	public IEntity getTarget()
+	{
+		return target;
 	}
 
 }

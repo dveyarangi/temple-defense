@@ -1,8 +1,8 @@
 package yarangi.game.harmonium.environment.terrain;
 
-import yarangi.game.harmonium.model.Damage;
-import yarangi.game.harmonium.model.Damageable;
-import yarangi.game.harmonium.model.Integrity;
+import yarangi.game.harmonium.battle.Damage;
+import yarangi.game.harmonium.battle.Damageable;
+import yarangi.game.harmonium.battle.Integrity;
 import yarangi.graphics.quadraturin.objects.Dummy;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.spatial.PolygonArea;

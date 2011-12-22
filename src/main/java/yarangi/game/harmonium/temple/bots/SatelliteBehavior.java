@@ -1,5 +1,6 @@
 package yarangi.game.harmonium.temple.bots;
 
+import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.Angles;
 import yarangi.math.Geometry;
@@ -11,17 +12,20 @@ import yarangi.spatial.Area;
  * @author dveyarangi
  *
  */
-public class SatelliteBehavior implements IBehaviorState <Bot>
+public class SatelliteBehavior <K extends IEntity> implements IBehaviorState <K>
 {
 	private Area host;
 	
-	public SatelliteBehavior(Area host)
+	private double enginePower;
+	
+	public SatelliteBehavior(Area host, double enginePower)
 	{
 		this.host = host;
+		this.enginePower = enginePower;
 	}
 
 	@Override
-	public double behave(double time, Bot bot)
+	public double behave(double time, K bot)
 	{
 		Vector2D botLocation = bot.getArea().getRefPoint();
 		Vector2D hostLocation = host.getRefPoint();
@@ -31,20 +35,19 @@ public class SatelliteBehavior implements IBehaviorState <Bot>
 		Vector2D attractionDir = hostLocation.minus(botLocation).normalize();
 		if (attractionDir.x() == 0 && attractionDir.y() == 0) // stale mate
 		{
-			double randomAngle = Math.random()*Angles.PI_2;
-			attractionDir = Vector2D.POLAR(1, randomAngle);
+			attractionDir = Vector2D.UNIT(Math.random()*Angles.PI_2);
 		}
 		double offset = Geometry.calcHypotSquare( botLocation, hostLocation ) - satelliteDistanceSquare;
 		
 		double rotationScalar = 1 / Math.log( Math.abs( offset )+1 );
 //		System.out.println(rotationScalar);
-		Vector2D attractionForce = attractionDir.multiply( (offset > 0 ? 1 : -1 ) * (1 - rotationScalar)*3*bot.getEnginePower()); 
+		Vector2D attractionForce = attractionDir.multiply( (offset > 0 ? 1 : -1 ) * (1 - rotationScalar)*3*enginePower); 
 		
 //			System.out.println(rotationScalar);
 		Vector2D rotationDir = attractionDir.left(); 
 		rotationDir = bot.getBody().getVelocity().dot( attractionDir.left() ) > 0 ? rotationDir : rotationDir.minus();
 		
-		Vector2D force = rotationDir.multiply( rotationScalar * bot.getEnginePower() ).add( attractionForce );
+		Vector2D force = rotationDir.multiply( rotationScalar * enginePower ).add( attractionForce );
 	
 //		System.out.println(bot.getArea() + " : " + offset);
 		bot.getBody().setForce( force.x(), force.y() );

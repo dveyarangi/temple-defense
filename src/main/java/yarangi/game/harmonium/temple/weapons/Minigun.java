@@ -1,7 +1,8 @@
 package yarangi.game.harmonium.temple.weapons;
 
+import yarangi.game.harmonium.battle.Damage;
+import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.environment.resources.Resource;
-import yarangi.game.harmonium.model.Damage;
 import yarangi.game.harmonium.temple.BattleInterface;
 
 public class Minigun extends Weapon 
@@ -65,7 +66,7 @@ public class Minigun extends Weapon
 	
 	
 	public Minigun(BattleInterface bi, WeaponProperties props) {
-		super(bi, props);
+		super(bi, props, Integrity.DUMMY());
 
 	}
 
@@ -87,5 +88,5 @@ public class Minigun extends Weapon
 	public void stop() {
 	}
 
-	
+	public double getAttractivity() { return 100; }
 }

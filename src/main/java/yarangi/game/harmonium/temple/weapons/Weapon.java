@@ -1,14 +1,18 @@
 package yarangi.game.harmonium.temple.weapons;
 
-import yarangi.game.harmonium.actions.Fireable;
 import yarangi.game.harmonium.ai.weapons.NetCore;
+import yarangi.game.harmonium.battle.Damage;
+import yarangi.game.harmonium.battle.Damageable;
+import yarangi.game.harmonium.battle.ITemple;
+import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.environment.resources.Port;
+import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.temple.BattleInterface;
 import yarangi.game.harmonium.temple.Serviceable;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.spatial.Area;
 
-public abstract class Weapon extends Entity implements Fireable, Serviceable
+public abstract class Weapon extends Entity implements Serviceable, ITemple, Damageable
 {
 
 	private static final long serialVersionUID = 1561840016371205291L;
@@ -30,14 +34,17 @@ public abstract class Weapon extends Entity implements Fireable, Serviceable
 	private BattleInterface battleInterface; 
 	private double requestedAmount = 0;
 	private double arrivedAmount = 0;
+	private Integrity integrity;
+	
 	private Port port;
 	
 	private boolean isPoweredUp = true;
 	
-	protected Weapon(BattleInterface battleInterface, WeaponProperties props) {
+	protected Weapon(BattleInterface battleInterface, WeaponProperties props, Integrity integrity) {
 		
 		this.battleInterface = battleInterface;
 		this.props = props;
+		this.integrity = integrity;
 		this.port = new Port();
 		port.setCapacity( props.getResourceType(), props.getResourceCapacity()/2, props.getResourceCapacity() );
 		// TODO: lets start with this:
@@ -62,6 +69,8 @@ public abstract class Weapon extends Entity implements Fireable, Serviceable
 	{
 		return timeToReload < 0;
 	}
+	
+	public abstract Projectile fire();
 	
 	public void advanceReloading(double time)
 	{
@@ -121,4 +130,26 @@ public abstract class Weapon extends Entity implements Fireable, Serviceable
 		double amountToConsume = props.getResourceConsumption();
 		return amountRemaining >= amountToConsume;
 	}
+	
+
+	@Override
+	public Integrity getIntegrity()
+	{
+		return integrity;
+	}
+
+	@Override
+	public void hit(Damage damage)
+	{
+		integrity.hit( damage );
+		port.use(Resource.Type.ENERGY, damage.getDamage( Damage.ELECTRO_MAGNETIC ));
+	}
+
+	@Override
+	public int getGroupId()
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

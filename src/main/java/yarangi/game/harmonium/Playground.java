@@ -5,19 +5,18 @@ import javax.media.opengl.GL;
 import yarangi.game.harmonium.ai.economy.IOrderScheduler;
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.ai.weapons.NetCore;
+import yarangi.game.harmonium.battle.EffectUtils;
 import yarangi.game.harmonium.controllers.ControlBehavior;
 import yarangi.game.harmonium.controllers.ControlLook;
 import yarangi.game.harmonium.controllers.TempleController;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
 import yarangi.game.harmonium.enemies.swarm.SwarmFactory;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
-import yarangi.game.harmonium.environment.terrain.Matter;
-import yarangi.game.harmonium.model.EffectUtils;
 import yarangi.game.harmonium.temple.BattleInterface;
+import yarangi.game.harmonium.temple.EnergyCore;
 import yarangi.game.harmonium.temple.ObserverBehavior;
 import yarangi.game.harmonium.temple.Shield;
 import yarangi.game.harmonium.temple.StructureInterface;
-import yarangi.game.harmonium.temple.TempleEntity;
 import yarangi.game.harmonium.temple.TempleLook;
 import yarangi.game.harmonium.temple.bots.Bot;
 import yarangi.game.harmonium.temple.bots.BotFactory;
@@ -37,7 +36,6 @@ import yarangi.graphics.quadraturin.config.SceneConfig;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.Dummy;
 import yarangi.graphics.quadraturin.objects.EntityShell;
-import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.simulations.Body;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
@@ -51,13 +49,12 @@ import yarangi.graphics.quadraturin.ui.Panel;
 import yarangi.graphics.quadraturin.ui.PanelLook;
 import yarangi.math.Angles;
 import yarangi.spatial.AABB;
-import yarangi.spatial.ISpatialFilter;
 import yarangi.spatial.PointArea;
 
 public class Playground extends Scene
 {
 	
-	private TempleEntity temple;
+	private EnergyCore temple;
 	
 //	private BackgroundEntity background;
 	
@@ -84,7 +81,7 @@ public class Playground extends Scene
 		core = new NetCore("netcore", this.getWorldLayer().getWidth(), this.getWorldLayer().getHeight());
 //		addEntity(new BubbleSwarm(getWorldVeil(), temple));
 		
-		temple = new TempleEntity(this);
+		temple = new EnergyCore(this);
 		TempleController controller = new TempleController(this, core, temple);
 		temple.setLook(new TempleLook( ));
 		temple.setBehavior(new ObserverBehavior(controller));
@@ -161,7 +158,7 @@ public class Playground extends Scene
 		
 //		KolbasaFactory.generateKolbasaMaze( this );
 		
-		Swarm swarm = SwarmFactory.createSwarm(sceneConfig.getWidth(), this, 5);
+		Swarm swarm = SwarmFactory.createSwarm(sceneConfig.getWidth(), this, 2);
 		Behavior <Swarm> swarmBehavior = SwarmFactory.
 		
 		createDefaultBehavior((GridyTerrainMap)getWorldLayer().<Bitmap>getTerrain());
@@ -186,8 +183,8 @@ public class Playground extends Scene
 				}*/
 				if(target instanceof SwarmAgent)
 				{
+					((SwarmAgent) target).hit( source.getDamage() );
 					source.markDead();
-					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(0,1,0,0), 4 );
 					return true;
 				}
 				
@@ -195,6 +192,7 @@ public class Playground extends Scene
 			}
 			
 		};
+
 		getCollisionManager().registerHandler( Projectile.class, projectileCollider );
 		
 				
@@ -207,27 +205,6 @@ public class Playground extends Scene
 			addEntity( bot );
 			botInterface.add(bot);
 		}
-
-
-		ICollisionHandler<TempleEntity> templeCollider = new ICollisionHandler <TempleEntity> ()
-		{
-
-			@Override
-			public boolean setImpactWith(TempleEntity source, IPhysicalObject target)
-			{
-				if( target instanceof SwarmAgent)
-				{
-//					botInterface.changeTransferRate(-0.5);
-					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(1,0,0,0), 4 );
-					return true;
-				}
-				
-				return false;
-			}
-			
-		};
-		getCollisionManager().registerHandler( TempleEntity.class, templeCollider );
-		
 		
 		ICollisionHandler<Shield> shieldCollider = new ICollisionHandler <Shield> ()
 		{

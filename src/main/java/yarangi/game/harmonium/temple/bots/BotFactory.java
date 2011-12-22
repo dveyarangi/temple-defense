@@ -38,16 +38,16 @@ public class BotFactory
  			@Override public IBehaviorState<Bot> nextState(Bot bot) {
 
 				if(bot.getOrder() == null) // querying returned no order:
-					return new SatelliteBehavior(host.getServiceArea());
+					return new SatelliteBehavior<Bot>(host.getServiceArea(), Bot.ENGINE_POWER);
 				
 				IOrder order = bot.getOrder();
 				switch(order.getState())
 				{
-				case TO_PROVIDER: return new ChasingBehavior (bot.getOrder().getProvider());
+				case TO_PROVIDER: return new ChasingBehavior (bot.getOrder().getProvider().getServiceArea(),  Bot.ENGINE_POWER);
 				case AT_PROVIDER: return new ServicingBehavior (botInterface, bot.getOrder().getProvider());
-				case TO_REQUESTER: return new ChasingBehavior (bot.getOrder().getRequester());
+				case TO_REQUESTER: return new ChasingBehavior (bot.getOrder().getRequester().getServiceArea(),  Bot.ENGINE_POWER);
 				case AT_REQUESTER: return new ServicingBehavior (botInterface, bot.getOrder().getRequester());
-				default: return new SatelliteBehavior(host.getServiceArea());
+				default: return new SatelliteBehavior<Bot>(host.getServiceArea(), Bot.ENGINE_POWER);
 				}
 			}});
 		

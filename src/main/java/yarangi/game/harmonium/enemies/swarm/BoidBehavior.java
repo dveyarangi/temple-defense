@@ -2,11 +2,13 @@ package yarangi.game.harmonium.enemies.swarm;
 
 import java.util.Set;
 
+import yarangi.game.harmonium.battle.ITemple;
 import yarangi.game.harmonium.enemies.IEnemy;
 import yarangi.game.harmonium.enemies.swarm.agents.DroneBehavior;
-import yarangi.game.harmonium.enemies.swarm.agents.Seeder;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
+import yarangi.game.harmonium.temple.bots.SatelliteBehavior;
 import yarangi.graphics.quadraturin.objects.Entity;
+import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.ISensor;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.Geometry;
@@ -16,12 +18,14 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 {
 	public static final double ATTRACTION_COEF = 0.25;
 	public static final double SEPARATION_COEF = 0.5;
-	public static final double FLOCKING_COEF = 0.3;
+	public static final double FLOCKING_COEF = 0.1;
 	
 	private DroneBehavior droning = new DroneBehavior(100);
+	private SatelliteBehavior satellite;
 ///	public static final double FLOCKING_COEF = 1;
 	@Override
 	public double behave(double time, SwarmAgent boid) {
+		
 		
 		ISensor<Entity> sensor = boid.getSensor();
 		
@@ -30,8 +34,9 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 		{
 			droning.behave( time, boid);
 
-			return 0;
+			return CONTINUE;
 		}
+		
 		Vector2D loc = boid.getArea().getRefPoint();
 		
 		double separationDistance;
@@ -44,15 +49,42 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 		double distance;
 		double dN = 1./(neighbours.size()-1);
 		IEnemy otherBoid;
+		double leadership;
+		double attractivity;
+		boolean flocking = false;
 		for(Entity neigh : neighbours)
 		{
-			otherBoid = (IEnemy) neigh;
-			if(otherBoid == boid)
+			if(neigh == boid)
 				continue;
 			
+			if(neigh instanceof ITemple)
+			{
+				if(boid.getTarget() == null)
+				{
+					boid.setTarget( neigh );
+				}
+				
+				if(neigh == boid.getTarget()) 
+				{
+				leadership = 1;
+				attractivity = ((ITemple) neigh).getAttractivity();
+				flocking = false;
+				}
+				else
+					continue;
+			}
+			else
+			{
+ 				otherBoid = (IEnemy) neigh;
+				leadership = otherBoid.getLeadership();
+				attractivity = otherBoid.getAttractiveness();
+				flocking = true;
+			}
 			
-			otherLoc = otherBoid.getArea().getRefPoint();
-			separationDistance = (otherBoid.getArea().getMaxRadius() + boid.getArea().getMaxRadius())/1.5;
+			
+			
+			otherLoc = neigh.getArea().getRefPoint();
+			separationDistance = (neigh.getArea().getMaxRadius() + boid.getArea().getMaxRadius())/1.5;
 			
 			distance = Geometry.calcHypot( loc, otherLoc );
 			
@@ -63,10 +95,11 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 			}
 			
 			// attraction parameters:
-			massCenter.add(otherLoc.minus(loc).multiply( otherBoid.getAttractiveness() ));
+			massCenter.add(otherLoc.minus(loc).multiply( attractivity ));
 			
 			// flocking:
-			flockingVelocity.add(otherBoid.getBody().getVelocity().mul(otherBoid.getLeadership()));
+			if(flocking)
+			flockingVelocity.add(neigh.getBody().getVelocity().mul(leadership));
 		}
 		
 		massCenter.multiply(dN).add( loc );
@@ -82,13 +115,14 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 		Vector2D Flok = flockingVelocity.normalize().multiply(FLOCKING_COEF); 
 		
 //		droning.behave( time, boid);
-		boid.getBody().setForce( Fatt );
+		droning.behave( time, boid);
+		boid.getBody().addForce( Fatt );
 		boid.getBody().addForce( Fsep );
 		boid.getBody().addForce( Flok );
 		
 //		System.out.println(Fatt + " : " + Fsep + " : " + Flok + ", res:" + boid.getBody().getForce());
 		
-		return -1;
+		return CONTINUE;
 	}
 	@Override
 	public int getId() {
