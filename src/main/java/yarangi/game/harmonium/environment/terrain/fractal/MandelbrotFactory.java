@@ -59,7 +59,7 @@ public class MandelbrotFactory implements ITerrainFactory
 		    {
 				yoffset = ystart + toYCoord * j * cellsize;
 
-		    	Bitmap tile = new Bitmap( terrain.toXCoord( i ), terrain.toXCoord( j ), cellsize, 1);
+		    	Bitmap tile = new Bitmap( terrain.toXCoord( i ), terrain.toXCoord( j ), cellsize);
 
 		    	for(pi = 0; pi < cellsize; pi ++)
 			    	for(pj = 0; pj < cellsize; pj ++)

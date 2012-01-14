@@ -18,7 +18,7 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 	public float getPriority() { return 1; }
 
 	@Override
-	protected void renderTile(GL gl, Tile<Beacon> tile, Swarm swarm)
+	protected void renderTile(GL gl, Tile<Beacon> tile, Swarm swarm, int scale)
 	{
         if(tile == null)
         	return;

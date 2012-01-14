@@ -19,11 +19,11 @@ public class SeederBehavior implements IBehaviorState <Seeder>
 	public static final double WINDING_SPEED = 0.5;	
 	private DroneBehavior drone = new DroneBehavior(20);
 	private GridyTerrainMap terrain;
-	private static double SEED_INTERVAL = 20;
+	private static double SEED_INTERVAL = 10;
 	private double lifeTime = 0;
 	private double lastSeedTime = 0;
 	
-	private static final int MASK_WIDTH = 8; 
+	private static final int MASK_WIDTH = 4; 
 	
 	private static final byte [] SEED_MASK = MaskUtil.createCircleMask( MASK_WIDTH/2, new Color(0.1f, 0.1f, 0.1f, 1f) );
 	
@@ -54,7 +54,7 @@ public class SeederBehavior implements IBehaviorState <Seeder>
 		{
 			lastSeedTime = lifeTime;
 			
-//			terrain.apply( seeder.getArea().getRefPoint().x()-MASK_WIDTH/2, seeder.getArea().getRefPoint().y()-MASK_WIDTH/2, false, MASK_WIDTH, SEED_MASK );
+			terrain.apply( seeder.getArea().getRefPoint().x()-MASK_WIDTH/2, seeder.getArea().getRefPoint().y()-MASK_WIDTH/2, false, MASK_WIDTH, SEED_MASK );
 			
 //			Tile <Bitmap> tile = terrain.setPixel( seeder.getArea().getRefPoint().x(), seeder.getArea().getRefPoint().y(), 
 //					new Color(0.2f, 0.2f, 0.2f, 1.0f) );

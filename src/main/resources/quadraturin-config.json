@@ -15,16 +15,12 @@
  					"isoheight" : "shaders/isoheight.glsl"
 			  	}
 			},
+
 			{ "factoryClass" : "yarangi.graphics.veils.IsoheightVeil",
 			  "properties" : {
 			  	}
-			},
-			{ "comment" : 
-			[{ "factoryClass" : "yarangi.graphics.veils.BlurVeil",
-			  "properties" : {
-			  	}
 			}
-			]}
+			
 		 ]
 			  		
 	},
@@ -90,7 +86,7 @@
 	    		},
 		    		
 		    	"terrain" : {
-		    	    "factoryClass"  : "yarangi.game.harmonium.environment.terrain.stone.StoneFactory",
+		    	    "factoryClass"  : "yarangi.game.harmonium.environment.terrain.fractal.MandelbrotFactory",
 		    	    "cellsize" : 8
 	    	    }
 			}

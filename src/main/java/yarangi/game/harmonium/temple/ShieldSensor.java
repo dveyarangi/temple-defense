@@ -1,6 +1,7 @@
 package yarangi.game.harmonium.temple;
 
-import java.util.Set;
+import java.util.List;
+import java.util.SortedSet;
 
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.ISensor;
@@ -64,7 +65,7 @@ public class ShieldSensor implements ISensor <IEntity>
 	}
 
 	@Override
-	public Set<IEntity> getEntities()
+	public List<IEntity> getEntities()
 	{
 		return null;
 	}

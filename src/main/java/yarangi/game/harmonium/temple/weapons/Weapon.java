@@ -10,6 +10,7 @@ import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.temple.BattleInterface;
 import yarangi.game.harmonium.temple.Serviceable;
 import yarangi.graphics.quadraturin.objects.Entity;
+import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
 
 public abstract class Weapon extends Entity implements Serviceable, ITemple, Damageable
@@ -38,15 +39,21 @@ public abstract class Weapon extends Entity implements Serviceable, ITemple, Dam
 	
 	private Port port;
 	
+	private AABB serviceArea;
+	
 	private boolean isPoweredUp = true;
 	
-	protected Weapon(BattleInterface battleInterface, WeaponProperties props, Integrity integrity) {
+	protected Weapon(BattleInterface battleInterface, Area area, WeaponProperties props, Integrity integrity) {
 		
 		this.battleInterface = battleInterface;
 		this.props = props;
 		this.integrity = integrity;
 		this.port = new Port();
 		port.setCapacity( props.getResourceType(), props.getResourceCapacity()/2, props.getResourceCapacity() );
+		
+		setArea(area);
+		
+//		serviceArea = new AABB(area.get)
 		// TODO: lets start with this:
 	}
 //	public WeaponPlatform getPlatform() { return platform; }

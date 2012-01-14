@@ -52,14 +52,15 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 		gl.glBegin(GL.GL_POLYGON);
 		for(double a = 0; a <= 6; a ++)
 		{
-			gl.glVertex3f((float)(0. + cannon.getArea().getMaxRadius()*Math.cos(a*Angles.PI_div_3)), 
-					(float)(0f + cannon.getArea().getMaxRadius()*Math.sin(a*Angles.PI_div_3)), -0.1f);
+			// TODO: markers!
+			gl.glVertex3f((float)(0. + 1*Math.cos(a*Angles.PI_div_3)), 
+						  (float)(0f + 1*Math.sin(a*Angles.PI_div_3)), -0.1f);
 		}
 		gl.glEnd();
 
 		
 		gl.glEnable(GL.GL_BLEND);
-		gl.glColor4f(0.0f, 1.0f, 0f,0.2f);
+		gl.glColor4f(0.0f, 1.0f, 0f, 0.2f);
 		Vector2D trackPoint = cannon.getBattleInterface().acquireTrackPoint(cannon);
 		
 		if(trackPoint != null)
@@ -83,7 +84,7 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 	public IVeil getVeil() { return veil; }
 
 	@Override
-	public boolean isCastsShadow() { return true; }
+	public boolean isCastsShadow() { return false; }
 	@Override
 	public float getPriority() { return 0; }
 

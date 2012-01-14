@@ -47,7 +47,7 @@ public class SatelliteBehavior <K extends IEntity> implements IBehaviorState <K>
 		Vector2D rotationDir = attractionDir.left(); 
 		rotationDir = bot.getBody().getVelocity().dot( attractionDir.left() ) > 0 ? rotationDir : rotationDir.minus();
 		
-		Vector2D force = rotationDir.multiply( rotationScalar * enginePower ).add( attractionForce );
+		Vector2D force = rotationDir.multiply( rotationScalar ).add( attractionForce );
 	
 //		System.out.println(bot.getArea() + " : " + offset);
 		bot.getBody().setForce( force.x(), force.y() );

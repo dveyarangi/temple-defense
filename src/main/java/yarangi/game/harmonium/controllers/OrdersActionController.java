@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import yarangi.game.harmonium.environment.terrain.ConsumingSensor;
+import yarangi.game.harmonium.temple.harvester.Harvester;
 import yarangi.game.harmonium.temple.weapons.Weapon;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.ViewPoint2D;
@@ -42,7 +43,7 @@ public class OrdersActionController extends ActionController
 		@Override
 		public boolean accept(IEntity entity)
 		{
-			if(entity instanceof Weapon)
+			if(entity instanceof Weapon || entity instanceof Harvester)
 			{
 				return true;
 			}

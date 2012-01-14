@@ -4,6 +4,7 @@ import yarangi.game.harmonium.battle.Damage;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.temple.BattleInterface;
+import yarangi.spatial.AABB;
 
 public class Minigun extends Weapon 
 {
@@ -18,7 +19,7 @@ public class Minigun extends Weapon
 	public static final double maxRangeSquare = 200;
 	public static final double RELOADING_TIME = 20;
 	public static final double ACCURACY = 0.2;
-	public static final Damage DAMAGE = new Damage(5, 0.1, 0, 0);
+	public static final Damage DAMAGE = new Damage(15, 0.1, 0, 0);
 	public static final double resourceCapacity = 1000;
 	public static final double resourceConsumption = 50;
 	public static final Resource.Type resourceType = Resource.Type.ENERGY;
@@ -35,38 +36,38 @@ public class Minigun extends Weapon
 			ACCURACY, 
 			projectileHitRadius, 
 			DAMAGE,
-			resourceCapacity, 20, resourceType
+			resourceCapacity, 10, resourceType
 			);
 	public static final WeaponProperties PROPS2 = new WeaponProperties(
 			BASE_TRACKING_SPEED, 
 			CANNON_TRACKING_HALF_WIDTH, 
 			1, 
-			10, 
+			3, 
 			10000,
 			2, 
 			100, 
 			ACCURACY, 
 			projectileHitRadius, 
 			DAMAGE,
-			resourceCapacity, 40, resourceType
+			resourceCapacity, 20, resourceType
 			);
 	public static final WeaponProperties PROPS3 = new WeaponProperties(
 			BASE_TRACKING_SPEED, 
 			CANNON_TRACKING_HALF_WIDTH, 
 			1, 
-			20, 
+			5, 
 			40000,
 			2, 
 			200, 
 			ACCURACY, 
 			projectileHitRadius, 
 			DAMAGE,
-			resourceCapacity, 50, resourceType
+			resourceCapacity, 30, resourceType
 			);
 	
 	
-	public Minigun(BattleInterface bi, WeaponProperties props) {
-		super(bi, props, Integrity.DUMMY());
+	public Minigun(BattleInterface bi, AABB area, WeaponProperties props) {
+		super(bi, area, props, Integrity.DUMMY());
 
 	}
 

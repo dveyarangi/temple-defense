@@ -34,8 +34,8 @@ public class MetaCircleLook implements Look <Entity>
 		BufferedImage image;
 		try
 		{
-			image = ImageIO.read(getClass().getResourceAsStream("/textures/red_gradient.jpg"));
-//			image = ImageIO.read(getClass().getResourceAsStream("/textures/distort_orange_512x512.png"));
+//			image = ImageIO.read(getClass().getResourceAsStream("/textures/red_gradient.jpg"));
+			image = ImageIO.read(getClass().getResourceAsStream("/textures/radial_orange_254x254.png"));
 //			image = ImageIO.read(getClass().getResourceAsStream("/textures/hairy_gradient.png"));
 		} catch ( IOException e )
 		{
@@ -49,10 +49,10 @@ public class MetaCircleLook implements Look <Entity>
 //		gl.glTexEnvf(GL.GL_TEXTURE_ENV, GL.GL_TEXTURE_ENV_MODE, GL.GL_REPLACE);
 //		gl.glBindTexture( GL.GL_TEXTURE_2D, 0 );
 //		veil = context.getPlugin( BlurVeil.NAME );
-//		veil = context.<IVeil>getPlugin( IsoheightVeil.NAME );
+		veil = context.<IVeil>getPlugin( IsoheightVeil.NAME );
 		if(veil == null)
 		{
-			Q.rendering.warn( "Plugin [" + BlurVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
+			Q.rendering.warn( "Plugin [" + IsoheightVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
 			veil = IVeil.ORIENTING;
 		}
 	}
@@ -71,7 +71,7 @@ public class MetaCircleLook implements Look <Entity>
 		
 		
 		gl.glBegin(GL.GL_QUADS);
-		gl.glColor4f( 0,0,0,1 );
+		gl.glColor4f( 1,1,1,1 );
 		gl.glTexCoord2f( 0.0f, 0.0f ); gl.glVertex2f(-radius, -radius);
 		gl.glTexCoord2f( 0.0f, 1.0f ); gl.glVertex2f(-radius,  radius);
 		gl.glTexCoord2f( 1.0f, 1.0f ); gl.glVertex2f( radius,  radius);

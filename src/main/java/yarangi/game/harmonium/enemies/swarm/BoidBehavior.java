@@ -1,6 +1,6 @@
 package yarangi.game.harmonium.enemies.swarm;
 
-import java.util.Set;
+import java.util.List;
 
 import yarangi.game.harmonium.battle.ITemple;
 import yarangi.game.harmonium.enemies.IEnemy;
@@ -8,7 +8,6 @@ import yarangi.game.harmonium.enemies.swarm.agents.DroneBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.harmonium.temple.bots.SatelliteBehavior;
 import yarangi.graphics.quadraturin.objects.Entity;
-import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.ISensor;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.Geometry;
@@ -20,7 +19,7 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 	public static final double SEPARATION_COEF = 0.5;
 	public static final double FLOCKING_COEF = 0.1;
 	
-	private DroneBehavior droning = new DroneBehavior(100);
+	private DroneBehavior droning = new DroneBehavior(20);
 	private SatelliteBehavior satellite;
 ///	public static final double FLOCKING_COEF = 1;
 	@Override
@@ -29,7 +28,7 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 		
 		ISensor<Entity> sensor = boid.getSensor();
 		
-		Set <Entity> neighbours = sensor.getEntities();
+		List <Entity> neighbours = sensor.getEntities();
 		if(neighbours.size() <= 1)
 		{
 			droning.behave( time, boid);
@@ -103,7 +102,7 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 		}
 		
 		massCenter.multiply(dN).add( loc );
-		double attDistance = Geometry.calcHypot(massCenter, loc);
+//		double attDistance = Geometry.calcHypot(massCenter, loc);
 		Vector2D Fatt = massCenter.substract(loc).normalize().multiply(ATTRACTION_COEF);
 		
 //		flockingVelocity.multiply(dN);

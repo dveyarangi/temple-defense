@@ -17,7 +17,7 @@ public class StoneFactory implements ITerrainFactory <GridyTerrainMap>
 	@Override
 	public EntityShell<GridyTerrainMap> generateTerrain(float width, float height, int cellsize)
 	{
-		GridyTerrainMap terrain = new GridyTerrainMap( width, height, cellsize, 1f );
+		GridyTerrainMap terrain = new GridyTerrainMap( width, height, cellsize, 0.5f );
 
 		for (int i = 0; i < terrain.getGridWidth(); i ++)
 		{

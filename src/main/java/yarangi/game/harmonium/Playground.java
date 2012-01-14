@@ -20,6 +20,7 @@ import yarangi.game.harmonium.temple.StructureInterface;
 import yarangi.game.harmonium.temple.TempleLook;
 import yarangi.game.harmonium.temple.bots.Bot;
 import yarangi.game.harmonium.temple.bots.BotFactory;
+import yarangi.game.harmonium.temple.harvester.HarvesterFactory;
 import yarangi.game.harmonium.temple.weapons.Minigun;
 import yarangi.game.harmonium.temple.weapons.MinigunGlowingLook;
 import yarangi.game.harmonium.temple.weapons.Projectile;
@@ -29,7 +30,7 @@ import yarangi.game.harmonium.temple.weapons.WeaponFactory;
 import yarangi.game.harmonium.temple.weapons.WeaponProperties;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.QuadVoices;
+import yarangi.graphics.quadraturin.QVoices;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.config.EkranConfig;
 import yarangi.graphics.quadraturin.config.SceneConfig;
@@ -67,7 +68,7 @@ public class Playground extends Scene
 	
 	private IntellectCore core;
 	
-	public Playground(SceneConfig sceneConfig, EkranConfig ekranConfig, QuadVoices voices)
+	public Playground(SceneConfig sceneConfig, EkranConfig ekranConfig, QVoices voices)
 	{
 		super(sceneConfig, ekranConfig, voices);
 		
@@ -77,6 +78,7 @@ public class Playground extends Scene
 //		addEntity(background);
 
 //		PowerGrid grid = new PowerGrid(this.getWorldVeil());
+		final GridyTerrainMap terrain = (GridyTerrainMap)getWorldLayer().<Bitmap>getTerrain();
 		
 		core = new NetCore("netcore", this.getWorldLayer().getWidth(), this.getWorldLayer().getHeight());
 //		addEntity(new BubbleSwarm(getWorldVeil(), temple));
@@ -85,7 +87,7 @@ public class Playground extends Scene
 		TempleController controller = new TempleController(this, core, temple);
 		temple.setLook(new TempleLook( ));
 		temple.setBehavior(new ObserverBehavior(controller));
-		temple.setSensor(new Sensor(512, 3, null, true));
+		temple.setSensor(new Sensor(512, 3, null, false));
 		temple.setArea(AABB.createSquare(0,0,10, 0));
 		temple.setBody(new Body());
 		addEntity(temple);
@@ -110,8 +112,8 @@ public class Playground extends Scene
 			case 1: props = Minigun.PROPS2; break;
 			case 2: props = Minigun.PROPS2; break;
 			}
-			Weapon weapon = new Minigun(bi, props);
-			weapon.setArea(AABB.createSquare((50+ a%3*30)*Math.cos(Angles.PI_2/maxCannons *a), (50+ a%3*30)*Math.sin(Angles.PI_2/maxCannons * a ),1,0));
+			AABB area = AABB.createSquare((50+ a%3*30)*Math.cos(Angles.PI_2/maxCannons *a), (50+ a%3*30)*Math.sin(Angles.PI_2/maxCannons * a ),6,0);
+			Weapon weapon = new Minigun(bi, area, props);
 			weapon.setLook(new MinigunGlowingLook());
 //			weapon.setLook(new MinigunLook());
 			weapon.setBehavior(new TrackingBehavior());
@@ -136,6 +138,11 @@ public class Playground extends Scene
 //			structure.addServiceable( weapon );
 		}
 
+		for(int a = 0; a < 0; a ++)
+		{
+			addEntity(HarvesterFactory.createHarvester( 300*Math.cos(Angles.PI_2/3 *a), 
+					300*Math.sin(Angles.PI_2/3 * a ), terrain));
+		}
 		
 /*		for(int i = 0; i < 6; i ++)
 		{
@@ -158,7 +165,7 @@ public class Playground extends Scene
 		
 //		KolbasaFactory.generateKolbasaMaze( this );
 		
-		Swarm swarm = SwarmFactory.createSwarm(sceneConfig.getWidth(), this, 2);
+		Swarm swarm = SwarmFactory.createSwarm(sceneConfig.getWidth(), this, 4);
 		Behavior <Swarm> swarmBehavior = SwarmFactory.
 		
 		createDefaultBehavior((GridyTerrainMap)getWorldLayer().<Bitmap>getTerrain());
