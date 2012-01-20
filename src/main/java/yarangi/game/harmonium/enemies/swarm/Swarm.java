@@ -36,7 +36,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	static final int MIN_DANGER_FACTOR = 0;
 	static final int MAX_DANGER_FACTOR = 1000;
 	
-	static final double DANGER_FACTOR_DECAY = 1./100.;
+	static final double DANGER_FACTOR_DECAY = 10.;
 	static final double OMNISCIENCE_PERIOD = 100.;
 	final GridyTerrainMap terrain;
 	

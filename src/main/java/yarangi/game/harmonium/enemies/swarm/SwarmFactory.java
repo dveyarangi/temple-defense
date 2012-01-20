@@ -69,7 +69,7 @@ public class SwarmFactory
 //		swarm.setArea(new Point(0, 0));
 		final IBehaviorState<Swarm> rotating = new RotatingBehavior();
 		final IBehaviorState<Swarm> pathing = new PathingBehavior(3);
-		final IBehaviorState<Swarm> spawning = new SpawningBehavior(terrain, 4);
+		final IBehaviorState<Swarm> spawning = new SpawningBehavior(terrain, 8);
 		final IBehaviorState<Swarm> shifting = new ShiftBehavior();
 		
 		FSMBehavior <Swarm> behavior = new FSMBehavior <Swarm> (shifting);
@@ -77,7 +77,7 @@ public class SwarmFactory
 			@Override
 			public IBehaviorState<Swarm> nextState(Swarm entity) 
 			{
-				if(RandomUtil.oneOf(5))
+				if(RandomUtil.oneOf(3))
 					return pathing;
 				
 				return spawning;
@@ -109,8 +109,8 @@ public class SwarmFactory
 
 				if(target instanceof Damageable && target instanceof ITemple)
 				{
-					((Damageable) target).hit( new Damage(0, 0, 0.01, 0) );
-					source.hit( new Damage(0.05, 0, 0, 0) );
+					((Damageable) target).hit( new Damage(source.getArea().getMaxRadius(), 0, 0, 0) );
+					source.hit( new Damage(1000, 0, 0, 0) );
 //					source.markDead();
 //					EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(1,0,0,1), 64);
 					return true;

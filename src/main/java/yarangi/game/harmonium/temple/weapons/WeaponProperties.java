@@ -110,7 +110,7 @@ public class WeaponProperties
 	}	
 	public Damage getDamage() { return damage; }
 
-	public double getEffectiveRangeSquare() {
+	public double getEffectiveRange() {
 		return cannonEffectiveRange;
 	}
 	public double getResourceCapacity() { return resourceCapacity; }

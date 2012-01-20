@@ -19,8 +19,8 @@ public class EffectUtils
 //		Entity explosion = new Entity(){};
 //		explosion.setBehavior( dyingBehavior );
 //		explosion.setLook( dyingLook );
-//		explosion.setSensor( new DummySensor() );
-//		explosion.setArea( new Point( location.x(), location.y() ) );
+//		explosion.setSensor( new DummySensor(size) );
+//		explosion.setArea( new PointArea( location.x(), location.y() ) );
 //		
 //		veil.addEntity( explosion );
 

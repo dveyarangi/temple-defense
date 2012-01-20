@@ -26,21 +26,21 @@ import yarangi.spatial.Tile;
 public class TempleController extends Entity implements CursorListener
 {
 
-	private EnergyCore temple;
+	private final EnergyCore temple;
 	
-	private Scene scene;
+	private final Scene scene;
 	
 	private ILayerObject highlighted;
 	
-	private BattleInterface battleInterface;
+	private final BattleInterface battleInterface;
 	
-	private StructureInterface structureInterface;
+	private final StructureInterface structureInterface;
 	
-	private IOrderScheduler botInterface;
+	private final IOrderScheduler botInterface;
 	
-	private ActionController actionController;
+	private final ActionController actionController;
 
-	public TempleController(Scene scene, IntellectCore core, EnergyCore temple) 
+	public TempleController(final Scene scene, final IntellectCore core, final EnergyCore temple) 
 	{
 		super();
 
@@ -70,7 +70,7 @@ public class TempleController extends Entity implements CursorListener
 
 	public EnergyCore getTemple() { return temple; }
 
-	public void onCursorMotion(ICursorEvent event) 
+	public void onCursorMotion(final ICursorEvent event) 
 	{
 		highlighted = event.getEntity();
 
@@ -86,7 +86,7 @@ public class TempleController extends Entity implements CursorListener
 //	}
 
 	
-	public void destroy(GL gl)
+	public void destroy(final GL gl)
 	{
 		battleInterface.destroy(gl);
 	}
@@ -97,7 +97,7 @@ public class TempleController extends Entity implements CursorListener
 	}
 
 
-	public void objectObserved(Entity object) { battleInterface.objectObserved(object); }
+	public void objectObserved(final Entity object) { battleInterface.objectObserved(object); }
 
 	class LOSSensor implements ISpatialSensor <Tile<Bitmap>, Bitmap> 
 	{
@@ -105,12 +105,12 @@ public class TempleController extends Entity implements CursorListener
 		public boolean hasLOS() { return hasLOS; }
 
 		@Override
-		public boolean objectFound(Tile<Bitmap> chunk, Bitmap object)
+		public boolean objectFound(final Tile<Bitmap> chunk, final Bitmap object)
 		{
 			if(object.isAlive())
 //			if(object instanceof Tile)
 			{
-//				hasLOS = false;
+				hasLOS = false;
 				return true;
 			}
 			return false;
@@ -121,9 +121,9 @@ public class TempleController extends Entity implements CursorListener
 		
 	}
 
-	public boolean testLOS(double x, double y, double x2, double y2)
+	public boolean testLOS(final double x, final double y, final double x2, final double y2)
 	{
-		LOSSensor sensor = new LOSSensor();
+		final LOSSensor sensor = new LOSSensor();
 //		scene.getEntityIndex().query( sensor, x, y, x2-x, y2-y );
 		if(scene.getWorldLayer().<Bitmap>getTerrain() != null)
 			scene.getWorldLayer().<Bitmap>getTerrain().query( sensor, x, y, x2-x, y2-y );

@@ -6,11 +6,9 @@ import yarangi.math.Vector2D;
 
 public class SimpleProjectileBehavior implements Behavior <Projectile>
 {
-	private BattleInterface bi;
 	
-	public SimpleProjectileBehavior(BattleInterface bi)
+	public SimpleProjectileBehavior()
 	{
-		this.bi = bi;
 	}
 
 	public boolean behave(double time, Projectile prj, boolean isVisible) 

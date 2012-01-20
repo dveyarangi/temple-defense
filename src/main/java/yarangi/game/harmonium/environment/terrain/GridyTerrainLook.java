@@ -5,16 +5,25 @@ import java.awt.Point;
 import javax.media.opengl.GL;
 
 import yarangi.graphics.grid.TileGridLook;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.graphics.textures.TextureUtils;
+import yarangi.graphics.veils.BlurVeil;
 import yarangi.math.BitUtils;
 import yarangi.spatial.Tile;
 
 public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap>
 {
 
+	
+	public void init(GL gl, GridyTerrainMap grid, IRenderingContext context)
+	{
+		super.init( gl, grid, context );
+	}
+	
+	
 	@Override
 	protected void renderTile(GL gl, Tile<Bitmap> tile, GridyTerrainMap grid, int scale)
 	{
@@ -57,7 +66,7 @@ public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap>
 		gl.glEnable( GL.GL_BLEND );
 	}
 	@Override
-	public IVeil getVeil() { return IVeil.ORIENTING; }
+	public IVeil getVeil() { return null; }
 	
 	@Override
 	protected Point getFBODimensions(GridyTerrainMap grid)

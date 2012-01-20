@@ -19,8 +19,11 @@
 			{ "factoryClass" : "yarangi.graphics.veils.IsoheightVeil",
 			  "properties" : {
 			  	}
-			}
-			
+			},
+			{ "factoryClass" : "yarangi.graphics.veils.BlurVeil",
+			  "properties" : {
+			  	}
+			}			
 		 ]
 			  		
 	},
@@ -67,8 +70,8 @@
 		"scenes" : [
 			{
 				"name" : "playground",
-				"width" : 1000,
-				"height" : 1000,
+				"width" : 1024,
+				"height" : 1024,
 				"frameLength" : 30,
 			    "viewpoint" : { 
 			    	"centerx"  : 0.0,
@@ -86,7 +89,7 @@
 	    		},
 		    		
 		    	"terrain" : {
-		    	    "factoryClass"  : "yarangi.game.harmonium.environment.terrain.fractal.MandelbrotFactory",
+		    	    "factoryClass"  : "yarangi.game.harmonium.environment.terrain.stone.StoneFactory",
 		    	    "cellsize" : 8
 	    	    }
 			}

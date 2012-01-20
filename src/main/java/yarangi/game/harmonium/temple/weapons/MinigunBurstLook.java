@@ -39,7 +39,7 @@ public class MinigunBurstLook implements Look <Projectile>
 	}
 
 	public void init(GL gl, Projectile entity, IRenderingContext context) {
-		veil = context.getPlugin( BlurVeil.NAME );
+//		veil = context.getPlugin( BlurVeil.NAME );
 		if(veil == null)
 			veil = IVeil.ORIENTING;
 	}

@@ -35,8 +35,8 @@ public class StoneFactory implements ITerrainFactory <GridyTerrainMap>
 			    	for(int y = 0; y < bitmap.getSize(); y ++)
 			    	{
 			    		if((tileX+x*terrain.getPixelSize())*(tileX+x*terrain.getPixelSize()) +
-			    		   (tileY+y*terrain.getPixelSize())*(tileY+y*terrain.getPixelSize()) > 100000) // TODO: variety :)
-			    			bitmap.put( new Color(0.1f, 0.1f, 0.1f, 1), x, y );
+			    		   (tileY+y*terrain.getPixelSize())*(tileY+y*terrain.getPixelSize()) > 10000) // TODO: variety :)
+			    			bitmap.put( new Color(0.0f, 0.0f, 0.0f, 1), x, y );
 			    	}
 		    	terrain.setModified( tile );
 		    }

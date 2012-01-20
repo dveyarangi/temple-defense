@@ -25,7 +25,7 @@ public class WeaponFactory
 
 		double speedScalar = weapon.getProps().getProjectileSpeed();
 	
-		SimpleProjectileBehavior shellBehavior = new SimpleProjectileBehavior(weapon.getBattleInterface());
+		SimpleProjectileBehavior shellBehavior = new SimpleProjectileBehavior();
 		
 
 		Vector2D speed = Vector2D.POLAR(speedScalar, area.getOrientation());
@@ -54,7 +54,7 @@ public class WeaponFactory
 
 	public static ISensor<?> createSensor(Weapon weapon)
 	{
-		return new Sensor(BitUtils.po2Ceiling( (int)Math.sqrt(weapon.getProps().getEffectiveRangeSquare())), 3, ENEMY_SENSOR, false);
+		return new Sensor(BitUtils.po2Ceiling( (int)(3*weapon.getProps().getEffectiveRange())), 3, ENEMY_SENSOR, false);
 	}
 
 }

@@ -26,7 +26,7 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 	public void init(GL gl, Minigun minigun, IRenderingContext context)
 	{
 		super.init( gl, minigun, context );
-//		veil = context.<IsoheightVeil> getPlugin( IsoheightVeil.NAME );
+		veil = context.<IsoheightVeil> getPlugin( IsoheightVeil.NAME );
 		
 		if(veil == null)
 		{

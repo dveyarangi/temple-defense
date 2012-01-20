@@ -33,7 +33,7 @@ public class BotLook implements Look<Bot> {
 	
 	public void init(GL gl, Bot bot, IRenderingContext context) {
 		
-		veil = context.<BlurVeil>getPlugin( BlurVeil.NAME );
+//		veil = context.<BlurVeil>getPlugin( BlurVeil.NAME );
 		if(veil == null)
 		{
 			Q.rendering.warn( "Plugin [" + BlurVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );

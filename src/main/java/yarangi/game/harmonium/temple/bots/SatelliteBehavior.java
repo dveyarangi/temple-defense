@@ -41,7 +41,7 @@ public class SatelliteBehavior <K extends IEntity> implements IBehaviorState <K>
 		
 		double rotationScalar = 1 / Math.log( Math.abs( offset )+1 );
 //		System.out.println(rotationScalar);
-		Vector2D attractionForce = attractionDir.multiply( (offset > 0 ? 1 : -1 ) * (1 - rotationScalar)*3*enginePower); 
+		Vector2D attractionForce = attractionDir.multiply( (offset > 0 ? 1 : -1 ) * (1 - rotationScalar)*10*enginePower); 
 		
 //			System.out.println(rotationScalar);
 		Vector2D rotationDir = attractionDir.left(); 

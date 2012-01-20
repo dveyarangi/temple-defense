@@ -103,7 +103,7 @@ public class Playground extends Scene
 		
 		BattleInterface bi = controller.getBattleInterface();
 		
-		float maxCannons = 9;
+		float maxCannons = 6;
 		for(int a = 0; a < maxCannons; a ++)
 		{
 			WeaponProperties props = null;
@@ -112,7 +112,8 @@ public class Playground extends Scene
 			case 1: props = Minigun.PROPS2; break;
 			case 2: props = Minigun.PROPS2; break;
 			}
-			AABB area = AABB.createSquare((50+ a%3*30)*Math.cos(Angles.PI_2/maxCannons *a), (50+ a%3*30)*Math.sin(Angles.PI_2/maxCannons * a ),6,0);
+			double radius = (50+ a%3*70);
+			AABB area = AABB.createSquare(radius*Math.cos(Angles.PI_2/maxCannons *a), radius*Math.sin(Angles.PI_2/maxCannons * a ),6,0);
 			Weapon weapon = new Minigun(bi, area, props);
 			weapon.setLook(new MinigunGlowingLook());
 //			weapon.setLook(new MinigunLook());
@@ -121,6 +122,7 @@ public class Playground extends Scene
 			addEntity(weapon);
 			bi.addFireable(weapon);
 			structure.addServiceable( weapon );
+			addEntity(HarvesterFactory.createHarvester(area, weapon.getProps().getEffectiveRange(), terrain));
 			
 /*			Shield shield = new Shield(bi, weapon.getPort());
 			shield.setArea(new Circle((100+ a%3*100)*Math.cos(Angles.PI_2/maxCannons *a), (100+ a%3*100)*Math.sin(Angles.PI_2/maxCannons * a ),100));
@@ -137,11 +139,11 @@ public class Playground extends Scene
 
 //			structure.addServiceable( weapon );
 		}
-
-		for(int a = 0; a < 0; a ++)
+		
+		int maxHarvs = 9;
+		for(int a = 0; a < maxHarvs; a ++)
 		{
-			addEntity(HarvesterFactory.createHarvester( 300*Math.cos(Angles.PI_2/3 *a), 
-					300*Math.sin(Angles.PI_2/3 * a ), terrain));
+			double radius = (a % 3+1) * 80;
 		}
 		
 /*		for(int i = 0; i < 6; i ++)
@@ -182,7 +184,7 @@ public class Playground extends Scene
 			@Override
 			public boolean setImpactWith(Projectile source, IPhysicalObject target)
 			{
-/*				if( target instanceof Bitmap || target instanceof Matter || target instanceof TempleEntity)
+/*				if( target instanceof Bitmap /*|| target instanceof Matter || target instanceof TempleEntity)
 				{
 					source.markDead();
 					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(1,0,0,0), 4 );
@@ -191,6 +193,7 @@ public class Playground extends Scene
 				if(target instanceof SwarmAgent)
 				{
 					((SwarmAgent) target).hit( source.getDamage() );
+					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(1,0,0,1), 4 );
 					source.markDead();
 					return true;
 				}

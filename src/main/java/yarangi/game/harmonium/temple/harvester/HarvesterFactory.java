@@ -1,35 +1,34 @@
 package yarangi.game.harmonium.temple.harvester;
 
 import yarangi.game.harmonium.environment.resources.Port;
-import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.spatial.AABB;
+import yarangi.spatial.Area;
 import yarangi.spatial.ISpatialFilter;
-import yarangi.spatial.ITile;
 
 public class HarvesterFactory
 {
 	
-	public static Harvester createHarvester(double x, double y, GridyTerrainMap terrain)
+	public static Harvester createHarvester(Area area, double range, GridyTerrainMap terrain)
 	{
 		Port port = Port.createEndlessPort();
 		Harvester harvester = new Harvester(port, null);
 		
-		harvester.setArea(AABB.createSquare( x, y, 5, 0 ));
+		harvester.setArea(area);
 		harvester.setLook(new HarvesterLook());
-		harvester.setBehavior( createErrodingBehavior(terrain) );
-		harvester.setSensor(new Sensor(100, 5, new HarvesterSensorFilter(), true));
+		ErrodingBehavior behavior = createErrodingBehavior(range, terrain);
+		harvester.setBehavior( behavior );
+		harvester.setSensor( behavior);
 		
 		return harvester;
 	}
 	
 	
-	public static Behavior <Harvester> createErrodingBehavior(GridyTerrainMap terrain)
+	public static ErrodingBehavior createErrodingBehavior(double range, GridyTerrainMap terrain)
 	{
-		return new ErrodingBehavior(terrain);
+		return new ErrodingBehavior(range, terrain);
 	}
 	
 	private static class HarvesterSensorFilter implements ISpatialFilter <IEntity> {

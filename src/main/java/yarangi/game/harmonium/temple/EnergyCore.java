@@ -6,6 +6,7 @@ import yarangi.game.harmonium.battle.Damageable;
 import yarangi.game.harmonium.battle.ITemple;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.environment.resources.Port;
+import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.spatial.Area;
 
 
@@ -80,8 +81,12 @@ public class EnergyCore extends ObserverEntity implements Serviceable, ITemple, 
 	@Override
 	public void hit(Damage damage)
 	{
-		// TODO Auto-generated method stub
+//		integrity.hit( damage );
+		port.use(Resource.Type.ENERGY, damage.getDamage( Damage.ELECTRO_MAGNETIC ));
 		
+		transferRate -= damage.getDamage( Damage.KINETIC )/10;
+		System.out.println("transfer rate: " + transferRate);
+		if(transferRate < 0) transferRate = 0;
 	}
 
 }
