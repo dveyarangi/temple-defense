@@ -36,7 +36,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	static final int MIN_DANGER_FACTOR = 0;
 	static final int MAX_DANGER_FACTOR = 1000;
 	
-	static final double DANGER_FACTOR_DECAY = 10.;
+	static final double DANGER_FACTOR_DECAY = 0.0001;
 	static final double OMNISCIENCE_PERIOD = 100.;
 	final GridyTerrainMap terrain;
 	
@@ -161,7 +161,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 					if(j < 0 || j >= WSIZE) continue;
 					
 					beacon = getContentByIndex( i, j );
-					beacon.update( damage/(dx+dy) );
+					beacon.update( damage/(dx*dx+dy*dy) );
 					
 				}
 		}

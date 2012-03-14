@@ -1,5 +1,6 @@
 package yarangi.game.harmonium.temple.weapons;
 
+import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.ai.weapons.NetCore;
 import yarangi.game.harmonium.battle.Damage;
 import yarangi.game.harmonium.battle.Damageable;
@@ -26,7 +27,7 @@ public abstract class Weapon extends Entity implements Serviceable, ITemple, Dam
 	
 	private WeaponProperties props;
 	
-	private NetCore core;
+	private IntellectCore core;
 	
 //	private double reloadTime;
 	private double timeToReload = 0;
@@ -50,7 +51,7 @@ public abstract class Weapon extends Entity implements Serviceable, ITemple, Dam
 		this.integrity = integrity;
 		this.port = new Port();
 		port.setCapacity( props.getResourceType(), props.getResourceCapacity()/2, props.getResourceCapacity() );
-		
+		core = battleInterface.getCore();
 		setArea(area);
 		
 //		serviceArea = new AABB(area.get)
@@ -91,7 +92,7 @@ public abstract class Weapon extends Entity implements Serviceable, ITemple, Dam
 	
 	public WeaponProperties getProps() { return props; }
 	
-	public NetCore getCore() { return core; }
+	public IntellectCore getCore() { return core; }
 
 	public BattleInterface getBattleInterface() {
 		return battleInterface;
@@ -158,5 +159,9 @@ public abstract class Weapon extends Entity implements Serviceable, ITemple, Dam
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	public abstract void updateState(double time);
+
+	public abstract double getProjectileSpeed();
 
 }

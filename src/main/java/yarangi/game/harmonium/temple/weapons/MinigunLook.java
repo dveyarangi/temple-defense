@@ -2,10 +2,13 @@ package yarangi.game.harmonium.temple.weapons;
 
 import javax.media.opengl.GL;
 
+import yarangi.game.harmonium.ai.weapons.IntellectCore;
+import yarangi.game.harmonium.ai.weapons.NetCore;
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
+import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
@@ -18,27 +21,7 @@ public class MinigunLook implements Look<Minigun>
 	public void render(GL gl, double time, Minigun cannon, IRenderingContext context) 
 	{
 
-		double controlAngle = cannon.getArea().getOrientation();
-		
-/*		double width =  cannon.getWeaponProperties().getProjectileTrajectoryAccuracy();
-		
-		double maxDistance = 1000;//Math.sqrt(DistanceUtils.calcDistanceSquare(new Vector2D(0,0), mousePoint));
-//		double distance = Math.sqrt(DistanceUtils.calcDistanceSquare(new Vector2D(0,0), mousePoint));
-		
-		double startAngle = controlAngle - width;
-		double endAngle = controlAngle + width;
-		gl.glBegin(GL.GL_POLYGON);
-		gl.glColor4f(1.0f, 0.5f, 0.7f,0.1f);
-//			gl.glVertex3f((float)(controlRadius*cos),(float)(controlRadius*sin),0);
-			gl.glVertex3f((float)(maxDistance*Math.cos(endAngle)),   (float)(maxDistance*Math.sin(endAngle)), 0);
-			gl.glVertex3f((float)(maxDistance*Math.cos(startAngle)), (float)(maxDistance*Math.sin(startAngle)), 0);
-		
-			for(double a = startAngle; a < endAngle; a += 0.1)
-				gl.glVertex3f((float)(10*Math.cos(a)),(float)(10*Math.sin(a)),0);
-		gl.glEnd();	*/
-		
-//		AABB target = cannon.getTrackingPoint()
-		Area area = cannon.getArea();
+			Area area = cannon.getArea();
 		Vector2D loc = area.getRefPoint();
 		Resource.Type type = cannon.getProps().getResourceType();
 		double resourcePercent = cannon.getPort().get( type ).getAmount() / cannon.getPort().getCapacity( type );
@@ -52,8 +35,17 @@ public class MinigunLook implements Look<Minigun>
 		}
 		gl.glEnd();
 		
-		gl.glEnable(GL.GL_BLEND);
+/*		gl.glEnable(GL.GL_BLEND);
 		gl.glColor4f(0.0f, 1.0f, 0f,0.2f);
+		gl.glBegin( GL.GL_LINE_STRIP );
+		float x, y;
+		for(double a = 0; a <= Angles.PI_2+0.001; a += Angles.PI_div_40)
+		{
+			x = (float)(cannon.getSensor().getRadius() * Math.cos( a ));
+			y = (float)(cannon.getSensor().getRadius() * Math.sin( a ));
+			gl.glVertex2f( x, y );
+		}
+		gl.glEnd();*/
 		Vector2D trackPoint = cannon.getBattleInterface().acquireTrackPoint(cannon);
 		
 		if(trackPoint != null)
@@ -70,6 +62,24 @@ public class MinigunLook implements Look<Minigun>
 			gl.glVertex3f((float)(relTrack.x()+0.5), (float)(relTrack.y()+0.5), 0);
 			gl.glVertex3f((float)(relTrack.x()+0.5), (float)(relTrack.y()-0.5), 0);
 			gl.glVertex3f((float)(relTrack.x()-0.5), (float)(relTrack.y()-0.5), 0);
+			gl.glEnd();
+		}
+		
+		IntellectCore core = cannon.getCore();
+		
+
+		IEntity target = cannon.getBattleInterface().getTargets().get( cannon );
+		if(target != null) {
+			double baseSpeed = cannon.getProps().getProjectileSpeed();
+			gl.glBegin(GL.GL_LINE_STRIP);
+			for(int i = -5; i < 5; i ++)
+			{
+//				System.out.println(core + " : " + target + " : " + cannon);
+				Vector2D prediction = core.pickTrackPoint( cannon.getArea().getRefPoint(), baseSpeed-0.5*i, target.getArea().getRefPoint(), target.getBody().getVelocity() );
+				prediction.substract( loc );
+				gl.glVertex3f((float)(prediction.x()), (float)(prediction.y()), 0);
+				
+			}
 			gl.glEnd();
 		}
 	}

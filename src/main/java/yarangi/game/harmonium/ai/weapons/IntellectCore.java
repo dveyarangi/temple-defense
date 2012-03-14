@@ -1,6 +1,5 @@
 package yarangi.game.harmonium.ai.weapons;
 
-import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Vector2D;
 
 /**
@@ -20,7 +19,7 @@ public interface IntellectCore
 	 * @param target
 	 * @return
 	 */
-	public Vector2D pickTrackPoint(Vector2D cannonLocation, Vector2D projectileVelocity, IEntity target);
+	public Vector2D pickTrackPoint(Vector2D cannonLocation, double projectileVelocity, Vector2D targetLocation, Vector2D targetVelocity);
 	
 	/**
 	 * 

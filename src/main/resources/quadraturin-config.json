@@ -87,11 +87,12 @@
 		    		"engineClass" : "yarangi.graphics.quadraturin.simulations.StupidInteractions",
 		    		"colliderClass" : "yarangi.graphics.quadraturin.simulations.RoughCollider"
 	    		},
-		    		
-		    	"terrain" : {
-		    	    "factoryClass"  : "yarangi.game.harmonium.environment.terrain.stone.StoneFactory",
-		    	    "cellsize" : 8
-	    	    }
+
+	    		"terrain" : {
+	    			"factoryClass" : "yarangi.game.harmonium.environment.terrain.stone.StoneFactory",
+	    			"cellsize" : 10
+		    	}
+
 			}
 		]
 	}

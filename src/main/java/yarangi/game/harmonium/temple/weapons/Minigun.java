@@ -4,6 +4,7 @@ import yarangi.game.harmonium.battle.Damage;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.temple.BattleInterface;
+import yarangi.numbers.RandomUtil;
 import yarangi.spatial.AABB;
 
 public class Minigun extends Weapon 
@@ -26,6 +27,33 @@ public class Minigun extends Weapon
 	public static final Resource.Type resourceType = Resource.Type.ENERGY;
 
 	
+	public static final WeaponProperties PROPS0 = new WeaponProperties(
+			BASE_TRACKING_SPEED, 
+			CANNON_TRACKING_HALF_WIDTH, 
+			1, 
+			1, // reloading time
+			256, // projectile range square
+			2,  // prjectile speed
+			256, // tracking range
+			ACCURACY, 
+			projectileHitRadius, 
+			new Damage(3, 0.1, 0, 0),
+			resourceCapacity, 0, resourceType,
+			256);
+	
+	public static final WeaponProperties PROP_SMALL = new WeaponProperties(
+			BASE_TRACKING_SPEED, 
+			CANNON_TRACKING_HALF_WIDTH, 
+			1, 
+			4, // reloading time
+			32, // projectile range square
+			2,  // prjectile speed
+			32, // tracking range
+			ACCURACY, 
+			projectileHitRadius, 
+			new Damage(15, 0.1, 0, 0),
+			resourceCapacity, 0, resourceType,
+			32);
 	public static final WeaponProperties PROPS1 = new WeaponProperties(
 			BASE_TRACKING_SPEED, 
 			CANNON_TRACKING_HALF_WIDTH, 
@@ -37,8 +65,8 @@ public class Minigun extends Weapon
 			ACCURACY, 
 			projectileHitRadius, 
 			new Damage(15, 0.1, 0, 0),
-			resourceCapacity, 4, resourceType
-			);
+			resourceCapacity, 8, resourceType,
+			256);
 	public static final WeaponProperties PROPS2 = new WeaponProperties(
 			BASE_TRACKING_SPEED, 
 			CANNON_TRACKING_HALF_WIDTH, 
@@ -50,8 +78,8 @@ public class Minigun extends Weapon
 			ACCURACY, 
 			projectileHitRadius, 
 			new Damage(30, 0.1, 0, 0),
-			resourceCapacity, 32, resourceType
-			);
+			resourceCapacity, 16, resourceType,
+			256);
 	public static final WeaponProperties PROPS3 = new WeaponProperties(
 			BASE_TRACKING_SPEED, 
 			CANNON_TRACKING_HALF_WIDTH, 
@@ -63,8 +91,10 @@ public class Minigun extends Weapon
 			ACCURACY, 
 			projectileHitRadius, 
 			new Damage(60, 0.1, 0, 0),
-			resourceCapacity, 64, resourceType
-			);
+			resourceCapacity, 32, resourceType,
+			256);
+
+	private double nextProjectileSpeed;
 	
 	
 	public Minigun(BattleInterface bi, AABB area, WeaponProperties props) {
@@ -81,7 +111,7 @@ public class Minigun extends Weapon
 
 		reload();
 		
-		return WeaponFactory.createProjectile( this );
+		return WeaponFactory.createProjectile( this, nextProjectileSpeed );
 	}
 
 	/**
@@ -91,4 +121,17 @@ public class Minigun extends Weapon
 	}
 
 	public double getAttractivity() { return 100; }
+
+	@Override
+	public void updateState(double time)
+	{
+		nextProjectileSpeed = RandomUtil.N( getProps().getProjectileSpeed(), 0.5);
+	}
+
+	@Override
+	public double getProjectileSpeed()
+	{
+		
+		return nextProjectileSpeed;
+	}
 }

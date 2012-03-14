@@ -6,13 +6,13 @@ import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.CircleLightLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
 
-public class ObserverLook extends CircleLightLook<ObserverEntity> 
+public class ObserverLook extends CircleLightLook<IObserverEntity> 
 {
 	public ObserverLook(Color color) {
 		super(color);
 	}
 
-	public void render(GL gl, double time, ObserverEntity entity, IRenderingContext context) 
+	public void render(GL gl, double time, IObserverEntity entity, IRenderingContext context) 
 	{	
 		super.render(gl, time, entity, context);
 

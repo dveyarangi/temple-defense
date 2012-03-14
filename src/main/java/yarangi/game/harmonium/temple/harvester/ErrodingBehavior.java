@@ -20,11 +20,11 @@ public class ErrodingBehavior extends Sensor implements Behavior <Harvester>
 	Tile <Bitmap> reserveTile = null;
 	boolean harvestedFound = false;
 //	final GridyTerrainMap terrain = (GridyTerrainMap)scene.getWorldLayer().<Bitmap>getTerrain();
-	private static final int MASK_WIDTH =32; 
+	private static final int MASK_WIDTH =16; 
 	
 	private static final byte [] HARV_MASK = MaskUtil.createCircleMask( MASK_WIDTH/2, new Color(0f, 0f, 0f, 1f), true);
 	
-	private static final long ERRODE_INVERVAL = 2;
+	private static final double ERRODE_INVERVAL = 1;
 	
 	private Tile <Bitmap> prevTile;
 	
@@ -40,8 +40,10 @@ public class ErrodingBehavior extends Sensor implements Behavior <Harvester>
 	@Override
 	public boolean objectFound(IAreaChunk chunk, IEntity object) 
 	{
-		if(!(chunk instanceof Tile))
+		if(!(chunk instanceof Tile)) {
+			super.objectFound( chunk, object );
 			return false;
+		}
 		
 		Tile <Bitmap> tile = (Tile <Bitmap>) chunk;
 		if(!tile.get().isEmpty())
@@ -88,6 +90,7 @@ public class ErrodingBehavior extends Sensor implements Behavior <Harvester>
 	
 	public void clear() { 
 		
+		super.clear();
 		lastSaturation = saturation;
 		saturation = 1;
 		harvestedFound = false;

@@ -21,9 +21,9 @@ public class BotLook implements Look<Bot> {
 	private int headIdx = 0;
 	IVeil veil;
 	
-	private Color color = new Color(RandomUtil.getRandomGaussian( 0.8f, 0.2f ), 
-			RandomUtil.getRandomGaussian(  0.8f, 0.2f  ), 
-			RandomUtil.getRandomGaussian( 0.8f, 0.2f ), 
+	private Color color = new Color(RandomUtil.N( 0.8f, 0.2f ), 
+			RandomUtil.N(  0.8f, 0.2f  ), 
+			RandomUtil.N( 0.8f, 0.2f ), 
 			0.5f);
 	
 	public BotLook(int tailSize)

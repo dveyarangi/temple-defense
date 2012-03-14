@@ -29,7 +29,7 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 //	private BackpropNetwork network = new BackpropNetwork(1);
 	private String name;
 	
-	private static final float LEARNING_RATE = 0.2f;
+	private static final float LEARNING_RATE = 0.1f;
 	
 	/** 
 	 * Back-propagate neural network algorithm. 
@@ -57,10 +57,9 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 		} catch (Exception e) {
 			log.debug("Cannot load NN core " + name + ", creating new one");
 			network = new BackpropNetwork(2);
-			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
-			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
-			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
-			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new LinearAF(0.1), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
+			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
+			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
+			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
 //			network.addLayer(new CompleteNeuronLayer(10, new NumericAF [] { new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF()}, 1));
 			network.addInput(new ArrayInput(new double [8]));
 		}
@@ -68,8 +67,8 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 //		network.addLayer(new CompleteNeuronLayer(10, new TanHAF(), 1));
 		
 		Normalizer normalizer = new ScalingNormalizer(
-						new double [] {-2*worldWidth, -2*worldHeight, -20, -20,  0 }, 
-						new double [] { 2*worldWidth,  2*worldHeight,  20,  20,   20},
+						new double [] {-2*worldWidth, -2*worldHeight, -20, -20, -2*worldWidth, -2*worldHeight, 0 }, 
+						new double [] { 2*worldWidth,  2*worldHeight,  20,  20, 2*worldWidth, 2*worldHeight,  20},
 						new double [] {-worldWidth, -worldHeight}, 
 						new double [] { worldWidth,  worldHeight});
 		
@@ -84,7 +83,7 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 		if(beacon.getDistance() < 40000) // TODO: real beacon location test
 		{
 			Vector2D relativeTarget = beacon.getInitialTargetLocation().minus(beacon.getSource());
-			double [] input = createInput(relativeTarget, beacon.getVelocity(),/*beacon.getSource().getArea().getRefPoint(),*/ beacon.getProjectileVelocity());
+			double [] input = createInput(beacon.getInitialTargetLocation(), beacon.getVelocity(), beacon.getSource(), beacon.getProjectileVelocity());
 			
 //			System.out.println(beacon.getSource().getArea().getRefPoint());
 			double [] res = run(input);
@@ -101,16 +100,16 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 		return false;
 	}
 
-	public Vector2D pickTrackPoint(Vector2D sourceLocation, Vector2D projectileVelocity, IEntity target) 
+	public Vector2D pickTrackPoint(Vector2D sourceLocation, double projectileVelocity, Vector2D targetLocation, Vector2D targetVelocity) 
 	{
 //		System.out.println(sourceLocation);
-		Vector2D relativeTarget = target.getArea().getRefPoint().minus(sourceLocation);
-		double [] res = run(createInput(relativeTarget, target.getBody().getVelocity(), /*sourceLocation,*/ projectileVelocity));
+		Vector2D relativeTarget = targetLocation.minus(sourceLocation);
+		double [] res = run(createInput(targetLocation, targetVelocity, sourceLocation, projectileVelocity));
 //		System.out.println(res[0] + " : " + res[1]);
 		return Vector2D.R(res[0], res[1]).plus(sourceLocation);
 //		return Math.atan2(res[1], res[0]);
 	}
-	private double [] createInput(Vector2D targetLocation, Vector2D targetVelocity, Vector2D projectileVelocity)
+	private double [] createInput(Vector2D targetLocation, Vector2D targetVelocity, Vector2D sourceCocation, double projectileVelocity)
 	{
 		return new double [] {
 				targetLocation.x(),
@@ -119,7 +118,9 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 //				Math.sin(target.getAABB().a),
 				targetVelocity.x(),
 				targetVelocity.y(),
-				projectileVelocity.abs()
+				sourceCocation.x(),
+				sourceCocation.y(),
+				projectileVelocity
 			};
 	}
 

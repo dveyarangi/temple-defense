@@ -67,10 +67,16 @@ public class Beacon implements IBeacon
 	public void decayDanger(long time)
 	{
 //		System.out.println(dangerFactor.getAverage());
+		if(dangerFactor.getSum() == 0)
+			return;
+		
 		double dt = time - this.time;
 //		if(dangerFactor.getSum() != 0)
 //			System.out.println(dangerFactor.getSum() + " : " + dt * Swarm.DANGER_FACTOR_DECAY);
+		double prevSum = dangerFactor.getSum();
 		dangerFactor.setSum(dangerFactor.getSum() - dt * Swarm.DANGER_FACTOR_DECAY);
+		
+//		System.out.println(prevSum + " : " + dangerFactor.getSum() + " : " + dt  + " : " + Swarm.DANGER_FACTOR_DECAY);
 		if(dangerFactor.getSum() < 0)
 		{
 			dangerFactor.reset();

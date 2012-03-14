@@ -3,6 +3,7 @@ package yarangi.game.harmonium.enemies.swarm;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.enemies.EnemyFactory;
 import yarangi.game.harmonium.enemies.MetaCircleLook;
+import yarangi.game.harmonium.enemies.swarm.agents.DroneBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.Seeder;
 import yarangi.game.harmonium.enemies.swarm.agents.SeederBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.SeederLook;
@@ -55,22 +56,23 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 			timeToSpawn += spawnInterval;
 			double angle = RandomUtil.getRandomDouble(Angles.PI_2);
 	//			double radius = RandomUtil.getRandomGaussian(800, 0);
-			double size = Math.abs(RandomUtil.getRandomGaussian(0.5, 0.2))+0.1;
+			double size = Math.abs(RandomUtil.N(0.5, 0.2))+0.1;
 			Vector2D source = swarm.getSource();
 			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(100*size, 0, new double [] {0,0,0,0}), size/100000, 10*size);
 			agent.setLook(agentLook);
-			agent.setBehavior(createBoidBehavior());
+//			agent.setBehavior(createBoidBehavior());
+			agent.setBehavior(new DroneBehavior( 20 ));
 	//		System.out.println("spawning agent at " + swarm.getArea().getRefPoint());
 			agent.setArea(AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
 								   source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle));
 			agent.setSensor(EnemyFactory.SHORT_SENSOR());
-			agent.setBody(new Body(10*size+RandomUtil.getRandomGaussian(0, 1), 0.5+RandomUtil.getRandomGaussian(0, 0.1)));
+			agent.setBody(new Body(10*size+RandomUtil.N(0, 1), 0.5+RandomUtil.N(0, 0.1)));
 			swarm.addAgent(agent);
 //			System.out.println("Agent spawn at " + agent.getArea().getRefPoint());
 			
 			if(RandomUtil.oneOf( 4 )) {
 				Seeder seeder = new Seeder(swarm, 
-										new Integrity(20*size*10, 0, new double [] {0,0,0,0}), 
+										new Integrity(5*size*10, 0, new double [] {0,0,0,0}), 
 										AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
 													  source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle),
 													  size*10, size*100);

@@ -6,7 +6,7 @@ import yarangi.numbers.RandomUtil;
 
 public class DroneBehavior implements Behavior<GenericEnemy> 
 {
-	double da = RandomUtil.getRandomGaussian(0, 0.1);
+	double da = RandomUtil.N(0, 0.1);
 	@Override
 	public boolean behave(double time, GenericEnemy entity, boolean isVisible) 
 	{

@@ -12,6 +12,7 @@ import yarangi.game.harmonium.controllers.TempleController;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
 import yarangi.game.harmonium.enemies.swarm.SwarmFactory;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
+import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.game.harmonium.temple.BattleInterface;
 import yarangi.game.harmonium.temple.EnergyCore;
 import yarangi.game.harmonium.temple.ObserverBehavior;
@@ -20,9 +21,11 @@ import yarangi.game.harmonium.temple.StructureInterface;
 import yarangi.game.harmonium.temple.TempleLook;
 import yarangi.game.harmonium.temple.bots.Bot;
 import yarangi.game.harmonium.temple.bots.BotFactory;
+import yarangi.game.harmonium.temple.harvester.Harvester;
 import yarangi.game.harmonium.temple.harvester.HarvesterFactory;
 import yarangi.game.harmonium.temple.weapons.Minigun;
 import yarangi.game.harmonium.temple.weapons.MinigunGlowingLook;
+import yarangi.game.harmonium.temple.weapons.MinigunLook;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.game.harmonium.temple.weapons.TrackingBehavior;
 import yarangi.game.harmonium.temple.weapons.Weapon;
@@ -103,17 +106,17 @@ public class Playground extends Scene
 		
 		BattleInterface bi = controller.getBattleInterface();
 		
-		float maxCannons = 6;
+		float maxCannons = 5;
 		for(int a = 0; a < maxCannons; a ++)
 		{
-			WeaponProperties props = null;
+			WeaponProperties props = Minigun.PROPS0;
 			switch(a%3) {
-			case 0: props = Minigun.PROPS1; break;
-			case 1: props = Minigun.PROPS2; break;
-			case 2: props = Minigun.PROPS2; break;
+			case 0: props = Minigun.PROPS0; break;
+//			case 1: props = Minigun.PROP_SMALL; break;
+//			case 2: props = Minigun.PROP_SMALL; break;
 			}
-			double radius = (50+ a%3*70);
-			AABB area = AABB.createSquare(radius*Math.cos(Angles.PI_2/maxCannons *a), radius*Math.sin(Angles.PI_2/maxCannons * a ),6,0);
+			double radius = (70+ a%3*70);
+			AABB area = AABB.createSquare(radius*Math.cos(Angles.PI_2/maxCannons *a), radius*Math.sin(Angles.PI_2/maxCannons * a ),1,0);
 			Weapon weapon = new Minigun(bi, area, props);
 			weapon.setLook(new MinigunGlowingLook());
 //			weapon.setLook(new MinigunLook());
@@ -122,7 +125,10 @@ public class Playground extends Scene
 			addEntity(weapon);
 			bi.addFireable(weapon);
 			structure.addServiceable( weapon );
-			addEntity(HarvesterFactory.createHarvester(area, weapon.getProps().getEffectiveRange(), terrain));
+			
+			Harvester harvester = HarvesterFactory.createHarvester(area, weapon.getPort(), 128, terrain);
+			addEntity(harvester);
+
 			
 /*			Shield shield = new Shield(bi, weapon.getPort());
 			shield.setArea(new Circle((100+ a%3*100)*Math.cos(Angles.PI_2/maxCannons *a), (100+ a%3*100)*Math.sin(Angles.PI_2/maxCannons * a ),100));
@@ -133,19 +139,28 @@ public class Playground extends Scene
 			shield.setBody( new Body() );
 			addEntity(shield);*/
 		}
-		int maxShields = 3;
+/*		int maxShields = 3;
 		for(int a = 0; a < maxShields; a ++)
 		{
-
-//			structure.addServiceable( weapon );
-		}
+			double radius = 100;
+			Port port = Port.createEmptyPort();
+			AABB area = AABB.createSquare(radius*Math.cos(Angles.PI_2/maxCannons *a), radius*Math.sin(Angles.PI_2/maxCannons * a ),6,0);
+			structure.addServiceable( harvester );
+		}*/
 		
 		int maxHarvs = 9;
-		for(int a = 0; a < maxHarvs; a ++)
+/*		for(int a = 0; a < maxHarvs; a ++)
 		{
 			double radius = (a % 3+1) * 80;
 		}
+		final IOrderScheduler botInterface = controller.getOrderScheduler();
 		
+		for(int i = 0; i < 5; i ++)
+		{
+			Bot bot = BotFactory.createBot( temple, botInterface );
+			addEntity( bot );
+			botInterface.add(bot);
+		}	*/	
 /*		for(int i = 0; i < 6; i ++)
 		{
 			double angle = i * Angles.PI_div_3 + Angles.PI_div_6;
@@ -184,12 +199,12 @@ public class Playground extends Scene
 			@Override
 			public boolean setImpactWith(Projectile source, IPhysicalObject target)
 			{
-/*				if( target instanceof Bitmap /*|| target instanceof Matter || target instanceof TempleEntity)
+				if( target instanceof Bitmap) //|| target instanceof Matter || target instanceof TempleEntity)
 				{
 					source.markDead();
 					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(1,0,0,0), 4 );
 					return true;
-				}*/
+				}
 				if(target instanceof SwarmAgent)
 				{
 					((SwarmAgent) target).hit( source.getDamage() );
@@ -207,14 +222,7 @@ public class Playground extends Scene
 		
 				
 		
-		final IOrderScheduler botInterface = controller.getOrderScheduler();
-		
-		for(int i = 0; i < 9; i ++)
-		{
-			Bot bot = BotFactory.createBot( temple, botInterface );
-			addEntity( bot );
-			botInterface.add(bot);
-		}
+
 		
 		ICollisionHandler<Shield> shieldCollider = new ICollisionHandler <Shield> ()
 		{

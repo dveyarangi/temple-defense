@@ -24,5 +24,13 @@ public class Damage
 		return damage[type];
 	}
 
-	
+	public String toString() {
+		return new StringBuilder()
+			.append( "damage: ")
+			.append(damage[KINETIC]).append(",")
+			.append(damage[THERMAL]).append(",")
+			.append(damage[ELECTRO_MAGNETIC]).append(",")
+			.append(damage[VOID])
+			.toString();
+	}
 }

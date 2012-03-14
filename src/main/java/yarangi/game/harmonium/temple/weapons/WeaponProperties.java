@@ -56,6 +56,8 @@ public class WeaponProperties
 	private double resourceConsumption;
 	private Resource.Type resourceType;
 	
+	private double sensorRange;
+	
 	public WeaponProperties(double cannonTrackingSpeed, double cannonTrackingHalfWidth,
 			double cannonTrackingAccuracy, double cannonReloadingTime, double cannonEffectiveRange,
 			
@@ -63,7 +65,8 @@ public class WeaponProperties
 			double projectileTrajectoryAccuracy,
 			double projectileHitRadius,
 			Damage damage, 
-			double resourceCapacity, double resourceConsumption, Resource.Type resourceType) 
+			double resourceCapacity, double resourceConsumption, Resource.Type resourceType,
+			double sensorRange) 
 	{
 		
 		super();
@@ -81,6 +84,8 @@ public class WeaponProperties
 		this.resourceCapacity = resourceCapacity;
 		this.resourceConsumption = resourceConsumption;
 		this.resourceType = resourceType;
+		
+		this.sensorRange = sensorRange;
 	}
 	
 	public double getCannonTrackingSpeed() {
@@ -116,5 +121,10 @@ public class WeaponProperties
 	public double getResourceCapacity() { return resourceCapacity; }
 	public double getResourceConsumption() { return resourceConsumption; }
 	public Resource.Type getResourceType() { return resourceType; }
+
+	public double getSensorRange()
+	{
+		return sensorRange;
+	}
 	
 }

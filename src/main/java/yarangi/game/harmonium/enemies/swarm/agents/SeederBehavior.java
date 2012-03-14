@@ -50,6 +50,8 @@ public class SeederBehavior implements IBehaviorState <Seeder>
 		right.p2().sety(seeder.getRightOffset().y() + phaseOffset);
 		right.p3().sety(seeder.getRightOffset().y() - phaseOffset);
 
+		if(terrain == null)
+			return 0;
 		lifeTime += time;
 		if(lifeTime - lastSeedTime > SEED_INTERVAL)
 		{

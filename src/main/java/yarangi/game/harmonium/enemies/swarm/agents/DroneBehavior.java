@@ -1,14 +1,15 @@
 package yarangi.game.harmonium.enemies.swarm.agents;
 
 import yarangi.game.harmonium.enemies.swarm.Swarm;
+import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 
-public class DroneBehavior implements IBehaviorState <SwarmAgent>  
+public class DroneBehavior implements IBehaviorState <SwarmAgent>, Behavior <SwarmAgent>  
 {
-	double da = RandomUtil.getRandomGaussian(0, 0.1);
+	double da = RandomUtil.N(0, 0.1);
 	
 	double inertion;
 	
@@ -32,5 +33,12 @@ public class DroneBehavior implements IBehaviorState <SwarmAgent>
 		return 0;
 	}
 	public int getId() { return this.getClass().hashCode(); }
+
+	@Override
+	public boolean behave(double time, SwarmAgent agent, boolean isVisible)
+	{
+		behave(time, agent);
+		return true;
+	}
 
 }

@@ -10,6 +10,7 @@ public class TrackingBehavior implements Behavior <Weapon>
 	public boolean behave(double time, Weapon weapon, boolean isVisible) 
 	{
 //		weapon.getTrackPoint();
+		weapon.updateState(time);
 		Vector2D trackingPoint = weapon.getBattleInterface().acquireTrackPoint(weapon);
 		if(trackingPoint == null)
 			return true;

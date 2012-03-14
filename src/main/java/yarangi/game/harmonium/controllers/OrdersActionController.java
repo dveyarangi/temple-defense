@@ -70,7 +70,8 @@ public class OrdersActionController extends ActionController
 				ICursorEvent cursor = event.getCursor();
 				target = cursor.getWorldLocation();
 				// TODO: test olnly 
-				terrain.query(new ConsumingSensor(terrain, false,target.x(), target.y(), 10  ), target.x(), target.y(), 10 );
+				
+				// terrain.query(new ConsumingSensor(terrain, false,target.x(), target.y(), 10  ), target.x(), target.y(), 10 );
 				
 				if(dragged != null || cursor.getEntity() == null || !(cursor.getEntity() instanceof IEntity))
 					return;

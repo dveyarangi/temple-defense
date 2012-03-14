@@ -13,9 +13,11 @@ import javax.media.opengl.GL;
 import yarangi.game.harmonium.ai.weapons.IFeedbackBeacon;
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.ai.weapons.LinearFeedbackBeacon;
+import yarangi.game.harmonium.ai.weapons.NetCore;
 import yarangi.game.harmonium.controllers.TempleController;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.harmonium.environment.resources.Resource;
+import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.game.harmonium.temple.weapons.Weapon;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Geometry;
@@ -72,9 +74,10 @@ public class BattleCommander implements BattleInterface
 		if(target == null)
 			return null;
 		
-		double speed = fireable.getProps().getProjectileSpeed();
-		double angle = fireable.getArea().getOrientation();
-		return core.pickTrackPoint(fireable.getArea().getRefPoint(), Vector2D.POLAR(speed, angle), target);
+//		double speed = fireable.getProps().getProjectileSpeed();
+//		double angle = fireable.getArea().getOrientation();
+		return core.pickTrackPoint(fireable.getArea().getRefPoint(), 
+				fireable.getProjectileSpeed(), target.getArea().getRefPoint(), target.getBody().getVelocity());
 //
 	}
 	
@@ -177,16 +180,16 @@ public class BattleCommander implements BattleInterface
 		this.observedEntities.add(object);
 	}
 	
-	public IFeedbackBeacon createFeedbackBeacon(Weapon weapon) 
+	public IFeedbackBeacon createFeedbackBeacon(Weapon weapon, Projectile projectile) 
 	{
 		if(!observedEntities.isEmpty())
 		{
-			double speed = weapon.getProps().getProjectileSpeed();
+			double speed = projectile.getBody().getVelocity().abs();
 			double angle = weapon.getArea().getOrientation();
 			
 //			return core.pickTrackPoint(fireable.getAABB(), new Vector2D(speed, angle, true), target);
 			if(getTarget(weapon) != null)
-			return new LinearFeedbackBeacon(weapon, getTarget(weapon), Vector2D.POLAR(speed, angle));
+			return new LinearFeedbackBeacon(weapon, getTarget(weapon), speed);
 		}
 		return null;
 	}
@@ -220,6 +223,12 @@ public class BattleCommander implements BattleInterface
 	public int requestResource(Weapon weapon, Resource.Type type, double amount)
 	{
 		return controller.getOrderScheduler().requestResource( weapon, controller.getTemple(), type, amount, 1 );
+	}
+
+	@Override
+	public IntellectCore getCore()
+	{
+		return core;
 	}
 
 

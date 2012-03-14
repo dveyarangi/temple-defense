@@ -13,7 +13,7 @@ import yarangi.spatial.PointArea;
 
 public class BotFactory
 {
-	public static final double BOT_CAPACITY = 300;
+	public static final double BOT_CAPACITY = 50;
 	
 	public static Bot createBot(final Serviceable host, IBotInterface botInterface)
 	{

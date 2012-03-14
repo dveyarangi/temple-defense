@@ -23,7 +23,7 @@ public class ControlBehavior implements Behavior <TempleController>
 					
 					if(fire == null)
 						continue;
-					fire.setFeedback(bi.createFeedbackBeacon(fireable));
+					fire.setFeedback(bi.createFeedbackBeacon(fireable, fire));
 					ctrl.getScene().addEntity(fire);
 					
 					

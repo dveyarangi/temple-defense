@@ -140,9 +140,6 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 //					if(temp.isDeadly(SpawningBehavior.AGENT_HEALTH))
 //						continue;
 					
-					if(!temp.isOpen()) // not yet visited
-						temp.decayDanger(time);
-					
 					double tentative = curr.g + 
 								((dx == 0 || dy == 0) ? 1 : FastMath.ROOT_2) + 
 								temp.getDangerFactor();

@@ -12,7 +12,7 @@ public class LinearFeedbackBeacon implements IFeedbackBeacon
 	private Vector2D sourceLocationMemo;
 	
 	private Vector2D velocity;
-	private Vector2D projectileVelocity;
+	private double projectileVelocity;
 	private WeakReference<IEntity> target;
 	
 	private Vector2D targetInitLoc;
@@ -20,7 +20,7 @@ public class LinearFeedbackBeacon implements IFeedbackBeacon
 	
 	private double distance;
 	
-	public LinearFeedbackBeacon(IEntity source, IEntity target, Vector2D projectileVelocity)
+	public LinearFeedbackBeacon(IEntity source, IEntity target, double projectileVelocity)
 	{
 		this.sourceLocationMemo = Vector2D.COPY(source.getArea().getRefPoint());
 		
@@ -74,7 +74,7 @@ public class LinearFeedbackBeacon implements IFeedbackBeacon
 	public Vector2D getVelocity() { return velocity; }
 
 
-	public Vector2D getProjectileVelocity() { return projectileVelocity; }
+	public double getProjectileVelocity() { return projectileVelocity; }
 
 	public Vector2D getInitialTargetLocation()
 	{

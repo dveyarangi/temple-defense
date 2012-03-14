@@ -25,19 +25,19 @@ public class HarvesterLook implements Look <Harvester>
 	{
 		
 		float x, y;
-/*		gl.glEnable(GL.GL_BLEND);
-		gl.glColor4f( 0f, 1f, 0f, 0.3f );
+		gl.glEnable(GL.GL_BLEND);
+		gl.glColor4f( 0f, 1f, 0f, 0.1f );
 		gl.glBegin( GL.GL_LINE_STRIP );
-		for(double a = 0; a <= Angles.PI_2; a += Angles.PI_div_40)
+		for(double a = 0; a <= Angles.PI_2+0.001; a += Angles.PI_div_40)
 		{
 			x = (float)(entity.getSensor().getRadius() * Math.cos( a ));
 			y = (float)(entity.getSensor().getRadius() * Math.sin( a ));
 			gl.glVertex2f( x, y );
 		}
-		gl.glEnd();*/
+		gl.glEnd();
 			
 		gl.glBegin( GL.GL_LINE_STRIP );
-		gl.glColor4f( 0f, 1f, 0f, 0.7f );
+		gl.glColor4f( 0f, 1f, 0f, 0.3f );
 		for(double a = 0; a <= Angles.PI_2; a += Angles.PI_div_20)
 		{
 			x = (float)(entity.getArea().getMaxRadius() * Math.cos( a ));
