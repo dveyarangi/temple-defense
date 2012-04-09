@@ -27,7 +27,7 @@ public class SeederLook implements Look <Seeder>
 		gl.glDisable(GL.GL_BLEND);
 		gl.glColor4f(0.3f, 0.3f, 0.3f, 1.0f);
 		
-		gl.glBegin(GL.GL_POLYGON);
+		gl.glBegin(GL.GL_LINE_STRIP);
 		for(float t = 0; t <= 1.09; t += 0.1) {
 			point = left.at(t);
 			gl.glVertex2f((float) point.x(), (float)point.y());

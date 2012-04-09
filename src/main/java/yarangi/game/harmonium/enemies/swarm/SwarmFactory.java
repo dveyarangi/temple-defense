@@ -2,6 +2,7 @@ package yarangi.game.harmonium.enemies.swarm;
 
 import yarangi.game.harmonium.battle.Damage;
 import yarangi.game.harmonium.battle.Damageable;
+import yarangi.game.harmonium.battle.IDamager;
 import yarangi.game.harmonium.battle.ITemple;
 import yarangi.game.harmonium.enemies.swarm.agents.Seeder;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
@@ -111,6 +112,14 @@ public class SwarmFactory
 				{
 					((Damageable) target).hit( new Damage(source.getArea().getMaxRadius(), 0, 0, 0) );
 					source.hit( new Damage(1000, 0, 0, 0) );
+//					source.markDead();
+//					EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(1,0,0,1), 64);
+					return true;
+				}
+				
+				if(target instanceof IDamager)
+				{
+
 //					source.markDead();
 //					EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(1,0,0,1), 64);
 					return true;

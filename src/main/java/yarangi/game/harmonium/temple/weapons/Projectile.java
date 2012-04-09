@@ -3,10 +3,12 @@ package yarangi.game.harmonium.temple.weapons;
 import yarangi.game.harmonium.ai.weapons.IFeedbackBeacon;
 import yarangi.game.harmonium.ai.weapons.IFeedbackCarrier;
 import yarangi.game.harmonium.battle.Damage;
+import yarangi.game.harmonium.battle.IDamager;
+import yarangi.game.harmonium.battle.ITemple;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.math.Vector2D;
 
-public class Projectile extends Entity implements IFeedbackCarrier
+public class Projectile extends Entity implements IFeedbackCarrier, IDamager
 {
 
 	private static final long serialVersionUID = -2909463886504124942L;
@@ -48,5 +50,6 @@ public class Projectile extends Entity implements IFeedbackCarrier
 	
 	public IFeedbackBeacon getFeedback() { return beacon; }
 	public void setFeedback(IFeedbackBeacon beacon) { this.beacon = beacon; }
+
 
 }

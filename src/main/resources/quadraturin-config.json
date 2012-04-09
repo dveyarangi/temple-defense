@@ -90,7 +90,7 @@
 
 	    		"terrain" : {
 	    			"factoryClass" : "yarangi.game.harmonium.environment.terrain.stone.StoneFactory",
-	    			"cellsize" : 10
+	    			"cellsize" : 8
 		    	}
 
 			}

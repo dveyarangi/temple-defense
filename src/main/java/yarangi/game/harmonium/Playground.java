@@ -5,11 +5,14 @@ import javax.media.opengl.GL;
 import yarangi.game.harmonium.ai.economy.IOrderScheduler;
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.ai.weapons.NetCore;
+import yarangi.game.harmonium.battle.Damageable;
 import yarangi.game.harmonium.battle.EffectUtils;
 import yarangi.game.harmonium.controllers.ControlBehavior;
 import yarangi.game.harmonium.controllers.ControlLook;
 import yarangi.game.harmonium.controllers.TempleController;
+import yarangi.game.harmonium.enemies.IEnemy;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
+import yarangi.game.harmonium.enemies.swarm.SwarmDebugOverlay;
 import yarangi.game.harmonium.enemies.swarm.SwarmFactory;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.harmonium.environment.resources.Port;
@@ -110,11 +113,11 @@ public class Playground extends Scene
 		for(int a = 0; a < maxCannons; a ++)
 		{
 			WeaponProperties props = Minigun.PROPS0;
-			switch(a%3) {
+/*			switch(a%3) {
 			case 0: props = Minigun.PROPS0; break;
-//			case 1: props = Minigun.PROP_SMALL; break;
-//			case 2: props = Minigun.PROP_SMALL; break;
-			}
+			case 1: props = Minigun.PROP_SMALL; break;
+			case 2: props = Minigun.PROP_SMALL; break;
+			}*/
 			double radius = (70+ a%3*70);
 			AABB area = AABB.createSquare(radius*Math.cos(Angles.PI_2/maxCannons *a), radius*Math.sin(Angles.PI_2/maxCannons * a ),1,0);
 			Weapon weapon = new Minigun(bi, area, props);
@@ -126,7 +129,8 @@ public class Playground extends Scene
 			bi.addFireable(weapon);
 			structure.addServiceable( weapon );
 			
-			Harvester harvester = HarvesterFactory.createHarvester(area, weapon.getPort(), 128, terrain);
+			// harvester location is linked to cannon:
+			Harvester harvester = HarvesterFactory.createHarvester(area, weapon.getPort(), 64, terrain);
 			addEntity(harvester);
 
 			
@@ -189,8 +193,8 @@ public class Playground extends Scene
 		swarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, Dummy.<Swarm>LOOK() );
 		addEntity(swarmShell);
 		
-//		SwarmDebugOverlay swarmDebugLook = new SwarmDebugOverlay();
-//		debugSwarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, swarmDebugLook );
+		SwarmDebugOverlay swarmDebugLook = new SwarmDebugOverlay();
+		debugSwarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, swarmDebugLook );
 //		addEntity(debugSwarmShell);
 		
 		ICollisionHandler<Projectile> projectileCollider = new ICollisionHandler <Projectile> ()
@@ -201,11 +205,12 @@ public class Playground extends Scene
 			{
 				if( target instanceof Bitmap) //|| target instanceof Matter || target instanceof TempleEntity)
 				{
+//					System.out.println("projectile collided with wall");
 					source.markDead();
 					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(1,0,0,0), 4 );
 					return true;
 				}
-				if(target instanceof SwarmAgent)
+				if(target instanceof Damageable && target instanceof IEnemy)
 				{
 					((SwarmAgent) target).hit( source.getDamage() );
 					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(1,0,0,1), 4 );
