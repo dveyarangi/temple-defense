@@ -76,8 +76,8 @@ public class BattleCommander implements BattleInterface
 		
 //		double speed = fireable.getProps().getProjectileSpeed();
 //		double angle = fireable.getArea().getOrientation();
-		return core.pickTrackPoint(fireable.getArea().getRefPoint(), 
-				fireable.getProjectileSpeed(), target.getArea().getRefPoint(), target.getBody().getVelocity());
+		return core.pickTrackPoint(fireable.getArea().getAnchor(), 
+				fireable.getProjectileSpeed(), target.getArea().getAnchor(), target.getBody().getVelocity());
 //
 	}
 	
@@ -94,11 +94,11 @@ public class BattleCommander implements BattleInterface
 		for(IEntity object : observedEntities)
 		{
 
-			objectLoc = object.getArea().getRefPoint();
+			objectLoc = object.getArea().getAnchor();
 			for(int idx = 0; idx < fireables.size(); idx ++)
 				if(object == targets.get(fireables.get(idx)))
 				{
-					Vector2D weaponLoc = fireables.get(idx).getArea().getRefPoint();
+					Vector2D weaponLoc = fireables.get(idx).getArea().getAnchor();
 					double d = Geometry.calcHypotSquare(weaponLoc.x(), weaponLoc.y(), objectLoc.x(), objectLoc.y());
 					double range = fireables.get(idx).getProps().getEffectiveRange();
 					if(d < range*range)
@@ -131,7 +131,7 @@ public class BattleCommander implements BattleInterface
 			if(!fireable.isPoweredUp())
 				continue;
 			
-			Vector2D weaponLoc = fireable.getArea().getRefPoint();
+			Vector2D weaponLoc = fireable.getArea().getAnchor();
 			double range = fireable.getProps().getEffectiveRange()*fireable.getProps().getEffectiveRange();
 			double minDistance = Double.MAX_VALUE;
 			
@@ -146,12 +146,12 @@ public class BattleCommander implements BattleInterface
 				
 				if(!targets.values().contains(o))
 				{
-					distance = Geometry.calcHypotSquare(o.getArea().getRefPoint().x(), o.getArea().getRefPoint().y(), weaponLoc.x(), weaponLoc.y());
+					distance = Geometry.calcHypotSquare(o.getArea().getAnchor().x(), o.getArea().getAnchor().y(), weaponLoc.x(), weaponLoc.y());
 					// distance = Geometry.calcHypotSquare(o.getArea().getRefPoint().x(), o.getArea().getRefPoint().y(), weaponLoc.x(), weaponLoc.y());
 					if(distance < minDistance && range > distance)
 					{
 //						System.out.println("observed: " +fireables.size());
-						if(!controller.testLOS(weaponLoc.x(), weaponLoc.y(), o.getArea().getRefPoint().x(), o.getArea().getRefPoint().y()))
+						if(!controller.testLOS(weaponLoc.x(), weaponLoc.y(), o.getArea().getAnchor().x(), o.getArea().getAnchor().y()))
 							continue;
 						minDistance = distance;
 						targets.put(fireable, o);

@@ -20,7 +20,7 @@ public class PowerConnector extends Entity
 		super();
 		
 		setArea(area);
-		this.sourceLoc = Vector2D.POLAR(area.getRefPoint().x(), area.getRefPoint().y(), 5, sourceAngle);
+		this.sourceLoc = Vector2D.POLAR(area.getAnchor().x(), area.getAnchor().y(), 5, sourceAngle);
 		
 		this.sourceDir = Vector2D.POLAR(1, sourceAngle);
 		

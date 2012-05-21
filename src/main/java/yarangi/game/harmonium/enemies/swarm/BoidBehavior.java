@@ -36,7 +36,7 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 			return CONTINUE;
 		}
 		
-		Vector2D loc = boid.getArea().getRefPoint();
+		Vector2D loc = boid.getArea().getAnchor();
 		
 		double separationDistance;
 		
@@ -82,7 +82,7 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 			
 			
 			
-			otherLoc = neigh.getArea().getRefPoint();
+			otherLoc = neigh.getArea().getAnchor();
 			separationDistance = (neigh.getArea().getMaxRadius() + boid.getArea().getMaxRadius())/1.5;
 			
 			distance = Geometry.calcHypot( loc, otherLoc );

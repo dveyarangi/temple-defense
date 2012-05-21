@@ -24,12 +24,12 @@ public class ChasingBehavior <H extends IEntity>implements IBehaviorState <H>
 	{
 	
 
-		Vector2D targetLocation = target.getRefPoint();
+		Vector2D targetLocation = target.getAnchor();
 		
-		double distanceToTarget = Geometry.calcHypotSquare(targetLocation, bot.getArea().getRefPoint());
+		double distanceToTarget = Geometry.calcHypotSquare(targetLocation, bot.getArea().getAnchor());
 		
-		Vector2D botLocation = bot.getArea().getRefPoint();
-		Vector2D hostLocation = target.getRefPoint();
+		Vector2D botLocation = bot.getArea().getAnchor();
+		Vector2D hostLocation = target.getAnchor();
 		double satelliteDistanceSquare = 2*target.getMaxRadius()*target.getMaxRadius();
 		
 			

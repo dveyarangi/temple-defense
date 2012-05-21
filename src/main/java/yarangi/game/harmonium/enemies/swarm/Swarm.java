@@ -8,6 +8,8 @@ import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
+import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
+import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.FastMath;
 import yarangi.math.Vector2D;
 import yarangi.spatial.GridMap;
@@ -38,7 +40,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	
 	static final double DANGER_FACTOR_DECAY = 0.0001;
 	static final double OMNISCIENCE_PERIOD = 100.;
-	final GridyTerrainMap terrain;
+	final PolygonTerrainMap terrain;
 	
 	/**
 	 * 
@@ -53,7 +55,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 		
 		WSIZE = (int)((float)worldSize / (float)cellsize);
 		
-		terrain = (GridyTerrainMap)scene.getWorldLayer().<Bitmap>getTerrain();
+		terrain = (PolygonTerrainMap)scene.getWorldLayer().<TilePoly>getTerrain();
 		
 		this.toNodeIdx = (double)WSIZE / (double)(worldSize);
 	}
@@ -140,8 +142,8 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 
 	public void setDanger(SwarmAgent agent, double damage) 
 	{
-		int x = toBeaconIdx(agent.getArea().getRefPoint().x());
-		int y = toBeaconIdx(agent.getArea().getRefPoint().y());
+		int x = toBeaconIdx(agent.getArea().getAnchor().x());
+		int y = toBeaconIdx(agent.getArea().getAnchor().y());
 		
 		if(x >= 0 && x < WSIZE && y >= 0 && y < WSIZE)
 		{
@@ -262,7 +264,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	{
 		if(terrain == null)
 			return false;
-		Tile <Bitmap> tile = terrain.getTile( toBeaconCoord( x ), toBeaconCoord( y ) );
+		Tile <TilePoly> tile = terrain.getTile( toBeaconCoord( x ), toBeaconCoord( y ) );
 		return tile != null && !tile.get().isEmpty();
 //		return !terrain.getCell( toBeaconCoord( x ), toBeaconCoord( y ) ).getProperties().isEmpty();
 				
@@ -277,9 +279,9 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	@Override public float getMaxY() { return halfSize; }
 
 	@Override
-	protected Tile<Beacon> createEmptyCell(int idx, double x, double y)
+	protected Tile<Beacon> createEmptyCell(int i, int j, double x, double y)
 	{
-		return new Tile<Beacon>(x, y, getCellSize(), getCellSize());
+		return new Tile<Beacon>(i, j, x, y, getCellSize(), getCellSize());
 	}
 
 	@Override
@@ -295,7 +297,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 				Vector2D toCenter = Vector2D.R(-tx, -ty).normalize();
 				if(tx != 0 || ty != 0)
 					node.setFlow(toCenter.x(), toCenter.y());
-				Tile <Beacon> tile = new Tile<Beacon>(tx, ty, getCellSize(), getCellSize());
+				Tile <Beacon> tile = new Tile<Beacon>(i, j, tx, ty, getCellSize(), getCellSize());
 				tile.put( node );
 				beacons[i + width * j] = tile; 
 //				System.out.println(beacons[i][j].getFlow());

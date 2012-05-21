@@ -6,18 +6,23 @@ import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.terrain.Bitmap;
-import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
+import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
+import yarangi.graphics.quadraturin.terrain.TilePoly;
+import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
 import yarangi.spatial.IAreaChunk;
 import yarangi.spatial.Tile;
+
+import com.seisw.util.geom.Poly;
+import com.seisw.util.geom.PolyDefault;
 
 
 public class ErrodingBehavior extends Sensor implements Behavior <Harvester>
 {
 	
-	private GridyTerrainMap terrain;
-	Tile <Bitmap> harvestedTile = null;
-	Tile <Bitmap> reserveTile = null;
+	private PolygonTerrainMap terrain;
+	Tile <TilePoly> harvestedTile = null;
+	Tile <TilePoly> reserveTile = null;
 	boolean harvestedFound = false;
 //	final GridyTerrainMap terrain = (GridyTerrainMap)scene.getWorldLayer().<Bitmap>getTerrain();
 	private static final int MASK_WIDTH =16; 
@@ -31,7 +36,7 @@ public class ErrodingBehavior extends Sensor implements Behavior <Harvester>
 	private int lastSaturation = 1;
 	private int saturation = 1;
 
-	public ErrodingBehavior(double radius, GridyTerrainMap terrain)
+	public ErrodingBehavior(double radius, PolygonTerrainMap terrain)
 	{
 		super(radius, ERRODE_INVERVAL, true);
 		this.terrain = terrain;
@@ -45,7 +50,7 @@ public class ErrodingBehavior extends Sensor implements Behavior <Harvester>
 			return false;
 		}
 		
-		Tile <Bitmap> tile = (Tile <Bitmap>) chunk;
+		Tile <TilePoly> tile = (Tile <TilePoly>) chunk;
 		if(!tile.get().isEmpty())
 		{
 			saturation ++;
@@ -59,6 +64,9 @@ public class ErrodingBehavior extends Sensor implements Behavior <Harvester>
 		return false;
 
 	}
+	
+	private static final double maskWidth = 5 ;
+
 
 	@Override
 	public boolean behave(double time, Harvester harvester, boolean isVisible)
@@ -66,21 +74,23 @@ public class ErrodingBehavior extends Sensor implements Behavior <Harvester>
 		if(harvestedTile == null) {
 			return false;
 		}
+		
+		
+		Poly poly = new PolyDefault();
 
 //		do {
-		double offset = MASK_WIDTH/2*terrain.getPixelSize();
 		double atx = RandomUtil.getRandomDouble( harvestedTile.getMaxX()-harvestedTile.getMinX() ) + harvestedTile.getMinX();
 		double aty = RandomUtil.getRandomDouble( harvestedTile.getMaxY()-harvestedTile.getMinY() ) + harvestedTile.getMinY();
-		double eatx = atx - offset;
-		double eaty = aty - offset;
+//		System.out.println("harvesting at : " + atx + " : " + atx);
+		for(double ang = 0 ; ang < Angles.PI_2; ang += Angles.PI_div_6)
+			poly.add( atx + maskWidth * Math.cos( ang ), aty + maskWidth * Math.sin( ang) );
 		
-		double dx = atx - harvester.getArea().getRefPoint().x();
-		double dy = aty - harvester.getArea().getRefPoint().y();
+		double dx = atx - harvester.getArea().getAnchor().x();
+		double dy = aty - harvester.getArea().getAnchor().y();
 //		} while()
-		if(dx*dx+dy*dy < harvester.getSensor().getRadius()*harvester.getSensor().getRadius()-offset)
-			terrain.apply( eatx, eaty, true, MASK_WIDTH, HARV_MASK );
+		if(dx*dx+dy*dy < harvester.getSensor().getRadius()*harvester.getSensor().getRadius())
+			terrain.apply( atx-maskWidth, aty-maskWidth, atx+maskWidth, aty+maskWidth, true, poly );
 
-		
 		if(harvestedTile.get().isEmpty())
 			harvestedTile = null;
 
@@ -96,7 +106,7 @@ public class ErrodingBehavior extends Sensor implements Behavior <Harvester>
 		harvestedFound = false;
 	}
 
-	public Tile <Bitmap> getErrodedTile()
+	public Tile <TilePoly> getErrodedTile()
 	{
 		// TODO Auto-generated method stub
 		return harvestedTile;

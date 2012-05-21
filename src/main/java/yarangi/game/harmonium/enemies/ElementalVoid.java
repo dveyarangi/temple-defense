@@ -2,10 +2,7 @@ package yarangi.game.harmonium.enemies;
 
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.graphics.quadraturin.objects.ILayerObject;
-import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
-import yarangi.math.Angles;
 import yarangi.math.Vector2D;
-import yarangi.numbers.RandomUtil;
 import yarangi.spatial.AABB;
 
 public class ElementalVoid extends GenericEnemy 

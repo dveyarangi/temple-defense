@@ -3,7 +3,6 @@ package yarangi.game.harmonium.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-import yarangi.game.harmonium.environment.terrain.ConsumingSensor;
 import yarangi.game.harmonium.temple.harvester.Harvester;
 import yarangi.game.harmonium.temple.weapons.Weapon;
 import yarangi.graphics.quadraturin.Scene;
@@ -16,10 +15,14 @@ import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.events.UserActionEvent;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Look;
-import yarangi.graphics.quadraturin.terrain.Bitmap;
-import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
+import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
+import yarangi.graphics.quadraturin.terrain.TilePoly;
+import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.spatial.ISpatialFilter;
+
+import com.seisw.util.geom.Poly;
+import com.seisw.util.geom.PolyDefault;
 
 
 public class OrdersActionController extends ActionController
@@ -34,9 +37,11 @@ public class OrdersActionController extends ActionController
 	
 	private Look look = new OrdersActionLook();
 	
-	private GridyTerrainMap terrain;
+	private PolygonTerrainMap terrain;
 	
 	private ICameraMan cameraMan;
+	
+	private boolean isDrawing = false;
 	
 	private ISpatialFilter <IEntity> filter = new ISpatialFilter <IEntity> ()
 	{
@@ -59,7 +64,7 @@ public class OrdersActionController extends ActionController
 		
 		cameraMan = new CameraMover( (ViewPoint2D) scene.getViewPoint() );
 		
-		terrain = (GridyTerrainMap)scene.getWorldLayer().<Bitmap>getTerrain();
+		terrain = (PolygonTerrainMap)scene.getWorldLayer().<TilePoly>getTerrain();
 //		actions.put("cursor-moved", temple.getController());
 		actions.put("mouse-left-drag", new IAction()
 		{
@@ -73,10 +78,16 @@ public class OrdersActionController extends ActionController
 				
 				// terrain.query(new ConsumingSensor(terrain, false,target.x(), target.y(), 10  ), target.x(), target.y(), 10 );
 				
-				if(dragged != null || cursor.getEntity() == null || !(cursor.getEntity() instanceof IEntity))
+				if(dragged != null)
 					return;
-				dragged = (IEntity)cursor.getEntity();
-				target = cursor.getWorldLocation();
+				if(cursor.getEntity() != null && (cursor.getEntity() instanceof IEntity) )
+				{
+					dragged = (IEntity)cursor.getEntity();
+					target = cursor.getWorldLocation();
+				}
+				if(dragged == null)
+					drawTerrain(terrain, target, false);
+
 			}
 			
 		});
@@ -88,9 +99,10 @@ public class OrdersActionController extends ActionController
 			{
 				// TODO: test olnly
 				target = event.getCursor().getWorldLocation();
-				terrain.query(new ConsumingSensor(terrain, true,target.x(), target.y(), 10  ), target.x(), target.y(), 10 );
 				
+				drawTerrain(terrain, target, true );
 			}
+
 			
 		});
 		actions.put("mouse-release", new IAction()
@@ -104,7 +116,7 @@ public class OrdersActionController extends ActionController
 				Vector2D location = event.getCursor().getWorldLocation();
 				if(location == null)
 					return;
-				dragged.getArea().getRefPoint().setxy( location.x(), location.y() );
+				dragged.getArea().getAnchor().setxy( location.x(), location.y() );
 				dragged = null;
 			}});
 //		actions.put( "drag", value )
@@ -134,6 +146,17 @@ public class OrdersActionController extends ActionController
 
 	@Override
 	public ISpatialFilter<IEntity> getPickingFilter() { return filter; }
+	
+	private double drawRadius = 100;
+	
+	private void drawTerrain(PolygonTerrainMap terrain, Vector2D target, boolean draw)
+	{
+		Poly poly = new PolyDefault();
+
+		for(double ang = 0 ; ang < Angles.PI_2; ang += Angles.PI_div_6)
+			poly.add( target.x() + drawRadius * Math.cos( ang ), target.y() + drawRadius * Math.sin( ang) );
+		terrain.apply( target.x()-drawRadius, target.y()-drawRadius, target.x()+drawRadius, target.y()+drawRadius, !draw, poly );
+	}
 
 
 	public IEntity getDragged() { return dragged; }

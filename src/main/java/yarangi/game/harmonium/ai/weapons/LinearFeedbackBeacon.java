@@ -22,12 +22,12 @@ public class LinearFeedbackBeacon implements IFeedbackBeacon
 	
 	public LinearFeedbackBeacon(IEntity source, IEntity target, double projectileVelocity)
 	{
-		this.sourceLocationMemo = Vector2D.COPY(source.getArea().getRefPoint());
+		this.sourceLocationMemo = Vector2D.COPY(source.getArea().getAnchor());
 		
 		this.target = new WeakReference<IEntity>( target );
 		this.projectileVelocity = projectileVelocity;
-		targetInitLoc = targetLocationMemo = Vector2D.COPY(target.getArea().getRefPoint());
-		Vector2D sourceLoc = source.getArea().getRefPoint();
+		targetInitLoc = targetLocationMemo = Vector2D.COPY(target.getArea().getAnchor());
+		Vector2D sourceLoc = source.getArea().getAnchor();
 
 		this.distance = Geometry.calcHypotSquare(sourceLoc, targetLocationMemo);
 		
@@ -41,7 +41,7 @@ public class LinearFeedbackBeacon implements IFeedbackBeacon
 			return true;
 		
 		
-		Vector2D targetLoc = target.get().getArea().getRefPoint();
+		Vector2D targetLoc = target.get().getArea().getAnchor();
 		double toTarget = Geometry.calcHypotSquare(sourceLocationMemo, targetLoc);
 		double toBeacon = Geometry.calcHypotSquare(sourceLocationMemo, beaconLoc);
 

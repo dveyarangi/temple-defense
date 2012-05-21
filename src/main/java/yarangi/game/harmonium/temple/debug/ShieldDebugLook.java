@@ -25,7 +25,7 @@ public class ShieldDebugLook implements Look <Shield>
 		
 		for(AngleInterval segment : segments.getRegularList())
 		{
-			drawSegment(gl, segment, entity.getArea().getRefPoint(), entity.getArea().getMaxRadius());
+			drawSegment(gl, segment, entity.getArea().getAnchor(), entity.getArea().getMaxRadius());
 		}
 		
 	}

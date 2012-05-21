@@ -29,10 +29,10 @@ public class ShieldSensor implements ISensor <IEntity>
 		{
 			Shield otherShield = (Shield) object;
 			neighbourArea = otherShield.getArea();
-			double distance = Geometry.calcHypot(coreArea.getRefPoint(), neighbourArea.getRefPoint());
+			double distance = Geometry.calcHypot(coreArea.getAnchor(), neighbourArea.getAnchor());
 			
 			
-			double neighbourAngle = coreArea.getRefPoint().minus(neighbourArea.getRefPoint()).getAngle();
+			double neighbourAngle = coreArea.getAnchor().minus(neighbourArea.getAnchor()).getAngle();
 			
 			double a = distance;
 			double b = coreArea.getMaxRadius();

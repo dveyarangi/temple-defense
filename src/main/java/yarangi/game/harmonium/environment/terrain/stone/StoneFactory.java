@@ -1,7 +1,7 @@
 package yarangi.game.harmonium.environment.terrain.stone;
 
-import yarangi.game.harmonium.environment.terrain.GridyTerrainBehavior;
 import yarangi.game.harmonium.environment.terrain.GridyTerrainLook;
+import yarangi.game.harmonium.environment.terrain.ModifiableGridBehavior;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.objects.EntityShell;
 import yarangi.graphics.quadraturin.objects.Look;
@@ -43,7 +43,7 @@ public class StoneFactory implements ITerrainFactory <GridyTerrainMap>
 		}
 
 		Look <GridyTerrainMap> look = new GridyTerrainLook();
-		return new EntityShell<GridyTerrainMap>( terrain, new GridyTerrainBehavior(), look );
+		return new EntityShell<GridyTerrainMap>( terrain, new ModifiableGridBehavior(), look );
 	}
 
 }

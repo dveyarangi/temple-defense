@@ -8,7 +8,7 @@ import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
-import yarangi.graphics.quadraturin.simulations.Body;
+import yarangi.physics.Body;
 import yarangi.spatial.PointArea;
 
 public class BotFactory

@@ -7,6 +7,7 @@ import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
+import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
 import yarangi.spatial.ISpatialFilter;
@@ -14,7 +15,7 @@ import yarangi.spatial.ISpatialFilter;
 public class HarvesterFactory
 {
 	
-	public static Harvester createHarvester(Area area, Port port, double range, GridyTerrainMap terrain)
+	public static Harvester createHarvester(Area area, Port port, double range, PolygonTerrainMap terrain)
 	{
 		Harvester harvester = new Harvester(port, null);
 		
@@ -28,7 +29,7 @@ public class HarvesterFactory
 	}
 	
 	
-	public static ErrodingBehavior createErrodingBehavior(double range, GridyTerrainMap terrain)
+	public static ErrodingBehavior createErrodingBehavior(double range, PolygonTerrainMap terrain)
 	{
 		return new ErrodingBehavior(range, terrain);
 	}

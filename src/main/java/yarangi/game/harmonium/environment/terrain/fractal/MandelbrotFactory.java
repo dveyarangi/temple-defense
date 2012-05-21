@@ -1,7 +1,6 @@
 package yarangi.game.harmonium.environment.terrain.fractal;
 
-import yarangi.game.harmonium.environment.terrain.GridyTerrainBehavior;
-import yarangi.game.harmonium.environment.terrain.GridyTerrainLook;
+import yarangi.game.harmonium.environment.terrain.ModifiableGridBehavior;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.objects.Dummy;
 import yarangi.graphics.quadraturin.objects.EntityShell;
@@ -59,7 +58,7 @@ public class MandelbrotFactory implements ITerrainFactory
 		    {
 				yoffset = ystart + toYCoord * j * cellsize;
 
-		    	Bitmap tile = new Bitmap( terrain.toXCoord( i ), terrain.toXCoord( j ), cellsize);
+		    	Bitmap tile = new Bitmap( terrain.toXCoord( i ), terrain.toXCoord( j ), terrain.getPixelSize()*cellsize, cellsize);
 
 		    	for(pi = 0; pi < cellsize; pi ++)
 			    	for(pj = 0; pj < cellsize; pj ++)
@@ -116,6 +115,6 @@ public class MandelbrotFactory implements ITerrainFactory
 		}
 
 		Look <GridyTerrainMap> look = Dummy.LOOK(); //new GridyTerrainLook();
-		return new EntityShell<GridyTerrainMap>( terrain, new GridyTerrainBehavior(), look );
+		return new EntityShell<GridyTerrainMap>( terrain, new ModifiableGridBehavior(), look );
 	}
 }

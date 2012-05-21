@@ -4,10 +4,10 @@ import yarangi.game.harmonium.enemies.IEnemy;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.ISensor;
 import yarangi.graphics.quadraturin.objects.Sensor;
-import yarangi.graphics.quadraturin.simulations.Body;
 import yarangi.math.BitUtils;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
+import yarangi.physics.Body;
 import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
 import yarangi.spatial.ISpatialFilter;
@@ -17,7 +17,7 @@ public class WeaponFactory
 	public static Projectile createProjectile(Weapon weapon, double velocity)
 	{
 		Area area = weapon.getArea();
-		Vector2D location = weapon.getArea().getRefPoint();
+		Vector2D location = weapon.getArea().getAnchor();
 		
 		
 		double fireAngle = RandomUtil.N(

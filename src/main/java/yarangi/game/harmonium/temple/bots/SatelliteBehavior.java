@@ -27,8 +27,8 @@ public class SatelliteBehavior <K extends IEntity> implements IBehaviorState <K>
 	@Override
 	public double behave(double time, K bot)
 	{
-		Vector2D botLocation = bot.getArea().getRefPoint();
-		Vector2D hostLocation = host.getRefPoint();
+		Vector2D botLocation = bot.getArea().getAnchor();
+		Vector2D hostLocation = host.getAnchor();
 		double satelliteDistanceSquare = 2*host.getMaxRadius()*host.getMaxRadius();
 		
 		

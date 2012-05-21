@@ -20,7 +20,7 @@ public class DroneBehavior implements IBehaviorState <SwarmAgent>, Behavior <Swa
 	@Override
 	public double behave(double time, SwarmAgent agent) {
 		Swarm swarm = agent.getSwarm();
-		Vector2D flow = swarm.getFlow(agent.getArea().getRefPoint());
+		Vector2D flow = swarm.getFlow(agent.getArea().getAnchor());
 		agent.getArea().setOrientation( Angles.TO_DEG * agent.getBody().getVelocity().getAngle() );
 		
 //		System.out.println(flow);

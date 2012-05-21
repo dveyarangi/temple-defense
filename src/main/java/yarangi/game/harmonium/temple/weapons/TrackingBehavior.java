@@ -16,7 +16,7 @@ public class TrackingBehavior implements Behavior <Weapon>
 			return true;
 //		System.out.println(trackPoint.getAngle());
 //		double newA = Angles.stepTo(weapon.getAABB().getA(), targetAngle, weapon.getWeaponProperties().getCannonTrackingSpeed());
-		double newA = trackingPoint.minus(weapon.getArea().getRefPoint()).getAngle();
+		double newA = trackingPoint.minus(weapon.getArea().getAnchor()).getAngle();
 /*		double window = weapon.getWeaponProperties().getCannonTrackingHalfWidth();
 		if(newA > window)
 			newA = window;

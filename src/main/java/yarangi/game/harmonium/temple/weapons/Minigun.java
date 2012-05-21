@@ -125,7 +125,7 @@ public class Minigun extends Weapon
 	@Override
 	public void updateState(double time)
 	{
-		nextProjectileSpeed = RandomUtil.N( getProps().getProjectileSpeed(), 0.5);
+		nextProjectileSpeed = RandomUtil.N( getProps().getProjectileSpeed(), 0.01);
 	}
 
 	@Override

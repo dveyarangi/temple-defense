@@ -52,7 +52,7 @@ public class ObserverBehavior implements Behavior <ObserverEntity>
 					Projectile prj = (Projectile) object;
 				
 //					System.out.println(object);
-					prj.getFeedback().update(prj.getArea().getRefPoint());
+					prj.getFeedback().update(prj.getArea().getAnchor());
 				}
 			}
 			else

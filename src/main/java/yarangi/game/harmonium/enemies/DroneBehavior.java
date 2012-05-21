@@ -12,7 +12,7 @@ public class DroneBehavior implements Behavior<GenericEnemy>
 	{
 		entity.getArea().setOrientation( entity.getArea().getOrientation()+da );
 		
-		Vector2D loc = entity.getArea().getRefPoint();
+		Vector2D loc = entity.getArea().getAnchor();
 		if(loc.x() >  800 || loc.y() >  800
 		|| loc.x() < -800 || loc.y() < -800)
 			entity.markDead();

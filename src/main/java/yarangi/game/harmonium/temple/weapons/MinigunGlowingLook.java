@@ -77,7 +77,7 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 		
 		if(trackPoint != null)
 		{
-			Vector2D relTrack = trackPoint.minus(cannon.getArea().getRefPoint());
+			Vector2D relTrack = trackPoint.minus(cannon.getArea().getAnchor());
 			gl.glBegin(GL.GL_LINE_STRIP);
 			gl.glVertex3f(0, 0, 0);
 			gl.glVertex3f((float)(relTrack.x()), (float)(relTrack.y()), 0);

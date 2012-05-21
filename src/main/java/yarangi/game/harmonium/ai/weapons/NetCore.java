@@ -1,20 +1,19 @@
 package yarangi.game.harmonium.ai.weapons;
 
-import org.apache.log4j.Logger;
 
 import yarangi.ai.nn.init.InitializerFactory;
 import yarangi.ai.nn.init.RandomWeightsInitializer;
 import yarangi.ai.nn.numeric.ArrayInput;
 import yarangi.ai.nn.numeric.BackpropNetwork;
 import yarangi.ai.nn.numeric.CompleteNeuronLayer;
-import yarangi.ai.nn.numeric.LinearAF;
 import yarangi.ai.nn.numeric.NeuralNetworkRunner;
 import yarangi.ai.nn.numeric.Normalizer;
 import yarangi.ai.nn.numeric.NumericAF;
 import yarangi.ai.nn.numeric.ScalingNormalizer;
 import yarangi.ai.nn.numeric.TanHAF;
-import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Vector2D;
+
+import com.spinn3r.log5j.Logger;
 
 /**
  * 
@@ -23,7 +22,7 @@ import yarangi.math.Vector2D;
  * @author dveyarangi
  *
  */
-public class NetCore extends NeuralNetworkRunner implements IntellectCore
+public class NetCore extends NeuralNetworkRunner <IFeedbackBeacon, Vector2D>implements IntellectCore
 {
 	
 //	private BackpropNetwork network = new BackpropNetwork(1);
@@ -47,7 +46,7 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 	
 	public NetCore(String name, int worldWidth, int worldHeight)
 	{
-		super();
+		super(LEARNING_RATE);
 		this.name = name;
 		
 		this.log = Logger.getLogger(name);
@@ -82,17 +81,9 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 
 		if(beacon.getDistance() < 40000) // TODO: real beacon location test
 		{
-			Vector2D relativeTarget = beacon.getInitialTargetLocation().minus(beacon.getSource());
-			double [] input = createInput(beacon.getInitialTargetLocation(), beacon.getVelocity(), beacon.getSource(), beacon.getProjectileVelocity());
-			
-//			System.out.println(beacon.getSource().getArea().getRefPoint());
-			double [] res = run(input);
-//			System.out.println("training target: " + capsule.getTarget().getArea().getRefPoint() + " delta: " + (toTarget.x-res[0]) +","+ (toTarget.y-res[1]));
-//			System.out.println("feedback: d:" + beacon.getDistance() + " a:" + Math.cos(beacon.getAngle())+ ":" + Math.sin(beacon.getAngle()) + " net: " + res[0] + ":" + res[1]);
-
 			Vector2D toTarget = beacon.getTargetLocationMemo().minus(beacon.getSource());
-//			System.out.println(toTarget + " " + relativeTarget);
-			train(new double [] {toTarget.x(), toTarget.y()}, LEARNING_RATE);
+			run(beacon);
+			train( toTarget );
 			
 			return true;
 		}
@@ -104,24 +95,11 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 	{
 //		System.out.println(sourceLocation);
 		Vector2D relativeTarget = targetLocation.minus(sourceLocation);
-		double [] res = run(createInput(targetLocation, targetVelocity, sourceLocation, projectileVelocity));
+		Vector2D res = toOutput(run(toInputArray(relativeTarget, targetVelocity, sourceLocation, projectileVelocity)));
+		
+		return res.add( sourceLocation );
 //		System.out.println(res[0] + " : " + res[1]);
-		return Vector2D.R(res[0], res[1]).plus(sourceLocation);
 //		return Math.atan2(res[1], res[0]);
-	}
-	private double [] createInput(Vector2D targetLocation, Vector2D targetVelocity, Vector2D sourceCocation, double projectileVelocity)
-	{
-		return new double [] {
-				targetLocation.x(),
-				targetLocation.y(), 
-//				Math.cos(target.getAABB().a),
-//				Math.sin(target.getAABB().a),
-				targetVelocity.x(),
-				targetVelocity.y(),
-				sourceCocation.x(),
-				sourceCocation.y(),
-				projectileVelocity
-			};
 	}
 
 	@Override
@@ -130,4 +108,45 @@ public class NetCore extends NeuralNetworkRunner implements IntellectCore
 		log.debug("Saved NN core [" + name + "].");
 //		log.debug("NN core [" + name + "] is NOT saved.");
 	}
+
+	@Override
+	public double[] toInputArray(IFeedbackBeacon input)
+	{
+		LinearFeedbackBeacon beacon = (LinearFeedbackBeacon) input;
+		Vector2D relativeTarget = beacon.getInitialTargetLocation().minus(beacon.getSource());
+		return toInputArray(
+				relativeTarget,
+					beacon.getVelocity(),
+					beacon.getSource(),
+					beacon.getProjectileVelocity());
+	}
+	
+	public double [] toInputArray(Vector2D targetLoc, Vector2D targetVel, Vector2D cannonLoc, double projVel)
+	{
+//		Vector2D relativeTarget = targetLoc.minus(cannonLoc);
+		return new double [] {
+			targetLoc.x(),
+			targetLoc.y(), 
+//			Math.cos(target.getAABB().a),
+//			Math.sin(target.getAABB().a),
+			targetVel.x(),
+			targetVel.y(),
+			targetVel.x(),
+			targetVel.y(),
+			projVel
+		};
+	}
+	@Override
+	public double[] toOutputArray(Vector2D output)
+	{
+		return new double [] {output.x(), output.y() };
+	}
+
+	@Override
+	public Vector2D toOutput(double[] outputs)
+	{
+		return Vector2D.R( outputs[0], outputs[1] );
+	}
+
+
 }

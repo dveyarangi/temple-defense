@@ -2,7 +2,6 @@ package yarangi.game.harmonium;
 
 import javax.media.opengl.GL;
 
-import yarangi.game.harmonium.ai.economy.IOrderScheduler;
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.ai.weapons.NetCore;
 import yarangi.game.harmonium.battle.Damageable;
@@ -15,20 +14,16 @@ import yarangi.game.harmonium.enemies.swarm.Swarm;
 import yarangi.game.harmonium.enemies.swarm.SwarmDebugOverlay;
 import yarangi.game.harmonium.enemies.swarm.SwarmFactory;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
-import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.game.harmonium.temple.BattleInterface;
 import yarangi.game.harmonium.temple.EnergyCore;
 import yarangi.game.harmonium.temple.ObserverBehavior;
 import yarangi.game.harmonium.temple.Shield;
 import yarangi.game.harmonium.temple.StructureInterface;
 import yarangi.game.harmonium.temple.TempleLook;
-import yarangi.game.harmonium.temple.bots.Bot;
-import yarangi.game.harmonium.temple.bots.BotFactory;
 import yarangi.game.harmonium.temple.harvester.Harvester;
 import yarangi.game.harmonium.temple.harvester.HarvesterFactory;
 import yarangi.game.harmonium.temple.weapons.Minigun;
 import yarangi.game.harmonium.temple.weapons.MinigunGlowingLook;
-import yarangi.game.harmonium.temple.weapons.MinigunLook;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.game.harmonium.temple.weapons.TrackingBehavior;
 import yarangi.game.harmonium.temple.weapons.Weapon;
@@ -44,17 +39,18 @@ import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.Dummy;
 import yarangi.graphics.quadraturin.objects.EntityShell;
 import yarangi.graphics.quadraturin.objects.Sensor;
-import yarangi.graphics.quadraturin.simulations.Body;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
-import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
 import yarangi.graphics.quadraturin.terrain.Bitmap;
-import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
+import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
+import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.graphics.quadraturin.ui.Direction;
 import yarangi.graphics.quadraturin.ui.Insets;
 import yarangi.graphics.quadraturin.ui.Overlay;
 import yarangi.graphics.quadraturin.ui.Panel;
 import yarangi.graphics.quadraturin.ui.PanelLook;
 import yarangi.math.Angles;
+import yarangi.physics.Body;
+import yarangi.physics.IPhysicalObject;
 import yarangi.spatial.AABB;
 import yarangi.spatial.PointArea;
 
@@ -84,7 +80,7 @@ public class Playground extends Scene
 //		addEntity(background);
 
 //		PowerGrid grid = new PowerGrid(this.getWorldVeil());
-		final GridyTerrainMap terrain = (GridyTerrainMap)getWorldLayer().<Bitmap>getTerrain();
+		final PolygonTerrainMap terrain = (PolygonTerrainMap)getWorldLayer().<TilePoly> getTerrain();
 		
 		core = new NetCore("netcore", this.getWorldLayer().getWidth(), this.getWorldLayer().getHeight());
 //		addEntity(new BubbleSwarm(getWorldVeil(), temple));
@@ -189,7 +185,7 @@ public class Playground extends Scene
 		Swarm swarm = SwarmFactory.createSwarm(sceneConfig.getWidth(), this, 4);
 		Behavior <Swarm> swarmBehavior = SwarmFactory.
 		
-		createDefaultBehavior((GridyTerrainMap)getWorldLayer().<Bitmap>getTerrain());
+		createDefaultBehavior((PolygonTerrainMap)getWorldLayer().<TilePoly>getTerrain());
 		swarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, Dummy.<Swarm>LOOK() );
 		addEntity(swarmShell);
 		
@@ -207,13 +203,13 @@ public class Playground extends Scene
 				{
 //					System.out.println("projectile collided with wall");
 					source.markDead();
-					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(1,0,0,0), 4 );
+					EffectUtils.makeExplosion( source.getArea().getAnchor(), Playground.this.getWorldLayer(), new Color(1,0,0,0), 4 );
 					return true;
 				}
 				if(target instanceof Damageable && target instanceof IEnemy)
 				{
 					((SwarmAgent) target).hit( source.getDamage() );
-					EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(1,0,0,1), 4 );
+					EffectUtils.makeExplosion( source.getArea().getAnchor(), Playground.this.getWorldLayer(), new Color(1,0,0,1), 4 );
 					source.markDead();
 					return true;
 				}
@@ -237,10 +233,10 @@ public class Playground extends Scene
 			{
 				if( target instanceof SwarmAgent)
 				{
-					if(!source.getExcludedSegments().covers(Math.atan2( target.getArea().getRefPoint().y()-source.getArea().getRefPoint().y(), 
-																	  target.getArea().getRefPoint().x()-source.getArea().getRefPoint().x())))
+					if(!source.getExcludedSegments().covers(Math.atan2( target.getArea().getAnchor().y()-source.getArea().getAnchor().y(), 
+																	  target.getArea().getAnchor().x()-source.getArea().getAnchor().x())))
 					{
-						EffectUtils.makeExplosion( source.getArea().getRefPoint(), Playground.this.getWorldLayer(), new Color(1,0,0,0), 4 );
+						EffectUtils.makeExplosion( source.getArea().getAnchor(), Playground.this.getWorldLayer(), new Color(1,0,0,0), 4 );
 						((SwarmAgent) target).markDead();
 						return true;
 					}

@@ -22,7 +22,7 @@ public class MinigunLook implements Look<Minigun>
 	{
 
 			Area area = cannon.getArea();
-		Vector2D loc = area.getRefPoint();
+		Vector2D loc = area.getAnchor();
 		Resource.Type type = cannon.getProps().getResourceType();
 		double resourcePercent = cannon.getPort().get( type ).getAmount() / cannon.getPort().getCapacity( type );
 		gl.glColor4f((float)((1-resourcePercent)/4+resourcePercent*0.3),  (float)(resourcePercent*0.3), (float)(resourcePercent),1);
@@ -75,7 +75,7 @@ public class MinigunLook implements Look<Minigun>
 			for(int i = -5; i < 5; i ++)
 			{
 //				System.out.println(core + " : " + target + " : " + cannon);
-				Vector2D prediction = core.pickTrackPoint( cannon.getArea().getRefPoint(), baseSpeed-0.5*i, target.getArea().getRefPoint(), target.getBody().getVelocity() );
+				Vector2D prediction = core.pickTrackPoint( cannon.getArea().getAnchor(), baseSpeed-0.5*i, target.getArea().getAnchor(), target.getBody().getVelocity() );
 				prediction.substract( loc );
 				gl.glVertex3f((float)(prediction.x()), (float)(prediction.y()), 0);
 				

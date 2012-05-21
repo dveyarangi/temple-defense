@@ -6,19 +6,17 @@ import yarangi.game.harmonium.battle.IDamager;
 import yarangi.game.harmonium.battle.ITemple;
 import yarangi.game.harmonium.enemies.swarm.agents.Seeder;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
-import yarangi.game.harmonium.temple.EnergyCore;
-import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
-import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
-import yarangi.graphics.quadraturin.terrain.Bitmap;
-import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
+import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
+import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
+import yarangi.physics.IPhysicalObject;
 
 public class SwarmFactory 
 {
@@ -55,7 +53,7 @@ public class SwarmFactory
 			swarm.addSpawnNode(r*Math.cos(a), r*Math.sin(a));
 		}
 		
-		final GridyTerrainMap terrain = (GridyTerrainMap)scene.getWorldLayer().<Bitmap>getTerrain();
+		final PolygonTerrainMap terrain = (PolygonTerrainMap)scene.getWorldLayer().<TilePoly> getTerrain();
 		
 		scene.getCollisionManager().registerHandler(SwarmAgent.class, new AgentCollisionHandler<SwarmAgent>(swarm));
 		scene.getCollisionManager().registerHandler(Seeder.class, new AgentCollisionHandler<Seeder>(swarm));
@@ -65,7 +63,7 @@ public class SwarmFactory
 	}
 	
 //	};
-	public static Behavior <Swarm> createDefaultBehavior(GridyTerrainMap terrain)
+	public static Behavior <Swarm> createDefaultBehavior(PolygonTerrainMap terrain)
 	{
 //		swarm.setArea(new Point(0, 0));
 		final IBehaviorState<Swarm> rotating = new RotatingBehavior();

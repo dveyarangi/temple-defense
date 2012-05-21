@@ -5,7 +5,7 @@ import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.simulations.IPhysicalObject;
+import yarangi.physics.IPhysicalObject;
 import yarangi.spatial.ISpatialFilter;
 
 public class Shield extends Entity implements IPhysicalObject 
