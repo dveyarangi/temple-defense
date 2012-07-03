@@ -46,21 +46,17 @@ public class NetCore extends NeuralNetworkRunner <IFeedbackBeacon, Vector2D>impl
 	
 	public NetCore(String name, int worldWidth, int worldHeight)
 	{
-		super(LEARNING_RATE);
+		super(name);
 		this.name = name;
 		
+		int [] descriptor = new int [] {8, 20, 20, 2 };
 		this.log = Logger.getLogger(name);
 		try {
-			network = NeuralNetworkRunner.load(name);
+			network = NeuralNetworkRunner.load(descriptor, name);
 			log.debug("Loaded NN core " + name);
 		} catch (Exception e) {
 			log.debug("Cannot load NN core " + name + ", creating new one");
-			network = new BackpropNetwork(2);
-			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
-			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
-			network.addLayer(new CompleteNeuronLayer(new NumericAF [] { new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF() }, 1));
-//			network.addLayer(new CompleteNeuronLayer(10, new NumericAF [] { new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF(), new TanHAF()}, 1));
-			network.addInput(new ArrayInput(new double [8]));
+			network = new BackpropNetwork(descriptor, new TanHAF());
 		}
 		
 //		network.addLayer(new CompleteNeuronLayer(10, new TanHAF(), 1));
@@ -104,7 +100,7 @@ public class NetCore extends NeuralNetworkRunner <IFeedbackBeacon, Vector2D>impl
 
 	@Override
 	public void shutdown() {
-		NeuralNetworkRunner.save(network, name);
+		save();
 		log.debug("Saved NN core [" + name + "].");
 //		log.debug("NN core [" + name + "] is NOT saved.");
 	}
@@ -146,6 +142,13 @@ public class NetCore extends NeuralNetworkRunner <IFeedbackBeacon, Vector2D>impl
 	public Vector2D toOutput(double[] outputs)
 	{
 		return Vector2D.R( outputs[0], outputs[1] );
+	}
+
+	@Override
+	protected double getLearningRate()
+	{
+		// TODO Auto-generated method stub
+		return LEARNING_RATE;
 	}
 
 

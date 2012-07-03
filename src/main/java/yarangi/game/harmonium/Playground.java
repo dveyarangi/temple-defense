@@ -6,10 +6,11 @@ import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.ai.weapons.NetCore;
 import yarangi.game.harmonium.battle.Damageable;
 import yarangi.game.harmonium.battle.EffectUtils;
+import yarangi.game.harmonium.battle.EntityCenter;
+import yarangi.game.harmonium.battle.IEnemy;
 import yarangi.game.harmonium.controllers.ControlBehavior;
 import yarangi.game.harmonium.controllers.ControlLook;
 import yarangi.game.harmonium.controllers.TempleController;
-import yarangi.game.harmonium.enemies.IEnemy;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
 import yarangi.game.harmonium.enemies.swarm.SwarmDebugOverlay;
 import yarangi.game.harmonium.enemies.swarm.SwarmFactory;
@@ -48,7 +49,7 @@ import yarangi.graphics.quadraturin.ui.Insets;
 import yarangi.graphics.quadraturin.ui.Overlay;
 import yarangi.graphics.quadraturin.ui.Panel;
 import yarangi.graphics.quadraturin.ui.PanelLook;
-import yarangi.math.Angles;
+import yarangi.numbers.RandomUtil;
 import yarangi.physics.Body;
 import yarangi.physics.IPhysicalObject;
 import yarangi.spatial.AABB;
@@ -76,6 +77,8 @@ public class Playground extends Scene
 		
 		createUI();
 		
+		EntityCenter.init(this);
+		
 //		BackgroundEntity background = new BackgroundEntity(100, 100, 50);		
 //		addEntity(background);
 
@@ -92,7 +95,7 @@ public class Playground extends Scene
 		temple.setSensor(new Sensor(512, 3, null, false));
 		temple.setArea(AABB.createSquare(0,0,10, 0));
 		temple.setBody(new Body());
-		addEntity(temple);
+		addEntity( temple );
 //		structure.addServiceable( temple );
 
 		
@@ -115,13 +118,14 @@ public class Playground extends Scene
 			case 2: props = Minigun.PROP_SMALL; break;
 			}*/
 			double radius = (70+ a%3*70);
-			AABB area = AABB.createSquare(radius*Math.cos(Angles.PI_2/maxCannons *a), radius*Math.sin(Angles.PI_2/maxCannons * a ),1,0);
+			AABB area = AABB.createSquare(RandomUtil.R( 400 )-200, RandomUtil.R( 400 )-200,1,0);
+//			AABB area = AABB.createSquare(radius*Math.cos(Angles.PI_2/maxCannons *a), radius*Math.sin(Angles.PI_2/maxCannons * a ),1,0);
 			Weapon weapon = new Minigun(bi, area, props);
 			weapon.setLook(new MinigunGlowingLook());
 //			weapon.setLook(new MinigunLook());
 			weapon.setBehavior(new TrackingBehavior());
 			weapon.setSensor( WeaponFactory.createSensor(weapon));
-			addEntity(weapon);
+			addEntity( weapon );
 			bi.addFireable(weapon);
 			structure.addServiceable( weapon );
 			
@@ -182,15 +186,15 @@ public class Playground extends Scene
 		
 //		KolbasaFactory.generateKolbasaMaze( this );
 		
-		Swarm swarm = SwarmFactory.createSwarm(sceneConfig.getWidth(), this, 4);
+		Swarm swarm = SwarmFactory.createSwarm(sceneConfig.getWidth(), this, 3);
 		Behavior <Swarm> swarmBehavior = SwarmFactory.
 		
 		createDefaultBehavior((PolygonTerrainMap)getWorldLayer().<TilePoly>getTerrain());
 		swarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, Dummy.<Swarm>LOOK() );
 		addEntity(swarmShell);
 		
-		SwarmDebugOverlay swarmDebugLook = new SwarmDebugOverlay();
-		debugSwarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, swarmDebugLook );
+//		SwarmDebugOverlay swarmDebugLook = new SwarmDebugOverlay(swarm);
+//		debugSwarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, swarmDebugLook );
 //		addEntity(debugSwarmShell);
 		
 		ICollisionHandler<Projectile> projectileCollider = new ICollisionHandler <Projectile> ()
@@ -264,7 +268,7 @@ public class Playground extends Scene
 	public void init(GL gl, IRenderingContext context)
 	{
 		super.init(gl, context);
-		gl.glClearColor(0.0f,0.0f, 0.0f, 0.0f);
+		gl.glClearColor(0.0f,0.0f, 0.0f, 1.0f);
 	}
 	
 	public void destroy(GL gl, IRenderingContext context)

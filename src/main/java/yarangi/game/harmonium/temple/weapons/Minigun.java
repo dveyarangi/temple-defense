@@ -13,7 +13,7 @@ public class Minigun extends Weapon
 	
 	public static final double BASE_TRACKING_SPEED = 3;
 	public static final double CANNON_TRACKING_HALF_WIDTH = 360;
-	public static final double projectileSpeed = 2;
+	public static final double projectileSpeed = 5;
 	public static final double projectileHitRadius = 3;
 	public static final double trackingSpeed = BASE_TRACKING_SPEED;
 	public static final double effectiveRangeSquare = 40000;
@@ -31,13 +31,13 @@ public class Minigun extends Weapon
 			BASE_TRACKING_SPEED, 
 			CANNON_TRACKING_HALF_WIDTH, 
 			1, 
-			1, // reloading time
+			4, // reloading time
 			128, // projectile range square
-			2,  // prjectile speed
+			projectileSpeed,  // prjectile speed
 			128, // tracking range
 			ACCURACY, 
 			projectileHitRadius, 
-			new Damage(3, 0.1, 0, 0),
+			new Damage(30, 0.1, 0, 0),
 			resourceCapacity, 0, resourceType,
 			128);
 	
@@ -47,7 +47,7 @@ public class Minigun extends Weapon
 			1, 
 			4, // reloading time
 			32, // projectile range square
-			2,  // prjectile speed
+			projectileSpeed,  // prjectile speed
 			32, // tracking range
 			ACCURACY, 
 			projectileHitRadius, 
@@ -60,7 +60,7 @@ public class Minigun extends Weapon
 			1, 
 			4, // reloading time
 			64, // projectile range square
-			2,  // prjectile speed
+			projectileSpeed,  // prjectile speed
 			64, // tracking range
 			ACCURACY, 
 			projectileHitRadius, 
@@ -125,7 +125,7 @@ public class Minigun extends Weapon
 	@Override
 	public void updateState(double time)
 	{
-		nextProjectileSpeed = RandomUtil.N( getProps().getProjectileSpeed(), 0.01);
+		nextProjectileSpeed = RandomUtil.STD( getProps().getProjectileSpeed(), 0.01);
 	}
 
 	@Override

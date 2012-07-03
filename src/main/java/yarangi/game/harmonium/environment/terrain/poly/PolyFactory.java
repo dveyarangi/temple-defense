@@ -12,6 +12,11 @@ import yarangi.spatial.Tile;
 public class PolyFactory implements ITerrainFactory <PolygonTerrainMap>
 {
 
+	/**
+	 * number of polygonal layers
+	 */
+	public static final int POLY_DEPTH = 5;
+	
 	@Override
 	public EntityShell<PolygonTerrainMap> generateTerrain(float width, float height, int cellsize)
 	{
@@ -23,10 +28,11 @@ public class PolyFactory implements ITerrainFactory <PolygonTerrainMap>
 			{
 				Tile <TilePoly> tile = terrain.getTileAt( i, j );
 //				System.out.println(tile);
-				tile.put( new TilePoly(tile.getMinX(), tile.getMinY(), tile.getMaxX(), tile.getMaxY() ) );
+				tile.put( new TilePoly(tile.getMinX(), tile.getMinY(), tile.getMaxX(), tile.getMaxY(), POLY_DEPTH ) );
 			}
 
-		Look <PolygonTerrainMap> look = new PolyTerrainLook();
+		Look <PolygonTerrainMap> look = new FBOPolyTerrainLook(true, true, POLY_DEPTH);
+//		Look <PolygonTerrainMap> look = new PolyTerrainLook();
 		return new EntityShell<PolygonTerrainMap>( terrain, new ModifiableGridBehavior(), look );
 	}
 

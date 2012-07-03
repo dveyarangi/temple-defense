@@ -2,8 +2,8 @@ package yarangi.game.harmonium.enemies.swarm;
 
 import java.util.List;
 
+import yarangi.game.harmonium.battle.IEnemy;
 import yarangi.game.harmonium.battle.ITemple;
-import yarangi.game.harmonium.enemies.IEnemy;
 import yarangi.game.harmonium.enemies.swarm.agents.DroneBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.harmonium.temple.bots.SatelliteBehavior;

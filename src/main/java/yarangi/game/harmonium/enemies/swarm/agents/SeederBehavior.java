@@ -16,12 +16,12 @@ import com.seisw.util.geom.PolyDefault;
 
 public class SeederBehavior implements IBehaviorState <Seeder>
 {
-	private static int id = RandomUtil.getRandomInt(Integer.MAX_VALUE);
+	private static int id = RandomUtil.N(Integer.MAX_VALUE);
 	
 	private double windingPhase = 0;
 	public static final double WINDING_COEF = 2;
 	public static final double WINDING_SPEED = 0.5;	
-	private DroneBehavior drone = new DroneBehavior(20);
+	private DroneBehavior drone = new DroneBehavior(10);
 	private PolygonTerrainMap terrain;
 	private static double SEED_INTERVAL = 10;
 	private double lifeTime = 0;

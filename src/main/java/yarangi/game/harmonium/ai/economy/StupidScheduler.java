@@ -51,7 +51,7 @@ public class StupidScheduler implements IOrderScheduler
 		if(requestsQueue.size() == 0 )
 			return null;
 		ResourceRequest request;
-		int dice = RandomUtil.getRandomInt( requestsQueue.size() );
+		int dice = RandomUtil.N( requestsQueue.size() );
 		request = requestsQueue.get( dice );
 		
 		if(request.isApproved())

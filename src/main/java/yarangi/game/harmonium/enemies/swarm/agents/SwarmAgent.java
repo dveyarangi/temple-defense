@@ -2,12 +2,11 @@ package yarangi.game.harmonium.enemies.swarm.agents;
 
 import yarangi.game.harmonium.battle.Damage;
 import yarangi.game.harmonium.battle.Damageable;
+import yarangi.game.harmonium.battle.IEnemy;
 import yarangi.game.harmonium.battle.Integrity;
-import yarangi.game.harmonium.enemies.IEnemy;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.spatial.Area;
 
 public class SwarmAgent extends Entity implements Damageable, IEnemy
 {

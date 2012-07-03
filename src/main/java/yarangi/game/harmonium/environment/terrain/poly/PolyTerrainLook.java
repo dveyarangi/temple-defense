@@ -12,8 +12,12 @@ import com.seisw.util.geom.Poly;
 
 public class PolyTerrainLook extends PolyGridLook<TilePoly, PolygonTerrainMap>
 {
-	public PolyTerrainLook()
+
+
+	public PolyTerrainLook(boolean depthtest, boolean blend)
 	{
+		super( depthtest, blend );
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -28,20 +32,24 @@ public class PolyTerrainLook extends PolyGridLook<TilePoly, PolygonTerrainMap>
 		// 
 //		for(Poly poly : tile.get().getPolys())
 //			renderPoly( gl, poly );
-		Poly poly = tile.get().getPoly();
-		if(poly == null)
+		Poly [] poly = tile.get().getPoly();
+		if(poly[0] == null)
 			return;
-		renderPoly( gl, poly );
-		for(int idx = 0; idx < poly.getNumInnerPoly(); idx ++)
-		{
-			// TODO: recursion may be needed:
-			renderPoly(gl, poly.getInnerPoly( idx ));
+		for(int idx = 0; idx < poly.length; idx ++) {
+			gl.glColor4f(idx*0.2f, (poly.length-idx)*0.2f, 0.0f, 0.5f);
+			if(poly[idx] == null || poly[idx].isEmpty())
+				break;
+			renderPoly( gl, poly[idx] );
+			for(int pidx = 0; pidx < poly[idx].getNumInnerPoly(); pidx ++)
+			{
+				// TODO: recursion may be needed:
+				renderPoly(gl, poly[idx].getInnerPoly( pidx ));
+			}
 		}
 	}
 	
 	private void renderPoly(GL gl, Poly poly)
 	{
-		gl.glColor4f(0.2f, 0.1f, 0.5f, 0.5f);
 		gl.glBegin( GL.GL_LINE_STRIP );
 		for(int idx = 0; idx < poly.getNumPoints(); idx ++)
 			gl.glVertex2f((float)poly.getX( idx ), (float)poly.getY( idx ));

@@ -11,11 +11,17 @@ import yarangi.spatial.Tile;
 
 public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 {
+	public SwarmDebugOverlay(boolean depthtest, boolean blend, Swarm swarm) {
+		super( depthtest, blend );
+		swarm.setModificationListener( this );
+	}
 
 	@Override
 	public boolean isCastsShadow() { return false; }
 	@Override
 	public float getPriority() { return 1; }
+	
+
 
 	@Override
 	protected void renderTile(GL gl, Tile<Beacon> tile, Swarm swarm, int scale)
@@ -88,7 +94,7 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 			gl.glPushAttrib( GL.GL_COLOR_BUFFER_BIT );
 			gl.glBlendEquation( GL.GL_MIN );
 			gl.glBlendFunc( GL.GL_ONE, GL.GL_ONE );
-			gl.glColor4f(0f, 0, 0f, 0f);
+			gl.glColor4f(0f, 0, 0f, 1f);
 			gl.glBegin(GL.GL_QUADS);
 			gl.glVertex3f((float)(x), (float)(y), 0);
 			gl.glVertex3f((float)(x), (float)(y+size), 0);
@@ -142,5 +148,6 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 	{
 		return new Point(grid.getWorldSize(), grid.getWorldSize());
 	}
+
 
 }

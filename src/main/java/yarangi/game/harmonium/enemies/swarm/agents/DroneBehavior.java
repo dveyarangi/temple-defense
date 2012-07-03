@@ -9,7 +9,7 @@ import yarangi.numbers.RandomUtil;
 
 public class DroneBehavior implements IBehaviorState <SwarmAgent>, Behavior <SwarmAgent>  
 {
-	double da = RandomUtil.N(0, 0.1);
+	double da = RandomUtil.STD(0, 0.1);
 	
 	double inertion;
 	
@@ -25,6 +25,10 @@ public class DroneBehavior implements IBehaviorState <SwarmAgent>, Behavior <Swa
 		
 //		System.out.println(flow);
 		if(flow != null) {
+			if(inertion == 0) {
+				agent.getBody().addVelocity( flow.x(), flow.y() );
+			}
+			else
 //			if(agent.getBody().getForce().x() == 0 && agent.getBody().getForce().y() == 0)
 				agent.getBody().setForce( flow.x()/inertion, flow.y()/inertion );
 //			else

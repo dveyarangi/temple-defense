@@ -1,6 +1,6 @@
 package yarangi.game.harmonium.temple.weapons;
 
-import yarangi.game.harmonium.enemies.IEnemy;
+import yarangi.game.harmonium.battle.IEnemy;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.ISensor;
 import yarangi.graphics.quadraturin.objects.Sensor;
@@ -20,7 +20,7 @@ public class WeaponFactory
 		Vector2D location = weapon.getArea().getAnchor();
 		
 		
-		double fireAngle = RandomUtil.N(
+		double fireAngle = RandomUtil.STD(
 				area.getOrientation(), weapon.getProps().getProjectileTrajectoryAccuracy());
 	
 		SimpleProjectileBehavior shellBehavior = new SimpleProjectileBehavior();

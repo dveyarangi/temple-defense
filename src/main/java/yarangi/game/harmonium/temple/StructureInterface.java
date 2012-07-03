@@ -12,7 +12,7 @@ public class StructureInterface
 	
 	public Serviceable getServiceTarget(Bot bot)
 	{
-		return serviceables.get( RandomUtil.getRandomInt( serviceables.size() ) );
+		return serviceables.get( RandomUtil.N( serviceables.size() ) );
 	}
 	
 	public void addServiceable(Serviceable serv)

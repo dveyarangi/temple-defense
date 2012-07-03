@@ -26,9 +26,13 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 {
 	
 	private int flowRadius;
-	   ExecutorService executor = Executors.newFixedThreadPool(3);
+	   ExecutorService executor = Executors.newFixedThreadPool(1);
 
 	private long lastOmniscienceTime = System.currentTimeMillis();
+	
+	private int passId = 0;
+	
+	private volatile boolean isRunning = false;
 
 	FutureTask<String> future = null;
 	public PathingBehavior(int flowRadius)
@@ -39,8 +43,12 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 	@Override
 	public double behave(double time, final Swarm swarm) 
 	{
-		if(future != null && !future.isDone())
+		if(isRunning)
 			return 0;
+		
+		isRunning = true;
+		passId ++;
+		
 		Vector2D origin = swarm.getSource();
 		Vector2D target = swarm.getTarget();
 
@@ -55,8 +63,15 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 	               {
 	                   public String call()
 	                   {
-	               			markPath(ox, oy, tx, ty, swarm);
-                	   
+	                	   try { 
+	                		   
+	               				markPath(ox, oy, tx, ty, swarm);
+	                	   }
+	                	   catch(Exception e) 
+	                	   {
+	                		   e.printStackTrace();
+	                	   }
+	               			isRunning = false;
 	                       return null;
 	                   }
 	               });
@@ -77,9 +92,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 				return (int)(o1.f - o2.f);
 			}});
 		
-		// TODO: replace with run id:
-		List <AStarNode> closedNodes = new LinkedList <AStarNode> ();
-		
+
 		AStarNode curr = new AStarNode(ox, oy);
 		AStarNode temp;
 		
@@ -94,14 +107,15 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 			curr.unmarkOpen();
 //			openNodes.remove(curr);
 			
-			curr.markClosed();
-			closedNodes.add(curr);
+			curr.markClosed(passId);
 			
 			cx = curr.getX();
 			cy = curr.getY();
 			
-			if(cx == tx && cy == ty) // target reached
+			if(swarm.hasTarget( cx, cy )) // target reached
 			{
+				tx = cx;
+				ty = cy;
 				pathFound = true;
 				break;
 			}
@@ -119,10 +133,10 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 					if(y < 0 || y >= WSIZE) continue;
 					
 					temp = swarm.getBeaconByIndex( x, y );
-					if(temp.isClosed())
+					if(temp.isClosed(passId))
 						continue;
 				
-					if(swarm.isOmniUnpassable(temp.getX(), temp.getY()))
+//					if(swarm.isOmniUnpassable(temp.getX(), temp.getY()))
 					{
 //						if(omniscienceCount == 0)
 //							continue;
@@ -147,9 +161,9 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 //						temp = beacons[x][y] = new AStarNode(x, y);
 					
 					
-					if(!temp.isOpen()) // not yet visited
+					if(!temp.isOpen(passId)) // not yet visited
 					{
-						temp.markOpen();
+						temp.markOpen(passId);
 						temp.decayDanger(time);
 					}
 					else
@@ -175,7 +189,6 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 			
 		}
 		while((curr = openNodes.poll()) != null);
-		
 //		System.out.println("search end, pathing");
 		// clean up A* flags:
 		if(pathFound)
@@ -187,7 +200,6 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 			while(node.origin != null)
 			{
 				
-//				System.out.println(node.getX() + " : " + node.getY());
 				cx = node.origin.getX();
 				cy = node.origin.getY();
 				Vector2D flow = Vector2D.R(node.getX()-node.origin.getX(), node.getY()-node.origin.getY()).normalize();//.mul(0.1);
@@ -220,14 +232,10 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 			node.unmarkOpen();
 			node.reset();
 		}
-		// TODO: replace with pass id check:
-		for(AStarNode node : closedNodes)
-		{
-			node.unmarkClosed();
-			node.reset();
-		}
 		
 		swarm.fireGridModified();
+//		System.out.println("pathing finished");
+		isRunning = false;
 	}
 	public int getId() { return this.getClass().hashCode(); }
 }

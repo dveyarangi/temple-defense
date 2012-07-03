@@ -50,7 +50,7 @@ public abstract class Weapon extends Entity implements Serviceable, ITemple, Dam
 		this.props = props;
 		this.integrity = integrity;
 		this.port = new Port();
-		port.setCapacity( props.getResourceType(), props.getResourceCapacity()/2, props.getResourceCapacity() );
+		port.setCapacity( props.getResourceType(), props.getResourceCapacity(), props.getResourceCapacity() );
 		core = battleInterface.getCore();
 		setArea(area);
 		

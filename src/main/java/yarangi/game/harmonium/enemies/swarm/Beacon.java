@@ -59,6 +59,7 @@ public class Beacon implements IBeacon
 	public void update(double damage)
 	{
 		dangerFactor.addValue( damage > 0 ? damage : 0 );
+//		System.out.println("DAMAGE: " + damage + " : " + "FACTOR: " + dangerFactor.getSum() );
 //		System.out.println(dangerFactor.getAverage());
 		time = System.currentTimeMillis(); // TODO: should be engine's/scene time
 		unpassable = false;
@@ -66,7 +67,8 @@ public class Beacon implements IBeacon
 	
 	public void decayDanger(long time)
 	{
-//		System.out.println(dangerFactor.getAverage());
+//		System.out.println(dangerFactor.getSum());
+		this.time = time; 
 		if(dangerFactor.getSum() == 0)
 			return;
 		
@@ -81,7 +83,6 @@ public class Beacon implements IBeacon
 		{
 			dangerFactor.reset();
 		}
-		this.time = time; 
 	}
 	
 	public boolean isDeadly(double damageThreshold)

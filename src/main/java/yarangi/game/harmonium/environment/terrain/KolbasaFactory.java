@@ -18,7 +18,7 @@ public class KolbasaFactory
 		double maxSpan = 7;
 		for(int level = 0; level < LEVELS; level ++)
 		{
-			double levelWidth = RandomUtil.getRandomInt(30 )+ 60;
+			double levelWidth = RandomUtil.N(30 )+ 60;
 			double da = density * Angles.PI_2 / levelRadius;
 			
 			boolean start = false;

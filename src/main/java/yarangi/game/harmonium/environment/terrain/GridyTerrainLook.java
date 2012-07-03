@@ -18,6 +18,12 @@ public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap>
 {
 
 	
+	public GridyTerrainLook(boolean depthtest, boolean blend)
+	{
+		super( depthtest, blend );
+	}
+
+
 	public void init(GL gl, GridyTerrainMap grid, IRenderingContext context)
 	{
 		super.init( gl, grid, context );
@@ -75,6 +81,13 @@ public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap>
 				BitUtils.po2Ceiling(grid.getGridWidth()  * grid.getBitmapSize()), 
 				BitUtils.po2Ceiling(grid.getGridHeight() * grid.getBitmapSize())
 			);
+	}
+
+
+	@Override
+	public float getPriority()
+	{
+		return 0;
 	}
 	
 }

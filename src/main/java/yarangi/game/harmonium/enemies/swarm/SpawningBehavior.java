@@ -7,6 +7,7 @@ import yarangi.game.harmonium.enemies.swarm.agents.DroneBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.Seeder;
 import yarangi.game.harmonium.enemies.swarm.agents.SeederBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.SeederLook;
+import yarangi.game.harmonium.enemies.swarm.agents.SplitBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.harmonium.temple.bots.ChasingBehavior;
 import yarangi.graphics.quadraturin.objects.Behavior;
@@ -29,7 +30,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	public static final int SPAWNING_RADIUS = 50;
 	public static final Integrity AGENT_INTEGRITY = new Integrity(10, 0, new double [] {0,0,0,0});
 	public static final double AGENT_HEALTH = AGENT_INTEGRITY.getMaxHitPoints();
-	
+	public static final double  AGENT_VELOCITY = 1.5;
 	public Look agentLook = new MetaCircleLook();
 	private PolygonTerrainMap terrain;
 	
@@ -55,17 +56,17 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 			timeToSpawn += spawnInterval;
 			double angle = RandomUtil.getRandomDouble(Angles.PI_2);
 	//			double radius = RandomUtil.getRandomGaussian(800, 0);
-			double size = Math.abs(RandomUtil.N(0.5, 0.2))+0.1;
+			double size = Math.abs(RandomUtil.STD(0.5, 0.2))+0.1;
 			Vector2D source = swarm.getSource();
 			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(100*size, 0, new double [] {0,0,0,0}), size/100000, 10*size);
 			agent.setLook(agentLook);
 //			agent.setBehavior(createBoidBehavior());
-			agent.setBehavior(new DroneBehavior( 5 ));
+			agent.setBehavior(new DroneBehavior( 1 ));
 	//		System.out.println("spawning agent at " + swarm.getArea().getRefPoint());
 			agent.setArea(AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
 								   source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle));
 			agent.setSensor(EnemyFactory.SHORT_SENSOR());
-			agent.setBody(new Body(10*size+RandomUtil.N(0, 1), 2+RandomUtil.N(0, 1)));
+			agent.setBody(new Body(10*size+RandomUtil.STD(0, 1), AGENT_VELOCITY+RandomUtil.STD(0, 0.02)));
 			swarm.addAgent(agent);
 //			System.out.println("Agent spawn at " + agent.getArea().getRefPoint());
 			
@@ -78,12 +79,13 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 				
 				seeder.setBehavior(createSeederBehavior());
 				seeder.setLook(new SeederLook());
-				seeder.setBody(new Body(size, 2));
+				seeder.setBody(new Body(size, AGENT_VELOCITY+RandomUtil.STD(0, 0.01)));
 //				seeder.getBody().setMaxSpeed( 1 );
 				
 				swarm.addAgent(seeder);
 			}
 		}
+		
 		return 0;
 	}
 	
@@ -122,6 +124,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	{
 		final IBehaviorState<Seeder> seederState = new SeederBehavior(terrain);
 //		final IBehaviorState<SwarmAgent> dangerState = new DangerBehavior();
+		final IBehaviorState<SwarmAgent> splitState = new SplitBehavior();
 		
 		FSMBehavior <Seeder> beh = new FSMBehavior<Seeder>(seederState);
 		

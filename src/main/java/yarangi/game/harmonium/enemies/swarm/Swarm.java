@@ -1,18 +1,24 @@
 package yarangi.game.harmonium.enemies.swarm;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
+import yarangi.game.harmonium.battle.EntityCenter;
+import yarangi.game.harmonium.battle.ITemple;
+import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.graphics.quadraturin.Scene;
-import yarangi.graphics.quadraturin.terrain.Bitmap;
-import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
+import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.FastMath;
 import yarangi.math.Vector2D;
+import yarangi.numbers.RandomUtil;
 import yarangi.spatial.GridMap;
+import yarangi.spatial.SpatialHashMap;
 import yarangi.spatial.Tile;
 
 public class Swarm extends GridMap<Tile<Beacon>, Beacon>
@@ -38,9 +44,14 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	static final int MIN_DANGER_FACTOR = 0;
 	static final int MAX_DANGER_FACTOR = 1000;
 	
-	static final double DANGER_FACTOR_DECAY = 0.0001;
+	static final double DANGER_FACTOR_DECAY = 0.001;
 	static final double OMNISCIENCE_PERIOD = 100.;
+	static final double SPAWNING_INTERVAL = 4;
+	public static final int SPAWNING_RADIUS = 50;
+	public static final Integrity AGENT_INTEGRITY = new Integrity(10, 0, new double [] {0,0,0,0});
+
 	final PolygonTerrainMap terrain;
+	private SpatialHashMap <IEntity> index;
 	
 	/**
 	 * 
@@ -56,6 +67,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 		WSIZE = (int)((float)worldSize / (float)cellsize);
 		
 		terrain = (PolygonTerrainMap)scene.getWorldLayer().<TilePoly>getTerrain();
+		index = (SpatialHashMap <IEntity>)scene.getEntityIndex();
 		
 		this.toNodeIdx = (double)WSIZE / (double)(worldSize);
 	}
@@ -139,6 +151,10 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 		scene.removeEntity(agent);
 	}*/
 
+	public void setTarget(ITemple structure)
+	{
+		this.target = structure.getArea().getAnchor();
+	}
 
 	public void setDanger(SwarmAgent agent, double damage) 
 	{
@@ -203,32 +219,47 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 		public double f;
 		public AStarNode origin;
 		
-		public int passId;
+		public int openPassId;
+		public int closePassId;
 		
 		private boolean closed = false;
 		private boolean open = false;
+		
+		private int hashcode = RandomUtil.N( Integer.MAX_VALUE );
 		
 		public AStarNode(int x, int y)
 		{
 			super(x,y);
 		}
 
-		public void markClosed() { closed = true;}
+		public void markClosed(int passId) { closed = true; this.closePassId = passId; }
 		public void unmarkClosed() { closed = false; }
-		public boolean isClosed() { return closed; }
-		public void markOpen() 
+		public boolean isClosed(int passId) { return this.closePassId == passId && closed; }
+		public void markOpen(int passId) 
 		{ 
+			openPassId = passId;
 			open = true;
 			g = 0;
 			h = 0;
 			f = 0;
 		}
 		public void unmarkOpen() { open = false; }
-		public boolean isOpen() { return open; }
+		public boolean isOpen(int passId) { return this.openPassId == passId && open; }
 		public void reset()
 		{
+			open = closed = false;
 			g = h = f = 0;
 			origin = null;
+		}
+		
+		public int hashCode() 
+		{
+			return hashcode;
+		}
+		
+		public boolean equals(Object o)
+		{
+			return o == this;
 		}
 
 	}
@@ -267,6 +298,21 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 		Tile <TilePoly> tile = terrain.getTile( toBeaconCoord( x ), toBeaconCoord( y ) );
 		return tile != null && !tile.get().isEmpty();
 //		return !terrain.getCell( toBeaconCoord( x ), toBeaconCoord( y ) ).getProperties().isEmpty();
+				
+	}
+	
+	public boolean hasTarget(int x, int y)
+	{
+		Collection <IEntity> entities = index.getBucket( 
+					index.toGridIndex( toBeaconCoord(x) ), index.toGridIndex( toBeaconCoord(y) ) )
+					.values();
+		
+		for(IEntity entity : entities) 
+			if(entity instanceof ITemple) {
+//				System.out.println("Swarm: target found: " + x + " : " + y + " : " + entity);
+				return true;
+			}
+		return false;
 				
 	}
 
@@ -312,5 +358,6 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	{
 		return i + WSIZE * j;
 	}
+
 
 }

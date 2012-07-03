@@ -68,7 +68,7 @@ public class SwarmFactory
 //		swarm.setArea(new Point(0, 0));
 		final IBehaviorState<Swarm> rotating = new RotatingBehavior();
 		final IBehaviorState<Swarm> pathing = new PathingBehavior(3);
-		final IBehaviorState<Swarm> spawning = new SpawningBehavior(terrain, 8);
+		final IBehaviorState<Swarm> spawning = new SpawningBehavior(terrain, Swarm.SPAWNING_INTERVAL);
 		final IBehaviorState<Swarm> shifting = new ShiftBehavior();
 		
 		FSMBehavior <Swarm> behavior = new FSMBehavior <Swarm> (shifting);

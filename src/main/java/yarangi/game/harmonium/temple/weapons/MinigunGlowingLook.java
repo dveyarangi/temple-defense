@@ -41,13 +41,13 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 	{
 		Resource.Type type = cannon.getProps().getResourceType();
 		float P = (float)(cannon.getPort().get( type ).getAmount() / cannon.getPort().getCapacity( type ));
-		this.setColor(new Color( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (float)(P),1));
+		this.setColor(new Color( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (P),1));
 //		this.setColor(new Color( P*0.2f+(1-P)*0.8f, 0.5f+0.5f*P, 1f*P, 1.0f));
 //		this.setColor(new Color( 1.0f, P, P, 1.0f));
 				
 		super.render( gl, time, cannon, context );		
 		
-		gl.glEnable(GL.GL_BLEND);
+//		gl.glEnable(GL.GL_BLEND);
 		gl.glColor4f( 0f, 1f, 0f, 0.1f );
 		gl.glBegin( GL.GL_LINE_STRIP );
 		float x, y;
@@ -71,7 +71,7 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 		gl.glEnd();
 
 		
-		gl.glEnable(GL.GL_BLEND);
+//		gl.glEnable(GL.GL_BLEND);
 		gl.glColor4f(0.0f, 1.0f, 0f, 0.2f);
 		Vector2D trackPoint = cannon.getBattleInterface().acquireTrackPoint(cannon);
 		
