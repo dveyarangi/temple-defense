@@ -26,7 +26,6 @@ public class Minigun extends Weapon
 	public static final double resourceConsumption = 50;
 	public static final Resource.Type resourceType = Resource.Type.ENERGY;
 
-	
 	public static final WeaponProperties PROPS0 = new WeaponProperties(
 			BASE_TRACKING_SPEED, 
 			CANNON_TRACKING_HALF_WIDTH, 

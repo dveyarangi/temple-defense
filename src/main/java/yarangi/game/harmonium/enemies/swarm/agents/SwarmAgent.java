@@ -10,6 +10,7 @@ import yarangi.graphics.quadraturin.objects.IEntity;
 
 public class SwarmAgent extends Entity implements Damageable, IEnemy
 {
+	
 	private Swarm swarm;
 	
 	private Integrity integrity;

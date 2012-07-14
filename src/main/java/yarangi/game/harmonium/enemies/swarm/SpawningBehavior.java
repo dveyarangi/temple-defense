@@ -31,6 +31,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	public static final Integrity AGENT_INTEGRITY = new Integrity(10, 0, new double [] {0,0,0,0});
 	public static final double AGENT_HEALTH = AGENT_INTEGRITY.getMaxHitPoints();
 	public static final double  AGENT_VELOCITY = 1.5;
+	
 	public Look agentLook = new MetaCircleLook();
 	private PolygonTerrainMap terrain;
 	

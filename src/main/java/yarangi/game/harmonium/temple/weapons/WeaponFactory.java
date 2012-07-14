@@ -48,7 +48,6 @@ public class WeaponFactory
 		}
 		
 	};
-	
 
 	public static ISensor<?> createSensor(Weapon weapon)
 	{

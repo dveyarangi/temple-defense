@@ -69,6 +69,7 @@ public class Beacon implements IBeacon
 	{
 //		System.out.println(dangerFactor.getSum());
 		this.time = time; 
+		
 		if(dangerFactor.getSum() == 0)
 			return;
 		

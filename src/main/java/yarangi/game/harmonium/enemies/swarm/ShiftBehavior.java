@@ -22,6 +22,7 @@ class ShiftBehavior implements IBehaviorState<Swarm>
 		}*/
 		return 0;
 	}
+	
 	public int getId() { return this.getClass().hashCode(); }
 
 }

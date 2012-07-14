@@ -35,5 +35,6 @@ public class PolyFactory implements ITerrainFactory <PolygonTerrainMap>
 //		Look <PolygonTerrainMap> look = new PolyTerrainLook();
 		return new EntityShell<PolygonTerrainMap>( terrain, new ModifiableGridBehavior(), look );
 	}
+	
 
 }

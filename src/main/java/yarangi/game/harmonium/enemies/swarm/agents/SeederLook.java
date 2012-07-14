@@ -68,7 +68,7 @@ public class SeederLook implements Look <Seeder>
 
 	@Override
 	public boolean isCastsShadow() {
-		return false;
+		return false; 
 	}
 
 	@Override

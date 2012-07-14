@@ -13,6 +13,7 @@ import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.Geometry;
 import yarangi.math.Vector2D;
 
+
 public class BoidBehavior implements IBehaviorState<SwarmAgent> 
 {
 	public static final double ATTRACTION_COEF = 0.25;

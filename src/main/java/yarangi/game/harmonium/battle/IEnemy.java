@@ -2,6 +2,7 @@ package yarangi.game.harmonium.battle;
 
 import yarangi.graphics.quadraturin.objects.IEntity;
 
+
 /**
  * Marker interface for enemy units
  * @author dveyarangi

@@ -86,7 +86,6 @@ public class KolbasaFactory
 			poly.add( currPoint );
 		}
 		
-
 		return poly;
 	}
 

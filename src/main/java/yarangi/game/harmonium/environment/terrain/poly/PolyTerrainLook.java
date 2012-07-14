@@ -56,5 +56,4 @@ public class PolyTerrainLook extends PolyGridLook<TilePoly, PolygonTerrainMap>
 		gl.glVertex2f((float)poly.getX( 0 ), (float)poly.getY( 0 ));
 		gl.glEnd();
 	}
-
 }

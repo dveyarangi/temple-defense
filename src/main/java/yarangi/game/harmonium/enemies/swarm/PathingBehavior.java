@@ -32,6 +32,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 	
 	private int passId = 0;
 	
+	
 	private volatile boolean isRunning = false;
 
 	FutureTask<String> future = null;

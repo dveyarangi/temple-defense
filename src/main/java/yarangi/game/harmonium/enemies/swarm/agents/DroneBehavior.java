@@ -36,6 +36,7 @@ public class DroneBehavior implements IBehaviorState <SwarmAgent>, Behavior <Swa
 		}
 		return 0;
 	}
+	
 	public int getId() { return this.getClass().hashCode(); }
 
 	@Override

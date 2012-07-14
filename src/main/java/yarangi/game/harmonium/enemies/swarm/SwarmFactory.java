@@ -83,10 +83,12 @@ public class SwarmFactory
 				
 			}
 		});
+		
 		behavior.link(spawning, new IBehaviorCondition<Swarm>() {
 			@Override
 			public IBehaviorState<Swarm> nextState(Swarm entity) { return shifting; }
 		});
+		
 		behavior.link(pathing, new IBehaviorCondition<Swarm>() {
 			@Override
 			public IBehaviorState<Swarm> nextState(Swarm entity) { return shifting; }

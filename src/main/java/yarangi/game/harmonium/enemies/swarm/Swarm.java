@@ -4,9 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
-import yarangi.game.harmonium.battle.EntityCenter;
 import yarangi.game.harmonium.battle.ITemple;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
@@ -20,6 +18,7 @@ import yarangi.numbers.RandomUtil;
 import yarangi.spatial.GridMap;
 import yarangi.spatial.SpatialHashMap;
 import yarangi.spatial.Tile;
+
 
 public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 {

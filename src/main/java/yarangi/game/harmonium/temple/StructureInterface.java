@@ -19,6 +19,7 @@ public class StructureInterface
 	{
 		if(serviceables.contains( serv ))
 			throw new IllegalArgumentException(serv + " is already registered as serviceable entity.");
+		
 		serviceables.add( serv );
 	}
 

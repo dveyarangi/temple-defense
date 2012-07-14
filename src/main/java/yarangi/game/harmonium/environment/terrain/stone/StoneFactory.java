@@ -10,7 +10,6 @@ import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.graphics.quadraturin.terrain.ITerrainFactory;
 import yarangi.spatial.Tile;
 
-
 public class StoneFactory implements ITerrainFactory <GridyTerrainMap>
 {
 

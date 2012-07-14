@@ -19,7 +19,8 @@ public class BotLook implements Look<Bot> {
 	private Vector2D [] tail;
 	private int step = 0;
 	private int headIdx = 0;
-	IVeil veil;
+	
+	private IVeil veil;
 	
 	private Color color = new Color(RandomUtil.STD( 0.8f, 0.2f ), 
 			RandomUtil.STD(  0.8f, 0.2f  ), 

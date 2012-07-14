@@ -23,7 +23,6 @@ public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap>
 		super( depthtest, blend );
 	}
 
-
 	public void init(GL gl, GridyTerrainMap grid, IRenderingContext context)
 	{
 		super.init( gl, grid, context );

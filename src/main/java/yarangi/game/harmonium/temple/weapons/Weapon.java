@@ -1,7 +1,6 @@
 package yarangi.game.harmonium.temple.weapons;
 
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
-import yarangi.game.harmonium.ai.weapons.NetCore;
 import yarangi.game.harmonium.battle.Damage;
 import yarangi.game.harmonium.battle.Damageable;
 import yarangi.game.harmonium.battle.ITemple;

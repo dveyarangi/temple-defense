@@ -8,11 +8,9 @@ import yarangi.graphics.lights.CircleLightLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.Q;
-import yarangi.graphics.quadraturin.objects.Look;
 import yarangi.graphics.veils.IsoheightVeil;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
-import yarangi.spatial.Area;
 
 public class MinigunGlowingLook extends CircleLightLook<Minigun>
 {

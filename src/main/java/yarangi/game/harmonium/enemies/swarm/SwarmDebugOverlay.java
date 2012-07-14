@@ -18,6 +18,7 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 
 	@Override
 	public boolean isCastsShadow() { return false; }
+	
 	@Override
 	public float getPriority() { return 1; }
 	
