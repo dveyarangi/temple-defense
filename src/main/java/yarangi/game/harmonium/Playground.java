@@ -10,9 +10,9 @@ import yarangi.game.harmonium.battle.EntityCenter;
 import yarangi.game.harmonium.battle.IEnemy;
 import yarangi.game.harmonium.controllers.ControlBehavior;
 import yarangi.game.harmonium.controllers.ControlLook;
+import yarangi.game.harmonium.controllers.OrdersActionController;
 import yarangi.game.harmonium.controllers.TempleController;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
-import yarangi.game.harmonium.enemies.swarm.SwarmDebugOverlay;
 import yarangi.game.harmonium.enemies.swarm.SwarmFactory;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.harmonium.temple.BattleInterface;
@@ -21,8 +21,8 @@ import yarangi.game.harmonium.temple.ObserverBehavior;
 import yarangi.game.harmonium.temple.Shield;
 import yarangi.game.harmonium.temple.StructureInterface;
 import yarangi.game.harmonium.temple.TempleLook;
-import yarangi.game.harmonium.temple.harvester.Harvester;
 import yarangi.game.harmonium.temple.harvester.HarvesterFactory;
+import yarangi.game.harmonium.temple.harvester.Waller;
 import yarangi.game.harmonium.temple.weapons.Minigun;
 import yarangi.game.harmonium.temple.weapons.MinigunGlowingLook;
 import yarangi.game.harmonium.temple.weapons.Projectile;
@@ -36,14 +36,14 @@ import yarangi.graphics.quadraturin.QVoices;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.config.EkranConfig;
 import yarangi.graphics.quadraturin.config.SceneConfig;
-import yarangi.graphics.quadraturin.objects.Behavior;
 import yarangi.graphics.quadraturin.objects.Dummy;
 import yarangi.graphics.quadraturin.objects.EntityShell;
+import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
 import yarangi.graphics.quadraturin.terrain.Bitmap;
+import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
-import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.graphics.quadraturin.ui.Direction;
 import yarangi.graphics.quadraturin.ui.Insets;
 import yarangi.graphics.quadraturin.ui.Overlay;
@@ -83,7 +83,7 @@ public class Playground extends Scene
 //		addEntity(background);
 
 //		PowerGrid grid = new PowerGrid(this.getWorldVeil());
-		final PolygonTerrainMap terrain = (PolygonTerrainMap)getWorldLayer().<TilePoly> getTerrain();
+		final PolygonTerrainMap terrain = (PolygonTerrainMap)getWorldLayer().<MultilayerTilePoly> getTerrain();
 		
 		core = new NetCore("netcore", this.getWorldLayer().getWidth(), this.getWorldLayer().getHeight());
 //		addEntity(new BubbleSwarm(getWorldVeil(), temple));
@@ -130,8 +130,10 @@ public class Playground extends Scene
 			structure.addServiceable( weapon );
 			
 			// harvester location is linked to cannon:
-			Harvester harvester = HarvesterFactory.createHarvester(area, weapon.getPort(), 64, terrain);
-			addEntity(harvester);
+//			Harvester harvester = HarvesterFactory.createHarvester(area, weapon.getPort(), 64, terrain);
+//			addEntity(harvester);
+			Waller waller = HarvesterFactory.createWaller(area, weapon.getPort(), 64, terrain, ((OrdersActionController)controller.getActionController()).getReinforcementMap());
+			addEntity(waller);
 
 			
 /*			Shield shield = new Shield(bi, weapon.getPort());
@@ -187,9 +189,9 @@ public class Playground extends Scene
 //		KolbasaFactory.generateKolbasaMaze( this );
 		
 		Swarm swarm = SwarmFactory.createSwarm(sceneConfig.getWidth(), this, 3);
-		Behavior <Swarm> swarmBehavior = SwarmFactory.
+		IBehavior <Swarm> swarmBehavior = SwarmFactory.
 		
-		createDefaultBehavior((PolygonTerrainMap)getWorldLayer().<TilePoly>getTerrain());
+		createDefaultBehavior((PolygonTerrainMap)getWorldLayer().<MultilayerTilePoly>getTerrain());
 		swarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, Dummy.<Swarm>LOOK() );
 		addEntity(swarmShell);
 		
@@ -265,18 +267,21 @@ public class Playground extends Scene
 		}
 	}*/
 	
+	@Override
 	public void init(GL gl, IRenderingContext context)
 	{
 		super.init(gl, context);
 		gl.glClearColor(0.0f,0.0f, 0.0f, 1.0f);
 	}
 	
+	@Override
 	public void destroy(GL gl, IRenderingContext context)
 	{
 		super.destroy(gl, context);
 		core.shutdown();
 	}
 
+	@Override
 	public String toString() { return "playground scene"; }
 	
 	public void toggleSwarmOverlay()

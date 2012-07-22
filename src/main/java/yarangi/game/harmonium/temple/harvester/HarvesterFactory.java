@@ -1,14 +1,11 @@
 package yarangi.game.harmonium.temple.harvester;
 
 import yarangi.game.harmonium.environment.resources.Port;
-import yarangi.game.harmonium.temple.ObserverLook;
-import yarangi.game.harmonium.temple.weapons.MinigunGlowingLook;
-import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.terrain.Bitmap;
-import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
+import yarangi.graphics.quadraturin.terrain.PolygonGrid;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
-import yarangi.spatial.AABB;
+import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.spatial.Area;
 import yarangi.spatial.ISpatialFilter;
 
@@ -27,11 +24,27 @@ public class HarvesterFactory
 		
 		return harvester;
 	}
+	public static Waller createWaller(Area area, Port port, double range, PolygonTerrainMap terrain, PolygonGrid <TilePoly> reinforcementMap)
+	{
+		Waller waller = new Waller(port, null);
+		
+		waller.setArea(area);
+		waller.setLook(new WallerLook());
+		EnforcingBehavior behavior = createEnforcingBehavior(range, terrain, reinforcementMap);
+		waller.setBehavior( behavior );
+		waller.setSensor( behavior);
+		
+		return waller;
+	}
 	
 	
 	public static ErrodingBehavior createErrodingBehavior(double range, PolygonTerrainMap terrain)
 	{
 		return new ErrodingBehavior(range, terrain);
+	}
+	public static EnforcingBehavior createEnforcingBehavior(double range, PolygonTerrainMap terrain, PolygonGrid <TilePoly> reinforcementMap)
+	{
+		return new EnforcingBehavior(range, terrain, reinforcementMap);
 	}
 	
 	private static class HarvesterSensorFilter implements ISpatialFilter <IEntity> {

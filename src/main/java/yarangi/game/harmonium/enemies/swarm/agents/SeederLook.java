@@ -5,27 +5,34 @@ import javax.media.opengl.GL;
 import yarangi.graphics.curves.Bezier4Curve;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.objects.ILook;
+import yarangi.graphics.veils.BlurVeil;
 import yarangi.math.Vector2D;
 
-public class SeederLook implements Look <Seeder> 
+public class SeederLook implements ILook <Seeder> 
 {
 
+	IVeil veil;
+	
 	@Override
 	public void init(GL gl, Seeder entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
+		veil = context.getPlugin( BlurVeil.NAME );
+		if(veil == null)
+			veil = IVeil.ORIENTING;
 		
 	}
 
 	@Override
-	public void render(GL gl, double time, Seeder seeder, IRenderingContext context) {
+	public void render(GL gl, Seeder seeder, IRenderingContext context) {
 		
 		Bezier4Curve left = seeder.getLeftEdge();
 		Bezier4Curve right = seeder.getRightEdge();
 		
 		Vector2D point;
+		gl.glPushAttrib( GL.GL_ENABLE_BIT );
 		gl.glDisable(GL.GL_BLEND);
-		gl.glColor4f(1f, 0.3f, 0.3f, 1.0f);
+		gl.glColor4f(1f, 0.0f, 0.0f, 1.0f);
 		
 		gl.glBegin(GL.GL_POLYGON);
 		for(float t = 0; t <= 1.09; t += 0.1) {
@@ -53,7 +60,7 @@ public class SeederLook implements Look <Seeder>
 		gl.glVertex2f((float) left.p3().x(), (float)left.p3().y());
 		gl.glVertex2f((float) left.p4().x(), (float)left.p4().y());
 		gl.glEnd();*/
-		gl.glEnable(GL.GL_BLEND);
+		gl.glPopAttrib();
 	}
 
 	@Override
@@ -73,7 +80,7 @@ public class SeederLook implements Look <Seeder>
 
 	@Override
 	public IVeil getVeil() {
-		return IVeil.ORIENTING;
+		return veil;
 	}
 
 }

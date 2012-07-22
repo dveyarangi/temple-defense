@@ -5,9 +5,9 @@ import yarangi.game.harmonium.ai.economy.StupidScheduler;
 import yarangi.game.harmonium.temple.BattleInterface;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.game.harmonium.temple.weapons.Weapon;
-import yarangi.graphics.quadraturin.objects.Behavior;
+import yarangi.graphics.quadraturin.objects.IBehavior;
 
-public class ControlBehavior implements Behavior <TempleController> 
+public class ControlBehavior implements IBehavior <TempleController> 
 {
 
 

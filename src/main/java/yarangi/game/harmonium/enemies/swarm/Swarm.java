@@ -10,8 +10,8 @@ import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
-import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.FastMath;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
@@ -22,21 +22,21 @@ import yarangi.spatial.Tile;
 
 public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 {
-	private int WSIZE ;
+	private final int WSIZE ;
 	
 //	private Vector2D [][] flows;
 	
 	private Vector2D target = Vector2D.ZERO();
 	
-	private int cellsize = 8;
+	private final int cellsize = 8;
 	
-	private Scene scene;
+	private final Scene scene;
 	
-	private double toNodeIdx;
+	private final double toNodeIdx;
 	
-	private float halfSize;
+	private final float halfSize;
 	
-	private List <SpawnNode> spawnNodes = new LinkedList <SpawnNode> ();
+	private final List <SpawnNode> spawnNodes = new LinkedList <SpawnNode> ();
 	private Iterator <SpawnNode> nodeIterator;
 	private SpawnNode currNode;
 	
@@ -45,12 +45,12 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	
 	static final double DANGER_FACTOR_DECAY = 0.001;
 	static final double OMNISCIENCE_PERIOD = 100.;
-	static final double SPAWNING_INTERVAL = 4;
+	static final double SPAWNING_INTERVAL = 20;
 	public static final int SPAWNING_RADIUS = 50;
 	public static final Integrity AGENT_INTEGRITY = new Integrity(10, 0, new double [] {0,0,0,0});
 
 	final PolygonTerrainMap terrain;
-	private SpatialHashMap <IEntity> index;
+	private final SpatialHashMap <IEntity> index;
 	
 	/**
 	 * 
@@ -65,7 +65,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 		
 		WSIZE = (int)((float)worldSize / (float)cellsize);
 		
-		terrain = (PolygonTerrainMap)scene.getWorldLayer().<TilePoly>getTerrain();
+		terrain = (PolygonTerrainMap)scene.getWorldLayer().<MultilayerTilePoly>getTerrain();
 		index = (SpatialHashMap <IEntity>)scene.getEntityIndex();
 		
 		this.toNodeIdx = (double)WSIZE / (double)(worldSize);
@@ -224,7 +224,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 		private boolean closed = false;
 		private boolean open = false;
 		
-		private int hashcode = RandomUtil.N( Integer.MAX_VALUE );
+		private final int hashcode = RandomUtil.N( Integer.MAX_VALUE );
 		
 		public AStarNode(int x, int y)
 		{
@@ -251,11 +251,13 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 			origin = null;
 		}
 		
+		@Override
 		public int hashCode() 
 		{
 			return hashcode;
 		}
 		
+		@Override
 		public boolean equals(Object o)
 		{
 			return o == this;
@@ -265,7 +267,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	
 	public class SpawnNode
 	{
-		private Vector2D spawnLocation;
+		private final Vector2D spawnLocation;
 		
 		public SpawnNode(Vector2D spawnLocation)
 		{
@@ -294,7 +296,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	{
 		if(terrain == null)
 			return false;
-		Tile <TilePoly> tile = terrain.getTile( toBeaconCoord( x ), toBeaconCoord( y ) );
+		Tile <MultilayerTilePoly> tile = terrain.getTile( toBeaconCoord( x ), toBeaconCoord( y ) );
 		return tile != null && !tile.get().isEmpty();
 //		return !terrain.getCell( toBeaconCoord( x ), toBeaconCoord( y ) ).getProperties().isEmpty();
 				
@@ -332,14 +334,14 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	@Override
 	protected Tile<Beacon>[] createMap(int cellSize, int width, int height)
 	{
-		Tile<Beacon>[] beacons = (Tile<Beacon>[]) new Tile [width*height];
+		Tile<Beacon>[] beacons = new Tile [width*height];
 		for(int i = 0; i < width; i ++)
 			for(int j = 0; j < height; j ++)
 			{
 				AStarNode node = new AStarNode(i, j); 
 				double tx = toBeaconCoord(i);
 				double ty = toBeaconCoord(j);
-				Vector2D toCenter = Vector2D.R(-tx, -ty).normalize();
+				Vector2D toCenter = Vector2D.R(0, 0).normalize();
 				if(tx != 0 || ty != 0)
 					node.setFlow(toCenter.x(), toCenter.y());
 				Tile <Beacon> tile = new Tile<Beacon>(i, j, tx, ty, getCellSize(), getCellSize());
@@ -356,6 +358,11 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	protected int indexAtTile(int i, int j)
 	{
 		return i + WSIZE * j;
+	}
+
+	public PolygonTerrainMap getTerrain()
+	{
+		return terrain;
 	}
 
 

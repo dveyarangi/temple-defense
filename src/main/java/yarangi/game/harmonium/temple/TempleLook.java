@@ -10,15 +10,16 @@ public class TempleLook extends CircleLightLook<EnergyCore>
 {
 	
 	
-	public void render(GL gl, double time,EnergyCore temple, IRenderingContext context) 
+	@Override
+	public void render(GL gl, EnergyCore temple, IRenderingContext context) 
 	{
 		
 		float P = (float)temple.getHealth();
 //		this.setColor(new Color( P*0.2f+(1-P)*0.8f, 0.5f+0.5f*P, 1f*P, 1.0f));
 //		this.setColor(new Color( P*0.3f+(1-P)*0.7f, (1-P)*0.5f+0.5f*P, 1f*P, 1.0f));
-		this.setColor(new Color( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (float)(P),1));
+		this.setColor(new Color( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (P),1));
 //		this.setColor(new Color( 1.0f, P, P, 1.0f));
-		super.render( gl, time, temple, context );
+		super.render( gl, temple, context );
 		
 	}
 

@@ -7,11 +7,11 @@ import yarangi.game.harmonium.ai.weapons.IFeedbackBeacon;
 import yarangi.game.harmonium.controllers.TempleController;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.game.harmonium.temple.weapons.Weapon;
-import yarangi.graphics.quadraturin.objects.Behavior;
+import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.ISensor;
 
-public class ObserverBehavior implements Behavior <ObserverEntity>
+public class ObserverBehavior implements IBehavior <ObserverEntity>
 {
 	
 

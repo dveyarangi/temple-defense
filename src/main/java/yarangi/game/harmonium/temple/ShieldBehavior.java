@@ -2,9 +2,9 @@ package yarangi.game.harmonium.temple;
 
 import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.game.harmonium.environment.resources.Resource;
-import yarangi.graphics.quadraturin.objects.Behavior;
+import yarangi.graphics.quadraturin.objects.IBehavior;
 
-public class ShieldBehavior implements Behavior<Shield>
+public class ShieldBehavior implements IBehavior<Shield>
 {
 	private float normalRadius = 100;
 	private float speed;

@@ -10,7 +10,6 @@ import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.graphics.textures.TextureUtils;
-import yarangi.graphics.veils.BlurVeil;
 import yarangi.math.BitUtils;
 import yarangi.spatial.Tile;
 
@@ -23,6 +22,7 @@ public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap>
 		super( depthtest, blend );
 	}
 
+	@Override
 	public void init(GL gl, GridyTerrainMap grid, IRenderingContext context)
 	{
 		super.init( gl, grid, context );
@@ -30,7 +30,7 @@ public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap>
 	
 	
 	@Override
-	protected void renderTile(GL gl, Tile<Bitmap> tile, GridyTerrainMap grid, int scale)
+	protected void renderTile(GL gl, IRenderingContext context, Tile<Bitmap> tile, GridyTerrainMap grid, int scale)
 	{
 		Bitmap chunk = tile.get();
 		if(chunk == null)
@@ -40,6 +40,7 @@ public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap>
 			TextureUtils.destroyTexture(gl, chunk.getTextureId());
 		chunk.setTextureId( TextureUtils.createBitmapTexture2D( gl, chunk.getSize(), chunk.getSize(), chunk.getPixels(), false ) );
 			
+		gl.glPushAttrib( GL.GL_ENABLE_BIT );
 		gl.glDisable( GL.GL_DEPTH_TEST );
 		gl.glDisable( GL.GL_BLEND );
 		gl.glColor3f( 0,0,0 );
@@ -67,14 +68,15 @@ public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap>
 		gl.glEnd();
 		
 		gl.glBindTexture( GL.GL_TEXTURE_2D, 0 );
-//		gl.glEnable( GL.GL_DEPTH_TEST );
-		gl.glEnable( GL.GL_BLEND );
+		
+		gl.glPopAttrib();
+		
 	}
 	@Override
 	public IVeil getVeil() { return null; }
 	
 	@Override
-	protected Point getFBODimensions(GridyTerrainMap grid)
+	protected Point getFBODimensions(IRenderingContext context, GridyTerrainMap grid)
 	{
 		return new Point(
 				BitUtils.po2Ceiling(grid.getGridWidth()  * grid.getBitmapSize()), 

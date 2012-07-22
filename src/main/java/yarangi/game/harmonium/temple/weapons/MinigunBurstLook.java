@@ -6,15 +6,14 @@ import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.Look;
-import yarangi.graphics.veils.BlurVeil;
+import yarangi.graphics.quadraturin.objects.ILook;
 
-public class MinigunBurstLook implements Look <Projectile> 
+public class MinigunBurstLook implements ILook <Projectile> 
 {
 //	static float UGLY = 0.0f;
 	static float dir = 1;
 	
-	private Color color;
+	private final Color color;
 
 //	private static GLU glu = new GLU();
 	private IVeil veil;
@@ -26,7 +25,8 @@ public class MinigunBurstLook implements Look <Projectile>
 //		this.color = new Color( (float)((1-resourcePercent)+resourcePercent*0.1),  (float)(resourcePercent*0.5), (float)(resourcePercent),1);
 	}
 
-	public void render(GL gl, double time, Projectile prj, IRenderingContext context) 
+	@Override
+	public void render(GL gl, Projectile prj, IRenderingContext context) 
 	{
 		color.apply( gl );
 		gl.glBegin(GL.GL_POLYGON);
@@ -38,12 +38,14 @@ public class MinigunBurstLook implements Look <Projectile>
 		gl.glEnd();
 	}
 
+	@Override
 	public void init(GL gl, Projectile entity, IRenderingContext context) {
 //		veil = context.getPlugin( BlurVeil.NAME );
 		if(veil == null)
 			veil = IVeil.ORIENTING;
 	}
 
+	@Override
 	public void destroy(GL gl, Projectile entity, IRenderingContext context) {
 	}
 

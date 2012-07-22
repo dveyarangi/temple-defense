@@ -1,10 +1,10 @@
 package yarangi.game.harmonium.enemies;
 
-import yarangi.graphics.quadraturin.objects.Behavior;
+import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 
-public class DroneBehavior implements Behavior<GenericEnemy> 
+public class DroneBehavior implements IBehavior<GenericEnemy> 
 {
 	double da = RandomUtil.STD(0, 0.1);
 	

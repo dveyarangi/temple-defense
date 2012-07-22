@@ -1,9 +1,9 @@
 package yarangi.game.harmonium.enemies;
 
-import yarangi.graphics.quadraturin.objects.Behavior;
+import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.spatial.AABB;
 
-public class LinearBehavior implements Behavior<GenericEnemy> 
+public class LinearBehavior implements IBehavior<GenericEnemy> 
 {
 
 	public boolean behave(double time, GenericEnemy entity, boolean isVisible) 

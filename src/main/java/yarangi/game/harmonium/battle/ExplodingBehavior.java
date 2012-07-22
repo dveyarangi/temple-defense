@@ -1,10 +1,10 @@
 package yarangi.game.harmonium.battle;
 
 import yarangi.graphics.colors.Color;
-import yarangi.graphics.quadraturin.objects.Behavior;
+import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.graphics.quadraturin.objects.Entity;
 
-public class ExplodingBehavior implements Behavior <Entity>  
+public class ExplodingBehavior implements IBehavior <Entity>  
 {
 	private double explosionTime;
 	private double timeLeft;

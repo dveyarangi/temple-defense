@@ -7,22 +7,22 @@ import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.Q;
-import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.graphics.veils.BlurVeil;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 
 
-public class BotLook implements Look<Bot> {
+public class BotLook implements ILook<Bot> {
 
 	
-	private Vector2D [] tail;
-	private int step = 0;
+	private final Vector2D [] tail;
+	private final int step = 0;
 	private int headIdx = 0;
 	
 	private IVeil veil;
 	
-	private Color color = new Color(RandomUtil.STD( 0.8f, 0.2f ), 
+	private final Color color = new Color(RandomUtil.STD( 0.8f, 0.2f ), 
 			RandomUtil.STD(  0.8f, 0.2f  ), 
 			RandomUtil.STD( 0.8f, 0.2f ), 
 			0.5f);
@@ -32,6 +32,7 @@ public class BotLook implements Look<Bot> {
 		tail = new Vector2D[tailSize];
 	}
 	
+	@Override
 	public void init(GL gl, Bot bot, IRenderingContext context) {
 		
 //		veil = context.<BlurVeil>getPlugin( BlurVeil.NAME );
@@ -45,15 +46,16 @@ public class BotLook implements Look<Bot> {
 		
 	}
 
-	public void render(GL gl, double time, Bot bot, IRenderingContext context) 
+	@Override
+	public void render(GL gl, Bot bot, IRenderingContext context) 
 	{
 		
 /*		if(entity.isHighlighted())
 			gl.glColor3f(1.0f, 1.0f, 1.0f);
 		else
 			gl.glColor3f(0.0f, 1.0f, 0.2f);*/
-		
-//		gl.glDisable(GL.GL_DEPTH_TEST);
+		gl.glPushAttrib(GL.GL_ENABLE_BIT);
+		gl.glDisable(GL.GL_DEPTH_TEST);
 		double resourcePercent = bot.getPort().get( Resource.Type.ENERGY ).getAmount() / bot.getPort().getCapacity( Resource.Type.ENERGY );
 		gl.glColor4f((float)(1-resourcePercent), (float)(1.0),(float)(1-resourcePercent),0.3f);
 //		gl.glColor4f(0,1,0,(float)(0.2+resourcePercent*0.5));
@@ -81,15 +83,14 @@ public class BotLook implements Look<Bot> {
 		for(int idx = 0; idx < headIdx; idx ++)
 			gl.glVertex2f((float)(tail[idx].x()-bx), (float)(tail[idx].y()-by)); 
 		gl.glEnd();
-		gl.glEnable(GL.GL_DEPTH_TEST);
-
 
 		
-
+		gl.glPopAttrib();
 
 	}
 
 
+	@Override
 	public void destroy(GL gl, Bot entity, IRenderingContext context) {
 	}
 

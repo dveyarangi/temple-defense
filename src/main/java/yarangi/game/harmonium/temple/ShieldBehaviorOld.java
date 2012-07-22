@@ -1,11 +1,11 @@
 package yarangi.game.harmonium.temple;
 
 import static yarangi.math.Angles.*;
-import yarangi.graphics.quadraturin.objects.Behavior;
+import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 
-public class ShieldBehaviorOld implements Behavior<Shield> 
+public class ShieldBehaviorOld implements IBehavior<Shield> 
 {
 
 

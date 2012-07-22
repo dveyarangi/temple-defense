@@ -12,9 +12,10 @@ public class ObserverLook extends CircleLightLook<IObserverEntity>
 		super(color);
 	}
 
-	public void render(GL gl, double time, IObserverEntity entity, IRenderingContext context) 
+	@Override
+	public void render(GL gl, IObserverEntity entity, IRenderingContext context) 
 	{	
-		super.render(gl, time, entity, context);
+		super.render(gl, entity, context);
 
 /*		Color color = getColor();
 		Vector2D observerLoc = entity.getArea().getRefPoint();

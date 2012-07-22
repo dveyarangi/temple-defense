@@ -1,10 +1,10 @@
 package yarangi.game.harmonium.enemies;
 
-import yarangi.graphics.quadraturin.objects.Behavior;
+import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.math.Geometry;
 import yarangi.math.Vector2D;
 
-public class ChasingBehavior implements Behavior <GenericEnemy> 
+public class ChasingBehavior implements IBehavior <GenericEnemy> 
 {
 
 	public boolean behave(double time, GenericEnemy bubble, boolean isVisible) 

@@ -13,8 +13,6 @@ import yarangi.spatial.Area;
 public class EnergyCore extends ObserverEntity implements Serviceable, ITemple, Damageable 
 {
 
-	private static final long serialVersionUID = 6893825029204201873L;
-
 	private TempleStructure structure;
 	
 	
@@ -59,6 +57,7 @@ public class EnergyCore extends ObserverEntity implements Serviceable, ITemple, 
 	
 	public double getHealth() { return health; }
 	
+	@Override
 	public double getAttractivity() { return 300; }
 
 
@@ -85,8 +84,8 @@ public class EnergyCore extends ObserverEntity implements Serviceable, ITemple, 
 		port.use(Resource.Type.ENERGY, damage.getDamage( Damage.ELECTRO_MAGNETIC ));
 		
 		transferRate -= damage.getDamage( Damage.KINETIC )/10;
-		System.out.println("transfer rate: " + transferRate);
 		if(transferRate < 0) transferRate = 0;
+		System.out.println("transfer rate: " + transferRate);
 	}
 
 }

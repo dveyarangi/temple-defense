@@ -14,12 +14,15 @@ import yarangi.graphics.quadraturin.actions.ICameraMan;
 import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.events.UserActionEvent;
 import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.objects.ILook;
+import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
+import yarangi.graphics.quadraturin.terrain.PolygonGrid;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.spatial.ISpatialFilter;
+import yarangi.spatial.Tile;
 
 import com.seisw.util.geom.Poly;
 import com.seisw.util.geom.PolyDefault;
@@ -30,20 +33,22 @@ public class OrdersActionController extends ActionController
 	Map <String, IAction> actions = new HashMap <String, IAction> ();
 	
 	private IEntity dragged = null;
-	private IEntity hovered = null;
+	private final IEntity hovered = null;
 
 	
 	private Vector2D target;
 	
-	private Look look = new OrdersActionLook();
+	private final ILook look = new OrdersActionLook();
 	
 	private PolygonTerrainMap terrain;
 	
+	private PolygonGrid<TilePoly> reinforcementMap;
+	
 	private ICameraMan cameraMan;
 	
-	private boolean isDrawing = false;
+	private final boolean isDrawing = false;
 	
-	private ISpatialFilter <IEntity> filter = new ISpatialFilter <IEntity> ()
+	private final ISpatialFilter <IEntity> filter = new ISpatialFilter <IEntity> ()
 	{
 		@Override
 		public boolean accept(IEntity entity)
@@ -64,7 +69,7 @@ public class OrdersActionController extends ActionController
 		
 		cameraMan = new CameraMover( (ViewPoint2D) scene.getViewPoint() );
 		
-		terrain = (PolygonTerrainMap)scene.getWorldLayer().<TilePoly>getTerrain();
+		terrain = (PolygonTerrainMap)scene.getWorldLayer().<MultilayerTilePoly>getTerrain();
 //		actions.put("cursor-moved", temple.getController());
 		actions.put("mouse-left-drag", new IAction()
 		{
@@ -76,7 +81,7 @@ public class OrdersActionController extends ActionController
 				target = cursor.getWorldLocation();
 				// TODO: test olnly 
 				
-				// terrain.query(new ConsumingSensor(terrain, false,target.x(), target.y(), 10  ), target.x(), target.y(), 10 );
+//				reinforcementMap.query(new ConsumingSensor(terrain, false,target.x(), target.y(), 10  ), target.x(), target.y(), 10 );
 				
 				if(dragged != null)
 					return;
@@ -135,6 +140,22 @@ public class OrdersActionController extends ActionController
 				addEntity(sensor2);
 			}
 		})*/
+		
+		
+		reinforcementMap = new PolygonGrid<TilePoly>(32, terrain.getWidth(), terrain.getHeight());
+
+//		System.out.println(reinforcementMap.getGridWidth() + " : " + terrain.getGridHeight());
+		for (int i = 0; i < reinforcementMap.getGridWidth(); i ++)
+			for (int j = 0; j < reinforcementMap.getGridHeight(); j ++)
+			{
+				Tile <TilePoly> tile = reinforcementMap.getTileAt( i, j );
+//				System.out.println(tile);
+				tile.put( new TilePoly(tile.getMinX(), tile.getMinY(), tile.getMaxX(), tile.getMaxY() ) );
+			}
+
+//		ILook <PolygonTerrainMap> look = new FBOPolyTerrainLook(false, false, POLY_DEPTH);
+//		return new EntityShell<PolygonTerrainMap>( terrain, new ModifiableGridBehavior(), look );
+
 	}
 	
 	
@@ -147,15 +168,21 @@ public class OrdersActionController extends ActionController
 	@Override
 	public ISpatialFilter<IEntity> getPickingFilter() { return filter; }
 	
-	private double drawRadius = 100;
+	private final double drawRadius = 5;
+
 	
 	private void drawTerrain(PolygonTerrainMap terrain, Vector2D target, boolean draw)
 	{
 		Poly poly = new PolyDefault();
 
-		for(double ang = 0 ; ang < Angles.PI_2; ang += Angles.PI_div_6)
+		for(double ang = 0 ; ang < Angles.PI_2; ang += Angles.PI_div_12)
 			poly.add( target.x() + drawRadius * Math.cos( ang ), target.y() + drawRadius * Math.sin( ang) );
-		terrain.apply( target.x()-drawRadius, target.y()-drawRadius, target.x()+drawRadius, target.y()+drawRadius, !draw, poly );
+		
+		if(terrain == null)
+			return;
+		reinforcementMap.apply( target.x()-drawRadius, target.y()-drawRadius, target.x()+drawRadius, target.y()+drawRadius, draw, poly );
+		
+		reinforcementMap.fireGridModified();
 	}
 
 
@@ -172,10 +199,16 @@ public class OrdersActionController extends ActionController
 
 
 	@Override
-	public Look<ActionController> getLook()
+	public ILook<ActionController> getLook()
 	{
 		
 		return look;
+	}
+
+
+	public PolygonGrid<TilePoly> getReinforcementMap()
+	{
+		return reinforcementMap;
 	}
 
 /*	@Override

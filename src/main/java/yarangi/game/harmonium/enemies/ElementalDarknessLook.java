@@ -5,17 +5,18 @@ import javax.media.opengl.GL;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 
-public class ElementalDarknessLook implements Look <ElementalDarkness>
+public class ElementalDarknessLook implements ILook <ElementalDarkness>
 {
-	private double blue = RandomUtil.getRandomDouble(0.5)+0.5;
-	private double green = RandomUtil.getRandomDouble(0.5)+0.5;
-	private double red = RandomUtil.getRandomDouble(0.5)+0.5;
+	private final double blue = RandomUtil.getRandomDouble(0.5)+0.5;
+	private final double green = RandomUtil.getRandomDouble(0.5)+0.5;
+	private final double red = RandomUtil.getRandomDouble(0.5)+0.5;
 
-	public void render(GL gl, double time, ElementalDarkness entity, IRenderingContext context) 
+	@Override
+	public void render(GL gl, ElementalDarkness entity, IRenderingContext context) 
 	{
 		Integrity integrity = entity.getIntegrity();
 //		gl.glColor3f(0.4f, 0.4f, 0.5f);
@@ -47,9 +48,11 @@ public class ElementalDarknessLook implements Look <ElementalDarkness>
 		
 	}
 
+	@Override
 	public void init(GL gl, ElementalDarkness entity, IRenderingContext context) {
 	}
 
+	@Override
 	public void destroy(GL gl, ElementalDarkness entity, IRenderingContext context) {
 	}
 

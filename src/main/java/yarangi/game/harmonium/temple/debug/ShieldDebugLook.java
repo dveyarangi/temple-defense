@@ -6,11 +6,11 @@ import yarangi.fragments.CircleSegmentList;
 import yarangi.game.harmonium.temple.Shield;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.intervals.AngleInterval;
 import yarangi.math.Vector2D;
 
-public class ShieldDebugLook implements Look <Shield>
+public class ShieldDebugLook implements ILook <Shield>
 {
 
 	@Override
@@ -19,7 +19,7 @@ public class ShieldDebugLook implements Look <Shield>
 	}
 
 	@Override
-	public void render(GL gl, double time, Shield entity, IRenderingContext context)
+	public void render(GL gl, Shield entity, IRenderingContext context)
 	{
 		CircleSegmentList segments = entity.getExcludedSegments();
 		

@@ -4,9 +4,9 @@ import javax.media.opengl.GL;
 
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.objects.ILook;
 
-public class CrystalMatterLook implements Look <CrystalMatter> 
+public class CrystalMatterLook implements ILook <CrystalMatter> 
 {
 
 	@Override
@@ -14,12 +14,12 @@ public class CrystalMatterLook implements Look <CrystalMatter>
 	}
 
 	@Override
-	public void render(GL gl, double time, CrystalMatter crystal, IRenderingContext context) 
+	public void render(GL gl, CrystalMatter crystal, IRenderingContext context) 
 	{
-		render(gl, time, crystal.getRoot());
+		render(gl, crystal.getRoot());
 	}
 	
-	public void render(GL gl, double time, CrystalLeaf leaf)
+	public void render(GL gl, CrystalLeaf leaf)
 	{
 		gl.glEnable(GL.GL_DEPTH_TEST);
 
@@ -76,7 +76,7 @@ public class CrystalMatterLook implements Look <CrystalMatter>
 		*/
 		
 		for(MatterBranch branch : leaf.getBranches().keySet())
-			render(gl, time, (CrystalLeaf) branch);
+			render(gl, (CrystalLeaf) branch);
 		
 	}
 

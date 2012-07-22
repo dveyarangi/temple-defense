@@ -1,8 +1,8 @@
 package yarangi.game.harmonium.enemies;
 
-import yarangi.graphics.quadraturin.objects.Behavior;
+import yarangi.graphics.quadraturin.objects.IBehavior;
 
-public class ElementalDarknessBehavior implements Behavior<ElementalDarkness> 
+public class ElementalDarknessBehavior implements IBehavior<ElementalDarkness> 
 {
 
 	public boolean behave(double time, ElementalDarkness entity, boolean isVisible) 

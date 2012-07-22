@@ -4,7 +4,7 @@ import yarangi.game.harmonium.ai.economy.IOrder;
 import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.temple.Serviceable;
-import yarangi.graphics.quadraturin.objects.Behavior;
+import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
@@ -29,7 +29,7 @@ public class BotFactory
 		return bot;
 	}
 	
-	public static Behavior <Bot> createBotBehavoir(final Serviceable host, final IBotInterface botInterface)
+	public static IBehavior <Bot> createBotBehavoir(final Serviceable host, final IBotInterface botInterface)
 	{
 		final IBehaviorState <Bot> querying = new QueryingBehavior (botInterface);
 		FSMBehavior <Bot> fsm = new FSMBehavior <Bot>(querying);

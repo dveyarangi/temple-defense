@@ -20,7 +20,7 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 	public static final double SEPARATION_COEF = 0.5;
 	public static final double FLOCKING_COEF = 0.1;
 	
-	private DroneBehavior droning = new DroneBehavior(20);
+	private final DroneBehavior droning = new DroneBehavior(20);
 	private SatelliteBehavior satellite;
 ///	public static final double FLOCKING_COEF = 1;
 	@Override

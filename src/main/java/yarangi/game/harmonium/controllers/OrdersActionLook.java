@@ -2,24 +2,32 @@ package yarangi.game.harmonium.controllers;
 
 import javax.media.opengl.GL;
 
+import yarangi.game.harmonium.environment.terrain.poly.PolyTerrainLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.objects.ILook;
+import yarangi.graphics.quadraturin.terrain.PolygonGrid;
+import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 
-public class OrdersActionLook implements Look <OrdersActionController>
+public class OrdersActionLook implements ILook <OrdersActionController>
 {
+	ILook <PolygonGrid<TilePoly>> look = new PolyTerrainLook();
 
 	@Override
 	public void init(GL gl, OrdersActionController entity, IRenderingContext context)
 	{
+		look.init( gl, entity.getReinforcementMap(), context );
 	}
 
 	@Override
-	public void render(GL gl, double time, OrdersActionController entity, IRenderingContext context)
+	public void render(GL gl, OrdersActionController entity, IRenderingContext context)
 	{
+		
+		look.render( gl, entity.getReinforcementMap(), context );
+		
 		IEntity dragged = entity.getDragged();
 		Vector2D target = entity.getTarget();
 		IEntity hovered = entity.getHovered();
@@ -54,6 +62,7 @@ public class OrdersActionLook implements Look <OrdersActionController>
 	@Override
 	public void destroy(GL gl, OrdersActionController entity, IRenderingContext context)
 	{
+		look.destroy( gl, entity.getReinforcementMap(), context );
 	}
 
 	@Override

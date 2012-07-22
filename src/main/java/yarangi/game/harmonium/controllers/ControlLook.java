@@ -1,21 +1,17 @@
 package yarangi.game.harmonium.controllers;
 
-import java.util.Collection;
-
 import javax.media.opengl.GL;
 
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.objects.Look;
-import yarangi.math.Angles;
-import yarangi.math.Vector2D;
+import yarangi.graphics.quadraturin.objects.ILook;
 
 // TODO: this class should be placed somewhere else!
-public class ControlLook implements Look <TempleController> 
+public class ControlLook implements ILook <TempleController> 
 {
 	
-	public void render(GL gl, double time, TempleController entity, IRenderingContext context) 
+	@Override
+	public void render(GL gl, TempleController entity, IRenderingContext context) 
 	{
 //		entity.getActionController().display( gl, time, context );
 //		TempleEntity temple = entity.getTemple();
@@ -98,9 +94,11 @@ public class ControlLook implements Look <TempleController>
 
 	}
 
+	@Override
 	public void init(GL gl, TempleController entity, IRenderingContext context) {
 	}
 
+	@Override
 	public void destroy(GL gl, TempleController entity, IRenderingContext context) {
 	}
 

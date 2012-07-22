@@ -4,19 +4,19 @@ import javax.media.opengl.GL;
 
 import yarangi.graphics.grid.PolyGridLook;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
+import yarangi.graphics.quadraturin.terrain.PolygonGrid;
 import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.spatial.Tile;
 
 import com.seisw.util.geom.Poly;
 
-public class PolyTerrainLook extends PolyGridLook<TilePoly, PolygonTerrainMap>
+public class PolyTerrainLook extends PolyGridLook<TilePoly, PolygonGrid<TilePoly>>
 {
 
 
-	public PolyTerrainLook(boolean depthtest, boolean blend)
+	public PolyTerrainLook()
 	{
-		super( depthtest, blend );
+		super( false, true );
 		// TODO Auto-generated constructor stub
 	}
 
@@ -27,25 +27,18 @@ public class PolyTerrainLook extends PolyGridLook<TilePoly, PolygonTerrainMap>
 	}
 
 	@Override
-	protected void renderTile(GL gl, Tile<TilePoly> tile, PolygonTerrainMap grid, int scale)
+	protected void renderTile(GL gl, Tile<TilePoly> tile, PolygonGrid<TilePoly> grid, int scale)
 	{
 		// 
 //		for(Poly poly : tile.get().getPolys())
 //			renderPoly( gl, poly );
-		Poly [] poly = tile.get().getPoly();
-		if(poly[0] == null)
+		Poly poly = tile.get().getPoly();
+		if(poly == null || poly.isEmpty())
 			return;
-		for(int idx = 0; idx < poly.length; idx ++) {
-			gl.glColor4f(idx*0.2f, (poly.length-idx)*0.2f, 0.0f, 0.5f);
-			if(poly[idx] == null || poly[idx].isEmpty())
-				break;
-			renderPoly( gl, poly[idx] );
-			for(int pidx = 0; pidx < poly[idx].getNumInnerPoly(); pidx ++)
-			{
-				// TODO: recursion may be needed:
-				renderPoly(gl, poly[idx].getInnerPoly( pidx ));
-			}
-		}
+		gl.glColor4f(1f, 1f, 0.1f, 0.25f);
+//		renderPoly( gl, poly );
+		for(int idx = 0; idx < poly.getNumInnerPoly(); idx ++)
+			renderPoly( gl, poly.getInnerPoly( idx ) );
 	}
 	
 	private void renderPoly(GL gl, Poly poly)
@@ -53,6 +46,8 @@ public class PolyTerrainLook extends PolyGridLook<TilePoly, PolygonTerrainMap>
 		gl.glBegin( GL.GL_LINE_STRIP );
 		for(int idx = 0; idx < poly.getNumPoints(); idx ++)
 			gl.glVertex2f((float)poly.getX( idx ), (float)poly.getY( idx ));
+		
+	
 		gl.glVertex2f((float)poly.getX( 0 ), (float)poly.getY( 0 ));
 		gl.glEnd();
 	}

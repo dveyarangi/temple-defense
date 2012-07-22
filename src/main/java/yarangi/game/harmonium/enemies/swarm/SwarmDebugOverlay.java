@@ -5,6 +5,7 @@ import java.awt.Point;
 import javax.media.opengl.GL;
 
 import yarangi.graphics.grid.TileGridLook;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.math.Vector2D;
 import yarangi.spatial.Tile;
@@ -25,7 +26,7 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 
 
 	@Override
-	protected void renderTile(GL gl, Tile<Beacon> tile, Swarm swarm, int scale)
+	protected void renderTile(GL gl, IRenderingContext context, Tile<Beacon> tile, Swarm swarm, int scale)
 	{
         if(tile == null)
         	return;
@@ -135,6 +136,7 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 //			gl.glEnable( GL.GL_DEPTH_TEST );
 			gl.glPopAttrib();
 		}
+		context.setDefaultBlendMode( gl );
 	}
 	
 	private float toAlpha(IBeacon beacon)
@@ -145,7 +147,7 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 	@Override
 	public IVeil getVeil() { return IVeil.ORIENTING; }
 	@Override
-	protected Point getFBODimensions(Swarm grid)
+	protected Point getFBODimensions(IRenderingContext context, Swarm grid)
 	{
 		return new Point(grid.getWorldSize(), grid.getWorldSize());
 	}

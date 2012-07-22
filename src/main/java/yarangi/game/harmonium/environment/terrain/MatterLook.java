@@ -6,11 +6,11 @@ import javax.media.opengl.GL;
 
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.spatial.PolygonArea;
 import yarangi.spatial.PolygonArea.PolyPoint;
 
-public class MatterLook implements Look <Matter> 
+public class MatterLook implements ILook <Matter> 
 {
 
 	@Override
@@ -18,7 +18,7 @@ public class MatterLook implements Look <Matter>
 	}
 
 	@Override
-	public void render(GL gl, double time, Matter entity, IRenderingContext context) {
+	public void render(GL gl, Matter entity, IRenderingContext context) {
 		PolygonArea polygon = (PolygonArea) entity.getArea();
 		
 		Iterator <PolyPoint> polyit =  polygon.getPoints().iterator();

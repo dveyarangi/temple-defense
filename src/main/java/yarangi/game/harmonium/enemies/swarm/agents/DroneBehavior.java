@@ -1,13 +1,13 @@
 package yarangi.game.harmonium.enemies.swarm.agents;
 
 import yarangi.game.harmonium.enemies.swarm.Swarm;
-import yarangi.graphics.quadraturin.objects.Behavior;
+import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 
-public class DroneBehavior implements IBehaviorState <SwarmAgent>, Behavior <SwarmAgent>  
+public class DroneBehavior implements IBehaviorState <SwarmAgent>, IBehavior <SwarmAgent>  
 {
 	double da = RandomUtil.STD(0, 0.1);
 	

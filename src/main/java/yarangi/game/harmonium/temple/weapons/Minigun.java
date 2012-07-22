@@ -101,6 +101,7 @@ public class Minigun extends Weapon
 
 	}
 
+	@Override
 	public Projectile fire() 
 	{
 		if(!isReloaded())
@@ -119,7 +120,8 @@ public class Minigun extends Weapon
 	public void stop() {
 	}
 
-	public double getAttractivity() { return 100; }
+	@Override
+	public double getAttractivity() { return 10000; }
 
 	@Override
 	public void updateState(double time)

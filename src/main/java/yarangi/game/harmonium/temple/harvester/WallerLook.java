@@ -7,18 +7,18 @@ import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.math.Angles;
 
-public class HarvesterLook implements ILook <Harvester>
+public class WallerLook implements ILook <Waller>
 {
 
 	@Override
-	public void init(GL gl, Harvester entity, IRenderingContext context)
+	public void init(GL gl, Waller entity, IRenderingContext context)
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void render(GL gl, Harvester entity, IRenderingContext context)
+	public void render(GL gl, Waller entity, IRenderingContext context)
 	{
 		
 		float x, y;
@@ -61,7 +61,7 @@ public class HarvesterLook implements ILook <Harvester>
 	}
 
 	@Override
-	public void destroy(GL gl, Harvester entity, IRenderingContext context)
+	public void destroy(GL gl, Waller entity, IRenderingContext context)
 	{
 		// TODO Auto-generated method stub
 		

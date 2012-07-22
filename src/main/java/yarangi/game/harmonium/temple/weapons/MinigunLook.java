@@ -3,22 +3,21 @@ package yarangi.game.harmonium.temple.weapons;
 import javax.media.opengl.GL;
 
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
-import yarangi.game.harmonium.ai.weapons.NetCore;
 import yarangi.game.harmonium.environment.resources.Resource;
-import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.spatial.Area;
 
-public class MinigunLook implements Look<Minigun> 
+public class MinigunLook implements ILook<Minigun> 
 {
 
 
-	public void render(GL gl, double time, Minigun cannon, IRenderingContext context) 
+	@Override
+	public void render(GL gl, Minigun cannon, IRenderingContext context) 
 	{
 
 			Area area = cannon.getArea();
@@ -86,9 +85,11 @@ public class MinigunLook implements Look<Minigun>
 	
 	
 
+	@Override
 	public void init(GL gl, Minigun entity, IRenderingContext context) {
 	}
 
+	@Override
 	public void destroy(GL gl, Minigun entity, IRenderingContext context) {
 	}
 

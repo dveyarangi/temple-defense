@@ -4,11 +4,9 @@ import javax.media.opengl.GL;
 
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.Look;
-import yarangi.math.Vector2D;
-import yarangi.spatial.AABB;
+import yarangi.graphics.quadraturin.objects.ILook;
 
-public class PowerConnectorLook implements Look <PowerConnector> 
+public class PowerConnectorLook implements ILook <PowerConnector> 
 {
 
 	@Override
@@ -16,7 +14,7 @@ public class PowerConnectorLook implements Look <PowerConnector>
 	}
 
 	@Override
-	public void render(GL gl, double time, PowerConnector entity, IRenderingContext context) 
+	public void render(GL gl, PowerConnector entity, IRenderingContext context) 
 	{
 		
 /*		AABB aabb = entity.getAABB();

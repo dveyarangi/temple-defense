@@ -15,15 +15,13 @@
  					"isoheight" : "shaders/isoheight.glsl"
 			  	}
 			},
-
-			{ "factoryClass" : "yarangi.graphics.veils.IsoheightVeil",
-			  "properties" : {
-			  	}
-			},
-			{ "factoryClass" : "yarangi.graphics.veils.BlurVeil",
-			  "properties" : {
-			  	}
-			}			
+				{ 
+					"factoryClass" : "yarangi.graphics.veils.BlurVeil",
+					"properties" : {
+						"decay" : 0.02
+					}
+				}		
+			
 		 ]
 			  		
 	},
@@ -87,11 +85,10 @@
 		    		"engineClass" : "yarangi.graphics.quadraturin.simulations.StupidInteractions",
 		    		"colliderClass" : "yarangi.graphics.quadraturin.simulations.RoughCollider"
 	    		},
-
-	    		"terrain" : {
-	    			"factoryClass" : "yarangi.game.harmonium.environment.terrain.poly.PolyFactory",
-	    			"cellsize" : 8
-		    	}
+				"terrain" : { 
+					"factoryClass" : "yarangi.game.harmonium.environment.terrain.poly.PolyFactory",
+				    "cellsize" : 8
+				}		
 
 			}
 		]

@@ -11,14 +11,14 @@ import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.Q;
-import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.graphics.veils.IsoheightVeil;
 import yarangi.numbers.RandomUtil;
 
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
 
-public class ShieldLook implements Look <Shield> 
+public class ShieldLook implements ILook <Shield> 
 {
 
 	
@@ -66,8 +66,7 @@ public class ShieldLook implements Look <Shield>
 //		veil = context.getPlugin( IsoheightVeil.NAME );	}
 	}
 	@Override
-	public void render(GL gl, double time, Shield entity,
-			IRenderingContext context) {
+	public void render(GL gl, Shield entity, IRenderingContext context) {
 		gl.glPushAttrib( GL.GL_COLOR_BUFFER_BIT );
 		gl.glBlendFunc(GL.GL_ONE, GL.GL_ONE);
 		gl.glBlendEquation(GL.GL_FUNC_ADD);
@@ -78,7 +77,7 @@ public class ShieldLook implements Look <Shield>
 		
 		gl.glPushMatrix();
 		gl.glRotatef( a1, 0, 0, 1 );
-		a1 += 0.005*time;
+		a1 += 0.005*context.getFrameLength();
 		gl.glBegin(GL.GL_QUADS);
 		gl.glTexCoord2f( 0.0f, 0.0f ); gl.glVertex2f(-radius, -radius);
 		gl.glTexCoord2f( 0.0f, 1.0f ); gl.glVertex2f(-radius,  radius);
@@ -88,7 +87,7 @@ public class ShieldLook implements Look <Shield>
 		gl.glPopMatrix();
 		gl.glPushMatrix();
 		gl.glRotatef( a2, 0, 0, 1 );
-		a2 -= 0.005*time;
+		a2 -= 0.005*context.getFrameLength();
 		gl.glBegin(GL.GL_QUADS);
 		gl.glTexCoord2f( 0.0f, 0.0f ); gl.glVertex2f(-radius, -radius);
 		gl.glTexCoord2f( 0.0f, 1.0f ); gl.glVertex2f(-radius,  radius);
@@ -99,6 +98,7 @@ public class ShieldLook implements Look <Shield>
 		
 		gl.glBindTexture( GL.GL_TEXTURE_2D, 0 );
 		gl.glPopAttrib();
+		context.setDefaultBlendMode( gl );
 	}
 
 	@Override

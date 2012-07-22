@@ -8,14 +8,14 @@ import yarangi.graphics.grid.TileGridLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
-import yarangi.graphics.quadraturin.terrain.TilePoly;
+import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
 import yarangi.spatial.Tile;
 
 import com.seisw.util.geom.Poly;
 
-public class FBOPolyTerrainLook extends TileGridLook<TilePoly, PolygonTerrainMap>
+public class FBOPolyTerrainLook extends TileGridLook<MultilayerTilePoly, PolygonTerrainMap>
 {
-	private int layers;
+	private final int layers;
 	
 	public FBOPolyTerrainLook(boolean depthtest, boolean blend, int layers)
 	{
@@ -29,13 +29,13 @@ public class FBOPolyTerrainLook extends TileGridLook<TilePoly, PolygonTerrainMap
 		return null;
 	}
 	
-	public void init(GL gl, Tile<TilePoly> tile, PolygonTerrainMap grid, IRenderingContext context)
+	public void init(GL gl, Tile<MultilayerTilePoly> tile, PolygonTerrainMap grid, IRenderingContext context)
 	{
 		super.init( gl, grid, context );
 	}
 
 	@Override
-	protected void renderTile(GL gl, Tile<TilePoly> tile, PolygonTerrainMap grid, int scale)
+	protected void renderTile(GL gl, IRenderingContext context, Tile<MultilayerTilePoly> tile, PolygonTerrainMap grid, int scale)
 	{
 		// 
 //		for(Poly poly : tile.get().getPolys())
@@ -56,8 +56,8 @@ public class FBOPolyTerrainLook extends TileGridLook<TilePoly, PolygonTerrainMap
 		if(poly[0] == null)
 			return;
 		for(int idx = 0; idx < poly.length; idx ++) {
-			gradient = (layers-idx)/(float)layers;
-			gl.glColor4f(gradient, gradient, gradient, 1f);
+			gradient = (idx)/(float)layers;
+			gl.glColor4f(0.3f*gradient, 0.1f, gradient, gradient/2);
 			if(poly[idx] == null || poly[idx].isEmpty())
 				break;
 			renderPoly( gl, poly[idx] );
@@ -79,7 +79,7 @@ public class FBOPolyTerrainLook extends TileGridLook<TilePoly, PolygonTerrainMap
 	}
 
 	@Override
-	protected Point getFBODimensions(PolygonTerrainMap grid)
+	protected Point getFBODimensions(IRenderingContext context, PolygonTerrainMap grid)
 	{
 		return new Point(2048, 2048);
 	}

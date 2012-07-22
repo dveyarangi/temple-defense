@@ -10,8 +10,8 @@ import yarangi.game.harmonium.enemies.swarm.agents.SeederLook;
 import yarangi.game.harmonium.enemies.swarm.agents.SplitBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.harmonium.temple.bots.ChasingBehavior;
-import yarangi.graphics.quadraturin.objects.Behavior;
-import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.objects.IBehavior;
+import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
@@ -25,15 +25,15 @@ import yarangi.spatial.AABB;
 class SpawningBehavior implements IBehaviorState<Swarm> 
 {
 	
-	private double spawnInterval;
+	private final double spawnInterval;
 	private double timeToSpawn = 0;
 	public static final int SPAWNING_RADIUS = 50;
 	public static final Integrity AGENT_INTEGRITY = new Integrity(10, 0, new double [] {0,0,0,0});
 	public static final double AGENT_HEALTH = AGENT_INTEGRITY.getMaxHitPoints();
 	public static final double  AGENT_VELOCITY = 1.5;
 	
-	public Look agentLook = new MetaCircleLook();
-	private PolygonTerrainMap terrain;
+	public ILook agentLook = new MetaCircleLook();
+	private final PolygonTerrainMap terrain;
 	
 //	public Integrity integrity = new Integrity(30, 0, new double [] {0,0,0,0});
 	public SpawningBehavior(PolygonTerrainMap terrain, double spawnInterval)
@@ -55,9 +55,10 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 		while(timeToSpawn < 0)
 		{
 			timeToSpawn += spawnInterval;
+			for(int idx = 0; idx < RandomUtil.N( 30 ); idx ++) {
 			double angle = RandomUtil.getRandomDouble(Angles.PI_2);
 	//			double radius = RandomUtil.getRandomGaussian(800, 0);
-			double size = Math.abs(RandomUtil.STD(0.5, 0.2))+0.1;
+			double size = Math.abs(RandomUtil.STD(0.1, 0.01))+0.1;
 			Vector2D source = swarm.getSource();
 			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(100*size, 0, new double [] {0,0,0,0}), size/100000, 10*size);
 			agent.setLook(agentLook);
@@ -71,7 +72,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 			swarm.addAgent(agent);
 //			System.out.println("Agent spawn at " + agent.getArea().getRefPoint());
 			
-			if(RandomUtil.oneOf( 2 )) {
+			if(RandomUtil.oneOf( 3 )) {
 				Seeder seeder = new Seeder(swarm, 
 										new Integrity(5*size*10, 0, new double [] {0,0,0,0}), 
 										AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
@@ -85,13 +86,14 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 				
 				swarm.addAgent(seeder);
 			}
+			}
 		}
 		
 		return 0;
 	}
 	
 	
-	public Behavior <SwarmAgent> createBoidBehavior()
+	public IBehavior <SwarmAgent> createBoidBehavior()
 	{
 		final IBehaviorState<SwarmAgent> boidState = new BoidBehavior();
 //		final IBehaviorState<SwarmAgent> attackState = new SatelliteBehavior();
@@ -121,7 +123,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	}
 
 	
-	public Behavior <Seeder> createSeederBehavior()
+	public IBehavior <Seeder> createSeederBehavior()
 	{
 		final IBehaviorState<Seeder> seederState = new SeederBehavior(terrain);
 //		final IBehaviorState<SwarmAgent> dangerState = new DangerBehavior();
@@ -138,6 +140,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 		
 		return beh;
 	}
+	@Override
 	public int getId() { return this.getClass().hashCode(); }
 
 }

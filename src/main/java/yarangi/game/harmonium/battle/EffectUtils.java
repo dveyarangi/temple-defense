@@ -5,7 +5,7 @@ import yarangi.graphics.lights.CircleLightLook;
 import yarangi.graphics.quadraturin.SceneLayer;
 import yarangi.graphics.quadraturin.objects.DummySensor;
 import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.math.Vector2D;
 import yarangi.spatial.PointArea;

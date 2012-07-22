@@ -1,45 +1,53 @@
 package yarangi.game.harmonium.temple.harvester;
 
-import yarangi.graphics.colors.Color;
-import yarangi.graphics.colors.MaskUtil;
 import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.terrain.Bitmap;
-import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
+import yarangi.graphics.quadraturin.terrain.PolygonGrid;
+import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
+import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
+import yarangi.spatial.AABB;
 import yarangi.spatial.IAreaChunk;
+import yarangi.spatial.ISpatialSensor;
 import yarangi.spatial.Tile;
 
 import com.seisw.util.geom.Poly;
 import com.seisw.util.geom.PolyDefault;
 
 
-public class ErrodingBehavior extends Sensor implements IBehavior <Harvester>
+public class EnforcingBehavior extends Sensor implements IBehavior <Waller>
 {
 	
-	private PolygonTerrainMap terrain;
+	private final PolygonTerrainMap terrain;
 	Tile <MultilayerTilePoly> harvestedTile = null;
 	Tile <MultilayerTilePoly> reserveTile = null;
 	boolean harvestedFound = false;
+	
+	private static final double maskWidth = 3 ;
 //	final GridyTerrainMap terrain = (GridyTerrainMap)scene.getWorldLayer().<Bitmap>getTerrain();
-	private static final int MASK_WIDTH =16; 
+//	private static final int MASK_WIDTH =16; 
 	
-	private static final byte [] HARV_MASK = MaskUtil.createCircleMask( MASK_WIDTH/2, new Color(0f, 0f, 0f, 1f), true);
+//	private static final byte [] HARV_MASK = MaskUtil.createCircleMask( MASK_WIDTH/2, new Color(0f, 0f, 0f, 1f), true);
 	
-	private static final double ERRODE_INVERVAL = 1;
+	private static final double ERRODE_INVERVAL = 0;
 	
 	private Tile <Bitmap> prevTile;
 	
 	private int lastSaturation = 1;
 	private int saturation = 1;
+	
+	private final PolygonGrid <TilePoly> reinforcementMap;
 
-	public ErrodingBehavior(double radius, PolygonTerrainMap terrain)
+	public EnforcingBehavior(double radius, PolygonTerrainMap terrain, PolygonGrid <TilePoly> reinforcementMap)
 	{
 		super(radius, ERRODE_INVERVAL, true);
 		this.terrain = terrain;
+		
+		this.reinforcementMap = reinforcementMap;
 	}
 	
 	@Override
@@ -51,25 +59,24 @@ public class ErrodingBehavior extends Sensor implements IBehavior <Harvester>
 		}
 		
 		Tile <MultilayerTilePoly> tile = (Tile <MultilayerTilePoly>) chunk;
-		if(!tile.get().isEmpty())
+//		if(!tile.get().isEmpty())
 		{
 			saturation ++;
 			
 			if(RandomUtil.oneOf( lastSaturation/2+1 ))
 			{
 				harvestedTile = tile;
+//				return true;
 			}
 		}
 		
 		return false;
 
 	}
-	
-	private static final double maskWidth = 5 ;
 
 
 	@Override
-	public boolean behave(double time, Harvester harvester, boolean isVisible)
+	public boolean behave(double time, Waller waller, boolean isVisible)
 	{
 		if(harvestedTile == null) {
 			return false;
@@ -77,27 +84,37 @@ public class ErrodingBehavior extends Sensor implements IBehavior <Harvester>
 		
 		
 		Poly poly = new PolyDefault();
+		//		System.out.println("harvesting at : " + atx + " : " + atx);
 
 //		do {
 		double atx = RandomUtil.getRandomDouble( harvestedTile.getMaxX()-harvestedTile.getMinX() ) + harvestedTile.getMinX();
 		double aty = RandomUtil.getRandomDouble( harvestedTile.getMaxY()-harvestedTile.getMinY() ) + harvestedTile.getMinY();
-//		System.out.println("harvesting at : " + atx + " : " + atx);
 		for(double ang = 0 ; ang < Angles.PI_2; ang += Angles.PI_div_6)
 			poly.add( atx + maskWidth * Math.cos( ang ), aty + maskWidth * Math.sin( ang) );
 		
-		double dx = atx - harvester.getArea().getAnchor().x();
-		double dy = aty - harvester.getArea().getAnchor().y();
+		ReinforcementSensor s = new ReinforcementSensor(poly);
+		reinforcementMap.query( s, AABB.createSquare( atx, aty, 1, 0 ));
+		
+		Poly res = s.getRes();
+		
+		if(res == null)
+			return false;
+		
+		
+		double dx = atx - waller.x();
+		double dy = aty - waller.y();
 //		} while()
-		if(dx*dx+dy*dy < harvester.getSensor().getRadius()*harvester.getSensor().getRadius())
-			terrain.apply( atx-maskWidth, aty-maskWidth, atx+maskWidth, aty+maskWidth, true, poly );
+		if(dx*dx+dy*dy < waller.getSensor().getRadius()*waller.getSensor().getRadius())
+			terrain.apply( atx-maskWidth, aty-maskWidth, atx+maskWidth, aty+maskWidth, false, res );
 
-		if(harvestedTile.get().isEmpty())
+		if(RandomUtil.oneOf( 10 ))
 			harvestedTile = null;
 
 		return true;
 
 	}
 	
+	@Override
 	public void clear() { 
 		
 		super.clear();
@@ -111,6 +128,38 @@ public class ErrodingBehavior extends Sensor implements IBehavior <Harvester>
 		// TODO Auto-generated method stub
 		return harvestedTile;
 	}
+	
+	private static class ReinforcementSensor implements ISpatialSensor <Tile<TilePoly>, TilePoly> {
 
+		Poly poly;
+		
+		Poly res;
+		
+		public ReinforcementSensor(Poly poly) {
+			this.poly = poly;
+		}
+		
+		@Override
+		public boolean objectFound(Tile<TilePoly> tile, TilePoly object)
+		{
+			if(object.getPoly() == null)
+				return true;
+			
+			res = object.getPoly().intersection( poly );
+			
+			return true;
+		}
+		
+		public Poly getRes() {
+			return res;
+		}
+
+		@Override
+		public void clear()
+		{
+			res = null;
+		}
+		 
+	}
 }
 

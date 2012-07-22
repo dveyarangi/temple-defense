@@ -7,13 +7,12 @@ import yarangi.game.harmonium.battle.ITemple;
 import yarangi.game.harmonium.enemies.swarm.agents.Seeder;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.graphics.quadraturin.Scene;
-import yarangi.graphics.quadraturin.objects.Behavior;
+import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
-import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
 import yarangi.physics.IPhysicalObject;
@@ -25,7 +24,6 @@ public class SwarmFactory
 	public static double agentEnginePower = 0.01;
 	private final static Damage MATTER_DAMAGE = new Damage(12, 0, 0, 0);
 
-	
 	public static Swarm createSwarm(int worldSize, final Scene scene, int nodes)
 	{
 		
@@ -53,7 +51,6 @@ public class SwarmFactory
 			swarm.addSpawnNode(r*Math.cos(a), r*Math.sin(a));
 		}
 		
-		final PolygonTerrainMap terrain = (PolygonTerrainMap)scene.getWorldLayer().<TilePoly> getTerrain();
 		
 		scene.getCollisionManager().registerHandler(SwarmAgent.class, new AgentCollisionHandler<SwarmAgent>(swarm));
 		scene.getCollisionManager().registerHandler(Seeder.class, new AgentCollisionHandler<Seeder>(swarm));
@@ -63,7 +60,7 @@ public class SwarmFactory
 	}
 	
 //	};
-	public static Behavior <Swarm> createDefaultBehavior(PolygonTerrainMap terrain)
+	public static IBehavior <Swarm> createDefaultBehavior(PolygonTerrainMap terrain)
 	{
 //		swarm.setArea(new Point(0, 0));
 		final IBehaviorState<Swarm> rotating = new RotatingBehavior();
@@ -99,7 +96,7 @@ public class SwarmFactory
 	
 	static class AgentCollisionHandler <E extends SwarmAgent> implements ICollisionHandler <E>
 	{
-		private Swarm swarm;
+		private final Swarm swarm;
 		public AgentCollisionHandler(Swarm swarm)
 		{
 			this.swarm = swarm; 
@@ -124,13 +121,16 @@ public class SwarmFactory
 //					EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(1,0,0,1), 64);
 					return true;
 				}
-				/*				else
-				if( target instanceof Bitmap || target instanceof Matter)
+								else
+/*				if( target instanceof Bitmap || target instanceof Matter)
 				{
+					
+					PolygonTerrainMap terrain = swarm.getTerrain();
+
 					terrain.query( new ConsumingSensor(terrain, false,
-							source.getArea().getRefPoint().x(), source.getArea().getRefPoint().y(), 30*source.getArea().getMaxRadius() ), 
-							AABB.createSquare(source.getArea().getRefPoint().x(), 
-									source.getArea().getRefPoint().y(), 
+							source.x(), source.y(), 30*source.getArea().getMaxRadius() ), 
+							AABB.createSquare(source.x(), 
+									source.y(), 
 									30*source.getArea().getMaxRadius(), 0));
 //					swarm.setUnpassable(target.getArea().getRefPoint().x(), target.getArea().getRefPoint().y());
 					
@@ -138,7 +138,7 @@ public class SwarmFactory
 //					if(source.getIntegrity().getHitPoints() <= 0)
 					{
 						source.markDead();
-						EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(0,1,0,1), 32);
+//						EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(0,1,0,1), 32);
 						return true;
 					}
 				}*/

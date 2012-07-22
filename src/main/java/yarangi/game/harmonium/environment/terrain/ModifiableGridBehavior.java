@@ -1,6 +1,6 @@
 package yarangi.game.harmonium.environment.terrain;
 
-import yarangi.graphics.quadraturin.objects.Behavior;
+import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.spatial.GridMap;
 
 /**
@@ -9,7 +9,7 @@ import yarangi.spatial.GridMap;
  *
  * @param <G>
  */
-public class ModifiableGridBehavior <G extends GridMap<?,?>> implements Behavior<G>
+public class ModifiableGridBehavior <G extends GridMap<?,?>> implements IBehavior<G>
 {
 
 	@Override

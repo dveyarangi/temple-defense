@@ -3,7 +3,6 @@ package yarangi.game.harmonium.temple.weapons;
 import javax.media.opengl.GL;
 
 import yarangi.game.harmonium.environment.resources.Resource;
-import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.CircleLightLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
@@ -21,10 +20,11 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 		super( );
 	}
 
+	@Override
 	public void init(GL gl, Minigun minigun, IRenderingContext context)
 	{
 		super.init( gl, minigun, context );
-		veil = context.<IsoheightVeil> getPlugin( IsoheightVeil.NAME );
+//		veil = context.<IsoheightVeil> getPlugin( IsoheightVeil.NAME );
 		
 		if(veil == null)
 		{
@@ -35,18 +35,20 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 	}
 
 
-	public void render(GL gl, double time, Minigun cannon, IRenderingContext context) 
+	@Override
+	public void render(GL gl,  Minigun cannon, IRenderingContext context) 
 	{
 		Resource.Type type = cannon.getProps().getResourceType();
 		float P = (float)(cannon.getPort().get( type ).getAmount() / cannon.getPort().getCapacity( type ));
-		this.setColor(new Color( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (P),1));
+//		this.setColor(new Color( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (P),1));
 //		this.setColor(new Color( P*0.2f+(1-P)*0.8f, 0.5f+0.5f*P, 1f*P, 1.0f));
 //		this.setColor(new Color( 1.0f, P, P, 1.0f));
 				
-		super.render( gl, time, cannon, context );		
+		super.render( gl, cannon, context );		
 		
-//		gl.glEnable(GL.GL_BLEND);
-		gl.glColor4f( 0f, 1f, 0f, 0.1f );
+		gl.glPushAttrib(GL.GL_ENABLE_BIT);
+		gl.glEnable(GL.GL_BLEND);
+		gl.glColor4f( 0f, 1f, 0f, 0.2f );
 		gl.glBegin( GL.GL_LINE_STRIP );
 		float x, y;
 		for(double a = 0; a <= Angles.PI_2+0.001; a += Angles.PI_div_40)
@@ -90,7 +92,9 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 			gl.glEnd();
 		}
 
+		gl.glPopAttrib();
 	}
+	@Override
 	public IVeil getVeil() { return veil; }
 
 	@Override

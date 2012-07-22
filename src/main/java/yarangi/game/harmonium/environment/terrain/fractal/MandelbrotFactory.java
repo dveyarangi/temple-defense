@@ -4,7 +4,7 @@ import yarangi.game.harmonium.environment.terrain.ModifiableGridBehavior;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.objects.Dummy;
 import yarangi.graphics.quadraturin.objects.EntityShell;
-import yarangi.graphics.quadraturin.objects.Look;
+import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.graphics.quadraturin.terrain.ITerrainFactory;
@@ -114,7 +114,7 @@ public class MandelbrotFactory implements ITerrainFactory
 		    }
 		}
 
-		Look <GridyTerrainMap> look = Dummy.LOOK(); //new GridyTerrainLook();
+		ILook <GridyTerrainMap> look = Dummy.LOOK(); //new GridyTerrainLook();
 		return new EntityShell<GridyTerrainMap>( terrain, new ModifiableGridBehavior(), look );
 	}
 }
