@@ -19,13 +19,12 @@ public class PolyTerrainLook extends PolyGridLook<TilePoly, PolygonGrid<TilePoly
 		super( false, true );
 		// TODO Auto-generated constructor stub
 	}
+	@Override
+	public IVeil getVeil() { return null; }
 
 	@Override
-	public IVeil getVeil()
-	{
-		return null;
-	}
-
+	public boolean isOriented() { return true; }
+	
 	@Override
 	protected void renderTile(GL gl, Tile<TilePoly> tile, PolygonGrid<TilePoly> grid, int scale)
 	{

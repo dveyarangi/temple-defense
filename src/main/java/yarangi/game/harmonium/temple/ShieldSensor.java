@@ -1,7 +1,6 @@
 package yarangi.game.harmonium.temple;
 
 import java.util.List;
-import java.util.SortedSet;
 
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.ISensor;
@@ -9,11 +8,10 @@ import yarangi.intervals.AngleInterval;
 import yarangi.math.Angles;
 import yarangi.math.Geometry;
 import yarangi.spatial.Area;
-import yarangi.spatial.IAreaChunk;
 
 public class ShieldSensor implements ISensor <IEntity>
 {
-	private Shield shield;
+	private final Shield shield;
 	
 	public ShieldSensor(Shield shield)
 	{
@@ -21,7 +19,7 @@ public class ShieldSensor implements ISensor <IEntity>
 	}
 
 	@Override
-	public boolean objectFound(IAreaChunk chunk, IEntity object)
+	public boolean objectFound(IEntity object)
 	{
 		Area coreArea = shield.getArea();
 		Area neighbourArea;

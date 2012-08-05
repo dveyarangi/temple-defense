@@ -18,8 +18,7 @@ public class SeederLook implements ILook <Seeder>
 	public void init(GL gl, Seeder entity, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		veil = context.getPlugin( BlurVeil.NAME );
-		if(veil == null)
-			veil = IVeil.ORIENTING;
+		
 		
 	}
 
@@ -81,6 +80,12 @@ public class SeederLook implements ILook <Seeder>
 	@Override
 	public IVeil getVeil() {
 		return veil;
+	}
+
+	@Override
+	public boolean isOriented()
+	{
+		return true;
 	}
 
 }

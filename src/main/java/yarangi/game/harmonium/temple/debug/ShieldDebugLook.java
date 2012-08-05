@@ -58,9 +58,8 @@ public class ShieldDebugLook implements ILook <Shield>
 	}
 
 	@Override
-	public IVeil getVeil()
-	{
-		return IVeil.ORIENTING;
-	}
+	public IVeil getVeil() { return null; }
 
+	@Override
+	public boolean isOriented() { return true; }
 }

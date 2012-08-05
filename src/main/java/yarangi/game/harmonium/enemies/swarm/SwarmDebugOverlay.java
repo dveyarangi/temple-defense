@@ -145,7 +145,11 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 
 	}
 	@Override
-	public IVeil getVeil() { return IVeil.ORIENTING; }
+	public IVeil getVeil() { return null; }
+
+	@Override
+	public boolean isOriented() { return true; }
+	
 	@Override
 	protected Point getFBODimensions(IRenderingContext context, Swarm grid)
 	{

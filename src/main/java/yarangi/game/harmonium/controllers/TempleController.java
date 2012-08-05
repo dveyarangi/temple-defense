@@ -9,20 +9,19 @@ import yarangi.game.harmonium.ai.economy.StupidScheduler;
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.temple.BattleCommander;
 import yarangi.game.harmonium.temple.BattleInterface;
-import yarangi.game.harmonium.temple.StructureInterface;
 import yarangi.game.harmonium.temple.EnergyCore;
+import yarangi.game.harmonium.temple.StructureInterface;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.actions.ActionController;
 import yarangi.graphics.quadraturin.actions.DefaultActionFactory;
 import yarangi.graphics.quadraturin.events.CursorListener;
 import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.objects.Entity;
+import yarangi.graphics.quadraturin.objects.EntityShell;
 import yarangi.graphics.quadraturin.objects.ILayerObject;
-import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
 import yarangi.spatial.Area;
 import yarangi.spatial.ISpatialSensor;
-import yarangi.spatial.Tile;
  
 public class TempleController extends Entity implements CursorListener
 {
@@ -60,8 +59,10 @@ public class TempleController extends Entity implements CursorListener
 		DefaultActionFactory.appendNavActions(scene, actionController);
 		Debug.appendDebugActions( actionController.getActions(), (Playground) scene );
 		
+		EntityShell <ActionController> shell = new EntityShell<ActionController>( actionController, null, new OrdersActionLook() );
+		
 		// TODO: control modes
-		scene.setActionController(actionController);
+		scene.setActionController(shell);
 
 	}
 
@@ -71,6 +72,7 @@ public class TempleController extends Entity implements CursorListener
 
 	public EnergyCore getTemple() { return temple; }
 
+	@Override
 	public void onCursorMotion(final ICursorEvent event) 
 	{
 		highlighted = event.getEntity();
@@ -100,13 +102,13 @@ public class TempleController extends Entity implements CursorListener
 
 	public void objectObserved(final Entity object) { battleInterface.objectObserved(object); }
 
-	class LOSSensor implements ISpatialSensor <Tile<MultilayerTilePoly>, MultilayerTilePoly> 
+	class LOSSensor implements ISpatialSensor <MultilayerTilePoly> 
 	{
 		private boolean hasLOS = true;
 		public boolean hasLOS() { return hasLOS; }
 
 		@Override
-		public boolean objectFound(final Tile<MultilayerTilePoly> chunk, final MultilayerTilePoly object)
+		public boolean objectFound(final MultilayerTilePoly object)
 		{
 			if(object.isAlive())
 //			if(object instanceof Tile)
@@ -127,7 +129,7 @@ public class TempleController extends Entity implements CursorListener
 		final LOSSensor sensor = new LOSSensor();
 //		scene.getEntityIndex().query( sensor, x, y, x2-x, y2-y );
 		if(scene.getWorldLayer().<MultilayerTilePoly>getTerrain() != null)
-			scene.getWorldLayer().<MultilayerTilePoly>getTerrain().query( sensor, x, y, x2-x, y2-y );
+			scene.getWorldLayer().<MultilayerTilePoly>getTerrain().queryLine( sensor, x, y, x2-x, y2-y );
 		
 		return sensor.hasLOS();
 	}
@@ -149,6 +151,9 @@ public class TempleController extends Entity implements CursorListener
 	public IOrderScheduler getOrderScheduler()
 	{
 		return botInterface;
-	}	
+	}
+	
+	@Override
+	public boolean isIndexed() { return false; }
 
 }

@@ -6,13 +6,7 @@ import yarangi.graphics.colors.MaskUtil;
 import yarangi.graphics.curves.Bezier4Curve;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
-import yarangi.math.Angles;
-import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
-import yarangi.spatial.AABB;
-
-import com.seisw.util.geom.Poly;
-import com.seisw.util.geom.PolyDefault;
 
 public class SeederBehavior implements IBehaviorState <Seeder>
 {
@@ -25,7 +19,7 @@ public class SeederBehavior implements IBehaviorState <Seeder>
 	private final PolygonTerrainMap terrain;
 	private static double SEED_INTERVAL = 10;
 	private double lifeTime = 0;
-	private double lastSeedTime = 0;
+	private final double lastSeedTime = 0;
 	
 	private static final int MASK_WIDTH = 32; 
 	
@@ -58,7 +52,7 @@ public class SeederBehavior implements IBehaviorState <Seeder>
 			return 0;
 		lifeTime += time;
 		
-		if(lifeTime - lastSeedTime > SEED_INTERVAL)
+/*		if(lifeTime - lastSeedTime > SEED_INTERVAL)
 		{
 			
 			AABB aabb = (AABB) seeder.getArea();
@@ -79,7 +73,7 @@ public class SeederBehavior implements IBehaviorState <Seeder>
 //					new Color(0.2f, 0.2f, 0.2f, 1.0f) );
 //			if(tile != null)
 //				terrain.setModified( tile );
-		}
+		}*/
 		
 		return 0;
 	}

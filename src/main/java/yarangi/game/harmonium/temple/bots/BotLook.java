@@ -6,9 +6,7 @@ import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.Q;
 import yarangi.graphics.quadraturin.objects.ILook;
-import yarangi.graphics.veils.BlurVeil;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 
@@ -36,11 +34,6 @@ public class BotLook implements ILook<Bot> {
 	public void init(GL gl, Bot bot, IRenderingContext context) {
 		
 //		veil = context.<BlurVeil>getPlugin( BlurVeil.NAME );
-		if(veil == null)
-		{
-			Q.rendering.warn( "Plugin [" + BlurVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
-			veil = IVeil.ORIENTING;
-		}
 		for(int idx = 0; idx < tail.length; idx ++)
 			tail[idx] = Vector2D.COPY(bot.getArea().getAnchor());
 		
@@ -104,4 +97,6 @@ public class BotLook implements ILook<Bot> {
 	@Override
 	public IVeil getVeil() { return veil; }
 
+	@Override
+	public boolean isOriented() { return true; }
 }

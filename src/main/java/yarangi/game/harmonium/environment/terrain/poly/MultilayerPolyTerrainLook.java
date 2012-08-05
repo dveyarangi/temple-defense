@@ -4,8 +4,8 @@ import javax.media.opengl.GL;
 
 import yarangi.graphics.grid.PolyGridLook;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
+import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.spatial.Tile;
 
 import com.seisw.util.geom.Poly;
@@ -21,11 +21,11 @@ public class MultilayerPolyTerrainLook extends PolyGridLook<MultilayerTilePoly, 
 	}
 
 	@Override
-	public IVeil getVeil()
-	{
-		return null;
-	}
+	public IVeil getVeil() { return null; }
 
+	@Override
+	public boolean isOriented() { return true; }
+	
 	@Override
 	protected void renderTile(GL gl, Tile<MultilayerTilePoly> tile, PolygonTerrainMap grid, int scale)
 	{

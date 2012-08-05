@@ -92,6 +92,8 @@ public class CrystalMatterLook implements ILook <CrystalMatter>
 	@Override
 	public float getPriority() { return 1; }
 	@Override
-	public IVeil getVeil() { return IVeil.ORIENTING; }
+	public IVeil getVeil() { return null; }
 
+	@Override
+	public boolean isOriented() { return true; }
 }

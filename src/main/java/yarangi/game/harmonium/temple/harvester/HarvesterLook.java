@@ -80,12 +80,10 @@ public class HarvesterLook implements ILook <Harvester>
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override
+	public IVeil getVeil() { return null; }
 
 	@Override
-	public IVeil getVeil()
-	{
-		// TODO Auto-generated method stub
-		return IVeil.ORIENTING;
-	}
-
+	public boolean isOriented() { return true; }
 }

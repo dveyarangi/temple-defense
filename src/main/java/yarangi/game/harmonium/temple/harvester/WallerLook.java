@@ -82,10 +82,8 @@ public class WallerLook implements ILook <Waller>
 	}
 
 	@Override
-	public IVeil getVeil()
-	{
-		// TODO Auto-generated method stub
-		return IVeil.ORIENTING;
-	}
+	public IVeil getVeil() { return null; }
 
+	@Override
+	public boolean isOriented() { return true; }
 }

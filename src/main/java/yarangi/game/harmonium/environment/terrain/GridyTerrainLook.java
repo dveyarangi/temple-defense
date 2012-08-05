@@ -72,8 +72,6 @@ public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap>
 		gl.glPopAttrib();
 		
 	}
-	@Override
-	public IVeil getVeil() { return null; }
 	
 	@Override
 	protected Point getFBODimensions(IRenderingContext context, GridyTerrainMap grid)
@@ -90,5 +88,9 @@ public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap>
 	{
 		return 0;
 	}
-	
+	@Override
+	public IVeil getVeil() { return null; }
+
+	@Override
+	public boolean isOriented() { return true; }	
 }

@@ -41,8 +41,7 @@ public class MinigunBurstLook implements ILook <Projectile>
 	@Override
 	public void init(GL gl, Projectile entity, IRenderingContext context) {
 //		veil = context.getPlugin( BlurVeil.NAME );
-		if(veil == null)
-			veil = IVeil.ORIENTING;
+
 	}
 
 	@Override
@@ -57,5 +56,8 @@ public class MinigunBurstLook implements ILook <Projectile>
 	public float getPriority() { return 0; }
 	@Override
 	public IVeil getVeil() { return veil; }
+
+	@Override
+	public boolean isOriented() { return true; }
 
 }

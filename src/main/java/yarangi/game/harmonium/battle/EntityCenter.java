@@ -6,8 +6,6 @@ import java.util.Set;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.spatial.AABB;
-import yarangi.spatial.IAreaChunk;
-import yarangi.spatial.ISpatialIndex;
 import yarangi.spatial.ISpatialSensor;
 import yarangi.spatial.SpatialHashMap;
 
@@ -20,12 +18,12 @@ public class EntityCenter
 		instance = new EntityCenter(scene);
 	}
 	
-	private Scene scene;
+	private final Scene scene;
 	
-	private SpatialHashMap <IEntity> index;
+	private final SpatialHashMap <IEntity> index;
 	
-	private Set <ITemple> templeTargets = new HashSet<ITemple> ();
-	private Set <IEnemy> enemyTargets = new HashSet<IEnemy> ();
+	private final Set <ITemple> templeTargets = new HashSet<ITemple> ();
+	private final Set <IEnemy> enemyTargets = new HashSet<IEnemy> ();
 	
 	private EntityCenter(Scene scene)
 	{
@@ -63,7 +61,7 @@ public class EntityCenter
 	
 	public Set <ITemple> getTempleTargets(AABB area) {
 		TempleSetSensor sensor = new TempleSetSensor ();
-		index.query( sensor, area );
+		index.queryAABB( sensor, area.getCenterX(), area.getCenterY(), area.getRX(), area.getRY() );
 		
 		return sensor;
 	}
@@ -73,11 +71,11 @@ public class EntityCenter
 		return instance.enemyTargets;
 	}
 	
-	public final class TempleSetSensor extends HashSet <ITemple> implements ISpatialSensor <IAreaChunk, IEntity>
+	public final class TempleSetSensor extends HashSet <ITemple> implements ISpatialSensor <IEntity>
 	{
 
 		@Override
-		public boolean objectFound(IAreaChunk tile, IEntity object)
+		public boolean objectFound(IEntity object)
 		{
 			if(object instanceof ITemple)
 				add((ITemple) object);	
@@ -88,12 +86,12 @@ public class EntityCenter
 	}
 
 	
-	public final class TempleSensor implements ISpatialSensor <IAreaChunk, IEntity>
+	public final class TempleSensor implements ISpatialSensor <IEntity>
 	{
 		private ITemple entity;
 		
 		@Override
-		public boolean objectFound(IAreaChunk tile, IEntity object)
+		public boolean objectFound(IEntity object)
 		{
 			if(object instanceof ITemple) {
 				entity = (ITemple) object;

@@ -1,6 +1,5 @@
 package yarangi.game.harmonium.enemies.swarm;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -304,7 +303,10 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	
 	public boolean hasTarget(int x, int y)
 	{
-		Collection <IEntity> entities = index.getBucket( 
+//		System.out.println(x + " " + y);
+		return x == getGridWidth()/2 && y == getGridHeight()/2;
+		
+/*		Collection <IEntity> entities = index.getBucket( 
 					index.toGridIndex( toBeaconCoord(x) ), index.toGridIndex( toBeaconCoord(y) ) )
 					.values();
 		
@@ -313,7 +315,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 //				System.out.println("Swarm: target found: " + x + " : " + y + " : " + entity);
 				return true;
 			}
-		return false;
+		return false;*/
 				
 	}
 

@@ -100,6 +100,8 @@ public class MinigunLook implements ILook<Minigun>
 	@Override
 	public float getPriority() { return 0; }
 	@Override
-	public IVeil getVeil() { return IVeil.ORIENTING; }
+	public IVeil getVeil() { return null; }
+	@Override
+	public boolean isOriented() { return true; }
 
 }

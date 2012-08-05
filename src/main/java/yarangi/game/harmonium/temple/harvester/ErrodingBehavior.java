@@ -3,15 +3,12 @@ package yarangi.game.harmonium.temple.harvester;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.colors.MaskUtil;
 import yarangi.graphics.quadraturin.objects.IBehavior;
-import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.graphics.quadraturin.objects.Sensor;
-import yarangi.graphics.quadraturin.terrain.Bitmap;
-import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
+import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
-import yarangi.spatial.IAreaChunk;
-import yarangi.spatial.Tile;
 
 import com.seisw.util.geom.Poly;
 import com.seisw.util.geom.PolyDefault;
@@ -20,9 +17,9 @@ import com.seisw.util.geom.PolyDefault;
 public class ErrodingBehavior extends Sensor implements IBehavior <Harvester>
 {
 	
-	private PolygonTerrainMap terrain;
-	Tile <MultilayerTilePoly> harvestedTile = null;
-	Tile <MultilayerTilePoly> reserveTile = null;
+	private final PolygonTerrainMap terrain;
+	MultilayerTilePoly harvestedTile = null;
+	MultilayerTilePoly reserveTile = null;
 	boolean harvestedFound = false;
 //	final GridyTerrainMap terrain = (GridyTerrainMap)scene.getWorldLayer().<Bitmap>getTerrain();
 	private static final int MASK_WIDTH =16; 
@@ -31,7 +28,7 @@ public class ErrodingBehavior extends Sensor implements IBehavior <Harvester>
 	
 	private static final double ERRODE_INVERVAL = 1;
 	
-	private Tile <Bitmap> prevTile;
+//	private Tile <Bitmap> prevTile;
 	
 	private int lastSaturation = 1;
 	private int saturation = 1;
@@ -43,15 +40,15 @@ public class ErrodingBehavior extends Sensor implements IBehavior <Harvester>
 	}
 	
 	@Override
-	public boolean objectFound(IAreaChunk chunk, IEntity object) 
+	public boolean objectFound(IBeing object) 
 	{
-		if(!(chunk instanceof Tile)) {
-			super.objectFound( chunk, object );
+		if(!(object instanceof MultilayerTilePoly)) {
+			super.objectFound( object );
 			return false;
 		}
 		
-		Tile <MultilayerTilePoly> tile = (Tile <MultilayerTilePoly>) chunk;
-		if(!tile.get().isEmpty())
+		MultilayerTilePoly tile = (MultilayerTilePoly) object;
+		if(!tile.isEmpty())
 		{
 			saturation ++;
 			
@@ -89,15 +86,16 @@ public class ErrodingBehavior extends Sensor implements IBehavior <Harvester>
 		double dy = aty - harvester.getArea().getAnchor().y();
 //		} while()
 		if(dx*dx+dy*dy < harvester.getSensor().getRadius()*harvester.getSensor().getRadius())
-			terrain.apply( atx-maskWidth, aty-maskWidth, atx+maskWidth, aty+maskWidth, true, poly );
+			terrain.apply( atx, aty, maskWidth, maskWidth, true, poly );
 
-		if(harvestedTile.get().isEmpty())
+		if(harvestedTile.isEmpty())
 			harvestedTile = null;
 
 		return true;
 
 	}
 	
+	@Override
 	public void clear() { 
 		
 		super.clear();
@@ -106,7 +104,7 @@ public class ErrodingBehavior extends Sensor implements IBehavior <Harvester>
 		harvestedFound = false;
 	}
 
-	public Tile <MultilayerTilePoly> getErrodedTile()
+	public MultilayerTilePoly getErrodedTile()
 	{
 		// TODO Auto-generated method stub
 		return harvestedTile;

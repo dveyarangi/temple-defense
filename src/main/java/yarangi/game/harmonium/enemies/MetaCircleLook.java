@@ -48,8 +48,7 @@ public class MetaCircleLook implements ILook <Entity>
 //		gl.glBindTexture( GL.GL_TEXTURE_2D, 0 );
 //		veil = context.getPlugin( BlurVeil.NAME );
 		veil = context.getPlugin( BlurVeil.NAME );
-		if(veil == null)
-			veil = IVeil.ORIENTING;
+
 /*		veil = context.<IVeil>getPlugin( IsoheightVeil.NAME );
 		if(veil == null)
 		{
@@ -100,4 +99,6 @@ public class MetaCircleLook implements ILook <Entity>
 	@Override
 	public IVeil getVeil() { return veil; }
 
+	@Override
+	public boolean isOriented() { return true; }
 }

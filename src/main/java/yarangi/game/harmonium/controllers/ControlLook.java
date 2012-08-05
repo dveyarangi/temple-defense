@@ -111,6 +111,9 @@ public class ControlLook implements ILook <TempleController>
 	public float getPriority() { return 0; }
 
 	@Override
-	public IVeil getVeil() { return IVeil.ORIENTING; }
+	public IVeil getVeil() { return null; }
+
+	@Override
+	public boolean isOriented() { return true; }
 
 }

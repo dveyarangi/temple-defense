@@ -1,7 +1,7 @@
 package yarangi.game.harmonium.temple.harvester;
 
 import yarangi.graphics.quadraturin.objects.IBehavior;
-import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
@@ -10,8 +10,6 @@ import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
-import yarangi.spatial.AABB;
-import yarangi.spatial.IAreaChunk;
 import yarangi.spatial.ISpatialSensor;
 import yarangi.spatial.Tile;
 
@@ -23,8 +21,8 @@ public class EnforcingBehavior extends Sensor implements IBehavior <Waller>
 {
 	
 	private final PolygonTerrainMap terrain;
-	Tile <MultilayerTilePoly> harvestedTile = null;
-	Tile <MultilayerTilePoly> reserveTile = null;
+	MultilayerTilePoly harvestedTile = null;
+	MultilayerTilePoly reserveTile = null;
 	boolean harvestedFound = false;
 	
 	private static final double maskWidth = 3 ;
@@ -51,14 +49,14 @@ public class EnforcingBehavior extends Sensor implements IBehavior <Waller>
 	}
 	
 	@Override
-	public boolean objectFound(IAreaChunk chunk, IEntity object) 
+	public boolean objectFound(IBeing object) 
 	{
-		if(!(chunk instanceof Tile)) {
-			super.objectFound( chunk, object );
+		if(!(object instanceof MultilayerTilePoly)) {
+			super.objectFound(object );
 			return false;
 		}
 		
-		Tile <MultilayerTilePoly> tile = (Tile <MultilayerTilePoly>) chunk;
+		MultilayerTilePoly tile = (MultilayerTilePoly) object;
 //		if(!tile.get().isEmpty())
 		{
 			saturation ++;
@@ -89,11 +87,12 @@ public class EnforcingBehavior extends Sensor implements IBehavior <Waller>
 //		do {
 		double atx = RandomUtil.getRandomDouble( harvestedTile.getMaxX()-harvestedTile.getMinX() ) + harvestedTile.getMinX();
 		double aty = RandomUtil.getRandomDouble( harvestedTile.getMaxY()-harvestedTile.getMinY() ) + harvestedTile.getMinY();
+		// TODO: transpose prepared poly instead.
 		for(double ang = 0 ; ang < Angles.PI_2; ang += Angles.PI_div_6)
 			poly.add( atx + maskWidth * Math.cos( ang ), aty + maskWidth * Math.sin( ang) );
 		
 		ReinforcementSensor s = new ReinforcementSensor(poly);
-		reinforcementMap.query( s, AABB.createSquare( atx, aty, 1, 0 ));
+		reinforcementMap.queryAABB( s, atx, aty, 1, 1 );
 		
 		Poly res = s.getRes();
 		
@@ -105,7 +104,7 @@ public class EnforcingBehavior extends Sensor implements IBehavior <Waller>
 		double dy = aty - waller.y();
 //		} while()
 		if(dx*dx+dy*dy < waller.getSensor().getRadius()*waller.getSensor().getRadius())
-			terrain.apply( atx-maskWidth, aty-maskWidth, atx+maskWidth, aty+maskWidth, false, res );
+			terrain.apply( atx, aty, maskWidth, maskWidth, false, res );
 
 		if(RandomUtil.oneOf( 10 ))
 			harvestedTile = null;
@@ -123,13 +122,13 @@ public class EnforcingBehavior extends Sensor implements IBehavior <Waller>
 		harvestedFound = false;
 	}
 
-	public Tile <MultilayerTilePoly> getErrodedTile()
+	public MultilayerTilePoly getErrodedTile()
 	{
 		// TODO Auto-generated method stub
 		return harvestedTile;
 	}
 	
-	private static class ReinforcementSensor implements ISpatialSensor <Tile<TilePoly>, TilePoly> {
+	private static class ReinforcementSensor implements ISpatialSensor <TilePoly> {
 
 		Poly poly;
 		
@@ -140,7 +139,7 @@ public class EnforcingBehavior extends Sensor implements IBehavior <Waller>
 		}
 		
 		@Override
-		public boolean objectFound(Tile<TilePoly> tile, TilePoly object)
+		public boolean objectFound(TilePoly object)
 		{
 			if(object.getPoly() == null)
 				return true;

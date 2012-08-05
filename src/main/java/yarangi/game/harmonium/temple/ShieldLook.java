@@ -39,7 +39,6 @@ public class ShieldLook implements ILook <Shield>
 		if(veil == null)
 		{
 			Q.rendering.warn( "Plugin [" + IsoheightVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
-			veil = IVeil.ORIENTING;
 		}
 		
 		Port port = entity.getPort();
@@ -122,4 +121,7 @@ public class ShieldLook implements ILook <Shield>
 	}
 	@Override
 	public IVeil getVeil() { return veil; }
+
+	@Override
+	public boolean isOriented() { return true; }
 }

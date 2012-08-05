@@ -1,5 +1,7 @@
 package yarangi.game.harmonium.enemies.swarm;
 
+import java.awt.geom.Point2D;
+
 import yarangi.game.harmonium.battle.Damage;
 import yarangi.game.harmonium.battle.Damageable;
 import yarangi.game.harmonium.battle.IDamager;
@@ -12,17 +14,21 @@ import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
+import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
+import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
 import yarangi.physics.IPhysicalObject;
+
+import com.seisw.util.geom.PolyDefault;
 
 public class SwarmFactory 
 {
 	public static int N = 10;
 	
 	public static double agentEnginePower = 0.01;
-	private final static Damage MATTER_DAMAGE = new Damage(12, 0, 0, 0);
+	private final static Damage MATTER_DAMAGE = new Damage(0.5, 0, 0, 0);
 
 	public static Swarm createSwarm(int worldSize, final Scene scene, int nodes)
 	{
@@ -97,14 +103,16 @@ public class SwarmFactory
 	static class AgentCollisionHandler <E extends SwarmAgent> implements ICollisionHandler <E>
 	{
 		private final Swarm swarm;
+		
+		private double lastX, lastY;
 		public AgentCollisionHandler(Swarm swarm)
 		{
-			this.swarm = swarm; 
+			this.swarm = swarm;
+			
 		}
 		@Override
 		public boolean setImpactWith(E source, IPhysicalObject target)
 		{
-
 				if(target instanceof Damageable && target instanceof ITemple)
 				{
 					((Damageable) target).hit( new Damage(source.getArea().getMaxRadius(), 0, 0, 0) );
@@ -113,7 +121,7 @@ public class SwarmFactory
 //					EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(1,0,0,1), 64);
 					return true;
 				}
-				
+				else
 				if(target instanceof IDamager)
 				{
 
@@ -121,27 +129,32 @@ public class SwarmFactory
 //					EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(1,0,0,1), 64);
 					return true;
 				}
-								else
-/*				if( target instanceof Bitmap || target instanceof Matter)
+				else
+				if( target instanceof TilePoly || target instanceof MultilayerTilePoly)
 				{
 					
 					PolygonTerrainMap terrain = swarm.getTerrain();
+					
+					double atx = source.x();
+					double aty = source.y();
+					double size = 3*source.getArea().getMaxRadius();
+					
+					PolyDefault poly = new PolyDefault();
+					for(double a = 0 ; a < Angles.PI_2; a += Angles.PI_div_12)
+						poly.add( new Point2D.Double(atx + size * Math.cos( a ), aty + size * Math.sin( a )) );
 
-					terrain.query( new ConsumingSensor(terrain, false,
-							source.x(), source.y(), 30*source.getArea().getMaxRadius() ), 
-							AABB.createSquare(source.x(), 
-									source.y(), 
-									30*source.getArea().getMaxRadius(), 0));
+					terrain.apply( atx, aty, size, size, true, poly );
 //					swarm.setUnpassable(target.getArea().getRefPoint().x(), target.getArea().getRefPoint().y());
 					
-					swarm.setDanger(source, source.getIntegrity().hit(MATTER_DAMAGE));
-//					if(source.getIntegrity().getHitPoints() <= 0)
+					double rawDamage = source.getIntegrity().hit(MATTER_DAMAGE);
+					swarm.setDanger(source, 10*rawDamage);
+					if(source.getIntegrity().getHitPoints() <= 0)
 					{
 						source.markDead();
 //						EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(0,1,0,1), 32);
 						return true;
 					}
-				}*/
+				}
 			
 				return false;
 			}

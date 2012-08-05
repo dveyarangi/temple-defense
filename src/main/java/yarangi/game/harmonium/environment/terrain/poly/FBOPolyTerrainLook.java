@@ -7,8 +7,8 @@ import javax.media.opengl.GL;
 import yarangi.graphics.grid.TileGridLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
+import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.spatial.Tile;
 
 import com.seisw.util.geom.Poly;
@@ -24,10 +24,10 @@ public class FBOPolyTerrainLook extends TileGridLook<MultilayerTilePoly, Polygon
 	}
 
 	@Override
-	public IVeil getVeil()
-	{
-		return null;
-	}
+	public IVeil getVeil() { return null; }
+
+	@Override
+	public boolean isOriented() { return true; }
 	
 	public void init(GL gl, Tile<MultilayerTilePoly> tile, PolygonTerrainMap grid, IRenderingContext context)
 	{

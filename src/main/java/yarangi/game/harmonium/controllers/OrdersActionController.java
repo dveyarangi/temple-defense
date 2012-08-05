@@ -14,7 +14,6 @@ import yarangi.graphics.quadraturin.actions.ICameraMan;
 import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.events.UserActionEvent;
 import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
 import yarangi.graphics.quadraturin.terrain.PolygonGrid;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
@@ -37,8 +36,7 @@ public class OrdersActionController extends ActionController
 
 	
 	private Vector2D target;
-	
-	private final ILook look = new OrdersActionLook();
+
 	
 	private PolygonTerrainMap terrain;
 	
@@ -168,7 +166,7 @@ public class OrdersActionController extends ActionController
 	@Override
 	public ISpatialFilter<IEntity> getPickingFilter() { return filter; }
 	
-	private final double drawRadius = 5;
+	private final double drawRadius = 15;
 
 	
 	private void drawTerrain(PolygonTerrainMap terrain, Vector2D target, boolean draw)
@@ -180,7 +178,7 @@ public class OrdersActionController extends ActionController
 		
 		if(terrain == null)
 			return;
-		reinforcementMap.apply( target.x()-drawRadius, target.y()-drawRadius, target.x()+drawRadius, target.y()+drawRadius, draw, poly );
+		reinforcementMap.apply( target.x(), target.y(), drawRadius, drawRadius, draw, poly );
 		
 		reinforcementMap.fireGridModified();
 	}
@@ -196,15 +194,6 @@ public class OrdersActionController extends ActionController
 	{
 		return cameraMan;
 	}
-
-
-	@Override
-	public ILook<ActionController> getLook()
-	{
-		
-		return look;
-	}
-
 
 	public PolygonGrid<TilePoly> getReinforcementMap()
 	{

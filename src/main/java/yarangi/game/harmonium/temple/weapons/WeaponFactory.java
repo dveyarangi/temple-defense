@@ -1,7 +1,7 @@
 package yarangi.game.harmonium.temple.weapons;
 
 import yarangi.game.harmonium.battle.IEnemy;
-import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.graphics.quadraturin.objects.ISensor;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.math.BitUtils;
@@ -40,9 +40,9 @@ public class WeaponFactory
 	}
 	
 
-	public static ISpatialFilter <IEntity> ENEMY_SENSOR = new ISpatialFilter <IEntity> () {
+	public static ISpatialFilter <IBeing> ENEMY_SENSOR = new ISpatialFilter <IBeing> () {
 
-		@Override public boolean accept(IEntity entity) 
+		@Override public boolean accept(IBeing entity) 
 		{ 
 			return (entity instanceof IEnemy);
 		}

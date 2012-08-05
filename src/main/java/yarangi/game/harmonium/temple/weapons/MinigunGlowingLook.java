@@ -29,7 +29,6 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 		if(veil == null)
 		{
 			Q.rendering.warn( "Plugin [" + IsoheightVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
-			veil = IVeil.ORIENTING;
 		}
 
 	}
@@ -102,4 +101,6 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 	@Override
 	public float getPriority() { return 0; }
 
+	@Override
+	public boolean isOriented() { return true; }
 }

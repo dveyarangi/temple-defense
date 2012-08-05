@@ -56,6 +56,12 @@ public class PowerConnectorLook implements ILook <PowerConnector>
 		return false;
 	}
 	@Override
-	public IVeil getVeil() { return IVeil.ORIENTING; }
+	public IVeil getVeil() { return null; }
+
+	@Override
+	public boolean isOriented()
+	{
+		return true;
+	}
 
 }
