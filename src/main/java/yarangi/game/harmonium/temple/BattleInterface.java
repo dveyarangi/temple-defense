@@ -7,11 +7,10 @@ import javax.media.opengl.GL;
 
 import yarangi.game.harmonium.ai.weapons.IFeedbackBeacon;
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
-import yarangi.game.harmonium.ai.weapons.NetCore;
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.game.harmonium.temple.weapons.Weapon;
-import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.math.Vector2D;
 
 public interface BattleInterface 
@@ -22,7 +21,7 @@ public interface BattleInterface
 
 	public void addFireable(Weapon weapon);
 
-	public Map <Weapon, IEntity> getTargets();
+	public Map <Weapon, IBeing> getTargets();
 
 	public List <Weapon> getFireables();
 
@@ -32,7 +31,7 @@ public interface BattleInterface
 
 //	public Vector2D getGuarded(Weapon entity);
 
-	public void objectObserved(IEntity object);
+	public void objectObserved(IBeing object);
 
 	public void dispatchFeedback(IFeedbackBeacon capsule);
 

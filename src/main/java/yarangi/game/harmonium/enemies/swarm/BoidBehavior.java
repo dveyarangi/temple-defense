@@ -17,8 +17,8 @@ import yarangi.math.Vector2D;
 public class BoidBehavior implements IBehaviorState<SwarmAgent> 
 {
 	public static final double ATTRACTION_COEF = 0.25;
-	public static final double SEPARATION_COEF = 0.5;
-	public static final double FLOCKING_COEF = 0.1;
+	public static final double SEPARATION_COEF = 0.02;
+	public static final double FLOCKING_COEF = 0.3;
 	
 	private final DroneBehavior droning = new DroneBehavior(20);
 	private SatelliteBehavior satellite;
@@ -89,17 +89,17 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 			distance = Geometry.calcHypot( loc, otherLoc );
 			
 			// separation:
-			if(distance <= separationDistance)
-			{
-				Fsep.add(loc.minus(otherLoc).multiply((separationDistance-distance)));
-			}
+//			if(distance <= separationDistance)
+//			{
+				Fsep.add(loc.minus(otherLoc).normalize().mul( SEPARATION_COEF ));//.multiply((separationDistance-distance)));
+//			}
 			
 			// attraction parameters:
 			massCenter.add(otherLoc.minus(loc).multiply( attractivity ));
 			
 			// flocking:
 			if(flocking)
-			flockingVelocity.add(neigh.getBody().getVelocity().mul(leadership));
+				flockingVelocity.add(neigh.getBody().getVelocity().mul(leadership));
 		}
 		
 		massCenter.multiply(dN).add( loc );
@@ -110,7 +110,7 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 //		flockingVelocity.substract( boid.getBody().getVelocity() );
 //		flockingVelocity.multiply(FLOCKING_COEF);
 		
-		Fsep.normalize().multiply( SEPARATION_COEF );
+//		Fsep.normalize().multiply( SEPARATION_COEF );
 		
 		Vector2D Flok = flockingVelocity.normalize().multiply(FLOCKING_COEF); 
 		

@@ -4,6 +4,7 @@ import yarangi.game.harmonium.battle.IEnemy;
 import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.graphics.quadraturin.objects.ISensor;
 import yarangi.graphics.quadraturin.objects.Sensor;
+import yarangi.math.Angles;
 import yarangi.math.BitUtils;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
@@ -30,7 +31,7 @@ public class WeaponFactory
 		Projectile shell = new Projectile( speed, weapon.getProps());
 		shell.setLook(new MinigunBurstLook(weapon.getPort(), weapon.getProps()));
 		shell.setBehavior(shellBehavior);
-		shell.setArea(AABB.createSquare(location.x(), location.y(), weapon.getProps().getProjectileHitRadius(), fireAngle));
+		shell.setArea(AABB.createSquare(location.x(), location.y(), weapon.getProps().getProjectileHitRadius(), fireAngle*Angles.TO_DEG));
 		shell.setBody(new Body());
 		shell.getBody().setMaxSpeed(velocity);
 		shell.getBody().addVelocity(speed.x(), speed.y());

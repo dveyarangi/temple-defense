@@ -3,6 +3,7 @@ package yarangi.game.harmonium.enemies;
 import javax.media.opengl.GL;
 
 import yarangi.game.harmonium.battle.Integrity;
+import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.ILook;
@@ -16,7 +17,7 @@ public class ElementalDarknessLook implements ILook <ElementalDarkness>
 	private final double red = RandomUtil.getRandomDouble(0.5)+0.5;
 
 	@Override
-	public void render(GL gl, ElementalDarkness entity, IRenderingContext context) 
+	public void render(GL gl, SwarmAgent entity, IRenderingContext context) 
 	{
 		Integrity integrity = entity.getIntegrity();
 //		gl.glColor3f(0.4f, 0.4f, 0.5f);
@@ -26,13 +27,13 @@ public class ElementalDarknessLook implements ILook <ElementalDarkness>
 		gl.glBegin(GL.GL_LINE_STRIP);
 		Vector2D point;
 
-//		for(float t = 0; t <= entity.getCurve().getMax(); t += 0.01 /* TODO: LOD */)
-//		{
-//			point = entity.getCurve().pointAt(t);
-////			gl.glColor4f(1f, 1f, 1f, /*(float)(0.5*integrity.getHitPoints()/integrity.getMaxHitPoints())*/ 1f);
-////			gl.glColor4f(1f, 1f, 1f, /*(float)(0.5*integrity.getHitPoints()/integrity.getMaxHitPoints())*/ 1f);
-//			gl.glVertex3f((float)point.x(), (float) point.y(), 0);
-//		}
+		for(float t = 0; t <= entity.getCurve().getMax(); t += 0.01 /* TODO: LOD */)
+		{
+			point = entity.getCurve().pointAt(t);
+			gl.glColor4f(1f, 1f, 1f, /*(float)(0.5*integrity.getHitPoints()/integrity.getMaxHitPoints())*/ 1f);
+			gl.glColor4f(1f, 1f, 1f, /*(float)(0.5*integrity.getHitPoints()/integrity.getMaxHitPoints())*/ 1f);
+			gl.glVertex3f((float)point.x(), (float) point.y(), 0);
+		}
 		gl.glEnd();
 		gl.glLineWidth(1);
 		

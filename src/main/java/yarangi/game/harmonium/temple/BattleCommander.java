@@ -13,32 +13,30 @@ import javax.media.opengl.GL;
 import yarangi.game.harmonium.ai.weapons.IFeedbackBeacon;
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.ai.weapons.LinearFeedbackBeacon;
-import yarangi.game.harmonium.ai.weapons.NetCore;
 import yarangi.game.harmonium.controllers.TempleController;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.game.harmonium.temple.weapons.Weapon;
-import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.math.Geometry;
 import yarangi.math.Vector2D;
 
 public class BattleCommander implements BattleInterface
 {
-	private static final long serialVersionUID = -6746350958616093717L;
 
-	private TempleController controller;
+	private final TempleController controller;
 	/**
 	 * List of currently selected weapons.
 	 */
-	private List <Weapon> fireables = new ArrayList <Weapon> ();
-	private Set <IEntity> observedEntities = new HashSet <IEntity> ();
+	private final List <Weapon> fireables = new ArrayList <Weapon> ();
+	private final Set <IBeing> observedEntities = new HashSet <IBeing> ();
 	
-	private Map <Weapon, IEntity> targets = new HashMap <Weapon, IEntity> ();
+	private final Map <Weapon, IBeing> targets = new HashMap <Weapon, IBeing> ();
 	
 //	private Vector2D guarded = new Vector2D(0,0);
 	
-	private IntellectCore core;
+	private final IntellectCore core;
 	public BattleCommander(TempleController controller, IntellectCore core)
 	{
 		this.controller = controller;
@@ -50,13 +48,13 @@ public class BattleCommander implements BattleInterface
 		return guarded;
 	}*/
 
-	public IEntity getTarget(Weapon fireable) 
+	public IBeing getTarget(Weapon fireable) 
 	{
 		return targets.get(fireable);
 	}
 	
 	@Override
-	public Map <Weapon, IEntity> getTargets()
+	public Map <Weapon, IBeing> getTargets()
 	{
 		return targets;
 	}
@@ -70,7 +68,7 @@ public class BattleCommander implements BattleInterface
 	@Override
 	public Vector2D acquireTrackPoint(Weapon fireable)
 	{
-		IEntity target = getTarget(fireable);
+		IBeing target = getTarget(fireable);
 		if(target == null)
 			return null;
 		
@@ -91,7 +89,7 @@ public class BattleCommander implements BattleInterface
 			found[i] = false;
 //		Vector2D cursorLoc = cursor.getArea().getRefPoint();
 		Vector2D objectLoc;
-		for(IEntity object : observedEntities)
+		for(IBeing object : observedEntities)
 		{
 
 			objectLoc = object.getArea().getAnchor();
@@ -118,7 +116,7 @@ public class BattleCommander implements BattleInterface
 			}*/
 		}
 		
-		Iterator <IEntity> it;
+		Iterator <IBeing> it;
 		Weapon fireable;
 		for(int idx = 0; idx < fireables.size(); idx ++)
 		{
@@ -139,7 +137,7 @@ public class BattleCommander implements BattleInterface
 			
 			while(it.hasNext())
 			{
-				IEntity o = it.next();
+				IBeing o = it.next();
 				
 				if(!(o instanceof SwarmAgent))
 					continue;
@@ -174,18 +172,19 @@ public class BattleCommander implements BattleInterface
 		observedEntities.clear();
 	}
 	@Override
-	public void objectObserved(IEntity object)
+	public void objectObserved(IBeing object)
 	{
 		
 		this.observedEntities.add(object);
 	}
 	
+	@Override
 	public IFeedbackBeacon createFeedbackBeacon(Weapon weapon, Projectile projectile) 
 	{
 		if(!observedEntities.isEmpty())
 		{
 			double speed = projectile.getBody().getVelocity().abs();
-			double angle = weapon.getArea().getOrientation();
+//			double angle = weapon.getArea().getOrientation();
 			
 //			return core.pickTrackPoint(fireable.getAABB(), new Vector2D(speed, angle, true), target);
 			if(getTarget(weapon) != null)

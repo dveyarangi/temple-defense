@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import yarangi.game.harmonium.temple.harvester.Harvester;
+import yarangi.game.harmonium.temple.harvester.Waller;
 import yarangi.game.harmonium.temple.weapons.Weapon;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.ViewPoint2D;
@@ -51,7 +52,7 @@ public class OrdersActionController extends ActionController
 		@Override
 		public boolean accept(IEntity entity)
 		{
-			if(entity instanceof Weapon || entity instanceof Harvester)
+			if(entity instanceof Weapon || entity instanceof Harvester || entity instanceof Waller)
 			{
 				return true;
 			}
@@ -88,9 +89,10 @@ public class OrdersActionController extends ActionController
 					dragged = (IEntity)cursor.getEntity();
 					target = cursor.getWorldLocation();
 				}
-				if(dragged == null)
+				if(dragged == null) {
+					System.out.println(target);
 					drawTerrain(terrain, target, false);
-
+				}
 			}
 			
 		});
@@ -139,18 +141,18 @@ public class OrdersActionController extends ActionController
 			}
 		})*/
 		
-		
-		reinforcementMap = new PolygonGrid<TilePoly>(32, terrain.getWidth(), terrain.getHeight());
-
-//		System.out.println(reinforcementMap.getGridWidth() + " : " + terrain.getGridHeight());
-		for (int i = 0; i < reinforcementMap.getGridWidth(); i ++)
-			for (int j = 0; j < reinforcementMap.getGridHeight(); j ++)
-			{
-				Tile <TilePoly> tile = reinforcementMap.getTileAt( i, j );
-//				System.out.println(tile);
-				tile.put( new TilePoly(tile.getMinX(), tile.getMinY(), tile.getMaxX(), tile.getMaxY() ) );
-			}
-
+		if(terrain != null) {
+			reinforcementMap = new PolygonGrid<TilePoly>(32, terrain.getWidth(), terrain.getHeight());
+	
+	//		System.out.println(reinforcementMap.getGridWidth() + " : " + terrain.getGridHeight());
+			for (int i = 0; i < reinforcementMap.getGridWidth(); i ++)
+				for (int j = 0; j < reinforcementMap.getGridHeight(); j ++)
+				{
+					Tile <TilePoly> tile = reinforcementMap.getTileAt( i, j );
+	//				System.out.println(tile);
+					tile.put( new TilePoly(tile.getMinX(), tile.getMinY(), tile.getMaxX(), tile.getMaxY() ) );
+				}
+		}
 //		ILook <PolygonTerrainMap> look = new FBOPolyTerrainLook(false, false, POLY_DEPTH);
 //		return new EntityShell<PolygonTerrainMap>( terrain, new ModifiableGridBehavior(), look );
 

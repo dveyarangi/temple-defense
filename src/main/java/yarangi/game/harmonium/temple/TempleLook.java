@@ -2,11 +2,11 @@ package yarangi.game.harmonium.temple;
 
 import javax.media.opengl.GL;
 
-import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.CircleLightLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.math.Angles;
 
-public class TempleLook extends CircleLightLook<EnergyCore>
+public class TempleLook extends CircleLightLook<EnergyCore> 
 {
 	
 	
@@ -17,16 +17,27 @@ public class TempleLook extends CircleLightLook<EnergyCore>
 		float P = (float)temple.getHealth();
 //		this.setColor(new Color( P*0.2f+(1-P)*0.8f, 0.5f+0.5f*P, 1f*P, 1.0f));
 //		this.setColor(new Color( P*0.3f+(1-P)*0.7f, (1-P)*0.5f+0.5f*P, 1f*P, 1.0f));
-		this.setColor(new Color( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (P),1));
+//		this.setColor(new Color( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (P),1));
 //		this.setColor(new Color( 1.0f, P, P, 1.0f));
+//		super.render( gl, temple, context );
+//		gl.glPushAttrib(GL.GL_ENABLE_BIT);
+//		gl.glEnable(GL.GL_BLEND);
+//		gl.glBegin( GL.GL_LINE_STRIP );
+
 		super.render( gl, temple, context );
+		
+		gl.glColor4f( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (P),1);
+		gl.glBegin(GL.GL_POLYGON);
+		for(double a = 0; a <= 6; a ++)
+		{
+			// TODO: markers!
+			gl.glVertex3f((float)(0. + 5*Math.cos(a*Angles.PI_div_3)), 
+						  (float)(0f + 5*Math.sin(a*Angles.PI_div_3)), -0.1f);
+		}
+		gl.glEnd();
 		
 	}
 
-	@Override
-	public boolean isCastsShadow() {
-		return true;
-	}
 	
 /*	public class DrawingObserver implements HexagonObserver
 	{
@@ -72,7 +83,6 @@ public class TempleLook extends CircleLightLook<EnergyCore>
 		}
 		
 	}*/
-	@Override
-	public float getPriority() { return 0; }
+
 
 }

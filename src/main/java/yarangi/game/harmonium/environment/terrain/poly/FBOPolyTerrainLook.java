@@ -57,7 +57,8 @@ public class FBOPolyTerrainLook extends TileGridLook<MultilayerTilePoly, Polygon
 			return;
 		for(int idx = 0; idx < poly.length; idx ++) {
 			gradient = (idx)/(float)layers;
-			gl.glColor4f(0.3f*gradient, 0.1f, gradient, gradient/2);
+			gl.glColor4f(0.0f, (poly.length-idx)*0.2f, idx*0.2f, 0.5f);
+//			gl.glColor4f(gradient, gradient, gradient, 1);
 			if(poly[idx] == null || poly[idx].isEmpty())
 				break;
 			renderPoly( gl, poly[idx] );

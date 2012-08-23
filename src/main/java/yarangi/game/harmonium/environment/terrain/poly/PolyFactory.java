@@ -31,6 +31,7 @@ public class PolyFactory implements ITerrainFactory <PolygonTerrainMap>
 				tile.put( new MultilayerTilePoly(tile.getMinX(), tile.getMinY(), tile.getMaxX(), tile.getMaxY(), POLY_DEPTH ) );
 			}
 
+//		ILook <PolygonTerrainMap> look = new MultilayerPolyTerrainLook(false, false);
 		ILook <PolygonTerrainMap> look = new FBOPolyTerrainLook(false, false, POLY_DEPTH);
 //		Look <PolygonTerrainMap> look = new PolyTerrainLook();
 		return new EntityShell<PolygonTerrainMap>( terrain, new ModifiableGridBehavior(), look );

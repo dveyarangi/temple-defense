@@ -1,9 +1,9 @@
 package yarangi.game.harmonium.enemies.swarm;
 
 import yarangi.game.harmonium.battle.Integrity;
+import yarangi.game.harmonium.enemies.ElementalVoidLook;
 import yarangi.game.harmonium.enemies.EnemyFactory;
 import yarangi.game.harmonium.enemies.MetaCircleLook;
-import yarangi.game.harmonium.enemies.swarm.agents.DroneBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.Seeder;
 import yarangi.game.harmonium.enemies.swarm.agents.SeederBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.SeederLook;
@@ -61,9 +61,9 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 			double size = Math.abs(RandomUtil.STD(0.1, 0.01))+0.1;
 			Vector2D source = swarm.getSource();
 			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(100*size, 0, new double [] {0,0,0,0}), size/100000, 10*size);
-			agent.setLook(agentLook);
-//			agent.setBehavior(createBoidBehavior());
-			agent.setBehavior(new DroneBehavior( 1 ));
+			agent.setLook(new ElementalVoidLook());
+			agent.setBehavior(createBoidBehavior());
+//			agent.setBehavior(new DroneBehavior( 1 ));
 	//		System.out.println("spawning agent at " + swarm.getArea().getRefPoint());
 			agent.setArea(AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
 								   source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle));

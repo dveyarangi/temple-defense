@@ -19,14 +19,16 @@ public class OrdersActionLook implements ILook <OrdersActionController>
 	@Override
 	public void init(GL gl, OrdersActionController entity, IRenderingContext context)
 	{
-		look.init( gl, entity.getReinforcementMap(), context );
+		if(entity.getReinforcementMap() != null)
+			look.init( gl, entity.getReinforcementMap(), context );
 	}
 
 	@Override
 	public void render(GL gl, OrdersActionController entity, IRenderingContext context)
 	{
 		
-		look.render( gl, entity.getReinforcementMap(), context );
+		if(entity.getReinforcementMap() != null)
+			look.render( gl, entity.getReinforcementMap(), context );
 		
 		IEntity dragged = entity.getDragged();
 		Vector2D target = entity.getTarget();
@@ -62,7 +64,8 @@ public class OrdersActionLook implements ILook <OrdersActionController>
 	@Override
 	public void destroy(GL gl, OrdersActionController entity, IRenderingContext context)
 	{
-		look.destroy( gl, entity.getReinforcementMap(), context );
+		if(entity.getReinforcementMap() != null)
+			look.destroy( gl, entity.getReinforcementMap(), context );
 	}
 
 	@Override

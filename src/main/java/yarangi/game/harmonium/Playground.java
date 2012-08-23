@@ -24,7 +24,7 @@ import yarangi.game.harmonium.temple.TempleLook;
 import yarangi.game.harmonium.temple.harvester.HarvesterFactory;
 import yarangi.game.harmonium.temple.harvester.Waller;
 import yarangi.game.harmonium.temple.weapons.Minigun;
-import yarangi.game.harmonium.temple.weapons.MinigunGlowingLook;
+import yarangi.game.harmonium.temple.weapons.MinigunLook;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.game.harmonium.temple.weapons.TrackingBehavior;
 import yarangi.game.harmonium.temple.weapons.Weapon;
@@ -49,7 +49,7 @@ import yarangi.graphics.quadraturin.ui.Insets;
 import yarangi.graphics.quadraturin.ui.Overlay;
 import yarangi.graphics.quadraturin.ui.Panel;
 import yarangi.graphics.quadraturin.ui.PanelLook;
-import yarangi.numbers.RandomUtil;
+import yarangi.math.Angles;
 import yarangi.physics.Body;
 import yarangi.physics.IPhysicalObject;
 import yarangi.spatial.AABB;
@@ -108,7 +108,7 @@ public class Playground extends Scene
 		
 		BattleInterface bi = controller.getBattleInterface();
 		
-		float maxCannons = 5;
+		float maxCannons = 6;
 		for(int a = 0; a < maxCannons; a ++)
 		{
 			WeaponProperties props = Minigun.PROPS0;
@@ -118,11 +118,11 @@ public class Playground extends Scene
 			case 2: props = Minigun.PROP_SMALL; break;
 			}*/
 			double radius = (70+ a%3*70);
-			AABB area = AABB.createSquare(RandomUtil.R( 400 )-200, RandomUtil.R( 400 )-200,1,0);
-//			AABB area = AABB.createSquare(radius*Math.cos(Angles.PI_2/maxCannons *a), radius*Math.sin(Angles.PI_2/maxCannons * a ),1,0);
+//			AABB area = AABB.createSquare(RandomUtil.R( 400 )-200, RandomUtil.R( 400 )-200,1,0);
+			AABB area = AABB.createSquare(radius*Math.cos(Angles.PI_2/maxCannons *a), radius*Math.sin(Angles.PI_2/maxCannons * a ),1,0);
 			Weapon weapon = new Minigun(bi, area, props);
-			weapon.setLook(new MinigunGlowingLook());
-//			weapon.setLook(new MinigunLook());
+//			weapon.setLook(new MinigunGlowingLook());
+			weapon.setLook(new MinigunLook());
 			weapon.setBehavior(new TrackingBehavior());
 			weapon.setSensor( WeaponFactory.createSensor(weapon));
 			addEntity( weapon );
@@ -322,5 +322,17 @@ public class Playground extends Scene
 		this.getUILayer().addEntity( panel1 );
 //		this.getUILayer().addEntity( panel2 );
 //		this.getUILayer().addEntity( panel3 );
+	}
+
+	@Override
+	public void init()
+	{
+	}
+
+	@Override
+	public void destroy()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

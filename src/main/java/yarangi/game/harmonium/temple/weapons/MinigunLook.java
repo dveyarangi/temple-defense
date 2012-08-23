@@ -2,11 +2,9 @@ package yarangi.game.harmonium.temple.weapons;
 
 import javax.media.opengl.GL;
 
-import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
@@ -64,10 +62,10 @@ public class MinigunLook implements ILook<Minigun>
 			gl.glEnd();
 		}
 		
-		IntellectCore core = cannon.getCore();
+/*		IntellectCore core = cannon.getCore();
 		
 
-		IEntity target = cannon.getBattleInterface().getTargets().get( cannon );
+		IBeing target = cannon.getBattleInterface().getTargets().get( cannon );
 		if(target != null) {
 			double baseSpeed = cannon.getProps().getProjectileSpeed();
 			gl.glBegin(GL.GL_LINE_STRIP);
@@ -80,7 +78,7 @@ public class MinigunLook implements ILook<Minigun>
 				
 			}
 			gl.glEnd();
-		}
+		}*/
 	}
 	
 	

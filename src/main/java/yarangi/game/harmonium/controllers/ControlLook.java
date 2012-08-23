@@ -19,7 +19,7 @@ public class ControlLook implements ILook <TempleController>
 //		double controlAngle = Math.atan2(mousePoint.y, mousePoint.x);
 //		double controlRadius = temple.getStructure().getShieldRadius()+1;
 //		System.out.println("hui: " + mousePoint);
-		gl.glColor4f(0.5f, 1.0f, 0.7f,0.2f);
+//		gl.glColor4f(0.5f, 1.0f, 0.7f,0.2f);
 //		double sin = Math.sin(controlAngle);
 //		double cos = Math.cos(controlAngle);
 //		double maxDistance = 1000;//Math.sqrt(DistanceUtils.calcDistanceSquare(new Vector2D(0,0), mousePoint));

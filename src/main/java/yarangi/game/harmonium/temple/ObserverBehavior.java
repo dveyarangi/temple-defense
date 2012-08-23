@@ -8,7 +8,7 @@ import yarangi.game.harmonium.controllers.TempleController;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.game.harmonium.temple.weapons.Weapon;
 import yarangi.graphics.quadraturin.objects.IBehavior;
-import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.graphics.quadraturin.objects.ISensor;
 
 public class ObserverBehavior implements IBehavior <ObserverEntity>
@@ -16,7 +16,7 @@ public class ObserverBehavior implements IBehavior <ObserverEntity>
 	
 
 	
-	private TempleController controller;
+	private final TempleController controller;
 	
 	public ObserverBehavior (TempleController controller)
 	{
@@ -25,17 +25,18 @@ public class ObserverBehavior implements IBehavior <ObserverEntity>
 
 	}
 
+	@Override
 	public boolean behave(double time, ObserverEntity entity, boolean isVisible) 
 	{
 		Set <IFeedbackBeacon> trackList = new HashSet <IFeedbackBeacon> ();
 		Set <IFeedbackBeacon> prevTrack = entity.getTrackedObjects();
 		
-		ISensor <IEntity> sensor = entity.getSensor();
+		ISensor <IBeing> sensor = entity.getSensor();
 //		System.out.println(getSensedObjects().size());
 		IFeedbackBeacon feedback;
 		
 		// updating list of tracked objects:
-		for(IEntity object : sensor.getEntities())
+		for(IBeing object : sensor.getEntities())
 		{
 
 //			System.out.println(object);
