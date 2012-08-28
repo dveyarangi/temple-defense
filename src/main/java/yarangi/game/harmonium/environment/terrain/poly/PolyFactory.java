@@ -15,7 +15,7 @@ public class PolyFactory implements ITerrainFactory <PolygonTerrainMap>
 	/**
 	 * number of polygonal layers
 	 */
-	public static final int POLY_DEPTH = 5;
+	public static final int POLY_DEPTH = 3;
 	
 	@Override
 	public EntityShell<PolygonTerrainMap> generateTerrain(float width, float height, int cellsize)

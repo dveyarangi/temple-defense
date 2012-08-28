@@ -3,8 +3,8 @@ package yarangi.game.harmonium.temple.harvester;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.colors.MaskUtil;
 import yarangi.graphics.quadraturin.objects.IBehavior;
-import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.graphics.quadraturin.objects.Sensor;
+import yarangi.graphics.quadraturin.terrain.ITerrain;
 import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.math.Angles;
@@ -14,7 +14,7 @@ import com.seisw.util.geom.Poly;
 import com.seisw.util.geom.PolyDefault;
 
 
-public class ErrodingBehavior extends Sensor implements IBehavior <Harvester>
+public class ErrodingBehavior extends Sensor <ITerrain> implements IBehavior <Harvester>
 {
 	
 	private final PolygonTerrainMap terrain;
@@ -35,17 +35,13 @@ public class ErrodingBehavior extends Sensor implements IBehavior <Harvester>
 
 	public ErrodingBehavior(double radius, PolygonTerrainMap terrain)
 	{
-		super(radius, ERRODE_INVERVAL, true);
+		super(radius, ERRODE_INVERVAL);
 		this.terrain = terrain;
 	}
 	
 	@Override
-	public boolean objectFound(IBeing object) 
+	public boolean objectFound(ITerrain object) 
 	{
-		if(!(object instanceof MultilayerTilePoly)) {
-			super.objectFound( object );
-			return false;
-		}
 		
 		MultilayerTilePoly tile = (MultilayerTilePoly) object;
 		if(!tile.isEmpty())
@@ -85,7 +81,7 @@ public class ErrodingBehavior extends Sensor implements IBehavior <Harvester>
 		double dx = atx - harvester.getArea().getAnchor().x();
 		double dy = aty - harvester.getArea().getAnchor().y();
 //		} while()
-		if(dx*dx+dy*dy < harvester.getSensor().getRadius()*harvester.getSensor().getRadius())
+		if(dx*dx+dy*dy < harvester.getTerrainSensor().getRadius()*harvester.getTerrainSensor().getRadius())
 			terrain.apply( atx, aty, maskWidth, maskWidth, true, poly );
 
 		if(harvestedTile.isEmpty())

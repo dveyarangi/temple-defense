@@ -1,9 +1,9 @@
 package yarangi.game.harmonium.temple.harvester;
 
 import yarangi.graphics.quadraturin.objects.IBehavior;
-import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.terrain.Bitmap;
+import yarangi.graphics.quadraturin.terrain.ITerrain;
 import yarangi.graphics.quadraturin.terrain.ITilePoly;
 import yarangi.graphics.quadraturin.terrain.PolygonGrid;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
@@ -21,7 +21,7 @@ import com.seisw.util.geom.PolyDefault;
  * @author dveyarangi
  *
  */
-public class EnforcingBehavior extends Sensor implements IBehavior <Waller>
+public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <Waller>
 {
 	
 	private final PolygonTerrainMap terrain;
@@ -48,14 +48,14 @@ public class EnforcingBehavior extends Sensor implements IBehavior <Waller>
 
 	public EnforcingBehavior(double radius, PolygonTerrainMap terrain, PolygonGrid <TilePoly> reinforcementMap)
 	{
-		super(radius, ERRODE_INVERVAL, true);
+		super(radius, ERRODE_INVERVAL);
 		this.terrain = terrain;
 		
 		this.reinforcementMap = reinforcementMap;
 	}
 	
 	@Override
-	public boolean objectFound(IBeing object) 
+	public boolean objectFound(ITerrain object) 
 	{
 		if(!(object instanceof ITilePoly)) {
 			super.objectFound(object );

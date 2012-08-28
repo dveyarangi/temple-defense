@@ -20,7 +20,7 @@ public class HarvesterFactory
 		harvester.setLook(new HarvesterLook());
 		ErrodingBehavior behavior = createErrodingBehavior(range, terrain);
 		harvester.setBehavior( behavior );
-		harvester.setSensor( behavior);
+		harvester.setTerrainSensor( behavior);
 		
 		return harvester;
 	}
@@ -32,7 +32,7 @@ public class HarvesterFactory
 		waller.setLook(new WallerLook());
 		EnforcingBehavior behavior = createEnforcingBehavior(range, terrain, reinforcementMap);
 		waller.setBehavior( behavior );
-		waller.setSensor( behavior);
+		waller.setTerrainSensor( behavior);
 		
 		return waller;
 	}

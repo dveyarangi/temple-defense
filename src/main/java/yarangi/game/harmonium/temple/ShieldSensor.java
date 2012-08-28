@@ -80,10 +80,4 @@ public class ShieldSensor implements ISensor <IEntity>
 		return true;
 	}
 
-	@Override
-	public boolean isSenseTerrain()
-	{
-		return false;
-	}
-
 }

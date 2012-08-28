@@ -19,7 +19,7 @@ import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.EntityShell;
 import yarangi.graphics.quadraturin.objects.ILayerObject;
-import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
+import yarangi.graphics.quadraturin.terrain.ITerrain;
 import yarangi.spatial.Area;
 import yarangi.spatial.ISpatialSensor;
  
@@ -102,13 +102,13 @@ public class TempleController extends Entity implements CursorListener
 
 	public void objectObserved(final Entity object) { battleInterface.objectObserved(object); }
 
-	class LOSSensor implements ISpatialSensor <MultilayerTilePoly> 
+	class LOSSensor implements ISpatialSensor <ITerrain> 
 	{
 		private boolean hasLOS = true;
 		public boolean hasLOS() { return hasLOS; }
 
 		@Override
-		public boolean objectFound(final MultilayerTilePoly object)
+		public boolean objectFound(final ITerrain object)
 		{
 			if(object.isAlive())
 //			if(object instanceof Tile)
@@ -128,8 +128,8 @@ public class TempleController extends Entity implements CursorListener
 	{
 		final LOSSensor sensor = new LOSSensor();
 //		scene.getEntityIndex().query( sensor, x, y, x2-x, y2-y );
-		if(scene.getWorldLayer().<MultilayerTilePoly>getTerrain() != null)
-			scene.getWorldLayer().<MultilayerTilePoly>getTerrain().queryLine( sensor, x, y, x2-x, y2-y );
+		if(scene.getWorldLayer().getTerrain() != null)
+			scene.getWorldLayer().<ITerrain>getTerrain().queryLine( sensor, x, y, x2-x, y2-y );
 		
 		return sensor.hasLOS();
 	}

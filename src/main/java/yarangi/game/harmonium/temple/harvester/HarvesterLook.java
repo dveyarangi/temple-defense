@@ -28,8 +28,8 @@ public class HarvesterLook implements ILook <Harvester>
 		gl.glBegin( GL.GL_LINE_STRIP );
 		for(double a = 0; a <= Angles.PI_2+0.001; a += Angles.PI_div_40)
 		{
-			x = (float)(entity.getSensor().getRadius() * Math.cos( a ));
-			y = (float)(entity.getSensor().getRadius() * Math.sin( a ));
+			x = (float)(entity.getTerrainSensor().getRadius() * Math.cos( a ));
+			y = (float)(entity.getTerrainSensor().getRadius() * Math.sin( a ));
 			gl.glVertex2f( x, y );
 		}
 		gl.glEnd();

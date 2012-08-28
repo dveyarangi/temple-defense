@@ -52,8 +52,8 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 		float x, y;
 		for(double a = 0; a <= Angles.PI_2+0.001; a += Angles.PI_div_40)
 		{
-			x = (float)(cannon.getSensor().getRadius() * Math.cos( a ));
-			y = (float)(cannon.getSensor().getRadius() * Math.sin( a ));
+			x = (float)(cannon.getEntitySensor().getRadius() * Math.cos( a ));
+			y = (float)(cannon.getEntitySensor().getRadius() * Math.sin( a ));
 			gl.glVertex2f( x, y );
 		}
 		gl.glEnd();

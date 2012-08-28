@@ -41,7 +41,7 @@ import yarangi.graphics.quadraturin.objects.EntityShell;
 import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
-import yarangi.graphics.quadraturin.terrain.Bitmap;
+import yarangi.graphics.quadraturin.terrain.ITerrain;
 import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.graphics.quadraturin.ui.Direction;
@@ -92,7 +92,7 @@ public class Playground extends Scene
 		TempleController controller = new TempleController(this, core, temple);
 		temple.setLook(new TempleLook( ));
 		temple.setBehavior(new ObserverBehavior(controller));
-		temple.setSensor(new Sensor(512, 3, null, false));
+		temple.setEntitySensor(new Sensor(512, 3, null));
 		temple.setArea(AABB.createSquare(0,0,10, 0));
 		temple.setBody(new Body());
 		addEntity( temple );
@@ -124,7 +124,7 @@ public class Playground extends Scene
 //			weapon.setLook(new MinigunGlowingLook());
 			weapon.setLook(new MinigunLook());
 			weapon.setBehavior(new TrackingBehavior());
-			weapon.setSensor( WeaponFactory.createSensor(weapon));
+			weapon.setEntitySensor( WeaponFactory.createSensor(weapon));
 			addEntity( weapon );
 			bi.addFireable(weapon);
 			structure.addServiceable( weapon );
@@ -205,7 +205,7 @@ public class Playground extends Scene
 			@Override
 			public boolean setImpactWith(Projectile source, IPhysicalObject target)
 			{
-				if( target instanceof Bitmap) //|| target instanceof Matter || target instanceof TempleEntity)
+				if( target instanceof ITerrain)
 				{
 //					System.out.println("projectile collided with wall");
 					source.markDead();

@@ -27,7 +27,7 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 	public double behave(double time, SwarmAgent boid) {
 		
 		
-		ISensor<Entity> sensor = boid.getSensor();
+		ISensor<Entity> sensor = boid.getEntitySensor();
 		
 		List <Entity> neighbours = sensor.getEntities();
 		if(neighbours.size() <= 1)

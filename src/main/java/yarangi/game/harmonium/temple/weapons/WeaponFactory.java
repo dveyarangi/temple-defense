@@ -52,7 +52,7 @@ public class WeaponFactory
 
 	public static ISensor<?> createSensor(Weapon weapon)
 	{
-		return new Sensor(BitUtils.po2Ceiling( (int)weapon.getProps().getSensorRange()), 3, ENEMY_SENSOR, false);
+		return new Sensor(BitUtils.po2Ceiling( (int)weapon.getProps().getSensorRange()), 3, ENEMY_SENSOR);
 	}
 
 }

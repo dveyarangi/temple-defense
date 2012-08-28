@@ -14,9 +14,8 @@ import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
-import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
+import yarangi.graphics.quadraturin.terrain.ITerrain;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
-import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
 import yarangi.physics.IPhysicalObject;
@@ -130,7 +129,7 @@ public class SwarmFactory
 					return true;
 				}
 				else
-				if( target instanceof TilePoly || target instanceof MultilayerTilePoly)
+				if( target instanceof ITerrain)
 				{
 					
 					PolygonTerrainMap terrain = swarm.getTerrain();

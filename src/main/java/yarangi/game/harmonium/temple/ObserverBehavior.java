@@ -31,7 +31,7 @@ public class ObserverBehavior implements IBehavior <ObserverEntity>
 		Set <IFeedbackBeacon> trackList = new HashSet <IFeedbackBeacon> ();
 		Set <IFeedbackBeacon> prevTrack = entity.getTrackedObjects();
 		
-		ISensor <IBeing> sensor = entity.getSensor();
+		ISensor <IBeing> sensor = entity.getEntitySensor();
 //		System.out.println(getSensedObjects().size());
 		IFeedbackBeacon feedback;
 		
