@@ -77,7 +77,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 										new Integrity(5*size*10, 0, new double [] {0,0,0,0}), 
 										AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
 													  source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*10, angle),
-													  size*10, size*100);
+													  size*10, size*10);
 				
 				seeder.setBehavior(createSeederBehavior());
 				seeder.setLook(new SeederLook());
