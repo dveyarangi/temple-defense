@@ -14,6 +14,7 @@ public class Port
 	 * @deprecated Test only, not really infinite
 	 * @return
 	 */
+	@Deprecated
 	public static Port createEndlessPort()
 	{
 		Port port = new Port();
@@ -38,8 +39,8 @@ public class Port
 		return port;
 	}
 	
-	private Map <Resource.Type, Double> capacity = new HashMap <Resource.Type, Double> ();
-	private Map <Resource.Type, Resource> stock = new HashMap <Resource.Type, Resource> ();
+	private final Map <Resource.Type, Double> capacity = new HashMap <Resource.Type, Double> ();
+	private final Map <Resource.Type, Resource> stock = new HashMap <Resource.Type, Resource> ();
 	
 	private double transferRate = 1;
 	
@@ -65,5 +66,9 @@ public class Port
 	}
 	
 	public double getTransferRate() { return transferRate; }
+
 	
+	public float getSaturation(Resource.Type type) {
+		return (float)(get( type ).getAmount() / getCapacity( type ));
+	}
 }
