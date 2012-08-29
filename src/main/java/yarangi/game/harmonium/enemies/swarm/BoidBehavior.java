@@ -11,6 +11,7 @@ import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.ISensor;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.Geometry;
+import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 
 
@@ -37,14 +38,15 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 			return CONTINUE;
 		}
 		
-		Vector2D loc = boid.getArea().getAnchor();
+		// TODO: OPTIMIZE vector operations
+		IVector2D loc = boid.getArea().getAnchor();
 		
 		double separationDistance;
 		
 		Vector2D massCenter = Vector2D.ZERO();
 		Vector2D Fsep = Vector2D.ZERO();
 		Vector2D flockingVelocity = Vector2D.ZERO();
-		Vector2D otherLoc;
+		IVector2D otherLoc;
 		
 		double distance;
 		double dN = 1./(neighbours.size()-1);

@@ -3,14 +3,12 @@ package yarangi.game.harmonium.ai.weapons;
 
 import yarangi.ai.nn.init.InitializerFactory;
 import yarangi.ai.nn.init.RandomWeightsInitializer;
-import yarangi.ai.nn.numeric.ArrayInput;
 import yarangi.ai.nn.numeric.BackpropNetwork;
-import yarangi.ai.nn.numeric.CompleteNeuronLayer;
 import yarangi.ai.nn.numeric.NeuralNetworkRunner;
 import yarangi.ai.nn.numeric.Normalizer;
-import yarangi.ai.nn.numeric.NumericAF;
 import yarangi.ai.nn.numeric.ScalingNormalizer;
 import yarangi.ai.nn.numeric.TanHAF;
+import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 
 import com.spinn3r.log5j.Logger;
@@ -22,11 +20,11 @@ import com.spinn3r.log5j.Logger;
  * @author dveyarangi
  *
  */
-public class NetCore extends NeuralNetworkRunner <IFeedbackBeacon, Vector2D>implements IntellectCore
+public class NetCore extends NeuralNetworkRunner <IFeedbackBeacon, IVector2D>implements IntellectCore
 {
 	
 //	private BackpropNetwork network = new BackpropNetwork(1);
-	private String name;
+	private final String name;
 	
 	private static final float LEARNING_RATE = 0.1f;
 	
@@ -41,7 +39,7 @@ public class NetCore extends NeuralNetworkRunner <IFeedbackBeacon, Vector2D>impl
 
 	}
 	
-	private Logger log;
+	private final Logger log;
 
 	
 	public NetCore(String name, int worldWidth, int worldHeight)
@@ -49,7 +47,7 @@ public class NetCore extends NeuralNetworkRunner <IFeedbackBeacon, Vector2D>impl
 		super(name);
 		this.name = name;
 		
-		int [] descriptor = new int [] {8, 20, 20, 2 };
+		int [] descriptor = new int [] {8, 10, 20, 2 };
 		this.log = Logger.getLogger(name);
 		try {
 			network = NeuralNetworkRunner.load(descriptor, name);
@@ -71,6 +69,7 @@ public class NetCore extends NeuralNetworkRunner <IFeedbackBeacon, Vector2D>impl
 		setNormalizer(normalizer);
 	}
 
+	@Override
 	public boolean processFeedback(IFeedbackBeacon capsule) 
 	{
 		LinearFeedbackBeacon beacon = (LinearFeedbackBeacon) capsule;
@@ -87,7 +86,8 @@ public class NetCore extends NeuralNetworkRunner <IFeedbackBeacon, Vector2D>impl
 		return false;
 	}
 
-	public Vector2D pickTrackPoint(Vector2D sourceLocation, double projectileVelocity, Vector2D targetLocation, Vector2D targetVelocity) 
+	@Override
+	public Vector2D pickTrackPoint(IVector2D sourceLocation, double projectileVelocity, IVector2D targetLocation, IVector2D targetVelocity) 
 	{
 //		System.out.println(sourceLocation);
 		Vector2D relativeTarget = targetLocation.minus(sourceLocation);
@@ -117,7 +117,7 @@ public class NetCore extends NeuralNetworkRunner <IFeedbackBeacon, Vector2D>impl
 					beacon.getProjectileVelocity());
 	}
 	
-	public double [] toInputArray(Vector2D targetLoc, Vector2D targetVel, Vector2D cannonLoc, double projVel)
+	public double [] toInputArray(IVector2D targetLoc, IVector2D targetVel, IVector2D cannonLoc, double projVel)
 	{
 //		Vector2D relativeTarget = targetLoc.minus(cannonLoc);
 		return new double [] {
@@ -133,7 +133,7 @@ public class NetCore extends NeuralNetworkRunner <IFeedbackBeacon, Vector2D>impl
 		};
 	}
 	@Override
-	public double[] toOutputArray(Vector2D output)
+	public double[] toOutputArray(IVector2D output)
 	{
 		return new double [] {output.x(), output.y() };
 	}

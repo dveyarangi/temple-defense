@@ -121,7 +121,7 @@ public class OrdersActionController extends ActionController
 				Vector2D location = event.getCursor().getWorldLocation();
 				if(location == null)
 					return;
-				dragged.getArea().getAnchor().setxy( location.x(), location.y() );
+				dragged.getArea().move( location.x(), location.y() );
 				dragged = null;
 			}});
 //		actions.put( "drag", value )

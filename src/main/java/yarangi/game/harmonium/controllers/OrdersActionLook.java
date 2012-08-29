@@ -10,6 +10,7 @@ import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.graphics.quadraturin.terrain.PolygonGrid;
 import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.Angles;
+import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 
 public class OrdersActionLook implements ILook <OrdersActionController>
@@ -48,7 +49,8 @@ public class OrdersActionLook implements ILook <OrdersActionController>
 		if(dragged == null || target == null)
 			return;
 		
-		Vector2D source = dragged.getArea().getAnchor();
+		// TODO: OPTIMIZE vector operations
+		IVector2D source = dragged.getArea().getAnchor();
 		Vector2D radius = target.minus(dragged.getArea().getAnchor()).normalize().multiply( dragged.getArea().getMaxRadius() );
 		Vector2D left = radius.left().add( source );
 		Vector2D right = radius.right().add( source );

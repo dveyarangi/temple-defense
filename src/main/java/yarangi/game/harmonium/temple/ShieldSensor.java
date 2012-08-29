@@ -7,6 +7,7 @@ import yarangi.graphics.quadraturin.objects.ISensor;
 import yarangi.intervals.AngleInterval;
 import yarangi.math.Angles;
 import yarangi.math.Geometry;
+import yarangi.math.Vector2D;
 import yarangi.spatial.Area;
 
 public class ShieldSensor implements ISensor <IEntity>
@@ -29,8 +30,9 @@ public class ShieldSensor implements ISensor <IEntity>
 			neighbourArea = otherShield.getArea();
 			double distance = Geometry.calcHypot(coreArea.getAnchor(), neighbourArea.getAnchor());
 			
-			
-			double neighbourAngle = coreArea.getAnchor().minus(neighbourArea.getAnchor()).getAngle();
+			Vector2D anchor = Vector2D.COPY( coreArea.getAnchor() );
+			double neighbourAngle = anchor.substract(neighbourArea.getAnchor()).getAngle();
+
 			
 			double a = distance;
 			double b = coreArea.getMaxRadius();

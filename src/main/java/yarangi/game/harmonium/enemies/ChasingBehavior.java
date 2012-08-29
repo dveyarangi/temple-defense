@@ -2,11 +2,13 @@ package yarangi.game.harmonium.enemies;
 
 import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.math.Geometry;
+import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 
 public class ChasingBehavior implements IBehavior <GenericEnemy> 
 {
 
+	@Override
 	public boolean behave(double time, GenericEnemy bubble, boolean isVisible) 
 	{
 	
@@ -19,8 +21,8 @@ public class ChasingBehavior implements IBehavior <GenericEnemy>
 			return false;
 		}
 	
-		Vector2D targetLocation = bubble.getTarget().isAlive() ? bubble.getTarget().getArea().getAnchor() : Vector2D.ZERO();  
-		Vector2D bubbleLocation = bubble.getArea().getAnchor();
+		IVector2D targetLocation = bubble.getTarget().isAlive() ? bubble.getTarget().getArea().getAnchor() : Vector2D.ZERO();  
+		IVector2D bubbleLocation = bubble.getArea().getAnchor();
 		
 		double distanceToTarget = Geometry.calcHypot(targetLocation, bubbleLocation);
 
@@ -31,7 +33,7 @@ public class ChasingBehavior implements IBehavior <GenericEnemy>
 //		Vector2D force = forceDir.mul(1-switchCoef).plus(forceDir.rotate(Angles.PI_div_2).mul(switchCoef));
 //		Vector2D force = forceDir.rotate(Angles.PI_div_2).mul(1);
 
-		bubbleLocation.setxy(distanceToTarget * Math.cos(a), distanceToTarget * Math.sin(a));
+		bubble.getArea().move(distanceToTarget * Math.cos(a), distanceToTarget * Math.sin(a));
 //		force = force.normalize().mul(0.001/*bubble.getEnginePower()*/);
 		
 //		bubble.addForce(force.x, force.y); 

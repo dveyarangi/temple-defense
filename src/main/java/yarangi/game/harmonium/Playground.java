@@ -94,7 +94,7 @@ public class Playground extends Scene
 		temple.setBehavior(new ObserverBehavior(controller));
 		temple.setEntitySensor(new Sensor(512, 3, null));
 		temple.setArea(AABB.createSquare(0,0,10, 0));
-		temple.setBody(new Body());
+		temple.setBody(new Body(0,0));
 		addEntity( temple );
 //		structure.addServiceable( temple );
 

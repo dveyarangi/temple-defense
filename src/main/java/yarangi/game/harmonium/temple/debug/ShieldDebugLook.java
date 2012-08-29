@@ -8,7 +8,7 @@ import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.intervals.AngleInterval;
-import yarangi.math.Vector2D;
+import yarangi.math.IVector2D;
 
 public class ShieldDebugLook implements ILook <Shield>
 {
@@ -30,7 +30,7 @@ public class ShieldDebugLook implements ILook <Shield>
 		
 	}
 	
-	private void drawSegment(GL gl, AngleInterval segment, Vector2D center, double radius) {
+	private void drawSegment(GL gl, AngleInterval segment, IVector2D center, double radius) {
 		
 		double da = (segment.getMax()- segment.getMin())/10.;
 		gl.glBegin( GL.GL_LINE_STRIP );

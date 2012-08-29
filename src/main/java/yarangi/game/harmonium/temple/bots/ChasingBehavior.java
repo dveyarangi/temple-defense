@@ -4,15 +4,16 @@ import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.Angles;
 import yarangi.math.Geometry;
+import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 import yarangi.spatial.Area;
 
 public class ChasingBehavior <H extends IEntity>implements IBehaviorState <H> 
 {
-	private Area target;
+	private final Area target;
 
 	
-	private double enginePower;
+	private final double enginePower;
 	
 	public ChasingBehavior(Area target, double enginePower)
 	{
@@ -20,16 +21,17 @@ public class ChasingBehavior <H extends IEntity>implements IBehaviorState <H>
 		this.target = target;
 		this.enginePower = enginePower;
 	}
+	@Override
 	public double behave(double time, IEntity bot) 
 	{
 	
 
-		Vector2D targetLocation = target.getAnchor();
+		IVector2D targetLocation = target.getAnchor();
 		
 		double distanceToTarget = Geometry.calcHypotSquare(targetLocation, bot.getArea().getAnchor());
 		
-		Vector2D botLocation = bot.getArea().getAnchor();
-		Vector2D hostLocation = target.getAnchor();
+		IVector2D botLocation = bot.getArea().getAnchor();
+		IVector2D hostLocation = target.getAnchor();
 		double satelliteDistanceSquare = 2*target.getMaxRadius()*target.getMaxRadius();
 		
 			
@@ -61,6 +63,7 @@ public class ChasingBehavior <H extends IEntity>implements IBehaviorState <H>
 			
 		return -1;
 	}
+	@Override
 	public int getId() { return getStateId(); }
 	public static int getStateId() {return ChasingBehavior.class.hashCode(); }
 

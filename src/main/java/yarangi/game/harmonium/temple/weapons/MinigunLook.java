@@ -7,6 +7,7 @@ import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.math.Angles;
+import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 import yarangi.spatial.Area;
 
@@ -19,7 +20,7 @@ public class MinigunLook implements ILook<Minigun>
 	{
 
 			Area area = cannon.getArea();
-		Vector2D loc = area.getAnchor();
+		IVector2D loc = area.getAnchor();
 		Resource.Type type = cannon.getProps().getResourceType();
 		double resourcePercent = cannon.getPort().get( type ).getAmount() / cannon.getPort().getCapacity( type );
 		gl.glColor4f((float)((1-resourcePercent)/4+resourcePercent*0.3),  (float)(resourcePercent*0.3), (float)(resourcePercent),1);
@@ -47,19 +48,21 @@ public class MinigunLook implements ILook<Minigun>
 		
 		if(trackPoint != null)
 		{
-			Vector2D relTrack = trackPoint.minus(loc);
+			float rel_x = (float)(trackPoint.x() - loc.x());
+			float rel_y = (float)(trackPoint.y() - loc.y());
 			gl.glBegin(GL.GL_LINE_STRIP);
 			gl.glVertex3f(0, 0, 0);
-			gl.glVertex3f((float)(relTrack.x()), (float)(relTrack.y()), 0);
+			gl.glVertex3f(rel_x, rel_y, 0);
 			gl.glEnd();
 			
 			gl.glBegin(GL.GL_QUADS);
-			gl.glVertex3f((float)(relTrack.x()-0.5), (float)(relTrack.y()-0.5), 0);
-			gl.glVertex3f((float)(relTrack.x()-0.5), (float)(relTrack.y()+0.5), 0);
-			gl.glVertex3f((float)(relTrack.x()+0.5), (float)(relTrack.y()+0.5), 0);
-			gl.glVertex3f((float)(relTrack.x()+0.5), (float)(relTrack.y()-0.5), 0);
-			gl.glVertex3f((float)(relTrack.x()-0.5), (float)(relTrack.y()-0.5), 0);
+			gl.glVertex3f(rel_x-0.5f, rel_y-0.5f, 0);
+			gl.glVertex3f(rel_x-0.5f, rel_y+0.5f, 0);
+			gl.glVertex3f(rel_x+0.5f, rel_y+0.5f, 0);
+			gl.glVertex3f(rel_x+0.5f, rel_y-0.5f, 0);
+			gl.glVertex3f(rel_x-0.5f, rel_y-0.5f, 0);
 			gl.glEnd();
+			
 		}
 		
 /*		IntellectCore core = cannon.getCore();

@@ -12,6 +12,7 @@ import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.math.FastMath;
+import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 import yarangi.spatial.GridMap;
@@ -25,7 +26,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	
 //	private Vector2D [][] flows;
 	
-	private Vector2D target = Vector2D.ZERO();
+	private IVector2D target = Vector2D.ZERO();
 	
 	private final int cellsize = 8;
 	
@@ -76,7 +77,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 		nodeIterator = spawnNodes.iterator();
 	}
 	
-	public Vector2D getFlow(Vector2D point) 
+	public Vector2D getFlow(IVector2D point) 
 	{
 		int px = toBeaconIdx(point.x());
 		int py = toBeaconIdx(point.y());
@@ -138,7 +139,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	
 	final public int getWorldSize() { return WSIZE; }
 
-	final public Vector2D getTarget() { return target; }
+	final public IVector2D getTarget() { return target; }
 
 	final protected AStarNode getBeaconByIndex(int x, int y) { return (AStarNode)getContentByIndex( x, y ); }
 
@@ -286,7 +287,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 
 	public Vector2D getSource() { return currNode.getSpawnLocation(); }
 
-	public IBeacon getBeacon(Vector2D point)
+	public IBeacon getBeacon(IVector2D point)
 	{
 		return getContentByCoord(point.x(), point.y());
 	}

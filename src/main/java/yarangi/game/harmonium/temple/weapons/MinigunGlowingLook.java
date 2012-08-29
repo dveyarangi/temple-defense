@@ -76,18 +76,20 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 		
 		if(trackPoint != null)
 		{
-			Vector2D relTrack = trackPoint.minus(cannon.getArea().getAnchor());
+//			Vector2D relTrack = trackPoint.minus(cannon.getArea().getAnchor());
+			float rel_x = (float) (trackPoint.x() - cannon.getArea().getAnchor().x());
+			float rel_y = (float) (trackPoint.y() - cannon.getArea().getAnchor().y());
 			gl.glBegin(GL.GL_LINE_STRIP);
 			gl.glVertex3f(0, 0, 0);
-			gl.glVertex3f((float)(relTrack.x()), (float)(relTrack.y()), 0);
+			gl.glVertex3f(rel_x, rel_y, 0);
 			gl.glEnd();
 			
 			gl.glBegin(GL.GL_QUADS);
-			gl.glVertex3f((float)(relTrack.x()-0.3), (float)(relTrack.y()-0.3), 0);
-			gl.glVertex3f((float)(relTrack.x()-0.3), (float)(relTrack.y()+0.3), 0);
-			gl.glVertex3f((float)(relTrack.x()+0.3), (float)(relTrack.y()+0.3), 0);
-			gl.glVertex3f((float)(relTrack.x()+0.3), (float)(relTrack.y()-0.3), 0);
-			gl.glVertex3f((float)(relTrack.x()-0.3), (float)(relTrack.y()-0.3), 0);
+			gl.glVertex3f(rel_x-0.3f, rel_y-0.3f, 0);
+			gl.glVertex3f(rel_x-0.3f, rel_y+0.3f, 0);
+			gl.glVertex3f(rel_x+0.3f, rel_y+0.3f, 0);
+			gl.glVertex3f(rel_x+0.3f, rel_y-0.3f, 0);
+			gl.glVertex3f(rel_x-0.3f, rel_y-0.3f, 0);
 			gl.glEnd();
 		}
 

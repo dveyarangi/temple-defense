@@ -1,8 +1,6 @@
 package yarangi.game.harmonium.enemies.swarm;
 
 import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.PriorityQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -12,6 +10,7 @@ import java.util.concurrent.FutureTask;
 import yarangi.game.harmonium.enemies.swarm.Swarm.AStarNode;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.FastMath;
+import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 
@@ -25,10 +24,10 @@ import yarangi.numbers.RandomUtil;
 public class PathingBehavior implements IBehaviorState<Swarm> 
 {
 	
-	private int flowRadius;
+	private final int flowRadius;
 	   ExecutorService executor = Executors.newFixedThreadPool(1);
 
-	private long lastOmniscienceTime = System.currentTimeMillis();
+	private final long lastOmniscienceTime = System.currentTimeMillis();
 	
 	private int passId = 0;
 	
@@ -50,8 +49,8 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 		isRunning = true;
 		passId ++;
 		
-		Vector2D origin = swarm.getSource();
-		Vector2D target = swarm.getTarget();
+		IVector2D origin = swarm.getSource();
+		IVector2D target = swarm.getTarget();
 
 		final int ox = swarm.toBeaconIdx(origin.x()+RandomUtil.getRandomDouble(100)-50);
 		final int oy = swarm.toBeaconIdx(origin.y()+RandomUtil.getRandomDouble(100)-50);
@@ -62,7 +61,8 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 	    future = new FutureTask<String>(
 	               new Callable<String>()
 	               {
-	                   public String call()
+	                   @Override
+					public String call()
 	                   {
 	                	   try { 
 	                		   
@@ -238,5 +238,6 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 //		System.out.println("pathing finished");
 		isRunning = false;
 	}
+	@Override
 	public int getId() { return this.getClass().hashCode(); }
 }

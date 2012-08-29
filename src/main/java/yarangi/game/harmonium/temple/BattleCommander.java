@@ -20,6 +20,7 @@ import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.game.harmonium.temple.weapons.Weapon;
 import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.math.Geometry;
+import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 
 public class BattleCommander implements BattleInterface
@@ -88,7 +89,7 @@ public class BattleCommander implements BattleInterface
 		for(int i = 0; i < fireables.size(); i ++)
 			found[i] = false;
 //		Vector2D cursorLoc = cursor.getArea().getRefPoint();
-		Vector2D objectLoc;
+		IVector2D objectLoc;
 		for(IBeing object : observedEntities)
 		{
 
@@ -96,7 +97,7 @@ public class BattleCommander implements BattleInterface
 			for(int idx = 0; idx < fireables.size(); idx ++)
 				if(object == targets.get(fireables.get(idx)))
 				{
-					Vector2D weaponLoc = fireables.get(idx).getArea().getAnchor();
+					IVector2D weaponLoc = fireables.get(idx).getArea().getAnchor();
 					double d = Geometry.calcHypotSquare(weaponLoc.x(), weaponLoc.y(), objectLoc.x(), objectLoc.y());
 					double range = fireables.get(idx).getProps().getEffectiveRange();
 					if(d < range*range)
@@ -129,7 +130,7 @@ public class BattleCommander implements BattleInterface
 			if(!fireable.isPoweredUp())
 				continue;
 			
-			Vector2D weaponLoc = fireable.getArea().getAnchor();
+			IVector2D weaponLoc = fireable.getArea().getAnchor();
 			double range = fireable.getProps().getEffectiveRange()*fireable.getProps().getEffectiveRange();
 			double minDistance = Double.MAX_VALUE;
 			

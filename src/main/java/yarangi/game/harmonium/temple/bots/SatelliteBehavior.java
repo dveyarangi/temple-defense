@@ -4,6 +4,7 @@ import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.Angles;
 import yarangi.math.Geometry;
+import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 import yarangi.spatial.Area;
 
@@ -14,9 +15,9 @@ import yarangi.spatial.Area;
  */
 public class SatelliteBehavior <K extends IEntity> implements IBehaviorState <K>
 {
-	private Area host;
+	private final Area host;
 	
-	private double enginePower;
+	private final double enginePower;
 	
 	public SatelliteBehavior(Area host, double enginePower)
 	{
@@ -27,8 +28,8 @@ public class SatelliteBehavior <K extends IEntity> implements IBehaviorState <K>
 	@Override
 	public double behave(double time, K bot)
 	{
-		Vector2D botLocation = bot.getArea().getAnchor();
-		Vector2D hostLocation = host.getAnchor();
+		IVector2D botLocation = bot.getArea().getAnchor();
+		IVector2D hostLocation = host.getAnchor();
 		double satelliteDistanceSquare = 2*host.getMaxRadius()*host.getMaxRadius();
 		
 		
@@ -55,6 +56,7 @@ public class SatelliteBehavior <K extends IEntity> implements IBehaviorState <K>
 		return 0;
 	}
 	
+	@Override
 	public int getId() { return getStateId(); }
 	public static int getStateId() { return SatelliteBehavior.class.hashCode(); }
 }

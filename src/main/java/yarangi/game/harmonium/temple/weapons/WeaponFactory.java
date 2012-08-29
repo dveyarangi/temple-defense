@@ -6,6 +6,7 @@ import yarangi.graphics.quadraturin.objects.ISensor;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.math.Angles;
 import yarangi.math.BitUtils;
+import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 import yarangi.physics.Body;
@@ -18,7 +19,7 @@ public class WeaponFactory
 	public static Projectile createProjectile(Weapon weapon, double velocity)
 	{
 		Area area = weapon.getArea();
-		Vector2D location = weapon.getArea().getAnchor();
+		IVector2D location = weapon.getArea().getAnchor();
 		
 		
 		double fireAngle = RandomUtil.STD(
@@ -32,11 +33,9 @@ public class WeaponFactory
 		shell.setLook(new MinigunBurstLook(weapon.getPort(), weapon.getProps()));
 		shell.setBehavior(shellBehavior);
 		shell.setArea(AABB.createSquare(location.x(), location.y(), weapon.getProps().getProjectileHitRadius(), fireAngle*Angles.TO_DEG));
-		shell.setBody(new Body());
-		shell.getBody().setMaxSpeed(velocity);
+		shell.setBody(new Body(0.001, velocity));
 		shell.getBody().addVelocity(speed.x(), speed.y());
 //		System.out.println("proj velocity " + v + " : " + getVelocity()+ " (" + a + ")");
-		shell.getBody().setMass(0.001);
 		return shell;
 	}
 	

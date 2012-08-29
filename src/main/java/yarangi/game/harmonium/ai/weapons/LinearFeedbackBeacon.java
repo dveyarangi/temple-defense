@@ -4,6 +4,7 @@ import java.lang.ref.WeakReference;
 
 import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.math.Geometry;
+import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 
 public class LinearFeedbackBeacon implements IFeedbackBeacon 
@@ -27,7 +28,7 @@ public class LinearFeedbackBeacon implements IFeedbackBeacon
 		this.target = new WeakReference<IBeing>( target );
 		this.projectileVelocity = projectileVelocity;
 		targetInitLoc = targetLocationMemo = Vector2D.COPY(target.getArea().getAnchor());
-		Vector2D sourceLoc = source.getArea().getAnchor();
+		IVector2D sourceLoc = source.getArea().getAnchor();
 
 		this.distance = Geometry.calcHypotSquare(sourceLoc, targetLocationMemo);
 		
@@ -35,13 +36,13 @@ public class LinearFeedbackBeacon implements IFeedbackBeacon
 	}
 
 	@Override
-	public boolean update(Vector2D beaconLoc) 
+	public boolean update(IVector2D beaconLoc) 
 	{
 		if(target.get() == null) // if target is dead before a projectile at it:
 			return true;
 		
 		
-		Vector2D targetLoc = target.get().getArea().getAnchor();
+		IVector2D targetLoc = target.get().getArea().getAnchor();
 		double toTarget = Geometry.calcHypotSquare(sourceLocationMemo, targetLoc);
 		double toBeacon = Geometry.calcHypotSquare(sourceLocationMemo, beaconLoc);
 
