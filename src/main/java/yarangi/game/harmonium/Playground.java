@@ -15,15 +15,19 @@ import yarangi.game.harmonium.controllers.TempleController;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
 import yarangi.game.harmonium.enemies.swarm.SwarmFactory;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
+import yarangi.game.harmonium.environment.resources.Port;
+import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.temple.BattleInterface;
 import yarangi.game.harmonium.temple.EnergyCore;
 import yarangi.game.harmonium.temple.ObserverBehavior;
 import yarangi.game.harmonium.temple.Shield;
 import yarangi.game.harmonium.temple.StructureInterface;
 import yarangi.game.harmonium.temple.TempleLook;
+import yarangi.game.harmonium.temple.harvester.Harvester;
 import yarangi.game.harmonium.temple.harvester.HarvesterFactory;
 import yarangi.game.harmonium.temple.harvester.Waller;
 import yarangi.game.harmonium.temple.weapons.Minigun;
+import yarangi.game.harmonium.temple.weapons.MinigunGlowingLook;
 import yarangi.game.harmonium.temple.weapons.MinigunLook;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.game.harmonium.temple.weapons.TrackingBehavior;
@@ -39,6 +43,7 @@ import yarangi.graphics.quadraturin.config.SceneConfig;
 import yarangi.graphics.quadraturin.objects.Dummy;
 import yarangi.graphics.quadraturin.objects.EntityShell;
 import yarangi.graphics.quadraturin.objects.IBehavior;
+import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
 import yarangi.graphics.quadraturin.terrain.ITerrain;
@@ -50,6 +55,7 @@ import yarangi.graphics.quadraturin.ui.Overlay;
 import yarangi.graphics.quadraturin.ui.Panel;
 import yarangi.graphics.quadraturin.ui.PanelLook;
 import yarangi.math.Angles;
+import yarangi.numbers.RandomUtil;
 import yarangi.physics.Body;
 import yarangi.physics.IPhysicalObject;
 import yarangi.spatial.AABB;
@@ -92,11 +98,11 @@ public class Playground extends Scene
 		TempleController controller = new TempleController(this, core, temple);
 		temple.setLook(new TempleLook( ));
 		temple.setBehavior(new ObserverBehavior(controller));
-		temple.setEntitySensor(new Sensor(512, 3, null));
+		temple.setEntitySensor(new Sensor<IBeing>(512, 3, null));
 		temple.setArea(AABB.createSquare(0,0,10, 0));
-		temple.setBody(new Body(0,0));
+		temple.setBody(new Body(1,0));
 		addEntity( temple );
-//		structure.addServiceable( temple );
+		//structure.addServiceable( temple );
 
 		
 //		TempleControlProps c = new TempleControlProps();
@@ -121,8 +127,8 @@ public class Playground extends Scene
 //			AABB area = AABB.createSquare(RandomUtil.R( 400 )-200, RandomUtil.R( 400 )-200,1,0);
 			AABB area = AABB.createSquare(radius*Math.cos(Angles.PI_2/maxCannons *a), radius*Math.sin(Angles.PI_2/maxCannons * a ),1,0);
 			Weapon weapon = new Minigun(bi, area, props);
-//			weapon.setLook(new MinigunGlowingLook());
-			weapon.setLook(new MinigunLook());
+			weapon.setLook(new MinigunGlowingLook());
+//			weapon.setLook(new MinigunLook());
 			weapon.setBehavior(new TrackingBehavior());
 			weapon.setEntitySensor( WeaponFactory.createSensor(weapon));
 			addEntity( weapon );
@@ -132,8 +138,6 @@ public class Playground extends Scene
 			// harvester location is linked to cannon:
 //			Harvester harvester = HarvesterFactory.createHarvester(area, weapon.getPort(), 64, terrain);
 //			addEntity(harvester);
-			Waller waller = HarvesterFactory.createWaller(area, weapon.getPort(), 64, terrain, ((OrdersActionController)controller.getActionController()).getReinforcementMap());
-			addEntity(waller);
 
 			
 /*			Shield shield = new Shield(bi, weapon.getPort());
@@ -145,14 +149,30 @@ public class Playground extends Scene
 			shield.setBody( new Body() );
 			addEntity(shield);*/
 		}
-/*		int maxShields = 3;
+		
+		int maxWallers = 6;
+		for(int a = 0; a < maxWallers; a ++) {
+			Port port = new Port();
+			
+			
+			port.setCapacity( Resource.Type.MATTER, 100, 100 );
+			AABB area = AABB.createSquare(RandomUtil.R( 400 )-200, RandomUtil.R( 400 )-200,2,0);
+			Waller waller = HarvesterFactory.createWaller(area, port, 64, terrain, ((OrdersActionController)controller.getActionController()).getReinforcementMap());
+			addEntity(waller);
+
+		}
+		int maxShields = 6;
 		for(int a = 0; a < maxShields; a ++)
 		{
 			double radius = 100;
 			Port port = Port.createEmptyPort();
-			AABB area = AABB.createSquare(radius*Math.cos(Angles.PI_2/maxCannons *a), radius*Math.sin(Angles.PI_2/maxCannons * a ),6,0);
+			
+			AABB area = AABB.createSquare(RandomUtil.R( 400 )-200, RandomUtil.R( 400 )-200,2,0);
+			Harvester harvester = HarvesterFactory.createHarvester(area, port, 64, terrain);
+			addEntity(harvester);			
+			
 			structure.addServiceable( harvester );
-		}*/
+		}
 		
 		int maxHarvs = 9;
 /*		for(int a = 0; a < maxHarvs; a ++)
