@@ -3,6 +3,7 @@ package yarangi.game.harmonium.temple.weapons;
 import javax.media.opengl.GL;
 
 import yarangi.game.harmonium.environment.resources.Resource;
+import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.CircleLightLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
@@ -41,9 +42,9 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 		float P = (float)(cannon.getPort().get( type ).getAmount() / cannon.getPort().getCapacity( type ));
 //		this.setColor(new Color( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (P),1));
 //		this.setColor(new Color( P*0.2f+(1-P)*0.8f, 0.5f+0.5f*P, 1f*P, 1.0f));
-//		this.setColor(new Color( 1.0f, P, P, 1.0f));
+		this.setColor(new Color( 0f, 0, 0.5f*P, 1.0f));
 				
-//		super.render( gl, cannon, context );		
+		super.render( gl, cannon, context );		
 		
 		gl.glPushAttrib(GL.GL_ENABLE_BIT);
 		gl.glEnable(GL.GL_BLEND);
