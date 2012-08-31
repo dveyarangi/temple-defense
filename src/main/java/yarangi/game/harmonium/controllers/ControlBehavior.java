@@ -11,6 +11,7 @@ public class ControlBehavior implements IBehavior <TempleController>
 {
 
 
+	@Override
 	public boolean behave(double time, TempleController ctrl, boolean isVisible) 
 	{
 		BattleInterface bi = ctrl.getBattleInterface();
@@ -35,7 +36,7 @@ public class ControlBehavior implements IBehavior <TempleController>
 		double transferRate = bots.changeTransferRate( 0.01 * time );
 		
 		// temple heart-beat:
-		ctrl.getTemple().setHealth((transferRate-StupidScheduler.MIN_TRANSFER_RATE)/(StupidScheduler.MAX_TRANSFER_RATE-StupidScheduler.MIN_TRANSFER_RATE));
+//		ctrl.getTemple().setHealth((transferRate-StupidScheduler.MIN_TRANSFER_RATE)/(StupidScheduler.MAX_TRANSFER_RATE-StupidScheduler.MIN_TRANSFER_RATE));
 	
 		return false;
 	}

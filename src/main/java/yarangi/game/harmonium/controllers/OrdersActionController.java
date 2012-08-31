@@ -20,6 +20,7 @@ import yarangi.graphics.quadraturin.terrain.PolygonGrid;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.Angles;
+import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 import yarangi.spatial.ISpatialFilter;
 import yarangi.spatial.Tile;
@@ -36,7 +37,7 @@ public class OrdersActionController extends ActionController
 	private final IEntity hovered = null;
 
 	
-	private Vector2D target;
+	private IVector2D target;
 
 	
 	private PolygonTerrainMap terrain;
@@ -118,7 +119,7 @@ public class OrdersActionController extends ActionController
 			{
 				if(dragged == null)
 					return;
-				Vector2D location = event.getCursor().getWorldLocation();
+				IVector2D location = event.getCursor().getWorldLocation();
 				if(location == null)
 					return;
 				dragged.getArea().move( location.x(), location.y() );
@@ -171,7 +172,7 @@ public class OrdersActionController extends ActionController
 	private final double drawRadius = 15;
 
 	
-	private void drawTerrain(PolygonTerrainMap terrain, Vector2D target, boolean draw)
+	private void drawTerrain(PolygonTerrainMap terrain, IVector2D target, boolean draw)
 	{
 		Poly poly = new PolyDefault();
 
@@ -187,7 +188,7 @@ public class OrdersActionController extends ActionController
 
 
 	public IEntity getDragged() { return dragged; }
-	public Vector2D getTarget() { return target; }
+	public IVector2D getTarget() { return target; }
 	public IEntity getHovered() { return hovered; }
 
 

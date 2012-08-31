@@ -28,7 +28,7 @@ public class PolyFactory implements ITerrainFactory <PolygonTerrainMap>
 			{
 				Tile <MultilayerTilePoly> tile = terrain.getTileAt( i, j );
 //				System.out.println(tile);
-				tile.put( new MultilayerTilePoly(tile.getMinX(), tile.getMinY(), tile.getMaxX(), tile.getMaxY(), POLY_DEPTH ) );
+				tile.put( new MultilayerTilePoly(tile.getMinX(), tile.getMinY(), tile.getMaxX(), tile.getMaxY(), POLY_DEPTH, false ) );
 			}
 
 //		ILook <PolygonTerrainMap> look = new MultilayerPolyTerrainLook(false, false);

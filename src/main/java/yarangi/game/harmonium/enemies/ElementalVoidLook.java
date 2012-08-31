@@ -15,6 +15,9 @@ public class ElementalVoidLook implements ILook <SwarmAgent>
 	private final float blue = (float)(RandomUtil.getRandomDouble(0.5)+0.5);
 	private final float green = (float)(RandomUtil.getRandomDouble(0.5)+0.5);
 	private final float red = (float)(RandomUtil.getRandomDouble(0.5)+0.5);
+//	private final float blue = 0;//(float)(RandomUtil.getRandomDouble(0.5)+0.5);
+//	private final float green = 0;//(float)(RandomUtil.getRandomDouble(0.5)+0.5);
+//	private final float red = 0;//(float)(RandomUtil.getRandomDouble(0.5)+0.5);
 	
 	private IVeil veil;
 

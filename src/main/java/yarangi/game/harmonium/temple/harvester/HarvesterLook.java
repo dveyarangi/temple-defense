@@ -18,7 +18,7 @@ public class HarvesterLook extends CircleLightLook <Harvester>
 	public void render(GL gl, Harvester entity, IRenderingContext context)
 	{
 		float P = entity.getPort().getSaturation( Resource.Type.MATTER );
-		this.setColor(new Color( 0.5f, 0, 0, 1.0f));
+		this.setColor(new Color( 1f, 0, 0, 1.0f));
 		
 		super.render( gl, entity, context );		
 

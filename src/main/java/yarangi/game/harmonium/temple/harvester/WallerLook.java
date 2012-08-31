@@ -19,7 +19,7 @@ public class WallerLook extends CircleLightLook <Waller>
 	public void render(GL gl, Waller entity, IRenderingContext context)
 	{
 		float P = entity.getPort().getSaturation( Resource.Type.MATTER );
-		this.setColor(new Color( 0, 0.5f*P, 0, 1.0f));
+		this.setColor(new Color( 0, P, 0, 1.0f));
 		super.render( gl, entity, context );
 		
 		float x, y;

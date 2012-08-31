@@ -101,6 +101,7 @@ public class Playground extends Scene
 		temple.setEntitySensor(new Sensor<IBeing>(512, 3, null));
 		temple.setArea(AABB.createSquare(0,0,10, 0));
 		temple.setBody(new Body(1,0));
+		temple.setHealth( 1 );
 		addEntity( temple );
 		//structure.addServiceable( temple );
 
@@ -161,8 +162,8 @@ public class Playground extends Scene
 			addEntity(waller);
 
 		}
-		int maxShields = 6;
-		for(int a = 0; a < maxShields; a ++)
+		int maxHarvs = 3;
+		for(int a = 0; a < maxHarvs; a ++)
 		{
 			double radius = 100;
 			Port port = Port.createEmptyPort();
@@ -174,7 +175,7 @@ public class Playground extends Scene
 			structure.addServiceable( harvester );
 		}
 		
-		int maxHarvs = 9;
+//		int maxHarvs = 9;
 /*		for(int a = 0; a < maxHarvs; a ++)
 		{
 			double radius = (a % 3+1) * 80;

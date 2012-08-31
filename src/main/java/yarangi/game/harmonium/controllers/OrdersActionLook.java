@@ -32,7 +32,7 @@ public class OrdersActionLook implements ILook <OrdersActionController>
 			look.render( gl, entity.getReinforcementMap(), context );
 		
 		IEntity dragged = entity.getDragged();
-		Vector2D target = entity.getTarget();
+		IVector2D target = entity.getTarget();
 		IEntity hovered = entity.getHovered();
 		if(hovered != null)
 		{

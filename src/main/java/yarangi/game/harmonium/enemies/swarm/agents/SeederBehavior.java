@@ -1,12 +1,18 @@
 package yarangi.game.harmonium.enemies.swarm.agents;
 
 
+import com.seisw.util.geom.Poly;
+import com.seisw.util.geom.PolyDefault;
+
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.colors.MaskUtil;
 import yarangi.graphics.curves.Bezier4Curve;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
+import yarangi.math.Angles;
+import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
+import yarangi.spatial.AABB;
 
 public class SeederBehavior implements IBehaviorState <Seeder>
 {
@@ -19,7 +25,7 @@ public class SeederBehavior implements IBehaviorState <Seeder>
 	private final PolygonTerrainMap terrain;
 	private static double SEED_INTERVAL = 10;
 	private double lifeTime = 0;
-	private final double lastSeedTime = 0;
+	private double lastSeedTime = 0;
 	
 	private static final int MASK_WIDTH = 32; 
 	
@@ -52,7 +58,7 @@ public class SeederBehavior implements IBehaviorState <Seeder>
 			return 0;
 		lifeTime += time;
 		
-/*		if(lifeTime - lastSeedTime > SEED_INTERVAL)
+		if(lifeTime - lastSeedTime > SEED_INTERVAL)
 		{
 			
 			AABB aabb = (AABB) seeder.getArea();
@@ -67,13 +73,13 @@ public class SeederBehavior implements IBehaviorState <Seeder>
 				Vector2D point = seeder.getLeftEdge().at( i );
 				poly.add( aabb.getAnchor().x() + point.x()*dx-point.y()*dy, aabb.getAnchor().y() + point.x()*dy+point.y()*dx );
 			}
-			terrain.apply( aabb.getMinX(), aabb.getMinY(), aabb.getMaxX(), aabb.getMaxY(),false, poly );
+			terrain.apply( aabb.getCenterX(), aabb.getCenterY(), aabb.getRX(), aabb.getRY(),false, poly );
 			lastSeedTime = lifeTime;
 //			Tile <Bitmap> tile = terrain.setPixel( seeder.getArea().getRefPoint().x(), seeder.getArea().getRefPoint().y(), 
 //					new Color(0.2f, 0.2f, 0.2f, 1.0f) );
 //			if(tile != null)
 //				terrain.setModified( tile );
-		}*/
+		}
 		
 		return 0;
 	}

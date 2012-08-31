@@ -60,7 +60,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	//			double radius = RandomUtil.getRandomGaussian(800, 0);
 			double size = Math.abs(RandomUtil.STD(0.1, 0.01))+0.1;
 			Vector2D source = swarm.getSource();
-			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(100*size, 0, new double [] {0,0,0,0}), size/100000, 10*size);
+			final SwarmAgent agent = new SwarmAgent(swarm, new Integrity(150*size, 0, new double [] {0,0,0,0}), size/100, 10*size);
 			agent.setLook(new ElementalVoidLook());
 			agent.setBehavior(createBoidBehavior());
 //			agent.setBehavior(new DroneBehavior( 1 ));
@@ -74,7 +74,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 			
 			if(RandomUtil.oneOf( 3 )) {
 				Seeder seeder = new Seeder(swarm, 
-										new Integrity(5*size*10, 0, new double [] {0,0,0,0}), 
+										new Integrity(500*size, 0, new double [] {0,0,0,0}), 
 										AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
 													  source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*10, angle),
 													  size*10, size*10);
