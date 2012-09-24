@@ -10,13 +10,14 @@ public class SimpleProjectileBehavior implements IBehavior <Projectile>
 	public SimpleProjectileBehavior()
 	{
 	}
-
+	
+	@Override
 	public boolean behave(double time, Projectile prj, boolean isVisible) 
 	{
+		double dx = prj.getBody().getVelocity().x() * time;
+		double dy = prj.getBody().getVelocity().y() * time;
 		
-		Vector2D ds = prj.getBody().getVelocity().mul(time);
-		
-		if(prj.addRange(Math.hypot( ds.x(), ds.y() )))
+		if(prj.addRange(Math.sqrt(dx*dx + dy*dy)))
 		{
 			prj.markDead();
 			return false;

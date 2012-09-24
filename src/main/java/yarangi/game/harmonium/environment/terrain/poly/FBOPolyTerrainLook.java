@@ -9,6 +9,7 @@ import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
+import yarangi.graphics.veils.BlurVeil;
 import yarangi.spatial.Tile;
 
 import com.seisw.util.geom.Poly;
@@ -16,7 +17,8 @@ import com.seisw.util.geom.Poly;
 public class FBOPolyTerrainLook extends TileGridLook<MultilayerTilePoly, PolygonTerrainMap>
 {
 	private final int layers;
-	
+	private IVeil veil;
+
 	public FBOPolyTerrainLook(boolean depthtest, boolean blend, int layers)
 	{
 		super(depthtest, blend);
@@ -24,7 +26,7 @@ public class FBOPolyTerrainLook extends TileGridLook<MultilayerTilePoly, Polygon
 	}
 
 	@Override
-	public IVeil getVeil() { return null; }
+	public IVeil getVeil() { return veil; }
 
 	@Override
 	public boolean isOriented() { return true; }
@@ -32,6 +34,7 @@ public class FBOPolyTerrainLook extends TileGridLook<MultilayerTilePoly, Polygon
 	public void init(GL gl, Tile<MultilayerTilePoly> tile, PolygonTerrainMap grid, IRenderingContext context)
 	{
 		super.init( gl, grid, context );
+		veil = context.getPlugin( BlurVeil.NAME );
 	}
 
 	@Override

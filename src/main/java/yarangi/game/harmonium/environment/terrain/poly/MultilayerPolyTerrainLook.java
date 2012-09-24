@@ -3,25 +3,35 @@ package yarangi.game.harmonium.environment.terrain.poly;
 import javax.media.opengl.GL;
 
 import yarangi.graphics.grid.PolyGridLook;
+import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
 import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
+import yarangi.graphics.veils.BlurVeil;
 import yarangi.spatial.Tile;
 
 import com.seisw.util.geom.Poly;
 
 public class MultilayerPolyTerrainLook extends PolyGridLook<MultilayerTilePoly, PolygonTerrainMap>
 {
-
+	private IVeil veil;
 
 	public MultilayerPolyTerrainLook(boolean depthtest, boolean blend)
 	{
 		super( depthtest, blend );
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public void init(GL gl, PolygonTerrainMap grid, IRenderingContext context)
+	{
+		super.init( gl, grid, context );
+		veil = context.getPlugin( BlurVeil.NAME );
+
+	}
 
 	@Override
-	public IVeil getVeil() { return null; }
+	public IVeil getVeil() { return veil; }
 
 	@Override
 	public boolean isOriented() { return true; }
@@ -29,6 +39,8 @@ public class MultilayerPolyTerrainLook extends PolyGridLook<MultilayerTilePoly, 
 	@Override
 	protected void renderTile(GL gl, Tile<MultilayerTilePoly> tile, PolygonTerrainMap grid, int scale)
 	{
+		
+
 		// 
 //		for(Poly poly : tile.get().getPolys())
 //			renderPoly( gl, poly );

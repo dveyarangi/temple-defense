@@ -4,7 +4,7 @@ import yarangi.game.harmonium.enemies.swarm.Swarm;
 import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.Angles;
-import yarangi.math.Vector2D;
+import yarangi.math.IVector2D;
 import yarangi.numbers.RandomUtil;
 
 public class DroneBehavior implements IBehaviorState <SwarmAgent>, IBehavior <SwarmAgent>  
@@ -20,7 +20,7 @@ public class DroneBehavior implements IBehaviorState <SwarmAgent>, IBehavior <Sw
 	@Override
 	public double behave(double time, SwarmAgent agent) {
 		Swarm swarm = agent.getSwarm();
-		Vector2D flow = swarm.getFlow(agent.getArea().getAnchor());
+		IVector2D flow = swarm.getFlow(agent.getArea().getAnchor());
 		agent.getArea().setOrientation( Angles.TO_DEG * agent.getBody().getVelocity().getAngle() );
 		
 //		System.out.println(flow);
@@ -37,6 +37,7 @@ public class DroneBehavior implements IBehaviorState <SwarmAgent>, IBehavior <Sw
 		return 0;
 	}
 	
+	@Override
 	public int getId() { return this.getClass().hashCode(); }
 
 	@Override

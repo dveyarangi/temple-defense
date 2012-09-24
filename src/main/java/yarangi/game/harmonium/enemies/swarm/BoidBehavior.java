@@ -14,7 +14,11 @@ import yarangi.math.Geometry;
 import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 
-
+/**
+ * TODO: this motherfucker creates enormous amounts of vectors, 
+ * @author dveyarangi
+ *
+ */
 public class BoidBehavior implements IBehaviorState<SwarmAgent> 
 {
 	public static final double ATTRACTION_COEF = 0.25;
@@ -23,6 +27,14 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 	
 	private final DroneBehavior droning = new DroneBehavior(20);
 	private SatelliteBehavior satellite;
+	
+	Vector2D massCenter = Vector2D.ZERO();
+	Vector2D Fsep = Vector2D.ZERO();
+	Vector2D flockingVelocity = Vector2D.ZERO();
+	Vector2D separation = Vector2D.ZERO();
+	Vector2D momentum = Vector2D.ZERO();
+	Vector2D lead = Vector2D.ZERO();
+
 ///	public static final double FLOCKING_COEF = 1;
 	@Override
 	public double behave(double time, SwarmAgent boid) {
@@ -43,10 +55,12 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 		
 		double separationDistance;
 		
-		Vector2D massCenter = Vector2D.ZERO();
-		Vector2D Fsep = Vector2D.ZERO();
-		Vector2D flockingVelocity = Vector2D.ZERO();
 		IVector2D otherLoc;
+		
+		massCenter.setxy( 0, 0 );
+		Fsep.setxy(0, 0);
+		flockingVelocity.setxy( 0, 0 );
+		
 		
 		double distance;
 		double dN = 1./(neighbours.size()-1);
@@ -91,17 +105,18 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 			distance = Geometry.calcHypot( loc, otherLoc );
 			
 			// separation:
-//			if(distance <= separationDistance)
-//			{
-				Fsep.add(loc.minus(otherLoc).normalize().mul( SEPARATION_COEF ));//.multiply((separationDistance-distance)));
-//			}
+			separation.set( loc ).substract(otherLoc).normalize().multiply( SEPARATION_COEF );
+			Fsep.add(separation);//.multiply((separationDistance-distance)));
 			
 			// attraction parameters:
-			massCenter.add(otherLoc.minus(loc).multiply( attractivity ));
+			momentum.set( otherLoc ).substract( loc ).multiply( attractivity );
+			massCenter.add(momentum);
 			
 			// flocking:
-			if(flocking)
-				flockingVelocity.add(neigh.getBody().getVelocity().mul(leadership));
+			if(flocking) {
+				lead.set(neigh.getBody().getVelocity()).multiply(leadership);
+				flockingVelocity.add(lead);
+			}
 		}
 		
 		massCenter.multiply(dN).add( loc );

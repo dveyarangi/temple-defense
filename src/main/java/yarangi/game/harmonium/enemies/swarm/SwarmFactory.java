@@ -27,7 +27,7 @@ public class SwarmFactory
 	public static int N = 10;
 	
 	public static double agentEnginePower = 0.01;
-	private final static Damage MATTER_DAMAGE = new Damage(0.5, 0, 0, 0);
+	private final static Damage MATTER_DAMAGE = new Damage(0, 0, 0, 0.5);
 
 	public static Swarm createSwarm(int worldSize, final Scene scene, int nodes)
 	{
@@ -145,15 +145,13 @@ public class SwarmFactory
 					terrain.apply( atx, aty, size, size, true, poly );
 //					swarm.setUnpassable(target.getArea().getRefPoint().x(), target.getArea().getRefPoint().y());
 					
-//					if( !(source instanceof Seeder) ) {
-						double rawDamage = source.getIntegrity().hit(MATTER_DAMAGE);
-						
-						swarm.setDanger(source, 10*rawDamage);
-						if(source.getIntegrity().getHitPoints() <= 0)
-						{
-							source.markDead();
+					double rawDamage = source.getIntegrity().hit(MATTER_DAMAGE);
+					swarm.setDanger(source, 10*rawDamage);
+					if(source.getIntegrity().getHitPoints() <= 0)
+					{
+						source.markDead();
 	//						EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(0,1,0,1), 32);
-							return true;
+						return true;
 						}
 //					}
 				}

@@ -7,7 +7,7 @@ import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.graphics.veils.BlurVeil;
-import yarangi.math.Vector2D;
+import yarangi.math.IVector2D;
 
 public class SeederLook implements ILook <Seeder> 
 {
@@ -28,9 +28,9 @@ public class SeederLook implements ILook <Seeder>
 		Bezier4Curve left = seeder.getLeftEdge();
 		Bezier4Curve right = seeder.getRightEdge();
 		
-		Vector2D point;
-		gl.glPushAttrib( GL.GL_ENABLE_BIT );
-		gl.glDisable(GL.GL_BLEND);
+		IVector2D point;
+//		gl.glPushAttrib( GL.GL_ENABLE_BIT );
+//		gl.glDisable(GL.GL_BLEND);
 		gl.glColor4f(1f, 0.0f, 0.0f, 1.0f);
 		
 		gl.glBegin(GL.GL_POLYGON);
@@ -59,7 +59,7 @@ public class SeederLook implements ILook <Seeder>
 		gl.glVertex2f((float) left.p3().x(), (float)left.p3().y());
 		gl.glVertex2f((float) left.p4().x(), (float)left.p4().y());
 		gl.glEnd();*/
-		gl.glPopAttrib();
+//		gl.glPopAttrib();
 	}
 
 	@Override

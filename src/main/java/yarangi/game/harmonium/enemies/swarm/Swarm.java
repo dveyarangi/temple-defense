@@ -77,7 +77,9 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 		nodeIterator = spawnNodes.iterator();
 	}
 	
-	public Vector2D getFlow(IVector2D point) 
+	private final Vector2D flow = Vector2D.ZERO();
+	
+	public IVector2D getFlow(IVector2D point) 
 	{
 		int px = toBeaconIdx(point.x());
 		int py = toBeaconIdx(point.y());
@@ -90,10 +92,11 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 			if(py < 0) fy = 1;
 			if(px >= WSIZE) fx = -1;
 			if(py >= WSIZE) fy = -1;
-			return Vector2D.R(fx, fy); 
+			flow.setxy(fx, fy);
+			return flow; 
 		}
 		
-		Vector2D flow = Vector2D.ZERO();
+		flow.setxy(0,0);
 		
 /*		int x, y, dx, dy;
 		
@@ -116,7 +119,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 //		System.out.println(px + " : " + py + " ::: " + beacons[px][py].getFlow());
 //		System.out.println("push: " + flow + ", flow: " + beacons[px][py].getFlow() + ", res: " + flow.plus(beacons[px][py].getFlow()).normal());
 //		flow.normalize();
-		flow.add(getContentByIndex(px, py).getFlow().mul(0.5));
+		flow.set(getContentByIndex(px, py).getFlow()).multiply(0.5);
 		flow.normalize();
 		return flow;
 	}

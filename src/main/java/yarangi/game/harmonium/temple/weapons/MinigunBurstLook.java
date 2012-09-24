@@ -29,12 +29,9 @@ public class MinigunBurstLook implements ILook <Projectile>
 	public void render(GL gl, Projectile prj, IRenderingContext context) 
 	{
 		color.apply( gl );
-		gl.glBegin(GL.GL_POLYGON);
-			gl.glVertex3f(1.2f, 0.1f, 0);
-			gl.glVertex3f(-1.2f, 0.1f, 0);
-			gl.glVertex3f(-1.2f, -0.1f, 0);
-			gl.glVertex3f(1.2f, -0.1f, 0);
-			gl.glVertex3f(1.2f, 0.1f, 0);
+		gl.glBegin(GL.GL_LINE_STRIP);
+			gl.glVertex2f(1.2f, 0.1f);
+			gl.glVertex2f(-1.2f, -0.1f);
 		gl.glEnd();
 	}
 

@@ -15,7 +15,7 @@ public class Main
 	    Stage stage = Q.go();
 	    
 	    // actualizing playground scene
-	    stage.setScene("playground");
+//	    stage.setScene("playground");
 	    
 	}
 }
