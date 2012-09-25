@@ -19,9 +19,9 @@ public class FBOPolyTerrainLook extends TileGridLook<MultilayerTilePoly, Polygon
 	private final int layers;
 	private IVeil veil;
 
-	public FBOPolyTerrainLook(boolean depthtest, boolean blend, int layers)
+	public FBOPolyTerrainLook(PolygonTerrainMap grid, boolean depthtest, boolean blend, int layers)
 	{
-		super(depthtest, blend);
+		super(grid, depthtest, blend);
 		this.layers = layers;
 	}
 
@@ -33,7 +33,7 @@ public class FBOPolyTerrainLook extends TileGridLook<MultilayerTilePoly, Polygon
 	
 	public void init(GL gl, Tile<MultilayerTilePoly> tile, PolygonTerrainMap grid, IRenderingContext context)
 	{
-		super.init( gl, grid, context );
+		super.init( gl, context );
 		veil = context.getPlugin( BlurVeil.NAME );
 	}
 

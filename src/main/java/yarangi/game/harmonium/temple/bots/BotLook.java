@@ -31,11 +31,12 @@ public class BotLook implements ILook<Bot> {
 	}
 	
 	@Override
-	public void init(GL gl, Bot bot, IRenderingContext context) {
+	public void init(GL gl, IRenderingContext context) {
 		
 //		veil = context.<BlurVeil>getPlugin( BlurVeil.NAME );
 		for(int idx = 0; idx < tail.length; idx ++)
-			tail[idx] = Vector2D.COPY(bot.getArea().getAnchor());
+			// TODO: this creates ugly lines from 0,0
+			tail[idx] = Vector2D.ZERO();
 		
 	}
 
@@ -84,8 +85,7 @@ public class BotLook implements ILook<Bot> {
 
 
 	@Override
-	public void destroy(GL gl, Bot entity, IRenderingContext context) {
-	}
+	public void destroy(GL gl,  IRenderingContext context) {}
 
 	@Override
 	public boolean isCastsShadow()

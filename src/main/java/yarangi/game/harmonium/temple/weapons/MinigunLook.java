@@ -87,12 +87,10 @@ public class MinigunLook implements ILook<Minigun>
 	
 
 	@Override
-	public void init(GL gl, Minigun entity, IRenderingContext context) {
-	}
+	public void init(GL gl, IRenderingContext context) {}
 
 	@Override
-	public void destroy(GL gl, Minigun entity, IRenderingContext context) {
-	}
+	public void destroy(GL gl, IRenderingContext context) {}
 
 
 

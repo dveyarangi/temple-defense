@@ -48,12 +48,10 @@ public class ElementalDarknessLook implements ILook <SwarmAgent>
 	}
 
 	@Override
-	public void init(GL gl, SwarmAgent entity, IRenderingContext context) {
-	}
+	public void init(GL gl, IRenderingContext context) {}
 
 	@Override
-	public void destroy(GL gl, SwarmAgent entity, IRenderingContext context) {
-	}
+	public void destroy(GL gl, IRenderingContext context) {}
 
 	@Override
 	public float getPriority()

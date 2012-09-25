@@ -32,7 +32,8 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	public static final Integrity AGENT_INTEGRITY = new Integrity(10, 0, new double [] {0,0,0,0});
 	public static final double AGENT_HEALTH = AGENT_INTEGRITY.getMaxHitPoints();
 	public static final double  AGENT_VELOCITY = 1.5;
-	public ILook agentLook = new MetaCircleLook();
+	public ILook agentLook = new ElementalVoidLook();
+	public ILook seederLook = new SeederLook();
 	private final PolygonTerrainMap terrain;
 	
 //	public Integrity integrity = new Integrity(30, 0, new double [] {0,0,0,0});
@@ -65,7 +66,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 				case 0: case 1: case 2: case 3: case 4: case 5: case 6:
 				case 7: case 8: case 9: case 10: case 11: case 12: case 13: case 14: case 15:
 					agent = new SwarmAgent(swarm, new Integrity(10*size, 0, new double [] {0,0,0,0}), size/100, size);
-					agent.setLook(new ElementalVoidLook());
+					agent.setLook(agentLook);
 					agent.setBehavior(createBoidBehavior());
 		//			agent.setBehavior(new DroneBehavior( 1 ));
 			//		System.out.println("spawning agent at " + swarm.getArea().getRefPoint());
@@ -86,14 +87,14 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 //					agent.setBehavior(createSeederBehavior());
 					agent.setBehavior(createBoidBehavior());
 					agent.setEntitySensor(EnemyFactory.SHORT_SENSOR());
-					agent.setLook(new SeederLook());
+					agent.setLook(seederLook);
 					agent.setBody(new Body(size, AGENT_VELOCITY+RandomUtil.STD(0, 0.01)));
 					
 					break;
 	//				seeder.getBody().setMaxSpeed( 1 );
 				case 19:
 					agent = new SwarmAgent(swarm, new Integrity(100*size, 0, new double [] {0,0,0,0}), size/100, size*10000 );
-					agent.setLook(new ElementalVoidLook());
+					agent.setLook(agentLook);
 					agent.setBehavior(createDroneBehavior());
 		//			agent.setBehavior(new DroneBehavior( 1 ));
 			//		System.out.println("spawning agent at " + swarm.getArea().getRefPoint());

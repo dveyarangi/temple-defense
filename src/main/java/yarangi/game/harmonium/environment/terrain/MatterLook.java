@@ -14,8 +14,7 @@ public class MatterLook implements ILook <Matter>
 {
 
 	@Override
-	public void init(GL gl, Matter entity, IRenderingContext context) {
-	}
+	public void init(GL gl, IRenderingContext context) { }
 
 	@Override
 	public void render(GL gl, Matter entity, IRenderingContext context) {
@@ -38,8 +37,7 @@ public class MatterLook implements ILook <Matter>
 	}
 
 	@Override
-	public void destroy(GL gl, Matter entity, IRenderingContext context) {
-	}
+	public void destroy(GL gl, IRenderingContext context) { }
 
 	@Override
 	public boolean isCastsShadow() { return true; }

@@ -6,13 +6,17 @@ import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.CircleLightLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.math.Angles;
 
 public class WallerLook extends CircleLightLook <Waller>
 {
 
+
+
+	public WallerLook(int size)
+	{
+		super( size );
+	}
 
 
 	@Override

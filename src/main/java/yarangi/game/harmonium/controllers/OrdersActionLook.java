@@ -15,20 +15,27 @@ import yarangi.math.Vector2D;
 
 public class OrdersActionLook implements ILook <OrdersActionController>
 {
-	ILook <PolygonGrid<TilePoly>> look = new PolyTerrainLook();
+	/** look for wolrd parst marked for terrain reinforcement */
+	private ILook <PolygonGrid<TilePoly>> look;
+
+	public OrdersActionLook( OrdersActionController controller)
+	{
+		if(controller.getReinforcementMap() != null)
+			look = new PolyTerrainLook(controller.getReinforcementMap());
+	}
 
 	@Override
-	public void init(GL gl, OrdersActionController entity, IRenderingContext context)
+	public void init(GL gl, IRenderingContext context)
 	{
-		if(entity.getReinforcementMap() != null)
-			look.init( gl, entity.getReinforcementMap(), context );
+		if(look != null)
+			look.init( gl, context );
 	}
 
 	@Override
 	public void render(GL gl, OrdersActionController entity, IRenderingContext context)
 	{
 		
-		if(entity.getReinforcementMap() != null)
+		if(look != null)
 			look.render( gl, entity.getReinforcementMap(), context );
 		
 		IEntity dragged = entity.getDragged();
@@ -64,10 +71,10 @@ public class OrdersActionLook implements ILook <OrdersActionController>
 	}
 
 	@Override
-	public void destroy(GL gl, OrdersActionController entity, IRenderingContext context)
+	public void destroy(GL gl,IRenderingContext context)
 	{
-		if(entity.getReinforcementMap() != null)
-			look.destroy( gl, entity.getReinforcementMap(), context );
+		if(look != null)
+			look.destroy( gl, context );
 	}
 
 	@Override

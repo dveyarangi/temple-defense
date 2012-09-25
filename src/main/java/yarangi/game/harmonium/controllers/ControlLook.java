@@ -95,11 +95,11 @@ public class ControlLook implements ILook <TempleController>
 	}
 
 	@Override
-	public void init(GL gl, TempleController entity, IRenderingContext context) {
+	public void init(GL gl, IRenderingContext context) {
 	}
 
 	@Override
-	public void destroy(GL gl, TempleController entity, IRenderingContext context) {
+	public void destroy(GL gl, IRenderingContext context) {
 	}
 
 	@Override

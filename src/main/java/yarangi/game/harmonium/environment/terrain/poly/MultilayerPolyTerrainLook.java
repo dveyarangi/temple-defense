@@ -16,18 +16,17 @@ public class MultilayerPolyTerrainLook extends PolyGridLook<MultilayerTilePoly, 
 {
 	private IVeil veil;
 
-	public MultilayerPolyTerrainLook(boolean depthtest, boolean blend)
+	public MultilayerPolyTerrainLook(PolygonTerrainMap grid, boolean depthtest, boolean blend)
 	{
-		super( depthtest, blend );
+		super( grid, depthtest, blend );
 		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
-	public void init(GL gl, PolygonTerrainMap grid, IRenderingContext context)
+	public void init(GL gl, IRenderingContext context)
 	{
-		super.init( gl, grid, context );
+		super.init( gl, context );
 		veil = context.getPlugin( BlurVeil.NAME );
-
 	}
 
 	@Override

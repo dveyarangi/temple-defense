@@ -15,7 +15,7 @@ public class SeederLook implements ILook <Seeder>
 	IVeil veil;
 	
 	@Override
-	public void init(GL gl, Seeder entity, IRenderingContext context) {
+	public void init(GL gl, IRenderingContext context) {
 		// TODO Auto-generated method stub
 		veil = context.getPlugin( BlurVeil.NAME );
 		
@@ -63,9 +63,7 @@ public class SeederLook implements ILook <Seeder>
 	}
 
 	@Override
-	public void destroy(GL gl, Seeder entity, IRenderingContext context) {
-		
-	}
+	public void destroy(GL gl,  IRenderingContext context) {}
 
 	@Override
 	public float getPriority() {

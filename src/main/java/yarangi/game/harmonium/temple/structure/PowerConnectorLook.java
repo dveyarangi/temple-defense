@@ -10,8 +10,7 @@ public class PowerConnectorLook implements ILook <PowerConnector>
 {
 
 	@Override
-	public void init(GL gl, PowerConnector entity, IRenderingContext context) {
-	}
+	public void init(GL gl, IRenderingContext context) {}
 
 	@Override
 	public void render(GL gl, PowerConnector entity, IRenderingContext context) 
@@ -41,8 +40,7 @@ public class PowerConnectorLook implements ILook <PowerConnector>
 	}
 
 	@Override
-	public void destroy(GL gl, PowerConnector entity, IRenderingContext context) {
-	}
+	public void destroy(GL gl, IRenderingContext context) {}
 
 	@Override
 	public float getPriority()

@@ -11,6 +11,11 @@ public class TempleLook extends CircleLightLook<EnergyCore>
 {
 	
 	
+	public TempleLook(int size)
+	{
+		super( size );
+	}
+
 	@Override
 	public void render(GL gl, EnergyCore temple, IRenderingContext context) 
 	{

@@ -17,15 +17,15 @@ public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap>
 {
 
 	
-	public GridyTerrainLook(boolean depthtest, boolean blend)
+	public GridyTerrainLook(GridyTerrainMap grid, boolean depthtest, boolean blend)
 	{
-		super( depthtest, blend );
+		super( grid, depthtest, blend );
 	}
 
 	@Override
-	public void init(GL gl, GridyTerrainMap grid, IRenderingContext context)
+	public void init(GL gl, IRenderingContext context)
 	{
-		super.init( gl, grid, context );
+		super.init( gl, context );
 	}
 	
 	

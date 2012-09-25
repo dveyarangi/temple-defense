@@ -25,7 +25,7 @@ public class MetaCircleLook implements ILook <Entity>
 	private static Texture texture;
 	
 	@Override
-	public void init(GL gl, Entity entity, IRenderingContext context) {
+	public void init(GL gl, IRenderingContext context) {
 		
 		if(texture != null)
 			return;
@@ -83,8 +83,8 @@ public class MetaCircleLook implements ILook <Entity>
 	}
 
 	@Override
-	public void destroy(GL gl, Entity entity, IRenderingContext context) {
-	//	texture.dispose();
+	public void destroy(GL gl, IRenderingContext context) {
+		texture.dispose();
 	}
 
 	@Override

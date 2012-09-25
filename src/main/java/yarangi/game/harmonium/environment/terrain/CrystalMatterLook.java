@@ -10,8 +10,7 @@ public class CrystalMatterLook implements ILook <CrystalMatter>
 {
 
 	@Override
-	public void init(GL gl, CrystalMatter entity, IRenderingContext context) {
-	}
+	public void init(GL gl, IRenderingContext context) { }
 
 	@Override
 	public void render(GL gl, CrystalMatter crystal, IRenderingContext context) 
@@ -81,8 +80,7 @@ public class CrystalMatterLook implements ILook <CrystalMatter>
 	}
 
 	@Override
-	public void destroy(GL gl, CrystalMatter entity, IRenderingContext context) {
-	}
+	public void destroy(GL gl, IRenderingContext context) { }
 
 	@Override
 	public boolean isCastsShadow()

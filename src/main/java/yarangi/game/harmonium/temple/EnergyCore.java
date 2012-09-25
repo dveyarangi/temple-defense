@@ -85,7 +85,7 @@ public class EnergyCore extends ObserverEntity implements Serviceable, ITemple, 
 		
 		transferRate -= damage.getDamage( Damage.KINETIC )/10;
 		if(transferRate < 0) transferRate = 0;
-		System.out.println("transfer rate: " + transferRate);
+//		System.out.println("transfer rate: " + transferRate);
 	}
 
 }

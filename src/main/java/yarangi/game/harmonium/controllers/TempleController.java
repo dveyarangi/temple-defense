@@ -38,7 +38,7 @@ public class TempleController extends Entity implements CursorListener
 	
 	private final IOrderScheduler botInterface;
 	
-	private final ActionController actionController;
+	private final OrdersActionController actionController;
 
 	public TempleController(final Scene scene, final IntellectCore core, final EnergyCore temple) 
 	{
@@ -59,7 +59,7 @@ public class TempleController extends Entity implements CursorListener
 		DefaultActionFactory.appendNavActions(scene, actionController);
 		Debug.appendDebugActions( actionController.getActions(), (Playground) scene );
 		
-		EntityShell <ActionController> shell = new EntityShell<ActionController>( actionController, null, new OrdersActionLook() );
+		EntityShell <ActionController> shell = new EntityShell<ActionController>( actionController, null, new OrdersActionLook(actionController) );
 		
 		// TODO: control modes
 		scene.setActionController(shell);

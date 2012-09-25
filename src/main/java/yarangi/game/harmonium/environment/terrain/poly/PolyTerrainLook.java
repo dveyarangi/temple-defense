@@ -14,9 +14,9 @@ public class PolyTerrainLook extends PolyGridLook<TilePoly, PolygonGrid<TilePoly
 {
 
 
-	public PolyTerrainLook()
+	public PolyTerrainLook(PolygonGrid<TilePoly> grid)
 	{
-		super( false, true );
+		super( grid, false, true );
 		// TODO Auto-generated constructor stub
 	}
 	@Override

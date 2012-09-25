@@ -6,8 +6,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.media.opengl.GL;
 
-import yarangi.game.harmonium.environment.resources.Port;
-import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.Q;
@@ -28,11 +26,11 @@ public class ShieldLook implements ILook <Shield>
 //	private IsoheightVeil veil;
 	private IVeil veil;
 	
-	private static Texture texture;
-	private static int count = 0;
+	private Texture texture;
+//	private static int count = 0;
 
 	@Override
-	public void init(GL gl, Shield entity, IRenderingContext context) {
+	public void init(GL gl,IRenderingContext context) {
 		
 
 		veil = context.<IsoheightVeil> getPlugin( IsoheightVeil.NAME );
@@ -41,8 +39,8 @@ public class ShieldLook implements ILook <Shield>
 			Q.rendering.warn( "Plugin [" + IsoheightVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
 		}
 		
-		Port port = entity.getPort();
-		double resourcePercent = port.get( Resource.Type.ENERGY ).getAmount() / port.getCapacity( Resource.Type.ENERGY );
+//		Port port = entity.getPort();
+//		double resourcePercent = port.get( Resource.Type.ENERGY ).getAmount() / port.getCapacity( Resource.Type.ENERGY );
 		
 		if(texture == null) // shared
 		{
@@ -60,7 +58,7 @@ public class ShieldLook implements ILook <Shield>
 			
 			texture.setTexParameteri(GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR);
 		}
-		count ++;
+//		count ++;
 		
 //		veil = context.getPlugin( IsoheightVeil.NAME );	}
 	}
@@ -101,13 +99,10 @@ public class ShieldLook implements ILook <Shield>
 	}
 
 	@Override
-	public void destroy(GL gl, Shield entity, IRenderingContext context) {
-		count --;
-		if(count == 0)
-		{
-			texture.dispose();
-			texture = null; //
-		}
+	public void destroy(GL gl,  IRenderingContext context) {
+		texture.dispose();
+		texture = null; //
+
 	}
 
 	@Override

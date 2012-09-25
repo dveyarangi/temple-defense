@@ -14,6 +14,12 @@ public class HarvesterLook extends CircleLightLook <Harvester>
 {
 
 
+	public HarvesterLook(int size)
+	{
+		super( size );
+	}
+
+
 	@Override
 	public void render(GL gl, Harvester entity, IRenderingContext context)
 	{

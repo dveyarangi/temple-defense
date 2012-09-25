@@ -17,10 +17,10 @@ public class HarvesterFactory
 		Harvester harvester = new Harvester(port, null);
 		
 		harvester.setArea(area);
-		harvester.setLook(new HarvesterLook());
 		ErrodingBehavior behavior = createErrodingBehavior(range, terrain);
 		harvester.setBehavior( behavior );
 		harvester.setTerrainSensor( behavior);
+		harvester.setLook(new HarvesterLook((int)behavior.getRadius()));
 		
 		return harvester;
 	}
@@ -29,10 +29,10 @@ public class HarvesterFactory
 		Waller waller = new Waller(port, null);
 		
 		waller.setArea(area);
-		waller.setLook(new WallerLook());
 		EnforcingBehavior behavior = createEnforcingBehavior(range, terrain, reinforcementMap);
 		waller.setBehavior( behavior );
 		waller.setTerrainSensor( behavior);
+		waller.setLook(new WallerLook((int)behavior.getRadius()));
 		
 		return waller;
 	}

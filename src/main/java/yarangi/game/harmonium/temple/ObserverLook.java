@@ -8,8 +8,8 @@ import yarangi.graphics.quadraturin.IRenderingContext;
 
 public class ObserverLook extends CircleLightLook<IObserverEntity> 
 {
-	public ObserverLook(Color color) {
-		super(color);
+	public ObserverLook(int size, Color color) {
+		super(size, color);
 	}
 
 	@Override

@@ -96,7 +96,7 @@ public class Playground extends Scene
 		
 		temple = new EnergyCore(this);
 		TempleController controller = new TempleController(this, core, temple);
-		temple.setLook(new TempleLook( ));
+		temple.setLook(new TempleLook( 512 ));
 		temple.setBehavior(new ObserverBehavior(controller));
 		temple.setEntitySensor(new Sensor<IBeing>(512, 3, null));
 		temple.setArea(AABB.createSquare(0,0,10, 0));
@@ -128,10 +128,10 @@ public class Playground extends Scene
 //			AABB area = AABB.createSquare(RandomUtil.R( 400 )-200, RandomUtil.R( 400 )-200,1,0);
 			AABB area = AABB.createSquare(radius*Math.cos(Angles.PI_2/maxCannons *a), radius*Math.sin(Angles.PI_2/maxCannons * a ),1,0);
 			Weapon weapon = new Minigun(bi, area, props);
-			weapon.setLook(new MinigunGlowingLook());
 //			weapon.setLook(new MinigunLook());
 			weapon.setBehavior(new TrackingBehavior());
 			weapon.setEntitySensor( WeaponFactory.createSensor(weapon));
+			weapon.setLook(new MinigunGlowingLook((int)props.getSensorRange()));
 			addEntity( weapon );
 			bi.addFireable(weapon);
 			structure.addServiceable( weapon );
@@ -276,17 +276,6 @@ public class Playground extends Scene
 		getCollisionManager().registerHandler( Shield.class, shieldCollider );
 		
 	}
-/*	public void animate(double time)
-	{
-		super.animate(time);
-		
-		if(RandomUtil.oneOf(2))
-		{
-			double angle = RandomUtil.getRandomDouble(Angles.PI_2);
-			double radius = RandomUtil.getRandomGaussian(800, 0);
-			addEntity(new ElementalVoid(radius*Math.cos(angle), radius*Math.sin(angle), 0, RandomUtil.getRandomInt(1)+7, temple));
-		}
-	}*/
 	
 	@Override
 	public void init(GL gl, IRenderingContext context)

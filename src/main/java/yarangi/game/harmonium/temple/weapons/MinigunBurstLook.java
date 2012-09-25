@@ -36,13 +36,13 @@ public class MinigunBurstLook implements ILook <Projectile>
 	}
 
 	@Override
-	public void init(GL gl, Projectile entity, IRenderingContext context) {
+	public void init(GL gl, IRenderingContext context) {
 //		veil = context.getPlugin( BlurVeil.NAME );
 
 	}
 
 	@Override
-	public void destroy(GL gl, Projectile entity, IRenderingContext context) {
+	public void destroy(GL gl, IRenderingContext context) {
 	}
 
 	@Override
