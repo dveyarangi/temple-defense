@@ -182,8 +182,6 @@ public class OrdersActionController extends ActionController
 		if(terrain == null)
 			return;
 		reinforcementMap.apply( target.x(), target.y(), drawRadius, drawRadius, draw, poly );
-		
-		reinforcementMap.fireGridModified();
 	}
 
 

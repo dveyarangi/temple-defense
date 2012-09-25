@@ -34,7 +34,7 @@ public class PolyFactory implements ITerrainFactory <PolygonTerrainMap>
 //		ILook <PolygonTerrainMap> look = new MultilayerPolyTerrainLook(false, false);
 		ILook <PolygonTerrainMap> look = new FBOPolyTerrainLook(terrain, false, false, POLY_DEPTH);
 //		Look <PolygonTerrainMap> look = new PolyTerrainLook();
-		return new EntityShell<PolygonTerrainMap>( terrain, new ModifiableGridBehavior(), look );
+		return new EntityShell<PolygonTerrainMap>( terrain, null, look );
 	}
 	
 

@@ -14,7 +14,6 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 {
 	public SwarmDebugOverlay(boolean depthtest, boolean blend, Swarm swarm) {
 		super( swarm, depthtest, blend );
-		swarm.setModificationListener( this );
 	}
 
 	@Override

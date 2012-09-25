@@ -30,6 +30,7 @@ public class MandelbrotFactory implements ITerrainFactory
 //	private static double centery = 0f;
 //	private static double scale = 0.00001f;
 	
+	@Override
 	public EntityShell <GridyTerrainMap> generateTerrain(float width, float height, int cellsize)
 	{
 		GridyTerrainMap terrain = new GridyTerrainMap( width, height, cellsize, 1 );
@@ -83,8 +84,8 @@ public class MandelbrotFactory implements ITerrainFactory
 					        {
 					            inset = false;
 					            float r = k*toColor;
-					            float g = (float)k*toColor;
-					            float b = (float)k*toColor;
+					            float g = k*toColor;
+					            float b = k*toColor;
 					            float val =(float)(Math.abs( z) + Math.abs( zi))/4;
 		//			            System.out.println(val);
 		//			            color = new Color(1, 0, 0, 1);
@@ -115,6 +116,6 @@ public class MandelbrotFactory implements ITerrainFactory
 		}
 
 		ILook <GridyTerrainMap> look = Dummy.LOOK(); //new GridyTerrainLook();
-		return new EntityShell<GridyTerrainMap>( terrain, new ModifiableGridBehavior(), look );
+		return new EntityShell<GridyTerrainMap>( terrain, null, look );
 	}
 }

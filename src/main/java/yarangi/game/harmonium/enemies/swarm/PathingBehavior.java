@@ -234,7 +234,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 			node.reset();
 		}
 		
-		swarm.fireGridModified();
+//		swarm.fireGridModified();
 //		System.out.println("pathing finished");
 		isRunning = false;
 	}
