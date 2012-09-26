@@ -84,7 +84,7 @@ public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <W
 			}
 		}
 		
-		return true;
+		return false;
 
 	}
 
