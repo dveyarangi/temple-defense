@@ -13,17 +13,17 @@ import yarangi.numbers.AverageCounter;
  */
 public class Beacon implements IBeacon 
 {
-	private int x, y;
+	private final int x, y;
 	
 	/**
 	 * Danger level of this segment.
 	 */
-	private AverageCounter dangerFactor = new AverageCounter();
+	private final AverageCounter dangerFactor = new AverageCounter();
 	
 	/**
 	 * Swarm drones flow direction.
 	 */
-	private Vector2D flow;
+	private final Vector2D flow;
 	
 	/**
 	 * Beacon data time.

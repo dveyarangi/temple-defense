@@ -60,18 +60,21 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 				double angle = RandomUtil.getRandomDouble(Angles.PI_2);
 		//			double radius = RandomUtil.getRandomGaussian(800, 0);
 				double size = Math.abs(RandomUtil.STD(0.1, 0.01))+0.1;
+				
 				Vector2D source = swarm.getSource();
+				double spawnX = source.x();// + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS;
+				double spawnY = source.y();// + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS;
+				
 				SwarmAgent agent = null;
 				switch(RandomUtil.N( 20 )) {
 				case 0: case 1: case 2: case 3: case 4: case 5: case 6:
 				case 7: case 8: case 9: case 10: case 11: case 12: case 13: case 14: case 15:
-					agent = new SwarmAgent(swarm, new Integrity(10*size, 0, new double [] {0,0,0,0}), size/100, size);
+					agent = new SwarmAgent(swarm, new Integrity(10*size, 0, new double [] {0,0,0,0}), size/100, 5*size);
 					agent.setLook(agentLook);
 					agent.setBehavior(createBoidBehavior());
 		//			agent.setBehavior(new DroneBehavior( 1 ));
 			//		System.out.println("spawning agent at " + swarm.getArea().getRefPoint());
-					agent.setArea(AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
-										   source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*4, angle));
+					agent.setArea(AABB.createSquare(spawnX, spawnY, size*4, angle));
 					agent.setEntitySensor(EnemyFactory.SHORT_SENSOR());
 					agent.setBody(new Body(10*size+RandomUtil.STD(0, 1), AGENT_VELOCITY+RandomUtil.STD(0, 0.02)));
 					break;
@@ -79,9 +82,8 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 				case 16: case 17: case 18:
 					agent = new Seeder(swarm, 
 											new Integrity(5*size, 0, new double [] {0,0,0,0.99}), 
-											AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
-														  source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*10, angle),
-														  size/4, size/100);
+											AABB.createSquare(spawnX, spawnY, size*10, angle),
+														  size, 30*size);
 					
 					
 //					agent.setBehavior(createSeederBehavior());
@@ -98,8 +100,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 					agent.setBehavior(createDroneBehavior());
 		//			agent.setBehavior(new DroneBehavior( 1 ));
 			//		System.out.println("spawning agent at " + swarm.getArea().getRefPoint());
-					agent.setArea(AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
-										   source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 10*size, angle));
+					agent.setArea(AABB.createSquare(spawnX, spawnY, 10*size, angle));
 					agent.setEntitySensor(EnemyFactory.SHORT_SENSOR());
 					agent.setBody(new Body(10*size+RandomUtil.STD(0, 1), 1.3+RandomUtil.STD(0, 0.01)));
 					break;
@@ -115,7 +116,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	
 	private IBehavior<?> createDroneBehavior()
 	{
-		return new DroneBehavior( 10 );
+		return new DroneBehavior( 0 );
 	}
 	public IBehavior <SwarmAgent> createBoidBehavior()
 	{

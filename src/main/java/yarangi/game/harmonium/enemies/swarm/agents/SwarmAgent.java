@@ -11,12 +11,12 @@ import yarangi.graphics.quadraturin.objects.IEntity;
 public class SwarmAgent extends Entity implements Damageable, IEnemy
 {
 	
-	private Swarm swarm;
+	private final Swarm swarm;
 	
-	private Integrity integrity;
+	private final Integrity integrity;
 	
-	private double leadership;
-	private double attractiveness;
+	private final double leadership;
+	private final double attractiveness;
 	
 	private IEntity target;
 	
@@ -65,6 +65,11 @@ public class SwarmAgent extends Entity implements Damageable, IEnemy
 	public IEntity getTarget()
 	{
 		return target;
+	}
+
+	public double getLocalDanger()
+	{
+		return swarm.getDanger(getArea().getAnchor());
 	}
 
 }

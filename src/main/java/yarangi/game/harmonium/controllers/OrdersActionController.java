@@ -7,7 +7,7 @@ import yarangi.game.harmonium.temple.harvester.Harvester;
 import yarangi.game.harmonium.temple.harvester.Waller;
 import yarangi.game.harmonium.temple.weapons.Weapon;
 import yarangi.graphics.quadraturin.Scene;
-import yarangi.graphics.quadraturin.ViewPoint2D;
+import yarangi.graphics.quadraturin.Camera2D;
 import yarangi.graphics.quadraturin.actions.ActionController;
 import yarangi.graphics.quadraturin.actions.CameraMover;
 import yarangi.graphics.quadraturin.actions.IAction;
@@ -67,7 +67,7 @@ public class OrdersActionController extends ActionController
 	{
 		super(scene);
 		
-		cameraMan = new CameraMover( (ViewPoint2D) scene.getViewPoint() );
+		cameraMan = new CameraMover( (Camera2D) scene.getCamera() );
 		
 		terrain = (PolygonTerrainMap)scene.getWorldLayer().<MultilayerTilePoly>getTerrain();
 //		actions.put("cursor-moved", temple.getController());
@@ -91,7 +91,7 @@ public class OrdersActionController extends ActionController
 					target = cursor.getWorldLocation();
 				}
 				if(dragged == null) {
-					System.out.println(target);
+//					System.out.println(target);
 					drawTerrain(terrain, target, false);
 				}
 			}
@@ -176,6 +176,7 @@ public class OrdersActionController extends ActionController
 	{
 		Poly poly = new PolyDefault();
 
+		Camera2D camera = (Camera2D)(getScene().getCamera());
 		for(double ang = 0 ; ang < Angles.PI_2; ang += Angles.PI_div_12)
 			poly.add( target.x() + drawRadius * Math.cos( ang ), target.y() + drawRadius * Math.sin( ang) );
 		

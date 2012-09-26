@@ -21,6 +21,6 @@ public class EnemyFactory
 	
 	public static ISensor <IBeing> SHORT_SENSOR() 
 	{
-		return new Sensor <IBeing> (50, 10, FRIEND_OR_FOE_FILTER);
+		return new Sensor <IBeing> (20, 10, FRIEND_OR_FOE_FILTER);
 	}
 }

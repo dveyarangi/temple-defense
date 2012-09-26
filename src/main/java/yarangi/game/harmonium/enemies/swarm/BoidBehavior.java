@@ -24,9 +24,9 @@ import yarangi.math.Vector2D;
  */
 public class BoidBehavior implements IBehaviorState<SwarmAgent> 
 {
-	public static final double ATTRACTION_COEF = 0.1;
-	public static final double SEPARATION_COEF = 0.005;
-	public static final double FLOCKING_COEF = 0.07;
+	public static final double ATTRACTION_COEF = 1;
+	public static final double SEPARATION_COEF = 0.2;
+	public static final double FLOCKING_COEF = 0.03;
 	
 	private final DroneBehavior droning = new DroneBehavior(20);
 	private SatelliteBehavior satellite;
@@ -44,7 +44,6 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 ///	public static final double FLOCKING_COEF = 1;
 	@Override
 	public double behave(double time, SwarmAgent boid) {
-		
 		
 		ISensor<Entity> sensor = boid.getEntitySensor();
 		
@@ -75,6 +74,7 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 		double attractivity; // temp var for otherBoid attractiveness
 		boolean flocking = false; // temp var floking on/off for this boid
 		double distance;
+		double attractionModifier = Math.min( 100, boid.getLocalDanger() ) / 100 + 0.01;
 		for(Entity neigh : neighbours)
 		{
 			if(neigh == boid)
@@ -97,7 +97,7 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 			{
  				otherBoid = (IEnemy) neigh;
 				leadership = otherBoid.getLeadership();
-				attractivity = otherBoid.getAttractiveness();
+				attractivity = otherBoid.getAttractiveness() * attractionModifier;
 				flocking = true;
 			}
 			
@@ -148,6 +148,7 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 		boid.getBody().addForce( tAttractionForce );
 		boid.getBody().addForce( tSeparationForce );
 		boid.getBody().addVelocity( tFlockingVelocity.substract( boid.getBody().getVelocity()).multiply( FLOCKING_COEF ) );
+		
 		
 //		System.out.println(Fatt + " : " + Fsep + " : " + Flok + ", res:" + boid.getBody().getForce());
 		

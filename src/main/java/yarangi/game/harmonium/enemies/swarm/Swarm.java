@@ -48,6 +48,8 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	static final double SPAWNING_INTERVAL = 15;
 	public static final int SPAWNING_RADIUS = 50;
 	public static final Integrity AGENT_INTEGRITY = new Integrity(10, 0, new double [] {0,0,0,0});
+	
+	
 
 	final PolygonTerrainMap terrain;
 	private final SpatialHashMap <IEntity> index;
@@ -122,6 +124,16 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 		flow.set(getContentByIndex(px, py).getFlow()).multiply(0.5);
 		flow.normalize();
 		return flow;
+	}
+	
+	public double getDanger(IVector2D point) {
+		int px = toBeaconIdx(point.x());
+		int py = toBeaconIdx(point.y());
+//		System.out.println(px + " : " + py + " ::: " + point);
+		if(px < 0 || px >= WSIZE || py < 0 || py >= WSIZE)
+			return 0;
+		
+		return getContentByIndex(px, py).getDangerFactor();
 	}
 	
 	protected double getDanger(int i, int j)

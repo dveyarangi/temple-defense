@@ -22,7 +22,7 @@ public class DroneBehavior implements IBehaviorState <SwarmAgent>, IBehavior <Sw
 		Swarm swarm = agent.getSwarm();
 		IVector2D flow = swarm.getFlow(agent.getArea().getAnchor());
 		agent.getArea().setOrientation( Angles.TO_DEG * agent.getBody().getVelocity().getAngle() );
-		
+
 //		System.out.println(flow);
 		if(flow != null) {
 			if(inertion == 0) {
