@@ -84,7 +84,7 @@ public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <W
 			}
 		}
 		
-		return false;
+		return true;
 
 	}
 
@@ -93,7 +93,7 @@ public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <W
 	public boolean behave(double time, Waller waller, boolean isVisible)
 	{
 		if(harvestedTile == null) {
-			return false;
+			return true;
 		}
 		
 		
@@ -149,7 +149,7 @@ public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <W
 		Poly res = s.getRes();
 		
 		if(res == null)
-			return false;
+			return true;
 		
 		
 		double dx = atx - waller.x();

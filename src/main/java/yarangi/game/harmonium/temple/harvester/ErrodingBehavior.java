@@ -65,7 +65,7 @@ public class ErrodingBehavior extends Sensor <ITerrain> implements IBehavior <Ha
 	public boolean behave(double time, Harvester harvester, boolean isVisible)
 	{
 		if(harvestedTile == null) {
-			return false;
+			return true;
 		}
 		
 		
