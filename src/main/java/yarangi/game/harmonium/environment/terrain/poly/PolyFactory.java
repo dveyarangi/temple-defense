@@ -1,6 +1,5 @@
 package yarangi.game.harmonium.environment.terrain.poly;
 
-import yarangi.game.harmonium.environment.terrain.ModifiableGridBehavior;
 import yarangi.graphics.quadraturin.objects.EntityShell;
 import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.graphics.quadraturin.terrain.ITerrainFactory;

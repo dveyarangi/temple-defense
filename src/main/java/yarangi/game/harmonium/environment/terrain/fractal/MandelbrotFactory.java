@@ -1,6 +1,5 @@
 package yarangi.game.harmonium.environment.terrain.fractal;
 
-import yarangi.game.harmonium.environment.terrain.ModifiableGridBehavior;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.objects.Dummy;
 import yarangi.graphics.quadraturin.objects.EntityShell;

@@ -1,7 +1,6 @@
 package yarangi.game.harmonium.environment.terrain.stone;
 
 import yarangi.game.harmonium.environment.terrain.GridyTerrainLook;
-import yarangi.game.harmonium.environment.terrain.ModifiableGridBehavior;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.objects.EntityShell;
 import yarangi.graphics.quadraturin.objects.ILook;
