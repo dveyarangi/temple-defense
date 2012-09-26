@@ -36,9 +36,9 @@ public class PolyTerrainLook extends PolyGridLook<TilePoly, PolygonGrid<TilePoly
 			return;
 		gl.glColor4f(1f, 1f, 0.1f, 0.25f);
 //		renderPoly( gl, poly );
-		renderPoly( gl, poly );
-//		for(int idx = 0; idx < poly.getNumInnerPoly(); idx ++)
-//			renderPoly( gl, poly.getInnerPoly( idx ) );
+//		renderPoly( gl, poly );
+		for(int idx = 0; idx < poly.getNumInnerPoly(); idx ++)
+			renderPoly( gl, poly.getInnerPoly( idx ) );
 	}
 	
 	private void renderPoly(GL gl, Poly poly)
