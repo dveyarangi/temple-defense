@@ -37,7 +37,7 @@ public class Waller extends Entity implements Serviceable, ITemple, IObserverEnt
 
 
 	@Override
-	public double getAttractivity()
+	public double getAttractiveness()
 	{
 		return 0;
 	}

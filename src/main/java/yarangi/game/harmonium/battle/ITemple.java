@@ -12,6 +12,6 @@ import yarangi.spatial.Area;
 
 public interface ITemple extends IEntity
 {
-	public double getAttractivity();
+	public double getAttractiveness();
 	public Area getArea();
 }

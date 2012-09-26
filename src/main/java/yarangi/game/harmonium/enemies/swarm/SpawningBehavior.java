@@ -81,11 +81,11 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 											new Integrity(5*size, 0, new double [] {0,0,0,0.99}), 
 											AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
 														  source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, size*10, angle),
-														  size/100, size/100);
+														  size/4, size/100);
 					
 					
 //					agent.setBehavior(createSeederBehavior());
-					agent.setBehavior(createBoidBehavior());
+					agent.setBehavior(new DroneBehavior(20));
 					agent.setEntitySensor(EnemyFactory.SHORT_SENSOR());
 					agent.setLook(seederLook);
 					agent.setBody(new Body(size, AGENT_VELOCITY+RandomUtil.STD(0, 0.01)));
@@ -93,7 +93,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 					break;
 	//				seeder.getBody().setMaxSpeed( 1 );
 				case 19:
-					agent = new SwarmAgent(swarm, new Integrity(100*size, 0, new double [] {0,0,0,0}), size/100, size*10000 );
+					agent = new SwarmAgent(swarm, new Integrity(100*size, 0, new double [] {0,0,0,0}), 2*size, size*10 );
 					agent.setLook(agentLook);
 					agent.setBehavior(createDroneBehavior());
 		//			agent.setBehavior(new DroneBehavior( 1 ));
@@ -101,7 +101,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 					agent.setArea(AABB.createSquare(source.x() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 
 										   source.y() + RandomUtil.getRandomDouble(SPAWNING_RADIUS*2)-SPAWNING_RADIUS, 10*size, angle));
 					agent.setEntitySensor(EnemyFactory.SHORT_SENSOR());
-					agent.setBody(new Body(10*size+RandomUtil.STD(0, 1), 1+RandomUtil.STD(0, 0.02)));
+					agent.setBody(new Body(10*size+RandomUtil.STD(0, 1), 1.3+RandomUtil.STD(0, 0.01)));
 					break;
 				}
 				if(agent != null)
@@ -119,6 +119,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	}
 	public IBehavior <SwarmAgent> createBoidBehavior()
 	{
+		
 		final IBehaviorState<SwarmAgent> boidState = new BoidBehavior();
 //		final IBehaviorState<SwarmAgent> attackState = new SatelliteBehavior();
 		
@@ -130,7 +131,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 				return boidState;
 			}
 		});*/
-		beh.link(boidState.getId(), new IBehaviorCondition<SwarmAgent>()
+/*		beh.link(boidState.getId(), new IBehaviorCondition<SwarmAgent>()
 				{
 					@Override public IBehaviorState<SwarmAgent> nextState(SwarmAgent entity) {
 						return new ChasingBehavior<SwarmAgent>(entity.getTarget().getArea(), 4);
@@ -141,7 +142,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 					@Override public IBehaviorState<SwarmAgent> nextState(SwarmAgent entity) {
 						return new ChasingBehavior<SwarmAgent>(entity.getTarget().getArea(), 4);
 					}
-				});
+				});*/
 		
 		return beh;
 	}

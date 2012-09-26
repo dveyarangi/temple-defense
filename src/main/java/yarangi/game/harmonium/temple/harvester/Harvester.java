@@ -11,9 +11,9 @@ import yarangi.spatial.Area;
 public class Harvester extends Entity implements Serviceable, ITemple, IObserverEntity
 {
 	
-	private Port port;
+	private final Port port;
 	
-	private IOrderScheduler scheduler;
+	private final IOrderScheduler scheduler;
 	
 	
 	public Harvester(Port port, IOrderScheduler scheduler)
@@ -37,9 +37,9 @@ public class Harvester extends Entity implements Serviceable, ITemple, IObserver
 
 
 	@Override
-	public double getAttractivity()
+	public double getAttractiveness()
 	{
-		return 0;
+		return -10;
 	}
 
 }

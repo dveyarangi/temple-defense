@@ -20,7 +20,7 @@ public class Minigun extends Weapon
 	public static final double maxRangeSquare = 200;
 	public static final double RELOADING_TIME = 20;
 	public static final double ACCURACY = 0.2;
-	public static final Damage DAMAGE = new Damage(15, 0.1, 0, 0);
+	public static final Damage DAMAGE = new Damage(0.1, 0.1, 0, 0);
 //	public static final Damage DAMAGE = new Damage(15, 0.1, 0, 0);
 	public static final double resourceCapacity = 1000;
 	public static final double resourceConsumption = 50;
@@ -36,7 +36,7 @@ public class Minigun extends Weapon
 			128, // tracking range
 			ACCURACY, 
 			projectileHitRadius, 
-			new Damage(5, 0.1, 0, 0),
+			new Damage(0.2, 0.1, 0, 0),
 			resourceCapacity, 0, resourceType,
 			128);
 	
@@ -121,7 +121,7 @@ public class Minigun extends Weapon
 	}
 
 	@Override
-	public double getAttractivity() { return 10000; }
+	public double getAttractiveness() { return 100; }
 
 	@Override
 	public void updateState(double time)

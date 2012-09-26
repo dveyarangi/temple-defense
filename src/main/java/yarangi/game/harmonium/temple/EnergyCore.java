@@ -58,7 +58,7 @@ public class EnergyCore extends ObserverEntity implements Serviceable, ITemple, 
 	public double getHealth() { return health; }
 	
 	@Override
-	public double getAttractivity() { return 300; }
+	public double getAttractiveness() { return 30; }
 
 
 	@Override

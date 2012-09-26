@@ -15,25 +15,31 @@ import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 
 /**
- * TODO: this motherfucker creates enormous amounts of vectors, 
+ * 
+ * Boid  behavior implementation.
+ * Regards both IEnemy and ITemple entities as fellow boids, though handles them a bit differently 
+ *
  * @author dveyarangi
  *
  */
 public class BoidBehavior implements IBehaviorState<SwarmAgent> 
 {
-	public static final double ATTRACTION_COEF = 0.25;
-	public static final double SEPARATION_COEF = 0.02;
-	public static final double FLOCKING_COEF = 0.3;
+	public static final double ATTRACTION_COEF = 0.1;
+	public static final double SEPARATION_COEF = 0.005;
+	public static final double FLOCKING_COEF = 0.07;
 	
 	private final DroneBehavior droning = new DroneBehavior(20);
 	private SatelliteBehavior satellite;
 	
-	Vector2D massCenter = Vector2D.ZERO();
-	Vector2D Fsep = Vector2D.ZERO();
-	Vector2D flockingVelocity = Vector2D.ZERO();
-	Vector2D separation = Vector2D.ZERO();
-	Vector2D momentum = Vector2D.ZERO();
-	Vector2D lead = Vector2D.ZERO();
+	Vector2D tMassCenter = Vector2D.ZERO(); // temp var mass center of group (boids in sensor range)
+	Vector2D tSeparationForce = Vector2D.ZERO(); // temp var total separation force from group
+	Vector2D tFlockingVelocity = Vector2D.ZERO(); // temp var average group velocity
+	Vector2D tAttractionForce = Vector2D.ZERO(); // temp var for group attraction weighted vector
+	
+	Vector2D tMomentum = Vector2D.ZERO(); // temp var relative location to particular boid in group
+	Vector2D tBoidSeparation = Vector2D.ZERO(); // temp var separation force from particular boid (TODO: is this weak or electromagnetic forces?)  
+	Vector2D tBoidLeadership = Vector2D.ZERO(); // temp var leadership factor of particular boid
+	Vector2D tBoidAttraction = Vector2D.ZERO(); // temp var attraction factor of particular boid (em force?)
 
 ///	public static final double FLOCKING_COEF = 1;
 	@Override
@@ -52,42 +58,40 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 		
 		// TODO: OPTIMIZE vector operations
 		IVector2D loc = boid.getArea().getAnchor();
-		
-		double separationDistance;
+
 		
 		IVector2D otherLoc;
 		
-		massCenter.setxy( 0, 0 );
-		Fsep.setxy(0, 0);
-		flockingVelocity.setxy( 0, 0 );
+		// reset vectors
+		tMassCenter.setxy( 0, 0 );
+		tSeparationForce.setxy(0, 0);
+		tFlockingVelocity.setxy( 0, 0 );
+		tAttractionForce.setxy( 0, 0 );
 		
-		
+
+		double dN = 1./(neighbours.size()-1);  // detected neighbour boids count inverse
+		IEnemy otherBoid; // temp var
+		double leadership; // temp var for otherBoid leadership
+		double attractivity; // temp var for otherBoid attractiveness
+		boolean flocking = false; // temp var floking on/off for this boid
 		double distance;
-		double dN = 1./(neighbours.size()-1);
-		IEnemy otherBoid;
-		double leadership;
-		double attractivity;
-		boolean flocking = false;
 		for(Entity neigh : neighbours)
 		{
 			if(neigh == boid)
 				continue;
 			
-			if(neigh instanceof ITemple)
+
+ 			if(neigh instanceof ITemple)
 			{
-				if(boid.getTarget() == null)
+				attractivity = ((ITemple) neigh).getAttractiveness();
+				leadership = 0; //
+				flocking = false; //not one of our kind, we do not flock with him
+				
+//				if(boid.getTarget() == null) // lock on temple core, not used currently
 				{
 					boid.setTarget( neigh );
 				}
-				
-				if(neigh == boid.getTarget()) 
-				{
-				leadership = 1;
-				attractivity = ((ITemple) neigh).getAttractivity();
-				flocking = false;
-				}
-				else
-					continue;
+
 			}
 			else
 			{
@@ -100,28 +104,36 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 			
 			
 			otherLoc = neigh.getArea().getAnchor();
-			separationDistance = (neigh.getArea().getMaxRadius() + boid.getArea().getMaxRadius())/1.5;
+//			separationDistance = (neigh.getArea().getMaxRadius() + boid.getArea().getMaxRadius())/1.5;
 			
 			distance = Geometry.calcHypot( loc, otherLoc );
 			
+			tMomentum.set( otherLoc ).substract( loc ).multiply( 1 / distance );
+			
 			// separation:
-			separation.set( loc ).substract(otherLoc).normalize().multiply( SEPARATION_COEF );
-			Fsep.add(separation);//.multiply((separationDistance-distance)));
+			if(boid.getTarget() != neigh) 
+			{
+				tBoidSeparation.set( tMomentum ).multiply( -SEPARATION_COEF / distance); // its -momentum * S
+				tSeparationForce.add(tBoidSeparation);//.multiply((separationDistance-distance)));
+			}
 			
 			// attraction parameters:
-			momentum.set( otherLoc ).substract( loc ).multiply( attractivity );
-			massCenter.add(momentum);
+//			tMassCenter.add(tMomentum);
+			tBoidAttraction.set( tMomentum ).multiply( attractivity );
+			tAttractionForce.add( tBoidAttraction ); //attraction forces sum
+			
 			
 			// flocking:
 			if(flocking) {
-				lead.set(neigh.getBody().getVelocity()).multiply(leadership);
-				flockingVelocity.add(lead);
+				tBoidLeadership.set(neigh.getBody().getVelocity()).multiply(leadership);
+				tFlockingVelocity.add(tBoidLeadership);
 			}
 		}
 		
-		massCenter.multiply(dN).add( loc );
+//		tMassCenter.multiply( dN ).add( loc );
+		tAttractionForce.multiply( dN );
 //		double attDistance = Geometry.calcHypot(massCenter, loc);
-		Vector2D Fatt = massCenter.substract(loc).normalize().multiply(ATTRACTION_COEF);
+		tAttractionForce.multiply(ATTRACTION_COEF);
 		
 //		flockingVelocity.multiply(dN);
 //		flockingVelocity.substract( boid.getBody().getVelocity() );
@@ -129,13 +141,13 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 		
 //		Fsep.normalize().multiply( SEPARATION_COEF );
 		
-		Vector2D Flok = flockingVelocity.normalize().multiply(FLOCKING_COEF); 
+//		tFlockingVelocity.normalize().multiply(FLOCKING_COEF); 
 		
 //		droning.behave( time, boid);
 		droning.behave( time, boid);
-		boid.getBody().addForce( Fatt );
-		boid.getBody().addForce( Fsep );
-		boid.getBody().addForce( Flok );
+		boid.getBody().addForce( tAttractionForce );
+		boid.getBody().addForce( tSeparationForce );
+		boid.getBody().addVelocity( tFlockingVelocity.substract( boid.getBody().getVelocity()).multiply( FLOCKING_COEF ) );
 		
 //		System.out.println(Fatt + " : " + Fsep + " : " + Flok + ", res:" + boid.getBody().getForce());
 		
