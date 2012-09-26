@@ -169,7 +169,7 @@ public class OrdersActionController extends ActionController
 	@Override
 	public ISpatialFilter<IEntity> getPickingFilter() { return filter; }
 	
-	private final double drawRadius = 15;
+	private static final double drawRadius = 25;
 
 	
 	private void drawTerrain(PolygonTerrainMap terrain, IVector2D target, boolean draw)
@@ -177,12 +177,15 @@ public class OrdersActionController extends ActionController
 		Poly poly = new PolyDefault();
 
 		Camera2D camera = (Camera2D)(getScene().getCamera());
+		
+		double scaledRadius = camera.getScale() * drawRadius;
+		
 		for(double ang = 0 ; ang < Angles.PI_2; ang += Angles.PI_div_12)
-			poly.add( target.x() + drawRadius * Math.cos( ang ), target.y() + drawRadius * Math.sin( ang) );
+			poly.add( target.x() + scaledRadius * Math.cos( ang ), target.y() + scaledRadius * Math.sin( ang) );
 		
 		if(terrain == null)
 			return;
-		reinforcementMap.apply( target.x(), target.y(), drawRadius, drawRadius, draw, poly );
+		reinforcementMap.apply( target.x(), target.y(), scaledRadius, scaledRadius, draw, poly );
 	}
 
 
