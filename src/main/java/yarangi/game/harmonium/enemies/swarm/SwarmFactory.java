@@ -136,24 +136,26 @@ public class SwarmFactory
 					
 					double atx = source.x();
 					double aty = source.y();
-					double size = 5*source.getArea().getMaxRadius();
+					double size = 2*source.getArea().getMaxRadius();
 					
 					PolyDefault poly = new PolyDefault();
 					for(double a = 0 ; a < Angles.PI_2; a += Angles.PI_div_3)
 						poly.add( new Point2D.Double(atx + size * Math.cos( a ), aty + size * Math.sin( a )) );
 
-					terrain.apply( atx, aty, size, size, true, poly );
+					boolean hit = terrain.apply( atx, aty, size, size, true, poly );
 //					swarm.setUnpassable(target.getArea().getRefPoint().x(), target.getArea().getRefPoint().y());
-					
-					double rawDamage = source.getIntegrity().hit(MATTER_DAMAGE);
-					swarm.setDanger(source, 10*rawDamage);
-					if(source.getIntegrity().getHitPoints() <= 0)
-					{
-						source.markDead();
-	//						EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(0,1,0,1), 32);
-						return true;
+//					System.out.println(hit);
+					if(hit) {
+						double rawDamage = source.getIntegrity().hit(MATTER_DAMAGE);
+						swarm.setDanger(source, 10*rawDamage);
+						if(source.getIntegrity().getHitPoints() <= 0)
+						{
+							source.markDead();
+		//						EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(0,1,0,1), 32);
+							return true;
 						}
 //					}
+					}
 				}
 			
 				return false;
