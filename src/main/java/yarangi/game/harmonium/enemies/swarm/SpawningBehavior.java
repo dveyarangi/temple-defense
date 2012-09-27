@@ -86,7 +86,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 				case 16: case 17: case 18:
 					agent = new Seeder(swarm, 
 											new Integrity(5*flavor, 0, new double [] {0,0,0,0.99}), 
-											AABB.createSquare(spawnX, spawnY, size, angle),
+											AABB.createSquare(spawnX, spawnY, 3*size, angle),
 											flavor, 30*flavor);
 					
 					
