@@ -18,7 +18,7 @@
 			{ 
 				"factoryClass" : "yarangi.graphics.veils.BlurVeil",
 				"properties" : {
-					"decay" : 0.002
+					"decay" : 0.03
 				}
 			},	
 			{ 
@@ -87,6 +87,8 @@
 			    	"initZoom" : 1,
 			    	"minZoom"  : 0.1
 			    },
+			    
+			    "timeModifier" : 1,
 			    
 				"sceneClass" : "yarangi.game.harmonium.Playground",
 				
