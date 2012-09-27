@@ -13,6 +13,7 @@ import yarangi.game.harmonium.controllers.ControlLook;
 import yarangi.game.harmonium.controllers.OrdersActionController;
 import yarangi.game.harmonium.controllers.TempleController;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
+import yarangi.game.harmonium.enemies.swarm.SwarmDebugOverlay;
 import yarangi.game.harmonium.enemies.swarm.SwarmFactory;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.harmonium.environment.resources.Port;
@@ -216,8 +217,8 @@ public class Playground extends Scene
 		swarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, Dummy.<Swarm>LOOK() );
 		addEntity(swarmShell);
 		
-//		SwarmDebugOverlay swarmDebugLook = new SwarmDebugOverlay(swarm);
-//		debugSwarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, swarmDebugLook );
+		SwarmDebugOverlay swarmDebugLook = new SwarmDebugOverlay(false, true, swarm);
+		debugSwarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, swarmDebugLook );
 //		addEntity(debugSwarmShell);
 		
 		ICollisionHandler<Projectile> projectileCollider = new ICollisionHandler <Projectile> ()

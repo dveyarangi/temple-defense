@@ -62,6 +62,13 @@ public class EnergyCore extends ObserverEntity implements Serviceable, ITemple, 
 
 
 	@Override
+	public double getLeadership()
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
 	public int getGroupId()
 	{
 		// TODO Auto-generated method stub
@@ -87,5 +94,6 @@ public class EnergyCore extends ObserverEntity implements Serviceable, ITemple, 
 		if(transferRate < 0) transferRate = 0;
 //		System.out.println("transfer rate: " + transferRate);
 	}
+
 
 }

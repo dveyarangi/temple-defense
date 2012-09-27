@@ -2,12 +2,17 @@ package yarangi.game.harmonium.enemies.swarm.agents;
 
 import yarangi.game.harmonium.enemies.swarm.Swarm;
 import yarangi.graphics.quadraturin.objects.IBehavior;
+import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.graphics.quadraturin.objects.ISensor;
+import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
+import yarangi.graphics.quadraturin.terrain.ITerrain;
 import yarangi.math.Angles;
+import yarangi.math.Geometry;
 import yarangi.math.IVector2D;
 import yarangi.numbers.RandomUtil;
 
-public class DroneBehavior implements IBehaviorState <SwarmAgent>, IBehavior <SwarmAgent>  
+public class DroneBehavior /*extends Sensor <IEntity>*/ implements IBehaviorState <SwarmAgent>, IBehavior <SwarmAgent>
 {
 	double da = RandomUtil.STD(0, 0.1);
 	
@@ -19,6 +24,16 @@ public class DroneBehavior implements IBehaviorState <SwarmAgent>, IBehavior <Sw
 
 	@Override
 	public double behave(double time, SwarmAgent agent) {
+		
+/*		if(agent.getTarget() != null)
+		{
+			double dist = Geometry.calcHypotSquare( agent.getTarget().getArea().getAnchor(), agent.getArea().getAnchor());
+			if(dist < 900)
+			{
+				
+			}
+		}*/
+		
 		Swarm swarm = agent.getSwarm();
 		IVector2D flow = swarm.getFlow(agent.getArea().getAnchor());
 		agent.getArea().setOrientation( Angles.TO_DEG * agent.getBody().getVelocity().getAngle() );

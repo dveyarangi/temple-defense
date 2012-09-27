@@ -11,9 +11,9 @@ import yarangi.spatial.Area;
 public class Waller extends Entity implements Serviceable, ITemple, IObserverEntity
 {
 	
-	private Port port;
+	private final Port port;
 	
-	private IOrderScheduler scheduler;
+	private final IOrderScheduler scheduler;
 	
 	
 	public Waller(Port port, IOrderScheduler scheduler)
@@ -38,6 +38,13 @@ public class Waller extends Entity implements Serviceable, ITemple, IObserverEnt
 
 	@Override
 	public double getAttractiveness()
+	{
+		return 0;
+	}
+
+
+	@Override
+	public double getLeadership()
 	{
 		return 0;
 	}

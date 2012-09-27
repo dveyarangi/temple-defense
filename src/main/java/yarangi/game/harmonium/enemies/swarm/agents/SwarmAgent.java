@@ -5,8 +5,10 @@ import yarangi.game.harmonium.battle.Damageable;
 import yarangi.game.harmonium.battle.IEnemy;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
+import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.numbers.RandomUtil;
 
 public class SwarmAgent extends Entity implements Damageable, IEnemy
 {
@@ -20,6 +22,9 @@ public class SwarmAgent extends Entity implements Damageable, IEnemy
 	
 	private IEntity target;
 	
+	private final Color color;
+	private final Color otherColor;
+	
 	public SwarmAgent(Swarm swarm, Integrity integrity, double leadership, double attractiveness)
 	{
 		this.swarm = swarm;
@@ -29,6 +34,14 @@ public class SwarmAgent extends Entity implements Damageable, IEnemy
 		this.leadership = leadership;
 		
 		this.attractiveness = attractiveness;
+		
+		this.color = new Color( (float)(RandomUtil.getRandomDouble(0.5)+0.5),
+								(float)(RandomUtil.getRandomDouble(0.5)+0.5),
+								(float)(RandomUtil.getRandomDouble(0.5)+0.5), 1);
+		this.otherColor = new Color( (float)(RandomUtil.getRandomDouble(0.5)+0.5),
+									  (float)(RandomUtil.getRandomDouble(0.5)+0.5),
+									  (float)(RandomUtil.getRandomDouble(0.5)+0.5), 1);
+
 	}
 		
 	public Swarm getSwarm() { return swarm; }
@@ -70,6 +83,16 @@ public class SwarmAgent extends Entity implements Damageable, IEnemy
 	public double getLocalDanger()
 	{
 		return swarm.getDanger(getArea().getAnchor());
+	}
+
+	public Color getColor()
+	{
+		return color;
+	}
+
+	public Color getOtherColor()
+	{
+		return otherColor;
 	}
 
 }

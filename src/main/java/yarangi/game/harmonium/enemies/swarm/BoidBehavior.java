@@ -26,7 +26,7 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 {
 	public static final double ATTRACTION_COEF = 1;
 	public static final double SEPARATION_COEF = 0.2;
-	public static final double FLOCKING_COEF = 0.03;
+	public static final double FLOCKING_COEF = 0.07;
 	
 	private final DroneBehavior droning = new DroneBehavior(20);
 	private SatelliteBehavior satellite;
@@ -84,7 +84,7 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
  			if(neigh instanceof ITemple)
 			{
 				attractivity = ((ITemple) neigh).getAttractiveness();
-				leadership = 0; //
+				leadership = ((ITemple) neigh).getLeadership(); //
 				flocking = false; //not one of our kind, we do not flock with him
 				
 //				if(boid.getTarget() == null) // lock on temple core, not used currently

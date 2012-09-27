@@ -36,7 +36,7 @@ public class Minigun extends Weapon
 			128, // tracking range
 			ACCURACY, 
 			projectileHitRadius, 
-			new Damage(0.1, 0.1, 0, 0),
+			new Damage(0.2, 0.1, 0, 0),
 			resourceCapacity, 0, resourceType,
 			128);
 	
@@ -134,5 +134,11 @@ public class Minigun extends Weapon
 	{
 		
 		return nextProjectileSpeed;
+	}
+
+	@Override
+	public double getLeadership()
+	{
+		return 0;
 	}
 }

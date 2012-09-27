@@ -39,7 +39,14 @@ public class Harvester extends Entity implements Serviceable, ITemple, IObserver
 	@Override
 	public double getAttractiveness()
 	{
-		return -10;
+		return 0.05;
+	}
+
+
+	@Override
+	public double getLeadership()
+	{
+		return 100;
 	}
 
 }

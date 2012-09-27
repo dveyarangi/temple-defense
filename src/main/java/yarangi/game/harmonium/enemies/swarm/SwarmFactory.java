@@ -115,7 +115,7 @@ public class SwarmFactory
 				if(target instanceof Damageable && target instanceof ITemple)
 				{
 					((Damageable) target).hit( new Damage(source.getArea().getMaxRadius(), 0, 0, 0) );
-					source.hit( new Damage(1000, 0, 0, 0) );
+					source.hit( new Damage(2, 0, 0, 0) );
 //					source.markDead();
 //					EffectUtils.makeExplosion(source.getArea().getRefPoint(), scene.getWorldLayer(), new Color(1,0,0,1), 64);
 					return true;

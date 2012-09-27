@@ -15,13 +15,18 @@
  					"isoheight" : "shaders/isoheight.glsl"
 			  	}
 			},
-				{ 
-					"factoryClass" : "yarangi.graphics.veils.BlurVeil",
-					"properties" : {
-						"decay" : 0.02
-					}
-				}		
-			
+			{ 
+				"factoryClass" : "yarangi.graphics.veils.BlurVeil",
+				"properties" : {
+					"decay" : 0.002
+				}
+			},	
+			{ 
+				"factoryClass" : "yarangi.graphics.veils.IsoheightVeil",
+				"properties" : {
+					"decay" : 0.001
+				}
+			}				
 		 ]
 			  		
 	},

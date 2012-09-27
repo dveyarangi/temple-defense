@@ -12,7 +12,7 @@ public class DroneBehavior implements IBehavior<GenericEnemy>
 	public boolean behave(double time, GenericEnemy entity, boolean isVisible) 
 	{
 		entity.getArea().setOrientation( entity.getArea().getOrientation()+da );
-		
+
 		IVector2D loc = entity.getArea().getAnchor();
 		if(loc.x() >  800 || loc.y() >  800
 		|| loc.x() < -800 || loc.y() < -800)
