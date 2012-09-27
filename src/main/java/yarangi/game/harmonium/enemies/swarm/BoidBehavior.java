@@ -74,7 +74,7 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 		double attractivity; // temp var for otherBoid attractiveness
 		boolean flocking = false; // temp var floking on/off for this boid
 		double distance;
-		double attractionModifier = Math.min( 100, boid.getLocalDanger() ) / 100 + 0.01;
+		double attractionModifier = Math.min( 1000, boid.getLocalDanger() ) / 1000 + 0.01;
 		for(Entity neigh : neighbours)
 		{
 			if(neigh == boid)
