@@ -14,7 +14,7 @@ public class Minigun extends Weapon
 	public static final double BASE_TRACKING_SPEED = 3;
 	public static final double CANNON_TRACKING_HALF_WIDTH = 360;
 	public static final double projectileSpeed = 5;
-	public static final double projectileHitRadius = 3;
+	public static final double projectileHitRadius = 1;
 	public static final double trackingSpeed = BASE_TRACKING_SPEED;
 	public static final double effectiveRangeSquare = 40000;
 	public static final double maxRangeSquare = 200;

@@ -1,9 +1,11 @@
 package yarangi.game.harmonium.temple.weapons;
 
 import yarangi.game.harmonium.battle.IEnemy;
+import yarangi.game.harmonium.enemies.MetaCircleLook;
 import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.graphics.quadraturin.objects.ISensor;
 import yarangi.graphics.quadraturin.objects.Sensor;
+import yarangi.graphics.textures.TextureLook;
 import yarangi.math.Angles;
 import yarangi.math.BitUtils;
 import yarangi.math.IVector2D;
@@ -16,6 +18,10 @@ import yarangi.spatial.ISpatialFilter;
 
 public class WeaponFactory
 {
+	//new MinigunBurstLook(weapon.getPort(), weapon.getProps())
+	private static TextureLook look = new TextureLook("/textures/red_gradient.jpg");
+//	private static MetaCircleLook look = new MetaCircleLook();
+	
 	public static Projectile createProjectile(Weapon weapon, double velocity)
 	{
 		Area area = weapon.getArea();
@@ -30,7 +36,7 @@ public class WeaponFactory
 
 		Vector2D speed = Vector2D.POLAR(velocity, area.getOrientation());
 		Projectile shell = new Projectile( speed, weapon.getProps());
-		shell.setLook(new MinigunBurstLook(weapon.getPort(), weapon.getProps()));
+		shell.setLook(look);
 		shell.setBehavior(shellBehavior);
 		shell.setArea(AABB.createSquare(location.x(), location.y(), weapon.getProps().getProjectileHitRadius(), fireAngle*Angles.TO_DEG));
 		shell.setBody(new Body(0.001, velocity));
