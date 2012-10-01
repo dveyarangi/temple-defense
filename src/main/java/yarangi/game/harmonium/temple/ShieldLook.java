@@ -5,6 +5,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
+import javax.media.opengl.GLProfile;
+
+import com.jogamp.opengl.util.texture.Texture;
+import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
@@ -13,8 +18,6 @@ import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.graphics.veils.IsoheightVeil;
 import yarangi.numbers.RandomUtil;
 
-import com.sun.opengl.util.texture.Texture;
-import com.sun.opengl.util.texture.TextureIO;
 
 public class ShieldLook implements ILook <Shield> 
 {
@@ -53,29 +56,30 @@ public class ShieldLook implements ILook <Shield>
 			{
 				throw new IllegalArgumentException("file not found");
 			}
-			texture = TextureIO.newTexture(image, false);
-			texture.setTexParameteri(GL.GL_TEXTURE_MIN_FILTER, GL.GL_LINEAR);
+			texture = AWTTextureIO.newTexture(GLProfile.getGL2ES2(), image, false);
+			texture.setTexParameteri(gl, GL.GL_TEXTURE_MIN_FILTER, GL.GL_LINEAR);
 			
-			texture.setTexParameteri(GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR);
+			texture.setTexParameteri(gl, GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR);
 		}
 //		count ++;
 		
 //		veil = context.getPlugin( IsoheightVeil.NAME );	}
 	}
 	@Override
-	public void render(GL gl, Shield entity, IRenderingContext context) {
+	public void render(GL gl1, Shield entity, IRenderingContext context) {
+		GL2 gl = gl1.getGL2();
 		gl.glPushAttrib( GL.GL_COLOR_BUFFER_BIT );
 		gl.glBlendFunc(GL.GL_ONE, GL.GL_ONE);
 		gl.glBlendEquation(GL.GL_FUNC_ADD);
 		float radius = (float)entity.getArea().getMaxRadius();
 
 //	System.out.println(force + " : " + speed + " : " + radius + " : " + time);
-		texture.bind();
+		texture.bind(gl);
 		
 		gl.glPushMatrix();
 		gl.glRotatef( a1, 0, 0, 1 );
 		a1 += 0.005*context.getFrameLength();
-		gl.glBegin(GL.GL_QUADS);
+		gl.glBegin(GL2.GL_QUADS);
 		gl.glTexCoord2f( 0.0f, 0.0f ); gl.glVertex2f(-radius, -radius);
 		gl.glTexCoord2f( 0.0f, 1.0f ); gl.glVertex2f(-radius,  radius);
 		gl.glTexCoord2f( 1.0f, 1.0f ); gl.glVertex2f( radius,  radius);
@@ -85,7 +89,7 @@ public class ShieldLook implements ILook <Shield>
 		gl.glPushMatrix();
 		gl.glRotatef( a2, 0, 0, 1 );
 		a2 -= 0.005*context.getFrameLength();
-		gl.glBegin(GL.GL_QUADS);
+		gl.glBegin(GL2.GL_QUADS);
 		gl.glTexCoord2f( 0.0f, 0.0f ); gl.glVertex2f(-radius, -radius);
 		gl.glTexCoord2f( 0.0f, 1.0f ); gl.glVertex2f(-radius,  radius);
 		gl.glTexCoord2f( 1.0f, 1.0f ); gl.glVertex2f( radius,  radius);
@@ -100,7 +104,7 @@ public class ShieldLook implements ILook <Shield>
 
 	@Override
 	public void destroy(GL gl,  IRenderingContext context) {
-		texture.dispose();
+		texture.destroy(gl);
 		texture = null; //
 
 	}

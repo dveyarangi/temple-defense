@@ -1,6 +1,7 @@
 package yarangi.game.harmonium.environment.terrain.poly;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
 
 import yarangi.graphics.grid.PolyGridLook;
 import yarangi.graphics.quadraturin.IVeil;
@@ -26,7 +27,7 @@ public class PolyTerrainLook extends PolyGridLook<TilePoly, PolygonGrid<TilePoly
 	public boolean isOriented() { return true; }
 	
 	@Override
-	protected void renderTile(GL gl, Tile<TilePoly> tile, PolygonGrid<TilePoly> grid, int scale)
+	protected void renderTile(GL2 gl, Tile<TilePoly> tile, PolygonGrid<TilePoly> grid, int scale)
 	{
 		// 
 //		for(Poly poly : tile.get().getPolys())
@@ -41,7 +42,7 @@ public class PolyTerrainLook extends PolyGridLook<TilePoly, PolygonGrid<TilePoly
 			renderPoly( gl, poly.getInnerPoly( idx ) );
 	}
 	
-	private void renderPoly(GL gl, Poly poly)
+	private void renderPoly(GL2 gl, Poly poly)
 	{
 		gl.glBegin( GL.GL_LINE_STRIP );
 		for(int idx = 0; idx < poly.getNumPoints(); idx ++)

@@ -23,6 +23,7 @@ import yarangi.math.Angles;
 import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 import yarangi.spatial.ISpatialFilter;
+import yarangi.spatial.PickingSensor;
 import yarangi.spatial.Tile;
 
 import com.seisw.util.geom.Poly;
@@ -168,6 +169,8 @@ public class OrdersActionController extends ActionController
 
 	@Override
 	public ISpatialFilter<IEntity> getPickingFilter() { return filter; }
+	@Override
+	public PickingSensor.Mode getPickingMode() { return PickingSensor.Mode.ANY; }
 	
 	private static final double drawRadius = 25;
 

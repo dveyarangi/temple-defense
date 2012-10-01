@@ -1,6 +1,7 @@
 package yarangi.game.harmonium.temple.weapons;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
 
 import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.graphics.colors.Color;
@@ -26,8 +27,9 @@ public class MinigunBurstLook implements ILook <Projectile>
 	}
 
 	@Override
-	public void render(GL gl, Projectile prj, IRenderingContext context) 
+	public void render(GL gl1, Projectile prj, IRenderingContext context) 
 	{
+		GL2 gl = gl1.getGL2();
 		color.apply( gl );
 		gl.glBegin(GL.GL_LINE_STRIP);
 			gl.glVertex2f(1.2f, 0.1f);

@@ -1,6 +1,7 @@
 package yarangi.game.harmonium.temple.debug;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
 
 import yarangi.fragments.CircleSegmentList;
 import yarangi.game.harmonium.temple.Shield;
@@ -28,8 +29,9 @@ public class ShieldDebugLook implements ILook <Shield>
 		
 	}
 	
-	private void drawSegment(GL gl, AngleInterval segment, IVector2D center, double radius) {
+	private void drawSegment(GL gl1, AngleInterval segment, IVector2D center, double radius) {
 		
+		GL2 gl = gl1.getGL2();
 		double da = (segment.getMax()- segment.getMin())/10.;
 		gl.glBegin( GL.GL_LINE_STRIP );
 		for(double a = segment.getMin(); a < segment.getMax(); a += da)

@@ -86,6 +86,8 @@ public class Playground extends Scene
 		
 		EntityCenter.init(this);
 		
+		
+		
 //		BackgroundEntity background = new BackgroundEntity(100, 100, 50);		
 //		addEntity(background);
 

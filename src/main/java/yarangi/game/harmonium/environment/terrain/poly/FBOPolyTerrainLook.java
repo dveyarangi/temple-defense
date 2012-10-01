@@ -3,6 +3,7 @@ package yarangi.game.harmonium.environment.terrain.poly;
 import java.awt.Point;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
 
 import yarangi.graphics.grid.TileGridLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
@@ -38,7 +39,7 @@ public class FBOPolyTerrainLook extends TileGridLook<MultilayerTilePoly, Polygon
 	}
 
 	@Override
-	protected void renderTile(GL gl, IRenderingContext context, Tile<MultilayerTilePoly> tile, PolygonTerrainMap grid, int scale)
+	protected void renderTile(GL2 gl, IRenderingContext context, Tile<MultilayerTilePoly> tile, PolygonTerrainMap grid, int scale)
 	{
 		// 
 //		for(Poly poly : tile.get().getPolys())
@@ -47,7 +48,7 @@ public class FBOPolyTerrainLook extends TileGridLook<MultilayerTilePoly, Polygon
 		gl.glDisable( GL.GL_BLEND );
 		
 		gl.glColor4f( 0,0,0,0 );
-		gl.glBegin( GL.GL_QUADS );
+		gl.glBegin( GL2.GL_QUADS );
 			gl.glVertex2f( (float)tile.getMinX(), (float)tile.getMinY());
 			gl.glVertex2f( (float)tile.getMaxX(), (float)tile.getMinY());
 			gl.glVertex2f( (float)tile.getMaxX(), (float)tile.getMaxY());
@@ -73,9 +74,9 @@ public class FBOPolyTerrainLook extends TileGridLook<MultilayerTilePoly, Polygon
 		}
 	}
 	
-	private void renderPoly(GL gl, Poly poly)
+	private void renderPoly(GL2 gl, Poly poly)
 	{
-		gl.glBegin( GL.GL_POLYGON );
+		gl.glBegin( GL2.GL_POLYGON );
 		for(int idx = 0; idx < poly.getNumPoints(); idx ++)
 			gl.glVertex2f((float)poly.getX( idx ), (float)poly.getY( idx ));
 		gl.glVertex2f((float)poly.getX( 0 ), (float)poly.getY( 0 ));

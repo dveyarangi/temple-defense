@@ -1,6 +1,7 @@
 package yarangi.game.harmonium.environment.terrain;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
 
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
@@ -18,26 +19,27 @@ public class CrystalMatterLook implements ILook <CrystalMatter>
 		render(gl, crystal.getRoot());
 	}
 	
-	public void render(GL gl, CrystalLeaf leaf)
+	public void render(GL gl1, CrystalLeaf leaf)
 	{
+		GL2 gl = gl1.getGL2();
 		gl.glEnable(GL.GL_DEPTH_TEST);
 
 		gl.glColor4f(0.5f, 0.5f, 1.0f, 1f);
-		gl.glBegin(GL.GL_POLYGON);
+		gl.glBegin(GL2.GL_POLYGON);
 		gl.glVertex3f((float)leaf.getRoof().x(), (float)leaf.getRoof().y(), 0);
 		gl.glVertex3f((float)leaf.getRoofLead().x(), (float)leaf.getRoofLead().y(), 1);
 		gl.glVertex3f((float)leaf.getLeftRoof().x(), (float)leaf.getLeftRoof().y(), 0);
 		gl.glEnd();
 		
 		gl.glColor4f(0.5f, 0.5f, 0.8f, 0.8f);
-		gl.glBegin(GL.GL_POLYGON);
+		gl.glBegin(GL2.GL_POLYGON);
 		gl.glVertex3f((float)leaf.getRoof().x(), (float)leaf.getRoof().y(), 0);
 		gl.glVertex3f((float)leaf.getRoofLead().x(), (float)leaf.getRoofLead().y(), 1);
 		gl.glVertex3f((float)leaf.getRightRoof().x(), (float)leaf.getRightRoof().y(), 0);
 		gl.glEnd();
 		
 		
-		gl.glBegin(GL.GL_POLYGON);
+		gl.glBegin(GL2.GL_POLYGON);
 		gl.glVertex3f((float)leaf.getRoofLead().x(), (float)leaf.getRoofLead().y(), 1);
 		gl.glVertex3f((float)leaf.getRightRoof().x(), (float)leaf.getRightRoof().y(), 0);
 		gl.glVertex3f((float)leaf.getRightBase().x(), (float)leaf.getRightBase().y(), 0);
@@ -45,7 +47,7 @@ public class CrystalMatterLook implements ILook <CrystalMatter>
 		gl.glEnd();
 
 		gl.glColor4f(0.5f, 0.5f, 1.0f, 1f);
-		gl.glBegin(GL.GL_POLYGON);
+		gl.glBegin(GL2.GL_POLYGON);
 		gl.glVertex3f((float)leaf.getRoofLead().x(), (float)leaf.getRoofLead().y(), 1);
 		gl.glVertex3f((float)leaf.getLeftRoof().x(), (float)leaf.getLeftRoof().y(), 0);
 		gl.glVertex3f((float)leaf.getLeftBase().x(), (float)leaf.getLeftBase().y(), 0);

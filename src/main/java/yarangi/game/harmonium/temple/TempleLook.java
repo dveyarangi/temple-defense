@@ -1,6 +1,7 @@
 package yarangi.game.harmonium.temple;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
 
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.CircleLightLook;
@@ -17,9 +18,9 @@ public class TempleLook extends CircleLightLook<EnergyCore>
 	}
 
 	@Override
-	public void render(GL gl, EnergyCore temple, IRenderingContext context) 
+	public void render(GL gl1, EnergyCore temple, IRenderingContext context) 
 	{
-		
+		GL2 gl = gl1.getGL2();
 		float P = (float)temple.getHealth();
 //		System.out.println(P);
 //		this.setColor(new Color( P*0.2f+(1-P)*0.8f, 0.5f+0.5f*P, 1f*P, 1.0f));
@@ -35,7 +36,7 @@ public class TempleLook extends CircleLightLook<EnergyCore>
 		super.render( gl, temple, context );
 		
 		gl.glColor4f( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (P),1);
-		gl.glBegin(GL.GL_POLYGON);
+		gl.glBegin(GL2.GL_POLYGON);
 		for(double a = 0; a <= 6; a ++)
 		{
 			// TODO: markers!

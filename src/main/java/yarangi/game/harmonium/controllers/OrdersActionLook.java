@@ -1,6 +1,7 @@
 package yarangi.game.harmonium.controllers;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
 
 import yarangi.game.harmonium.environment.terrain.poly.PolyTerrainLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
@@ -32,8 +33,9 @@ public class OrdersActionLook implements ILook <OrdersActionController>
 	}
 
 	@Override
-	public void render(GL gl, OrdersActionController entity, IRenderingContext context)
+	public void render(GL gl1, OrdersActionController entity, IRenderingContext context)
 	{
+		GL2 gl = gl1.getGL2();
 		
 		if(look != null)
 			look.render( gl, entity.getReinforcementMap(), context );
@@ -62,7 +64,7 @@ public class OrdersActionLook implements ILook <OrdersActionController>
 		Vector2D left = radius.left().add( source );
 		Vector2D right = radius.right().add( source );
 		gl.glColor4f( 0, 1, 0, 0.4f );
-		gl.glBegin( GL.GL_POLYGON );
+		gl.glBegin( GL2.GL_POLYGON );
 		gl.glVertex3f((float)left.x(), (float)left.y(), 0);
 		gl.glVertex3f((float)right.x(), (float)right.y(), 0);
 		gl.glVertex3f((float)target.x(), (float)target.y(), 0);

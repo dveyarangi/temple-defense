@@ -1,6 +1,7 @@
 package yarangi.game.harmonium.temple.bots;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
 
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.graphics.colors.Color;
@@ -41,14 +42,15 @@ public class BotLook implements ILook<Bot> {
 	}
 
 	@Override
-	public void render(GL gl, Bot bot, IRenderingContext context) 
+	public void render(GL gl1, Bot bot, IRenderingContext context) 
 	{
+		GL2 gl = gl1.getGL2();
 		
 /*		if(entity.isHighlighted())
 			gl.glColor3f(1.0f, 1.0f, 1.0f);
 		else
 			gl.glColor3f(0.0f, 1.0f, 0.2f);*/
-		gl.glPushAttrib(GL.GL_ENABLE_BIT);
+		gl.glPushAttrib(GL2.GL_ENABLE_BIT);
 		gl.glDisable(GL.GL_DEPTH_TEST);
 		double resourcePercent = bot.getPort().get( Resource.Type.ENERGY ).getAmount() / bot.getPort().getCapacity( Resource.Type.ENERGY );
 		gl.glColor4f((float)(1-resourcePercent), (float)(1.0),(float)(1-resourcePercent),0.3f);
@@ -56,7 +58,7 @@ public class BotLook implements ILook<Bot> {
 //		color.apply( gl );
 		double bx = bot.getArea().getAnchor().x();
 		double by = bot.getArea().getAnchor().y();
-		gl.glBegin(GL.GL_QUADS);
+		gl.glBegin(GL2.GL_QUADS);
 			gl.glVertex2f((float)(tail[0].x()-bx-0.2), (float)(tail[0].y()-by-0.2)); 
 			gl.glVertex2f((float)(tail[0].x()-bx-0.2), (float)(tail[0].y()-by+0.2)); 
 			gl.glVertex2f((float)(tail[0].x()-bx+0.2), (float)(tail[0].y()-by+0.2)); 

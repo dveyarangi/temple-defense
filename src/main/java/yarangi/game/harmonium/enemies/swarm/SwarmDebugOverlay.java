@@ -3,6 +3,7 @@ package yarangi.game.harmonium.enemies.swarm;
 import java.awt.Point;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
 
 import yarangi.graphics.grid.TileGridLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
@@ -25,9 +26,9 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 
 
 	@Override
-	protected void renderTile(GL gl, IRenderingContext context, Tile<Beacon> tile, Swarm swarm, int scale)
+	protected void renderTile(GL2 gl, IRenderingContext context, Tile<Beacon> tile, Swarm swarm, int scale)
 	{
-        if(tile == null)
+       if(tile == null)
         	return;
         
 		float size = swarm.getCellSize();
@@ -93,10 +94,10 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 			Vector2D l = beacon.getFlow().left();
 			
 			gl.glPushAttrib( GL.GL_COLOR_BUFFER_BIT );
-			gl.glBlendEquation( GL.GL_MIN );
+			gl.glBlendEquation( GL2.GL_MIN );
 			gl.glBlendFunc( GL.GL_ONE, GL.GL_ONE );
 			gl.glColor4f(0f, 0, 0f, 1f);
-			gl.glBegin(GL.GL_QUADS);
+			gl.glBegin(GL2.GL_QUADS);
 			gl.glVertex3f((float)(x), (float)(y), 0);
 			gl.glVertex3f((float)(x), (float)(y+size), 0);
 			gl.glVertex3f((float)(x+size), (float)(y+size), 0);
@@ -115,7 +116,7 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 			
 			gl.glColor4f(0.3f, 0, 0.7f+curr, curr*1f);
 //			System.out.println(curr);
-			gl.glBegin(GL.GL_QUADS);
+			gl.glBegin(GL2.GL_QUADS);
 			gl.glVertex3f((float)(x), (float)(y), 0);
 			gl.glVertex3f((float)(x), (float)(y+size), 0);
 			gl.glVertex3f((float)(x+size), (float)(y+size), 0);

@@ -30,13 +30,13 @@ public class Minigun extends Weapon
 			BASE_TRACKING_SPEED, 
 			CANNON_TRACKING_HALF_WIDTH, 
 			1, 
-			1, // reloading time
+			5, // reloading time
 			128, // projectile range square
 			projectileSpeed,  // prjectile speed
 			128, // tracking range
 			ACCURACY, 
 			projectileHitRadius, 
-			new Damage(0.2, 0.1, 0, 0),
+			new Damage(1, 0.1, 0, 0),
 			resourceCapacity, 0, resourceType,
 			128);
 	

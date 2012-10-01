@@ -1,6 +1,7 @@
 package yarangi.game.harmonium.enemies.swarm.agents;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
 
 import yarangi.graphics.curves.Bezier4Curve;
 import yarangi.graphics.quadraturin.IRenderingContext;
@@ -23,8 +24,9 @@ public class SeederLook implements ILook <Seeder>
 	}
 
 	@Override
-	public void render(GL gl, Seeder seeder, IRenderingContext context) {
+	public void render(GL gl1, Seeder seeder, IRenderingContext context) {
 		
+		GL2 gl = gl1.getGL2();
 		Bezier4Curve left = seeder.getLeftEdge();
 		Bezier4Curve right = seeder.getRightEdge();
 		
@@ -33,7 +35,7 @@ public class SeederLook implements ILook <Seeder>
 //		gl.glDisable(GL.GL_BLEND);
 		gl.glColor4f(1f, 0.0f, 0.0f, 1.0f);
 		
-		gl.glBegin(GL.GL_POLYGON);
+		gl.glBegin(GL2.GL_POLYGON);
 		for(float t = 0; t <= 1.09; t += 0.1) {
 			point = left.at(t);
 			gl.glVertex2f((float) point.x(), (float)point.y());

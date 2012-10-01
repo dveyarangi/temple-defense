@@ -1,6 +1,7 @@
 package yarangi.game.harmonium.temple.weapons;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
 
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.graphics.colors.Color;
@@ -36,8 +37,9 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 
 
 	@Override
-	public void render(GL gl,  Minigun cannon, IRenderingContext context) 
+	public void render(GL gl1,  Minigun cannon, IRenderingContext context) 
 	{
+		GL2 gl = gl1.getGL2();
 		Resource.Type type = cannon.getProps().getResourceType();
 		float P = (float)(cannon.getPort().get( type ).getAmount() / cannon.getPort().getCapacity( type ));
 //		this.setColor(new Color( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (P),1));
@@ -46,7 +48,7 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 				
 		super.render( gl, cannon, context );		
 		
-		gl.glPushAttrib(GL.GL_ENABLE_BIT);
+		gl.glPushAttrib(GL2.GL_ENABLE_BIT);
 		gl.glEnable(GL.GL_BLEND);
 		gl.glColor4f( 0f, 1f, 0f, 0.2f );
 		gl.glBegin( GL.GL_LINE_STRIP );
@@ -61,7 +63,7 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 		
 //		gl.glColor4f((float)((1-P)/4+P*0.3),  (float)(P*0.3), (float)(P),1);
 //		gl.glColor4f((float)((1-resourcePercent)*1.0), (float)(resourcePercent*1.0), 2f*(float)(0.5-Math.abs(resourcePercent-0.5)),0.5f);
-		gl.glBegin(GL.GL_POLYGON);
+		gl.glBegin(GL2.GL_POLYGON);
 		for(double a = 0; a <= 6; a ++)
 		{
 			// TODO: markers!
@@ -85,7 +87,7 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 			gl.glVertex3f(rel_x, rel_y, 0);
 			gl.glEnd();
 			
-			gl.glBegin(GL.GL_QUADS);
+			gl.glBegin(GL2.GL_QUADS);
 			gl.glVertex3f(rel_x-0.3f, rel_y-0.3f, 0);
 			gl.glVertex3f(rel_x-0.3f, rel_y+0.3f, 0);
 			gl.glVertex3f(rel_x+0.3f, rel_y+0.3f, 0);

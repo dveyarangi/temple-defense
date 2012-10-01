@@ -1,6 +1,7 @@
 package yarangi.game.harmonium.temple.weapons;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
 
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.graphics.quadraturin.IRenderingContext;
@@ -16,16 +17,17 @@ public class MinigunLook implements ILook<Minigun>
 
 
 	@Override
-	public void render(GL gl, Minigun cannon, IRenderingContext context) 
+	public void render(GL gl1, Minigun cannon, IRenderingContext context) 
 	{
+		GL2 gl = gl1.getGL2();
 
-			Area area = cannon.getArea();
+		Area area = cannon.getArea();
 		IVector2D loc = area.getAnchor();
 		Resource.Type type = cannon.getProps().getResourceType();
 		double resourcePercent = cannon.getPort().get( type ).getAmount() / cannon.getPort().getCapacity( type );
 		gl.glColor4f((float)((1-resourcePercent)/4+resourcePercent*0.3),  (float)(resourcePercent*0.3), (float)(resourcePercent),1);
 //		gl.glColor4f((float)((1-resourcePercent)*1.0), (float)(resourcePercent*1.0), 2f*(float)(0.5-Math.abs(resourcePercent-0.5)),0.5f);
-		gl.glBegin(GL.GL_POLYGON);
+		gl.glBegin(GL2.GL_POLYGON);
 		for(double a = 0; a <= 6; a ++)
 		{
 			gl.glVertex3f((float)(0. + cannon.getArea().getMaxRadius()*Math.cos(a*Angles.PI_div_3)), 
@@ -55,7 +57,7 @@ public class MinigunLook implements ILook<Minigun>
 			gl.glVertex3f(rel_x, rel_y, 0);
 			gl.glEnd();
 			
-			gl.glBegin(GL.GL_QUADS);
+			gl.glBegin(GL2.GL_QUADS);
 			gl.glVertex3f(rel_x-0.5f, rel_y-0.5f, 0);
 			gl.glVertex3f(rel_x-0.5f, rel_y+0.5f, 0);
 			gl.glVertex3f(rel_x+0.5f, rel_y+0.5f, 0);

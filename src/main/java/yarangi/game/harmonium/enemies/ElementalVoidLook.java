@@ -1,6 +1,7 @@
 package yarangi.game.harmonium.enemies;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
 
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.graphics.GLList;
@@ -10,6 +11,7 @@ import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.graphics.veils.BlurVeil;
 import yarangi.math.Angles;
+import yarangi.math.IVector2D;
 import yarangi.numbers.RandomUtil;
 
 public class ElementalVoidLook implements ILook <SwarmAgent> 
@@ -29,25 +31,30 @@ public class ElementalVoidLook implements ILook <SwarmAgent>
 	}
 
 	@Override
-	public void render(GL gl, SwarmAgent entity, IRenderingContext context) {
+	public void render(GL gl1, SwarmAgent entity, IRenderingContext context) {
 	
+		GL2 gl = gl1.getGL2();
 //		gl.glBlendFunc(GL.GL_ONE, GL.GL_ZERO);
 		
 //		System.out.println("here");
 //		Integrity integrity = entity.getIntegrity();
 //		gl.glColor4f(0.2f, 0.1f, 0.1f, 1);
 //		gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
+		double dangerModifier = entity.getLocalDanger();
+		
+		IVector2D anchor = entity.getArea().getAnchor();
 		gl.glDisable(GL.GL_DEPTH_TEST);
-		gl.glBegin(GL.GL_POLYGON);
+		gl.glBegin(GL2.GL_POLYGON);
 		int count = 0;
 		double rad = entity.getArea().getMaxRadius();
 		for(double a = 0; a <= Angles.PI_2; a += Angles.TRIG_STEP*120) 
 		{
+//			gl.glColor3f((float)(dangerModifier/100f), 0, 0);
 			if(count ++ % 2 == 0)
 				entity.getColor().apply( gl );
 			else
 				entity.getOtherColor().apply( gl );
-			gl.glVertex2f((float)(rad*Angles.COS( a )), (float)(rad*Angles.SIN( a )));
+			gl.glVertex2f((float)(anchor.x() + rad*Angles.COS( a )), (float)(anchor.y() + rad*Angles.SIN( a )));
 		}
 		gl.glEnd();
 	}
@@ -64,5 +71,5 @@ public class ElementalVoidLook implements ILook <SwarmAgent>
 	public IVeil getVeil() { return veil; }
 
 	@Override
-	public boolean isOriented() { return true; }
+	public boolean isOriented() { return false; }
 }
