@@ -4,10 +4,11 @@ import javax.media.opengl.GL;
 
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.ai.weapons.NetCore;
-import yarangi.game.harmonium.battle.Damageable;
+import yarangi.game.harmonium.battle.IDamageable;
 import yarangi.game.harmonium.battle.EffectUtils;
 import yarangi.game.harmonium.battle.EntityCenter;
 import yarangi.game.harmonium.battle.IEnemy;
+import yarangi.game.harmonium.battle.ImpactFactory;
 import yarangi.game.harmonium.controllers.ControlBehavior;
 import yarangi.game.harmonium.controllers.ControlLook;
 import yarangi.game.harmonium.controllers.OrdersActionController;
@@ -21,12 +22,12 @@ import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.temple.BattleInterface;
 import yarangi.game.harmonium.temple.EnergyCore;
 import yarangi.game.harmonium.temple.ObserverBehavior;
-import yarangi.game.harmonium.temple.Shield;
-import yarangi.game.harmonium.temple.StructureInterface;
+import yarangi.game.harmonium.temple.ServiceInterface;
 import yarangi.game.harmonium.temple.TempleLook;
 import yarangi.game.harmonium.temple.harvester.Harvester;
 import yarangi.game.harmonium.temple.harvester.HarvesterFactory;
 import yarangi.game.harmonium.temple.harvester.Waller;
+import yarangi.game.harmonium.temple.shields.Shield;
 import yarangi.game.harmonium.temple.weapons.Minigun;
 import yarangi.game.harmonium.temple.weapons.MinigunGlowingLook;
 import yarangi.game.harmonium.temple.weapons.MinigunLook;
@@ -65,22 +66,25 @@ import yarangi.spatial.PointArea;
 public class Playground extends Scene
 {
 	
-	private EnergyCore temple;
+	private final EnergyCore temple;
 	
 //	private BackgroundEntity background;
 	
 //	private int worldWidth = 1000;
 //	private int worldHeight = 1000;
 	
-	private EntityShell <Swarm> swarmShell;
-	private EntityShell <Swarm> debugSwarmShell;
+	private final EntityShell <Swarm> swarmShell;
+	private final EntityShell <Swarm> debugSwarmShell;
 	private boolean debugSwarm = false;
+	int swarmSize;
 	
-	private IntellectCore core;
+	private final IntellectCore core;
 	
 	public Playground(SceneConfig sceneConfig, EkranConfig ekranConfig, QVoices voices)
 	{
 		super(sceneConfig, ekranConfig, voices);
+
+		this.swarmSize = sceneConfig.getWidth();
 		
 		createUI();
 		
@@ -114,7 +118,7 @@ public class Playground extends Scene
 		controller.setLook(new ControlLook());
 		controller.setBehavior(new ControlBehavior());
 		addEntity(controller);
-		StructureInterface structure = controller.getStructureInterface();
+		ServiceInterface structure = controller.getStructureInterface();
 		
 		BattleInterface bi = controller.getBattleInterface();
 		
@@ -127,9 +131,9 @@ public class Playground extends Scene
 			case 1: props = Minigun.PROP_SMALL; break;
 			case 2: props = Minigun.PROP_SMALL; break;
 			}*/
-			double radius = (70+ a%3*70);
+			double radius = (70+ a%2*70);
 //			AABB area = AABB.createSquare(RandomUtil.R( 400 )-200, RandomUtil.R( 400 )-200,1,0);
-			AABB area = AABB.createSquare(radius*Math.cos(Angles.PI_2/maxCannons *a), radius*Math.sin(Angles.PI_2/maxCannons * a ),1,0);
+			AABB area = AABB.createSquare(radius*Math.cos(Angles.TAU/maxCannons *a), radius*Math.sin(Angles.TAU/maxCannons * a ),1,0);
 			Weapon weapon = new Minigun(bi, area, props);
 //			weapon.setLook(new MinigunLook());
 			weapon.setBehavior(new TrackingBehavior());
@@ -142,6 +146,13 @@ public class Playground extends Scene
 			// harvester location is linked to cannon:
 //			Harvester harvester = HarvesterFactory.createHarvester(area, weapon.getPort(), 64, terrain);
 //			addEntity(harvester);
+			Port port = Port.createEmptyPort();
+			
+//			AABB area = AABB.createSquare(RandomUtil.R( 400 )-200, RandomUtil.R( 400 )-200,2,0);
+			Harvester harvester = HarvesterFactory.createHarvester(area, port, 64, terrain);
+			addEntity(harvester);			
+			
+			structure.addServiceable( harvester );
 
 			
 /*			Shield shield = new Shield(bi, weapon.getPort());
@@ -160,13 +171,16 @@ public class Playground extends Scene
 			
 			
 			port.setCapacity( Resource.Type.MATTER, 100, 100 );
-			AABB area = AABB.createSquare(RandomUtil.R( 400 )-200, RandomUtil.R( 400 )-200,2,0);
+			double radius = (170+ a%2*70);
+//			AABB area = AABB.createSquare(RandomUtil.R( 400 )-200, RandomUtil.R( 400 )-200,1,0);
+			AABB area = AABB.createSquare(radius*Math.cos(Angles.TAU/maxCannons *a), radius*Math.sin(Angles.TAU/maxCannons * a ),1,0);
+//			AABB area = AABB.createSquare(RandomUtil.R( 400 )-200, RandomUtil.R( 400 )-200,2,0);
 			Waller waller = HarvesterFactory.createWaller(area, port, 64, terrain, ((OrdersActionController)controller.getActionController()).getReinforcementMap());
 			addEntity(waller);
 
 		}
 		int maxHarvs = 3;
-		for(int a = 0; a < maxHarvs; a ++)
+/*		for(int a = 0; a < maxHarvs; a ++)
 		{
 			double radius = 100;
 			Port port = Port.createEmptyPort();
@@ -176,7 +190,7 @@ public class Playground extends Scene
 			addEntity(harvester);			
 			
 			structure.addServiceable( harvester );
-		}
+		}*/
 		
 //		int maxHarvs = 9;
 /*		for(int a = 0; a < maxHarvs; a ++)
@@ -212,7 +226,7 @@ public class Playground extends Scene
 		
 //		KolbasaFactory.generateKolbasaMaze( this );
 		
-		Swarm swarm = SwarmFactory.createSwarm(sceneConfig.getWidth(), this, 3);
+		Swarm swarm = SwarmFactory.createSwarm(swarmSize, this, 3);
 		IBehavior <Swarm> swarmBehavior = SwarmFactory.
 		
 		createDefaultBehavior((PolygonTerrainMap)getWorldLayer().<MultilayerTilePoly>getTerrain());
@@ -223,62 +237,8 @@ public class Playground extends Scene
 		debugSwarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, swarmDebugLook );
 //		addEntity(debugSwarmShell);
 		
-		ICollisionHandler<Projectile> projectileCollider = new ICollisionHandler <Projectile> ()
-		{
-
-			@Override
-			public boolean setImpactWith(Projectile source, IPhysicalObject target)
-			{
-				if( target instanceof ITerrain)
-				{
-//					System.out.println("projectile collided with wall");
-					source.markDead();
-					EffectUtils.makeExplosion( source.getArea().getAnchor(), Playground.this.getWorldLayer(), new Color(1,0,0,0), 4 );
-					return true;
-				}
-				if(target instanceof Damageable && target instanceof IEnemy)
-				{
-					((SwarmAgent) target).hit( source.getDamage() );
-					EffectUtils.makeExplosion( source.getArea().getAnchor(), Playground.this.getWorldLayer(), new Color(1,0,0,1), 4 );
-					source.markDead();
-					return true;
-				}
-				
-				return false;
+		ImpactFactory impactFactory = new ImpactFactory( this, terrain );
 			}
-			
-		};
-
-		getCollisionManager().registerHandler( Projectile.class, projectileCollider );
-		
-				
-		
-
-		
-		ICollisionHandler<Shield> shieldCollider = new ICollisionHandler <Shield> ()
-		{
-
-			@Override
-			public boolean setImpactWith(Shield source, IPhysicalObject target)
-			{
-				if( target instanceof SwarmAgent)
-				{
-					if(!source.getExcludedSegments().covers(Math.atan2( target.getArea().getAnchor().y()-source.getArea().getAnchor().y(), 
-																	  target.getArea().getAnchor().x()-source.getArea().getAnchor().x())))
-					{
-						EffectUtils.makeExplosion( source.getArea().getAnchor(), Playground.this.getWorldLayer(), new Color(1,0,0,0), 4 );
-						((SwarmAgent) target).markDead();
-						return true;
-					}
-				}
-				
-				return false;
-			}
-			
-		};
-		getCollisionManager().registerHandler( Shield.class, shieldCollider );
-		
-	}
 	
 	@Override
 	public void init(GL gl, IRenderingContext context)
@@ -340,6 +300,7 @@ public class Playground extends Scene
 	@Override
 	public void init()
 	{
+
 	}
 
 	@Override

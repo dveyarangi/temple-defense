@@ -3,7 +3,7 @@ package yarangi.game.harmonium.temple.bots;
 import yarangi.game.harmonium.ai.economy.IOrder;
 import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.game.harmonium.environment.resources.Resource;
-import yarangi.game.harmonium.temple.Serviceable;
+import yarangi.game.harmonium.temple.IServiceable;
 import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
@@ -15,7 +15,7 @@ public class BotFactory
 {
 	public static final double BOT_CAPACITY = 50;
 	
-	public static Bot createBot(final Serviceable host, IBotInterface botInterface)
+	public static Bot createBot(final IServiceable host, IBotInterface botInterface)
 	{
 		Port port = Port.createEmptyPort();
 		port.setTransferRate( 1 );
@@ -29,7 +29,7 @@ public class BotFactory
 		return bot;
 	}
 	
-	public static IBehavior <Bot> createBotBehavoir(final Serviceable host, final IBotInterface botInterface)
+	public static IBehavior <Bot> createBotBehavoir(final IServiceable host, final IBotInterface botInterface)
 	{
 		final IBehaviorState <Bot> querying = new QueryingBehavior (botInterface);
 		FSMBehavior <Bot> fsm = new FSMBehavior <Bot>(querying);

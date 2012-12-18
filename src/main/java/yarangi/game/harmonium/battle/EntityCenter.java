@@ -9,6 +9,12 @@ import yarangi.spatial.AABB;
 import yarangi.spatial.ISpatialSensor;
 import yarangi.spatial.SpatialHashMap;
 
+/** 
+ * This class controls generated game entities
+ * Probably should be part of the scene.
+ * 
+ * @author dveyarangi
+*/
 public class EntityCenter
 {
 	

@@ -38,7 +38,7 @@ public class ChasingBehavior <H extends IEntity>implements IBehaviorState <H>
 		Vector2D attractionDir = hostLocation.minus(botLocation).normalize();
 		if (attractionDir.x() == 0 && attractionDir.y() == 0) // stale mate
 		{
-			double randomAngle = Math.random()*Angles.PI_2;
+			double randomAngle = Math.random()*Angles.TAU;
 			attractionDir = Vector2D.POLAR(1, randomAngle);
 		}
 		double offset = Geometry.calcHypotSquare( botLocation, hostLocation ) - satelliteDistanceSquare;

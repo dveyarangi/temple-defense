@@ -33,7 +33,7 @@ public class WallerLook extends CircleLightLook <Waller>
 		gl.glEnable(GL.GL_BLEND);
 		gl.glColor4f( 0f, 1f, 0f, 0.1f );
 		gl.glBegin( GL.GL_LINE_STRIP );
-		for(double a = 0; a <= Angles.PI_2+0.001; a += Angles.PI_div_40)
+		for(double a = 0; a <= Angles.TAU+0.001; a += Angles.PI_div_40)
 		{
 			x = (float)(entity.getTerrainSensor().getRadius() * Math.cos( a ));
 			y = (float)(entity.getTerrainSensor().getRadius() * Math.sin( a ));
@@ -43,7 +43,7 @@ public class WallerLook extends CircleLightLook <Waller>
 			
 		gl.glBegin( GL2.GL_POLYGON );
 		gl.glColor4f( 0f, 1f, 0f, 0.3f );
-		for(double a = 0; a <= Angles.PI_2; a += Angles.PI_div_20)
+		for(double a = 0; a <= Angles.TAU; a += Angles.PI_div_20)
 		{
 			x = (float)(entity.getArea().getMaxRadius() * Math.cos( a ));
 			y = (float)(entity.getArea().getMaxRadius() * Math.sin( a ));

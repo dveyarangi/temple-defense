@@ -6,16 +6,16 @@ import java.util.List;
 import yarangi.game.harmonium.temple.bots.Bot;
 import yarangi.numbers.RandomUtil;
 
-public class StructureInterface
+public class ServiceInterface
 {
-	private List <Serviceable> serviceables = new ArrayList <Serviceable> (); 
+	private List <IServiceable> serviceables = new ArrayList <IServiceable> (); 
 	
-	public Serviceable getServiceTarget(Bot bot)
+	public IServiceable getServiceTarget(Bot bot)
 	{
 		return serviceables.get( RandomUtil.N( serviceables.size() ) );
 	}
 	
-	public void addServiceable(Serviceable serv)
+	public void addServiceable(IServiceable serv)
 	{
 		if(serviceables.contains( serv ))
 			throw new IllegalArgumentException(serv + " is already registered as serviceable entity.");

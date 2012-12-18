@@ -1,4 +1,4 @@
-package yarangi.game.harmonium.temple;
+package yarangi.game.harmonium.temple.structure;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -7,11 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import yarangi.game.harmonium.controllers.TempleController;
-import yarangi.game.harmonium.temple.structure.Connectable;
-import yarangi.game.harmonium.temple.structure.Hexagon;
-import yarangi.game.harmonium.temple.structure.HexagonObserver;
-import yarangi.game.harmonium.temple.structure.MeshNode;
-import yarangi.game.harmonium.temple.structure.PowerConnector;
+import yarangi.game.harmonium.temple.EnergyCore;
 import yarangi.game.harmonium.temple.structure.Hexagon.HexagonId;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.math.Angles;
@@ -24,7 +20,7 @@ public class TempleStructure extends Entity implements Connectable
 
 	private static final long serialVersionUID = 1922785697163737467L;
 	
-	private Map <HexagonId, Hexagon> hexagons = new HashMap <HexagonId, Hexagon> ();
+	private final Map <HexagonId, Hexagon> hexagons = new HashMap <HexagonId, Hexagon> ();
 	
 	private List <MeshNode> perimeter;
 	
@@ -233,6 +229,7 @@ public class TempleStructure extends Entity implements Connectable
 	class PerimetringHexagonObserver implements HexagonObserver
 	{
 
+		@Override
 		public void hexagonFound(Hexagon hexagon, int x, int y) {
 			if(perimeter != null)
 				return;
@@ -305,6 +302,7 @@ public class TempleStructure extends Entity implements Connectable
 	}	
 
 
+	@Override
 	public PowerConnector[] getConnectors() { return connectors; }
 
 }

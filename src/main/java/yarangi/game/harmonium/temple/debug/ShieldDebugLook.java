@@ -4,7 +4,7 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
 import yarangi.fragments.CircleSegmentList;
-import yarangi.game.harmonium.temple.Shield;
+import yarangi.game.harmonium.temple.shields.Shield;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.ILook;

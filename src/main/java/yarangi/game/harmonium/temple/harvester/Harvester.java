@@ -1,14 +1,16 @@
 package yarangi.game.harmonium.temple.harvester;
 
 import yarangi.game.harmonium.ai.economy.IOrderScheduler;
+import yarangi.game.harmonium.battle.Damage;
 import yarangi.game.harmonium.battle.ITemple;
+import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.game.harmonium.temple.IObserverEntity;
-import yarangi.game.harmonium.temple.Serviceable;
+import yarangi.game.harmonium.temple.IServiceable;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.spatial.Area;
 
-public class Harvester extends Entity implements Serviceable, ITemple, IObserverEntity
+public class Harvester extends Entity implements IServiceable, ITemple, IObserverEntity
 {
 	
 	private final Port port;
@@ -47,6 +49,22 @@ public class Harvester extends Entity implements Serviceable, ITemple, IObserver
 	public double getLeadership()
 	{
 		return 100;
+	}
+
+
+	@Override
+	public Integrity getIntegrity()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void hit(Damage damage)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

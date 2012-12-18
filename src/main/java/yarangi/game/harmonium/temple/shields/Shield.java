@@ -1,7 +1,9 @@
-package yarangi.game.harmonium.temple;
+package yarangi.game.harmonium.temple.shields;
 
 import yarangi.fragments.CircleSegmentList;
 import yarangi.game.harmonium.environment.resources.Port;
+import yarangi.game.harmonium.temple.BattleInterface;
+import yarangi.game.harmonium.temple.ForcePoint;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.IEntity;

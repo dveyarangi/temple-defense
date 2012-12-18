@@ -1,5 +1,6 @@
 package yarangi.game.harmonium.temple;
 
+import yarangi.game.harmonium.temple.shields.ShieldBehavior;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.graphics.quadraturin.objects.Sensor;

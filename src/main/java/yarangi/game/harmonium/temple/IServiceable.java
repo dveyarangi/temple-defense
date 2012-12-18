@@ -8,7 +8,7 @@ import yarangi.spatial.Area;
  * @author dveyarangi
  *
  */
-public interface Serviceable
+public interface IServiceable
 {
 	/**
 	 * Marks servicing area for animation.

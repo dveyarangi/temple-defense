@@ -36,7 +36,8 @@ public class DroneBehavior /*extends Sensor <IEntity>*/ implements IBehaviorStat
 		
 		Swarm swarm = agent.getSwarm();
 		IVector2D flow = swarm.getFlow(agent.getArea().getAnchor());
-		agent.getArea().setOrientation( Angles.TO_DEG * agent.getBody().getVelocity().getAngle() );
+		double a = Angles.atan2Deg(  agent.getBody().getVelocity().y(), agent.getBody().getVelocity().x());
+		agent.getArea().setOrientation( a );
 
 //		System.out.println(flow);
 		if(flow != null) {

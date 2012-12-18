@@ -18,7 +18,7 @@
 			{ 
 				"factoryClass" : "yarangi.graphics.veils.BlurVeil",
 				"properties" : {
-					"decay" : 0.03
+					"decay" : 0.01
 				}
 			},	
 			{ 
@@ -97,7 +97,7 @@
 		    		"colliderClass" : "yarangi.graphics.quadraturin.simulations.RoughCollider"
 	    		},
 				"terrain" : { 
-					"factoryClass" : "yarangi.game.harmonium.environment.terrain.poly.PolyFactory",
+					"factoryClass" : "yarangi.game.harmonium.environment.terrain.poly.TerrainPolyFactory",
 				    "cellsize" : 8
 				}		
 

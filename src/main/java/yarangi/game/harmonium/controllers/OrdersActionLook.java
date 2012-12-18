@@ -48,7 +48,7 @@ public class OrdersActionLook implements ILook <OrdersActionController>
 			gl.glColor4f( 0, 1, 0, 0.4f );
 			gl.glBegin(GL.GL_LINE_STRIP);
 			double rad = hovered.getArea().getMaxRadius() + 2;
-			for(double a = 0; a <= Angles.PI_2+0.001; a += Angles.PI_div_6)
+			for(double a = 0; a <= Angles.TAU+0.001; a += Angles.PI_div_6)
 				gl.glVertex3f((float)(hovered.getArea().getAnchor().x() + rad*Math.cos(a)), 
 						      (float)(hovered.getArea().getAnchor().y() + rad*Math.sin(a)), 1);
 			

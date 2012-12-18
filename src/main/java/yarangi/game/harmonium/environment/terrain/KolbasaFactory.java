@@ -19,14 +19,14 @@ public class KolbasaFactory
 		for(int level = 0; level < LEVELS; level ++)
 		{
 			double levelWidth = RandomUtil.N(30 )+ 60;
-			double da = density * Angles.PI_2 / levelRadius;
+			double da = density * Angles.TAU / levelRadius;
 			
 			boolean start = false;
 			
 //			maxSpan = 1/da;
 			
 			PolyLine line = null;
-			for(double a = 0; (a < Angles.PI_2) || (line != null && line.size() < maxSpan); a += da)
+			for(double a = 0; (a < Angles.TAU) || (line != null && line.size() < maxSpan); a += da)
 			{
 
 				if(line == null && RandomUtil.oneOf( 6 ))

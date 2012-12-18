@@ -1,6 +1,7 @@
-package yarangi.game.harmonium.temple;
+package yarangi.game.harmonium.temple.shields;
 
 import static yarangi.math.Angles.*;
+import yarangi.game.harmonium.temple.ForcePoint;
 import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
@@ -40,7 +41,7 @@ public class ShieldBehaviorOld implements IBehavior<Shield>
 				ForcePoint p = forcePoints[idx];
 				if(p == null || p.strength < 0)
 				{
-					double randomAngle = RandomUtil.getRandomDouble(PI_2);
+					double randomAngle = RandomUtil.getRandomDouble(TAU);
 					forcePoints[idx] = new ForcePoint(randomAngle , 0);
 				}
 				else

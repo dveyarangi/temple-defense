@@ -1,7 +1,7 @@
 package yarangi.game.harmonium.temple.harvester;
 
 import yarangi.game.harmonium.environment.resources.Port;
-import yarangi.game.harmonium.temple.Serviceable;
+import yarangi.game.harmonium.temple.IServiceable;
 import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
@@ -11,7 +11,7 @@ import yarangi.spatial.Area;
  * @author dveyarangi
  *
  */
-public class HarvestBeacon implements Serviceable
+public class HarvestBeacon implements IServiceable
 {
 	private GridyTerrainMap terrain;
 	

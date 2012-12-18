@@ -2,16 +2,16 @@ package yarangi.game.harmonium.temple.bots;
 
 import yarangi.game.harmonium.ai.economy.IOrder;
 import yarangi.game.harmonium.environment.resources.Port;
-import yarangi.game.harmonium.temple.Serviceable;
+import yarangi.game.harmonium.temple.IServiceable;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.spatial.Area;
 
-public class Bot extends Entity implements Serviceable
+public class Bot extends Entity implements IServiceable
 {
 
 	private static final long serialVersionUID = -19945327419649387L;
 	
-	private Serviceable currTarget;
+	private IServiceable currTarget;
 	public static double ENGINE_POWER = 10;
 	
 	private IOrder order;
@@ -25,7 +25,7 @@ public class Bot extends Entity implements Serviceable
 		this.port = port;
 	}
 	
-	public void setTarget(Serviceable target) 
+	public void setTarget(IServiceable target) 
 	{ 
 		this.currTarget = target; 
 	}

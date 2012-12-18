@@ -134,7 +134,7 @@ public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <W
 		}*/
 //		System.out.println(minx + "," + miny + "," + maxx + "," + maxy);
 	
-		for(double ang = 0 ; ang < Angles.PI_2; ang += Angles.PI_div_6) {
+		for(double ang = 0 ; ang < Angles.TAU; ang += Angles.PI_div_6) {
 			poly.add( atx + maskWidth * Math.cos( ang ), aty + maskWidth * Math.sin( ang) );
 		}
 /*		double rx = (maxx-minx) / 2;

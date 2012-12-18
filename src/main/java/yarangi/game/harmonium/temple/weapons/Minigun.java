@@ -121,7 +121,7 @@ public class Minigun extends Weapon
 	}
 
 	@Override
-	public double getAttractiveness() { return 100; }
+	public double getAttractiveness() { return 0; }
 
 	@Override
 	public void updateState(double time)

@@ -47,7 +47,7 @@ public class ElementalVoidLook implements ILook <SwarmAgent>
 		gl.glBegin(GL2.GL_POLYGON);
 		int count = 0;
 		double rad = entity.getArea().getMaxRadius();
-		for(double a = 0; a <= Angles.PI_2; a += Angles.TRIG_STEP*120) 
+		for(double a = 0; a <= Angles.TAU; a += Angles.TRIG_STEP*120) 
 		{
 //			gl.glColor3f((float)(dangerModifier/100f), 0, 0);
 			if(count ++ % 2 == 0)

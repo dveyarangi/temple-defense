@@ -36,7 +36,7 @@ public class SatelliteBehavior <K extends IEntity> implements IBehaviorState <K>
 		Vector2D attractionDir = hostLocation.minus(botLocation).normalize();
 		if (attractionDir.x() == 0 && attractionDir.y() == 0) // stale mate
 		{
-			attractionDir = Vector2D.UNIT(Math.random()*Angles.PI_2);
+			attractionDir = Vector2D.UNIT(Math.random()*Angles.TAU);
 		}
 		double offset = Geometry.calcHypotSquare( botLocation, hostLocation ) - satelliteDistanceSquare;
 		

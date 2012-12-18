@@ -156,7 +156,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 //						continue;
 					
 					double tentative = curr.g + 
-								((dx == 0 || dy == 0) ? 1 : FastMath.ROOT_2) + 
+								((dx == 0 || dy == 0) ? 1 : FastMath.SQRT2) + 
 								temp.getDangerFactor();
 //					if(temp == null)
 //						temp = beacons[x][y] = new AStarNode(x, y);

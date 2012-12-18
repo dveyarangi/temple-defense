@@ -23,7 +23,7 @@ import yarangi.numbers.RandomUtil;
 import yarangi.physics.Body;
 import yarangi.spatial.AABB;
 
-class SpawningBehavior implements IBehaviorState<Swarm> 
+class SwarmSpawningBehavior implements IBehaviorState<Swarm> 
 {
 	
 	private final double spawnInterval;
@@ -31,13 +31,15 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 	public static final int SPAWNING_RADIUS = 50;
 	public static final Integrity AGENT_INTEGRITY = new Integrity(10, 0, new double [] {0,0,0,0});
 	public static final double AGENT_HEALTH = AGENT_INTEGRITY.getMaxHitPoints();
-	public static final double  AGENT_VELOCITY = 1.5;
+	public static final double  AGENT_VELOCITY = 1;
 	public ILook agentLook = /*new MetaCircleLook();//*/new ElementalVoidLook();
 	public ILook seederLook = new SeederLook();
 	private final PolygonTerrainMap terrain;
 	
+	private static int getSpawnAmount() { return RandomUtil.N( 6 )+ 6; }
+	
 //	public Integrity integrity = new Integrity(30, 0, new double [] {0,0,0,0});
-	public SpawningBehavior(PolygonTerrainMap terrain, double spawnInterval)
+	public SwarmSpawningBehavior(PolygonTerrainMap terrain, double spawnInterval)
 	{
 		
 		this.terrain = terrain;
@@ -56,10 +58,10 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 		while(timeToSpawn < 0)
 		{
 			timeToSpawn += spawnInterval;
-			for(int idx = 0; idx < RandomUtil.N( 15 )+15; idx ++) {
-				double angle = RandomUtil.getRandomDouble(Angles.PI_2);
+			for(int idx = 0; idx < getSpawnAmount(); idx ++) {
+				double angle = RandomUtil.getRandomDouble(Angles.TAU);
 		//			double radius = RandomUtil.getRandomGaussian(800, 0);
-				double size = 2*Math.abs(RandomUtil.STD(0.5, 0.01))+0.1;
+				double size = 1*Math.abs(RandomUtil.STD(0.5, 0.01))+0.1;
 				
 				double flavor = Math.abs(RandomUtil.STD(0.1, 0.01))+0.1;
 				double health = 5;
@@ -72,7 +74,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 				SwarmAgent agent = null;
 				switch(RandomUtil.N( 20 )) {
 				case 0: case 1: case 2: case 3: case 4: case 5: case 6:
-				case 7: case 8: case 9: case 10: case 11: case 12: case 13: case 14: case 15:
+				case 7: case 8: case 9: case 10: case 11: case 12: case 13: case 14: 
 					agent = new SwarmAgent(swarm, new Integrity(10*flavor, 0, new double [] {0,0,0,0}), flavor/100, 5*flavor);
 					agent.setLook(agentLook);
 					agent.setBehavior(createBoidBehavior());
@@ -83,10 +85,10 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 					agent.setBody(new Body(10*mass, AGENT_VELOCITY+RandomUtil.STD(0, 0.02)));
 					break;
 	//			System.out.println("Agent spawn at " + agent.getArea().getRefPoint());
-				case 16: case 17: case 18:
+				case 16: case 17: case 18: case 15:
 					agent = new Seeder(swarm, 
 											new Integrity(5*flavor, 0, new double [] {0,0,0,0.99}), 
-											AABB.createSquare(spawnX, spawnY, 3*size, angle),
+											AABB.createSquare(spawnX, spawnY, 4*size, angle),
 											flavor, 30*flavor);
 					
 					
@@ -106,7 +108,7 @@ class SpawningBehavior implements IBehaviorState<Swarm>
 			//		System.out.println("spawning agent at " + swarm.getArea().getRefPoint());
 					agent.setArea(AABB.createSquare(spawnX, spawnY, 2*size, angle));
 					agent.setEntitySensor(EnemyFactory.SHORT_SENSOR());
-					agent.setBody(new Body(10*mass, 1.3+RandomUtil.STD(0, 0.01)));
+					agent.setBody(new Body(10*mass, AGENT_VELOCITY+RandomUtil.STD(0, 0.01)));
 					break;
 				}
 				if(agent != null)

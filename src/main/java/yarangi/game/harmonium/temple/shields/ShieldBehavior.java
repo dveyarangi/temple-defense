@@ -1,4 +1,4 @@
-package yarangi.game.harmonium.temple;
+package yarangi.game.harmonium.temple.shields;
 
 import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.game.harmonium.environment.resources.Resource;

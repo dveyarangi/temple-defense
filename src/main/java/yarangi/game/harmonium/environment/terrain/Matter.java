@@ -1,13 +1,13 @@
 package yarangi.game.harmonium.environment.terrain;
 
 import yarangi.game.harmonium.battle.Damage;
-import yarangi.game.harmonium.battle.Damageable;
+import yarangi.game.harmonium.battle.IDamageable;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.graphics.quadraturin.objects.Dummy;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.spatial.PolygonArea;
 
-public  class Matter extends Entity implements Damageable
+public  class Matter extends Entity implements IDamageable
 {
 
 	public Matter(PolygonArea area) 

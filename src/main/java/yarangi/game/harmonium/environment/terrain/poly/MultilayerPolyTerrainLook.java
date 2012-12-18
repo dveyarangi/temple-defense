@@ -48,7 +48,7 @@ public class MultilayerPolyTerrainLook extends PolyGridLook<MultilayerTilePoly, 
 		if(poly[0] == null)
 			return;
 		for(int idx = 0; idx < poly.length; idx ++) {
-			gl.glColor4f(idx*0.2f, (poly.length-idx)*0.2f, 0.0f, 0.5f);
+			gl.glColor4f(idx*0.2f, (poly.length-idx)*0.2f, (poly.length-idx)*0.2f, 0.5f);
 			if(poly[idx] == null || poly[idx].isEmpty())
 				break;
 			renderPoly( gl, poly[idx] );

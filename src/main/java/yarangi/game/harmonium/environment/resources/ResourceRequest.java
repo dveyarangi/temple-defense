@@ -1,18 +1,18 @@
 package yarangi.game.harmonium.environment.resources;
 
-import yarangi.game.harmonium.temple.Serviceable;
+import yarangi.game.harmonium.temple.IServiceable;
 
 public class ResourceRequest
 {
-	private Serviceable requester;
-	private Serviceable provider;
+	private IServiceable requester;
+	private IServiceable provider;
 	
 	private Resource.Type type;
 	
 	private double requiredAmount;
 	private double unapprovedAmount;
 	
-	public ResourceRequest(Serviceable requester, Serviceable provider, Resource.Type type, double amount)
+	public ResourceRequest(IServiceable requester, IServiceable provider, Resource.Type type, double amount)
 	{
 		this.requester = requester;
 		this.provider = provider;
@@ -54,11 +54,11 @@ public class ResourceRequest
 		return type;
 	}
 
-	public Serviceable getRequester()
+	public IServiceable getRequester()
 	{
 		return requester;
 	}
-	public Serviceable getProvider()
+	public IServiceable getProvider()
 	{
 		return provider;
 	}

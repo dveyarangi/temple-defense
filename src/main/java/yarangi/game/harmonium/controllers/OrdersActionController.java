@@ -6,8 +6,8 @@ import java.util.Map;
 import yarangi.game.harmonium.temple.harvester.Harvester;
 import yarangi.game.harmonium.temple.harvester.Waller;
 import yarangi.game.harmonium.temple.weapons.Weapon;
-import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.Camera2D;
+import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.actions.ActionController;
 import yarangi.graphics.quadraturin.actions.CameraMover;
 import yarangi.graphics.quadraturin.actions.IAction;
@@ -21,7 +21,6 @@ import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.Angles;
 import yarangi.math.IVector2D;
-import yarangi.math.Vector2D;
 import yarangi.spatial.ISpatialFilter;
 import yarangi.spatial.PickingSensor;
 import yarangi.spatial.Tile;
@@ -183,7 +182,7 @@ public class OrdersActionController extends ActionController
 		
 		double scaledRadius = camera.getScale() * drawRadius;
 		
-		for(double ang = 0 ; ang < Angles.PI_2; ang += Angles.PI_div_12)
+		for(double ang = 0 ; ang < Angles.TAU; ang += Angles.PI_div_12)
 			poly.add( target.x() + scaledRadius * Math.cos( ang ), target.y() + scaledRadius * Math.sin( ang) );
 		
 		if(terrain == null)

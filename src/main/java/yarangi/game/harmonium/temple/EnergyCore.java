@@ -2,15 +2,16 @@ package yarangi.game.harmonium.temple;
 
 import yarangi.game.harmonium.Playground;
 import yarangi.game.harmonium.battle.Damage;
-import yarangi.game.harmonium.battle.Damageable;
+import yarangi.game.harmonium.battle.IDamageable;
 import yarangi.game.harmonium.battle.ITemple;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.game.harmonium.environment.resources.Resource;
+import yarangi.game.harmonium.temple.structure.TempleStructure;
 import yarangi.spatial.Area;
 
 
-public class EnergyCore extends ObserverEntity implements Serviceable, ITemple, Damageable 
+public class EnergyCore extends ObserverEntity implements IServiceable, ITemple, IDamageable 
 {
 
 	private TempleStructure structure;

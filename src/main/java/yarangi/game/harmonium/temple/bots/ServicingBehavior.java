@@ -2,13 +2,13 @@ package yarangi.game.harmonium.temple.bots;
 
 import yarangi.game.harmonium.ai.economy.IOrder;
 import yarangi.game.harmonium.environment.resources.GatheringOrder;
-import yarangi.game.harmonium.temple.Serviceable;
+import yarangi.game.harmonium.temple.IServiceable;
 
 public class ServicingBehavior extends SatelliteBehavior <Bot>
 {
 	private double TRANSFER_RATE = 5;
 	private IBotInterface controller;
-	public ServicingBehavior(IBotInterface controller, Serviceable serviceable)
+	public ServicingBehavior(IBotInterface controller, IServiceable serviceable)
 	{
 		super(serviceable.getServiceArea(), Bot.ENGINE_POWER);
 		this.controller = controller;

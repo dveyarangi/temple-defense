@@ -3,7 +3,7 @@ package yarangi.game.harmonium.environment.resources;
 import yarangi.game.harmonium.ai.economy.EOrderState;
 import yarangi.game.harmonium.ai.economy.IOrder;
 import yarangi.game.harmonium.environment.resources.Resource.Type;
-import yarangi.game.harmonium.temple.Serviceable;
+import yarangi.game.harmonium.temple.IServiceable;
 
 /**
  * This class represents a resource transaction order.
@@ -53,13 +53,13 @@ public class GatheringOrder implements IOrder
 	}
 
 	@Override
-	public Serviceable getRequester()
+	public IServiceable getRequester()
 	{
 		return request.getRequester();
 	}
 
 	@Override
-	public Serviceable getProvider()
+	public IServiceable getProvider()
 	{
 		return request.getProvider();
 	}
@@ -87,7 +87,7 @@ public class GatheringOrder implements IOrder
 		}
 	}
 
-	public boolean sealExport(Serviceable importer, double time)
+	public boolean sealExport(IServiceable importer, double time)
 	{
 		Port exPort = getProvider().getPort();
 		Port imPort = importer.getPort();
@@ -120,7 +120,7 @@ public class GatheringOrder implements IOrder
 		return orderedAmount;
 	}
 
-	public boolean sealImport(Serviceable importer, double time)
+	public boolean sealImport(IServiceable importer, double time)
 	{
 		Port exPort = importer.getPort();
 		Port imPort = getRequester().getPort();

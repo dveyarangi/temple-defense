@@ -1,16 +1,22 @@
 package yarangi.game.harmonium.enemies.swarm.agents;
 
+import java.awt.geom.Point2D;
+
 import yarangi.game.harmonium.battle.Damage;
-import yarangi.game.harmonium.battle.Damageable;
 import yarangi.game.harmonium.battle.IEnemy;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.IEntity;
+import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
+import yarangi.spatial.Area;
 
-public class SwarmAgent extends Entity implements Damageable, IEnemy
+import com.seisw.util.geom.Poly;
+import com.seisw.util.geom.PolyDefault;
+
+public class SwarmAgent extends Entity implements IEnemy
 {
 	
 	private final Swarm swarm;
@@ -24,6 +30,8 @@ public class SwarmAgent extends Entity implements Damageable, IEnemy
 	
 	private final Color color;
 	private final Color otherColor;
+	
+	private PolyDefault poly;
 	
 	public SwarmAgent(Swarm swarm, Integrity integrity, double leadership, double attractiveness)
 	{
@@ -49,6 +57,17 @@ public class SwarmAgent extends Entity implements Damageable, IEnemy
 	@Override
 	public Integrity getIntegrity() {
 		return integrity;
+	}
+	
+	@Override
+	public void setArea(Area area) { 
+		super.setArea( area );
+		double atx = this.x();
+		double aty = this.y();
+		double size = area.getMaxRadius();
+		poly = new PolyDefault();
+		for(double a = 0 ; a < Angles.TAU; a += Angles.PI_div_3)
+			poly.add( new Point2D.Double(size * Math.cos( a ), size * Math.sin( a )) );
 	}
 
 	@Override
@@ -93,6 +112,12 @@ public class SwarmAgent extends Entity implements Damageable, IEnemy
 	public Color getOtherColor()
 	{
 		return otherColor;
+	}
+
+	@Override
+	public Poly getErrosionPoly()
+	{
+		return poly;
 	}
 
 }

@@ -5,6 +5,8 @@ import java.util.Map;
 
 /**
  * 
+ * Multibin resource stack with dynamic capacity and resource amount.
+ * 
  * @author dveyarangi
  *
  */

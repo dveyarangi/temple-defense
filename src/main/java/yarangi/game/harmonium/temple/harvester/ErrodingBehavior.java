@@ -75,7 +75,7 @@ public class ErrodingBehavior extends Sensor <ITerrain> implements IBehavior <Ha
 		double atx = RandomUtil.getRandomDouble( harvestedTile.getMaxX()-harvestedTile.getMinX() ) + harvestedTile.getMinX();
 		double aty = RandomUtil.getRandomDouble( harvestedTile.getMaxY()-harvestedTile.getMinY() ) + harvestedTile.getMinY();
 //		System.out.println("harvesting at : " + atx + " : " + atx);
-		for(double ang = 0 ; ang < Angles.PI_2; ang += Angles.PI_div_6)
+		for(double ang = 0 ; ang < Angles.TAU; ang += Angles.PI_div_6)
 			poly.add( atx + maskWidth * Math.cos( ang ), aty + maskWidth * Math.sin( ang) );
 		
 		double dx = atx - harvester.getArea().getAnchor().x();

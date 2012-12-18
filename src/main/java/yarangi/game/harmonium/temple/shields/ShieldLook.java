@@ -1,4 +1,4 @@
-package yarangi.game.harmonium.temple;
+package yarangi.game.harmonium.temple.shields;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

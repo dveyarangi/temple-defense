@@ -2,18 +2,18 @@ package yarangi.game.harmonium.temple.weapons;
 
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.battle.Damage;
-import yarangi.game.harmonium.battle.Damageable;
+import yarangi.game.harmonium.battle.IDamageable;
 import yarangi.game.harmonium.battle.ITemple;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.temple.BattleInterface;
-import yarangi.game.harmonium.temple.Serviceable;
+import yarangi.game.harmonium.temple.IServiceable;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
 
-public abstract class Weapon extends Entity implements Serviceable, ITemple, Damageable
+public abstract class Weapon extends Entity implements IServiceable, ITemple, IDamageable
 {
 
 	private static final long serialVersionUID = 1561840016371205291L;

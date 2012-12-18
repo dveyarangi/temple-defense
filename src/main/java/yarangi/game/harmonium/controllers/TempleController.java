@@ -10,7 +10,7 @@ import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.temple.BattleCommander;
 import yarangi.game.harmonium.temple.BattleInterface;
 import yarangi.game.harmonium.temple.EnergyCore;
-import yarangi.game.harmonium.temple.StructureInterface;
+import yarangi.game.harmonium.temple.ServiceInterface;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.actions.ActionController;
 import yarangi.graphics.quadraturin.actions.DefaultActionFactory;
@@ -34,7 +34,7 @@ public class TempleController extends Entity implements CursorListener
 	
 	private final BattleInterface battleInterface;
 	
-	private final StructureInterface structureInterface;
+	private final ServiceInterface structureInterface;
 	
 	private final IOrderScheduler botInterface;
 	
@@ -52,7 +52,7 @@ public class TempleController extends Entity implements CursorListener
 
 		
 		battleInterface = new BattleCommander(this, core);
-		structureInterface = new StructureInterface();
+		structureInterface = new ServiceInterface();
 		botInterface = new StupidScheduler();
 		
 		actionController = new OrdersActionController(scene);
@@ -141,7 +141,7 @@ public class TempleController extends Entity implements CursorListener
 
 
 
-	public StructureInterface getStructureInterface()
+	public ServiceInterface getStructureInterface()
 	{
 		return structureInterface; 
 	}

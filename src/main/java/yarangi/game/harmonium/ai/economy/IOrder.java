@@ -1,6 +1,6 @@
 package yarangi.game.harmonium.ai.economy;
 
-import yarangi.game.harmonium.temple.Serviceable;
+import yarangi.game.harmonium.temple.IServiceable;
 
 public interface IOrder
 {
@@ -8,13 +8,13 @@ public interface IOrder
 	 * Requester of service that relies on this order
 	 * @return
 	 */
-	public Serviceable getRequester();
+	public IServiceable getRequester();
 	
 	/**
 	 * Provider of service that relies on this order
 	 * @return
 	 */
-	public Serviceable getProvider();
+	public IServiceable getProvider();
 
 	public EOrderState getState();
 

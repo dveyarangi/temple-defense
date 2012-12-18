@@ -3,33 +3,32 @@ package yarangi.game.harmonium.temple.structure;
 import java.util.ArrayList;
 import java.util.List;
 
+import yarangi.game.harmonium.temple.IServiceable;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.math.Vector2D;
 import yarangi.spatial.Area;
 
 public class PowerConnector extends Entity
 {
-	private Vector2D sourceLoc;
-
-	private Vector2D sourceDir; 
 	
-	private List <PowerLine> paths = new ArrayList <PowerLine> ();
+	private final IServiceable source;
+	private final IServiceable target;
 	
-	public PowerConnector(Area area, double sourceAngle) 
+	
+	
+	private final List <PowerLine> paths = new ArrayList <PowerLine> ();
+	
+	public PowerConnector(IServiceable source, IServiceable target) 
 	{
 		super();
 		
-		setArea(area);
-		this.sourceLoc = Vector2D.POLAR(area.getAnchor().x(), area.getAnchor().y(), 5, sourceAngle);
 		
-		this.sourceDir = Vector2D.POLAR(1, sourceAngle);
-		
-		setLook(new PowerConnectorLook());
+		this.source = source;
+		this.target = target;
 	}
 
-	public Vector2D getLocation() { return sourceLoc; }
 
-	public void generatePath(PowerConnector targetConnector)
+/*	public void generatePath(PowerConnector targetConnector)
 	{
 		Vector2D targetLoc = targetConnector.getLocation();
 		
@@ -55,9 +54,13 @@ public class PowerConnector extends Entity
 		
 		paths.add(new PowerLine(targetConnector, sourceLoc, intersection, targetLoc));
 		
-	}
+	}*/
 	
 	public List <PowerLine> getPaths() { return paths; }
+
+
+	public IServiceable getSource() { return source;	}
+	public IServiceable getTarget() { return target;	}
 
 
 }

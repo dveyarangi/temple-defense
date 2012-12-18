@@ -10,7 +10,7 @@ import yarangi.spatial.Area;
  *
  */
 
-public interface ITemple extends IEntity
+public interface ITemple extends IEntity, IDamageable
 {
 	public double getAttractiveness();
 	

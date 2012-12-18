@@ -6,7 +6,7 @@ import java.util.List;
 import yarangi.game.harmonium.environment.resources.GatheringOrder;
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.environment.resources.ResourceRequest;
-import yarangi.game.harmonium.temple.Serviceable;
+import yarangi.game.harmonium.temple.IServiceable;
 import yarangi.game.harmonium.temple.bots.Bot;
 import yarangi.numbers.RandomUtil;
 
@@ -31,7 +31,7 @@ public class StupidScheduler implements IOrderScheduler
 	 * @see yarangi.game.temple.controllers.bots.ITempleNode#requestResource(yarangi.game.temple.model.temple.Serviceable, yarangi.game.temple.model.temple.Serviceable, yarangi.game.temple.model.resource.Resource.Type, double, int)
 	 */
 	@Override
-	public int requestResource(Serviceable requester, Serviceable provider, Resource.Type type, double amount, int priority)
+	public int requestResource(IServiceable requester, IServiceable provider, Resource.Type type, double amount, int priority)
 	{
 		ResourceRequest request = new ResourceRequest(requester, provider, type, amount);
 		

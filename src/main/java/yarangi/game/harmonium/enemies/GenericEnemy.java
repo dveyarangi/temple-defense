@@ -1,13 +1,13 @@
 package yarangi.game.harmonium.enemies;
 
 import yarangi.game.harmonium.battle.Damage;
-import yarangi.game.harmonium.battle.Damageable;
+import yarangi.game.harmonium.battle.IDamageable;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.ILayerObject;
 import yarangi.spatial.Area;
 
-public abstract class GenericEnemy extends Entity implements Damageable
+public abstract class GenericEnemy extends Entity implements IDamageable
 {
 
 	private Integrity integrity;

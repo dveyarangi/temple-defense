@@ -1,13 +1,12 @@
-package yarangi.game.harmonium.temple;
+package yarangi.game.harmonium.temple.structure;
 
 import yarangi.game.harmonium.battle.Damage;
-import yarangi.game.harmonium.battle.Damageable;
+import yarangi.game.harmonium.battle.IDamageable;
 import yarangi.game.harmonium.battle.Integrity;
-import yarangi.game.harmonium.temple.structure.Hexagon;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.spatial.AABB;
 
-public abstract class Platform extends Entity implements Damageable
+public abstract class Platform extends Entity implements IDamageable
 {
 
 	private static final long serialVersionUID = 5435486264209745580L;
