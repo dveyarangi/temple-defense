@@ -31,7 +31,7 @@ public class SwarmAgent extends Entity implements IEnemy
 	private final Color color;
 	private final Color otherColor;
 	
-	private PolyDefault poly;
+	protected Poly errosionPoly;
 	
 	public SwarmAgent(Swarm swarm, Integrity integrity, double leadership, double attractiveness)
 	{
@@ -62,12 +62,16 @@ public class SwarmAgent extends Entity implements IEnemy
 	@Override
 	public void setArea(Area area) { 
 		super.setArea( area );
-		double atx = this.x();
-		double aty = this.y();
+		errosionPoly = createErrosionPoly( area );
+	}
+	
+	protected Poly createErrosionPoly(Area area)
+	{
 		double size = area.getMaxRadius();
-		poly = new PolyDefault();
+		PolyDefault poly = new PolyDefault();
 		for(double a = 0 ; a < Angles.TAU; a += Angles.PI_div_3)
 			poly.add( new Point2D.Double(size * Math.cos( a ), size * Math.sin( a )) );
+		return poly;
 	}
 
 	@Override
@@ -117,7 +121,7 @@ public class SwarmAgent extends Entity implements IEnemy
 	@Override
 	public Poly getErrosionPoly()
 	{
-		return poly;
+		return errosionPoly;
 	}
 
 }

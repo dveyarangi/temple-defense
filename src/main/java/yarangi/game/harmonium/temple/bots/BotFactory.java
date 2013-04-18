@@ -9,23 +9,24 @@ import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.physics.Body;
+import yarangi.spatial.AABB;
 import yarangi.spatial.PointArea;
 
 public class BotFactory
 {
-	public static final double BOT_CAPACITY = 50;
+	public static final double BOT_CAPACITY = 300;
 	
 	public static Bot createBot(final IServiceable host, IBotInterface botInterface)
 	{
 		Port port = Port.createEmptyPort();
-		port.setTransferRate( 1 );
+		port.setTransferRate( 0.5 );
 		port.setCapacity( Resource.Type.ENERGY, 0, BOT_CAPACITY );
 		port.setCapacity( Resource.Type.MATTER, 0, BOT_CAPACITY );
 		Bot bot = new Bot (port);
-		bot.setArea( new PointArea(0, 0) );
-		bot.setLook( new BotLook(100) );
+		bot.setArea( AABB.createFromCenter(0, 0, 1, 1, 0) );
+		bot.setLook( new BotLook(20) );
 		bot.setBehavior( createBotBehavoir( host, botInterface ) );
-		bot.setBody( new Body(1, 10) );
+		bot.setBody( new Body(1, Bot.MAX_SPEED) );
 		return bot;
 	}
 	

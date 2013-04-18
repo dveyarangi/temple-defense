@@ -6,18 +6,19 @@ import javax.media.opengl.GL2;
 import yarangi.graphics.grid.PolyGridLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
+import yarangi.graphics.quadraturin.terrain.ITilePoly;
 import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
-import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
+import yarangi.graphics.quadraturin.terrain.PolygonGrid;
 import yarangi.graphics.veils.BlurVeil;
 import yarangi.spatial.Tile;
 
 import com.seisw.util.geom.Poly;
 
-public class MultilayerPolyTerrainLook extends PolyGridLook<MultilayerTilePoly, PolygonTerrainMap>
+public class MultilayerPolyTerrainLook extends PolyGridLook<ITilePoly, PolygonGrid>
 {
 	private IVeil veil;
 
-	public MultilayerPolyTerrainLook(PolygonTerrainMap grid, boolean depthtest, boolean blend)
+	public MultilayerPolyTerrainLook(PolygonGrid grid, boolean depthtest, boolean blend)
 	{
 		super( grid, depthtest, blend );
 		// TODO Auto-generated constructor stub
@@ -37,14 +38,15 @@ public class MultilayerPolyTerrainLook extends PolyGridLook<MultilayerTilePoly, 
 	public boolean isOriented() { return true; }
 	
 	@Override
-	protected void renderTile(GL2 gl, Tile<MultilayerTilePoly> tile, PolygonTerrainMap grid, int scale)
+	protected void renderTile(GL2 gl, Tile<ITilePoly> tile, PolygonGrid grid, int scale)
 	{
 		
+		MultilayerTilePoly p = (MultilayerTilePoly) tile.get();
 
 		// 
 //		for(Poly poly : tile.get().getPolys())
 //			renderPoly( gl, poly );
-		Poly [] poly = tile.get().getPoly();
+		Poly [] poly = p.getPolys();
 		if(poly[0] == null)
 			return;
 		for(int idx = 0; idx < poly.length; idx ++) {

@@ -222,7 +222,7 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 				node = node.origin;
 				node.addFlow(flow.x(), flow.y());
 				
-				swarm.setModified( node.getX(), node.getY() );
+				swarm.setModifiedByIndex( node.getX(), node.getY() );
 			}	
 		}
 //		System.out.println("pathing end");

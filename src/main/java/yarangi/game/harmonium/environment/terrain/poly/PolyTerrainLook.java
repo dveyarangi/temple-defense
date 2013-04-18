@@ -1,21 +1,20 @@
 package yarangi.game.harmonium.environment.terrain.poly;
 
-import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
 import yarangi.graphics.grid.PolyGridLook;
 import yarangi.graphics.quadraturin.IVeil;
+import yarangi.graphics.quadraturin.terrain.ITilePoly;
 import yarangi.graphics.quadraturin.terrain.PolygonGrid;
-import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.spatial.Tile;
 
 import com.seisw.util.geom.Poly;
 
-public class PolyTerrainLook extends PolyGridLook<TilePoly, PolygonGrid<TilePoly>>
+public class PolyTerrainLook extends PolyGridLook <ITilePoly, PolygonGrid>
 {
 
 
-	public PolyTerrainLook(PolygonGrid<TilePoly> grid)
+	public PolyTerrainLook(PolygonGrid grid)
 	{
 		super( grid, false, true );
 		// TODO Auto-generated constructor stub
@@ -27,7 +26,7 @@ public class PolyTerrainLook extends PolyGridLook<TilePoly, PolygonGrid<TilePoly
 	public boolean isOriented() { return true; }
 	
 	@Override
-	protected void renderTile(GL2 gl, Tile<TilePoly> tile, PolygonGrid<TilePoly> grid, int scale)
+	protected void renderTile(GL2 gl, Tile<ITilePoly> tile, PolygonGrid grid, int scale)
 	{
 		// 
 //		for(Poly poly : tile.get().getPolys())
@@ -42,10 +41,11 @@ public class PolyTerrainLook extends PolyGridLook<TilePoly, PolygonGrid<TilePoly
 			renderPoly( gl, tile.get(), poly.getInnerPoly( idx ) );
 	}
 	
-	private void renderPoly(GL2 gl, TilePoly tile, Poly poly)
+	private void renderPoly(GL2 gl, ITilePoly tile, Poly poly)
 	{
 
 		gl.glBegin( GL2.GL_POLYGON );
+
 		for(int idx = 0; idx < poly.getNumPoints(); idx ++)
 			gl.glVertex2f((float)poly.getX( idx ), (float)poly.getY( idx ));
 		

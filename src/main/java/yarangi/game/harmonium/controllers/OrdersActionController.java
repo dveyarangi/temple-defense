@@ -3,6 +3,7 @@ package yarangi.game.harmonium.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import yarangi.game.harmonium.battle.MazeInterface;
 import yarangi.game.harmonium.temple.harvester.Harvester;
 import yarangi.game.harmonium.temple.harvester.Waller;
 import yarangi.game.harmonium.temple.weapons.Weapon;
@@ -15,15 +16,14 @@ import yarangi.graphics.quadraturin.actions.ICameraMan;
 import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.events.UserActionEvent;
 import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
+import yarangi.graphics.quadraturin.terrain.ITilePoly;
 import yarangi.graphics.quadraturin.terrain.PolygonGrid;
-import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.Angles;
 import yarangi.math.IVector2D;
 import yarangi.spatial.ISpatialFilter;
+import yarangi.spatial.ITile;
 import yarangi.spatial.PickingSensor;
-import yarangi.spatial.Tile;
 
 import com.seisw.util.geom.Poly;
 import com.seisw.util.geom.PolyDefault;
@@ -40,9 +40,7 @@ public class OrdersActionController extends ActionController
 	private IVector2D target;
 
 	
-	private PolygonTerrainMap terrain;
-	
-	private PolygonGrid<TilePoly> reinforcementMap;
+	private PolygonGrid reinforcementMap;
 	
 	private ICameraMan cameraMan;
 	
@@ -63,13 +61,12 @@ public class OrdersActionController extends ActionController
 	};
 
 	
-	public OrdersActionController(final Scene scene)
+	public OrdersActionController(final Scene scene, final MazeInterface maze)
 	{
 		super(scene);
 		
 		cameraMan = new CameraMover( (Camera2D) scene.getCamera() );
 		
-		terrain = (PolygonTerrainMap)scene.getWorldLayer().<MultilayerTilePoly>getTerrain();
 //		actions.put("cursor-moved", temple.getController());
 		actions.put("mouse-left-drag", new IAction()
 		{
@@ -92,7 +89,7 @@ public class OrdersActionController extends ActionController
 				}
 				if(dragged == null) {
 //					System.out.println(target);
-					drawTerrain(terrain, target, false);
+					drawTerrain(maze, target, false);
 				}
 			}
 			
@@ -106,7 +103,7 @@ public class OrdersActionController extends ActionController
 				// TODO: test olnly
 				target = event.getCursor().getWorldLocation();
 				
-				drawTerrain(terrain, target, true );
+				drawTerrain(maze, target, true );
 			}
 
 			
@@ -142,16 +139,16 @@ public class OrdersActionController extends ActionController
 			}
 		})*/
 		
-		if(terrain != null) {
-			reinforcementMap = new PolygonGrid<TilePoly>(32, terrain.getWidth(), terrain.getHeight());
+		if(maze != null) {
+			reinforcementMap = new PolygonGrid(32, maze.getWidth(), maze.getHeight());
 	
 	//		System.out.println(reinforcementMap.getGridWidth() + " : " + terrain.getGridHeight());
 			for (int i = 0; i < reinforcementMap.getGridWidth(); i ++)
 				for (int j = 0; j < reinforcementMap.getGridHeight(); j ++)
 				{
-					Tile <TilePoly> tile = reinforcementMap.getTileAt( i, j );
+					ITile <ITilePoly> tile = reinforcementMap.getTileByIndex( i, j );
 	//				System.out.println(tile);
-					tile.put( new TilePoly(tile.getMinX(), tile.getMinY(), tile.getMaxX(), tile.getMaxY() ) );
+					tile.put( new TilePoly((float)tile.getMinX(), (float)tile.getMinY(), (float)tile.getMaxX(), (float)tile.getMaxY() ) );
 				}
 		}
 //		ILook <PolygonTerrainMap> look = new FBOPolyTerrainLook(false, false, POLY_DEPTH);
@@ -174,8 +171,12 @@ public class OrdersActionController extends ActionController
 	private static final double drawRadius = 25;
 
 	
-	private void drawTerrain(PolygonTerrainMap terrain, IVector2D target, boolean draw)
+	private void drawTerrain(MazeInterface maze, IVector2D target, boolean draw)
 	{
+		
+		if(maze == null)
+			return;
+		
 		Poly poly = new PolyDefault();
 
 		Camera2D camera = (Camera2D)(getScene().getCamera());
@@ -184,9 +185,7 @@ public class OrdersActionController extends ActionController
 		
 		for(double ang = 0 ; ang < Angles.TAU; ang += Angles.PI_div_12)
 			poly.add( target.x() + scaledRadius * Math.cos( ang ), target.y() + scaledRadius * Math.sin( ang) );
-		
-		if(terrain == null)
-			return;
+
 		reinforcementMap.apply( target.x(), target.y(), scaledRadius, scaledRadius, draw, poly );
 	}
 
@@ -202,7 +201,7 @@ public class OrdersActionController extends ActionController
 		return cameraMan;
 	}
 
-	public PolygonGrid<TilePoly> getReinforcementMap()
+	public PolygonGrid getReinforcementMap()
 	{
 		return reinforcementMap;
 	}

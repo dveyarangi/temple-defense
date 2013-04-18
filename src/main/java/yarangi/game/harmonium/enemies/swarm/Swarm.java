@@ -8,15 +8,11 @@ import yarangi.game.harmonium.battle.ITemple;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.graphics.quadraturin.Scene;
-import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
-import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.math.FastMath;
 import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 import yarangi.spatial.GridMap;
-import yarangi.spatial.SpatialHashMap;
 import yarangi.spatial.Tile;
 
 
@@ -48,12 +44,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	static final double SPAWNING_INTERVAL = 10;
 	public static final int SPAWNING_RADIUS = 50;
 	public static final Integrity AGENT_INTEGRITY = new Integrity(10, 0, new double [] {0,0,0,0});
-	
-	
 
-	final PolygonTerrainMap terrain;
-	private final SpatialHashMap <IEntity> index;
-	
 	/**
 	 * 
 	 * @param worldSize
@@ -66,9 +57,6 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 		this.scene = scene;
 		
 		WSIZE = (int)((float)worldSize / (float)cellsize);
-		
-		terrain = (PolygonTerrainMap)scene.getWorldLayer().<MultilayerTilePoly>getTerrain();
-		index = (SpatialHashMap <IEntity>)scene.getEntityIndex();
 		
 		this.toNodeIdx = (double)WSIZE / (double)(worldSize);
 	}
@@ -179,7 +167,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 		{
 			Beacon beacon = getContentByIndex( x, y );
 			beacon.update(damage);
-			setModified( beacon.getX(), beacon.getY() );
+			setModifiedByIndex( beacon.getX(), beacon.getY() );
 			int i, j;
 			for(int dx = -2; dx <= 2; dx ++)
 				for(int dy = -2; dy <= 2; dy ++)
@@ -307,7 +295,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 		return getContentByCoord(point.x(), point.y());
 	}
 
-	public boolean isOmniUnpassable(int x, int y)
+/*	public boolean isOmniUnpassable(int x, int y)
 	{
 		if(terrain == null)
 			return false;
@@ -315,7 +303,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 		return tile != null && !tile.get().isEmpty();
 //		return !terrain.getCell( toBeaconCoord( x ), toBeaconCoord( y ) ).getProperties().isEmpty();
 				
-	}
+	}*/
 	
 	public boolean hasTarget(int x, int y)
 	{
@@ -377,11 +365,5 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	{
 		return i + WSIZE * j;
 	}
-
-	public PolygonTerrainMap getTerrain()
-	{
-		return terrain;
-	}
-
 
 }

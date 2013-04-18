@@ -2,6 +2,7 @@ package yarangi.game.harmonium.temple.structure;
 
 import javax.media.opengl.GL;
 
+import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.ILook;
@@ -17,10 +18,10 @@ public class PowerConnectorLook implements ILook <PowerConnector>
 	public void render(GL gl, PowerConnector entity, IRenderingContext context) 
 	{
 		
-		Area sourceArea = entity.getSource().getArea();
-		Area targetArea = entity.getTarget().getArea();
-		IPort sourcePort = entity.getSource().getPort();
-		IPort targetPort = entity.getTarget().getPort();
+		Area sourceArea = entity.getSource().getServiceArea();
+		Area targetArea = entity.getTarget().getServiceArea();
+		Port sourcePort = entity.getSource().getPort();
+		Port targetPort = entity.getTarget().getPort();
 		
 /*		AABB aabb = entity.getAABB();
 		gl.glColor4f(0.0f, 1.0f, 0.0f, 0.5f);

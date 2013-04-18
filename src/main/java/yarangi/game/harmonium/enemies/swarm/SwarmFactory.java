@@ -1,11 +1,11 @@
 package yarangi.game.harmonium.enemies.swarm;
 
+import yarangi.game.harmonium.battle.MazeInterface;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
-import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
 
@@ -46,12 +46,12 @@ public class SwarmFactory
 	}
 	
 //	};
-	public static IBehavior <Swarm> createDefaultBehavior(PolygonTerrainMap terrain)
+	public static IBehavior <Swarm> createDefaultBehavior(MazeInterface maze)
 	{
 //		swarm.setArea(new Point(0, 0));
 		final IBehaviorState<Swarm> rotating = new RotatingBehavior();
 		final IBehaviorState<Swarm> pathing = new PathingBehavior(3);
-		final IBehaviorState<Swarm> spawning = new SwarmSpawningBehavior(terrain, Swarm.SPAWNING_INTERVAL);
+		final IBehaviorState<Swarm> spawning = new SwarmSpawningBehavior(maze, Swarm.SPAWNING_INTERVAL);
 		final IBehaviorState<Swarm> shifting = new ShiftBehavior();
 		
 		FSMBehavior <Swarm> behavior = new FSMBehavior <Swarm> (shifting);

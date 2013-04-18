@@ -1,18 +1,15 @@
 package yarangi.game.harmonium.battle;
 
-import com.seisw.util.geom.PolyDefault;
-
 import yarangi.game.harmonium.enemies.swarm.agents.Seeder;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
+import yarangi.game.harmonium.environment.terrain.ErrosionSeed;
 import yarangi.game.harmonium.temple.shields.Shield;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.Scene;
 import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
 import yarangi.graphics.quadraturin.terrain.ITerrain;
-import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.physics.IPhysicalObject;
-import yarangi.spatial.Area;
 
 /**
  * Collision handlers registrar
@@ -23,22 +20,20 @@ public class ImpactFactory
 {
 	private final static Damage MATTER_DAMAGE = new Damage( 0, 0, 0, 0.5 );
 	
-	private final PolygonTerrainMap terrain;
+	private final MazeInterface maze;
 	
 	private final Scene scene;
 
-	public ImpactFactory(Scene scene, PolygonTerrainMap terrain)
+	@SuppressWarnings("unchecked")
+	public ImpactFactory(Scene scene, MazeInterface maze)
 	{
 		
 		this.scene = scene;
-		this.terrain = terrain;
+		this.maze = maze;
 		
-		
-		
-		scene.getCollisionManager().registerHandler(IEnemy.class, new EnemyCollisionHandler());
-		scene.getCollisionManager().registerHandler(SwarmAgent.class, new EnemyCollisionHandler());
-		scene.getCollisionManager().registerHandler(Seeder.class, new EnemyCollisionHandler());
-//		scene.getCollisionManager().registerHandler(IEnemy.class, new EnemyCollisionHandler());
+		scene.getCollisionManager().registerHandler( IEnemy.class, new EnemyCollisionHandler() );
+		scene.getCollisionManager().registerHandler( SwarmAgent.class, new EnemyCollisionHandler() );
+		scene.getCollisionManager().registerHandler( Seeder.class, new EnemyCollisionHandler() );
 		scene.getCollisionManager().registerHandler( Projectile.class, new ProjectileCollider() );
 		scene.getCollisionManager().registerHandler( Shield.class, new ShieldCollider() );
 	}
@@ -51,7 +46,7 @@ public class ImpactFactory
 	public class EnemyCollisionHandler implements ICollisionHandler<IEnemy>
 	{
 
-		private final PolyDefault transposedPoly = new PolyDefault();
+		ErrosionSeed corrosiveSeed = new ErrosionSeed(2);
 		@Override
 		public boolean setImpactWith(IEnemy source, IPhysicalObject target)
 		{
@@ -66,24 +61,26 @@ public class ImpactFactory
 			} 
 			else if ( target instanceof ITerrain )
 			{
-				Area area = source.getArea();
-				transposedPoly.clear();
-				for(int pidx = 0; pidx < source.getErrosionPoly().getNumPoints(); pidx ++)
-					transposedPoly.add(area.getAnchor().x() + source.getErrosionPoly().getX( pidx ), area.getAnchor().y() + source.getErrosionPoly().getY( pidx ));
-				boolean hit = terrain.apply( area.getAnchor().x(), area.getAnchor().y(), 2*area.getMaxRadius(), 2*area.getMaxRadius(), true,
-						transposedPoly);
-				// swarm.setUnpassable(target.getArea().getRefPoint().x(),
-				// target.getArea().getRefPoint().y());
-				// System.out.println(hit);wwwwwwwwww
-				if ( hit )
-				{
-					source.hit( MATTER_DAMAGE );
-				}
+				collide( source, target );
 
 				return true;
 			}
 			return false;
 
+		}
+		
+		private boolean collide(IEnemy source, IPhysicalObject target)
+		{
+			corrosiveSeed.setLocation( source.getArea().getAnchor().x(), source.getArea().getAnchor().y() );
+			maze.seed( 0, corrosiveSeed );
+			boolean hit = corrosiveSeed.consumeHit();
+			if ( hit )
+			{
+				source.hit( MATTER_DAMAGE );
+				// swarm.setUnpassable(target.getArea().getRefPoint().x(),
+			}
+			
+			return hit;
 		}
 	}
 	

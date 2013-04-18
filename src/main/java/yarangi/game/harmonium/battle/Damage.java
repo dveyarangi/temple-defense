@@ -1,5 +1,10 @@
 package yarangi.game.harmonium.battle;
 
+/**
+ * Damage descriptor
+ * 
+ * @author dveyarangi
+ */
 public class Damage 
 {
 	public static final int KINETIC = 0;
@@ -9,7 +14,7 @@ public class Damage
 	
 	public static final int [] TYPES = {KINETIC, THERMAL, ELECTRO_MAGNETIC, VOID };
 	
-	private double [] damage = new double [4];
+	private final double [] damage = new double [4];
 	
 	public Damage(double kinetic, double thermal, double divine, double voidd)
 	{
@@ -24,6 +29,7 @@ public class Damage
 		return damage[type];
 	}
 
+	@Override
 	public String toString() {
 		return new StringBuilder()
 			.append( "damage: ")

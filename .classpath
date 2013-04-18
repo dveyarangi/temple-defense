@@ -6,9 +6,22 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="temple-defense"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/quadraturin"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/ai"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/util"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/q-1.0.b12.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="harmonium/lib/native/windows/32"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/commons-io-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="lib/gluegen.jar"/>
+	<classpathentry kind="lib" path="lib/gson-1.7.1.jar"/>
+	<classpathentry kind="lib" path="lib/guava-13.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/jogl-all.jar"/>
+	<classpathentry kind="lib" path="lib/log5j-2.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/trove-3.0.0rc1.jar"/>
+	<classpathentry kind="lib" path="lib/util-1.0.b12.jar"/>
+	<classpathentry kind="lib" path="lib/ai-1.0.b0.jar"/>
+	<classpathentry kind="lib" path="lib/native/windows/32"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

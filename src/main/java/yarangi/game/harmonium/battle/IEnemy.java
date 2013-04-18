@@ -10,6 +10,7 @@ import yarangi.graphics.quadraturin.objects.IEntity;
  */
 public interface IEnemy extends IEntity, IDamageable, ICollidable
 {
+	
 	public double getLeadership();
 	public double getAttractiveness();
 	

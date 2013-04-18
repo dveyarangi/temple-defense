@@ -21,7 +21,7 @@ public class EnergyCore extends ObserverEntity implements IServiceable, ITemple,
 	
 	Port port;
 	
-	double transferRate = 5;
+	double transferRate = 0.5;
 	
 	double health;
 

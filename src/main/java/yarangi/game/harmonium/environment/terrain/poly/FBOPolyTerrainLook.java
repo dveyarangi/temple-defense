@@ -8,19 +8,20 @@ import javax.media.opengl.GL2;
 import yarangi.graphics.grid.TileGridLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
+import yarangi.graphics.quadraturin.terrain.ITilePoly;
 import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
-import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
+import yarangi.graphics.quadraturin.terrain.PolygonGrid;
 import yarangi.graphics.veils.BlurVeil;
 import yarangi.spatial.Tile;
 
 import com.seisw.util.geom.Poly;
 
-public class FBOPolyTerrainLook extends TileGridLook<MultilayerTilePoly, PolygonTerrainMap>
+public class FBOPolyTerrainLook extends TileGridLook<ITilePoly, PolygonGrid>
 {
 	private final int layers;
 	private IVeil veil;
 
-	public FBOPolyTerrainLook(PolygonTerrainMap grid, boolean depthtest, boolean blend, int layers)
+	public FBOPolyTerrainLook(PolygonGrid grid, boolean depthtest, boolean blend, int layers)
 	{
 		super(grid, depthtest, blend);
 		this.layers = layers;
@@ -32,14 +33,14 @@ public class FBOPolyTerrainLook extends TileGridLook<MultilayerTilePoly, Polygon
 	@Override
 	public boolean isOriented() { return true; }
 	
-	public void init(GL gl, Tile<MultilayerTilePoly> tile, PolygonTerrainMap grid, IRenderingContext context)
+	public void init(GL gl, Tile<MultilayerTilePoly> tile, PolygonGrid grid, IRenderingContext context)
 	{
 		super.init( gl, context );
 		veil = context.getPlugin( BlurVeil.NAME );
 	}
 
 	@Override
-	protected void renderTile(GL2 gl, IRenderingContext context, Tile<MultilayerTilePoly> tile, PolygonTerrainMap grid, int scale)
+	protected void renderTile(GL2 gl, IRenderingContext context, Tile<ITilePoly> tile, PolygonGrid grid, int scale)
 	{
 		// 
 //		for(Poly poly : tile.get().getPolys())
@@ -55,13 +56,14 @@ public class FBOPolyTerrainLook extends TileGridLook<MultilayerTilePoly, Polygon
 			gl.glVertex2f( (float)tile.getMinX(), (float)tile.getMaxY());
 		gl.glEnd();		
 		
-		Poly [] poly = tile.get().getPoly();
+		MultilayerTilePoly p = (MultilayerTilePoly) tile.get();
+		Poly [] poly = p.getPolys();
 		float gradient;
 		if(poly[0] == null)
 			return;
 		for(int idx = 0; idx < poly.length; idx ++) {
 			gradient = (idx)/(float)layers;
-			gl.glColor4f((poly.length-idx)*0.2f, (poly.length-idx)*0.2f, (poly.length-idx)*0.2f, 0.5f);
+			gl.glColor4f((poly.length-idx)*0.8f, 0, 0, 1f);
 //			gl.glColor4f(gradient, gradient, gradient, 1);
 			if(poly[idx] == null || poly[idx].isEmpty())
 				break;
@@ -84,7 +86,7 @@ public class FBOPolyTerrainLook extends TileGridLook<MultilayerTilePoly, Polygon
 	}
 
 	@Override
-	protected Point getFBODimensions(IRenderingContext context, PolygonTerrainMap grid)
+	protected Point getFBODimensions(IRenderingContext context, PolygonGrid grid)
 	{
 		return new Point(2048, 2048);
 	}

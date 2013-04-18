@@ -25,7 +25,7 @@ public class PowerGrid
 		for(PowerConnector con1 : source.getConnectors())
 			for(PowerConnector con2 : target.getConnectors())
 			{
-				temp = Geometry.calcHypotSquare(con1.getLocation(), con2.getLocation());
+				temp = Geometry.calcHypotSquare(con1.getArea().getAnchor(), con2.getArea().getAnchor());
 				if(temp < min)
 				{
 					min = temp;
@@ -37,7 +37,7 @@ public class PowerGrid
 		if(sourceConn == null)
 			throw new IllegalArgumentException("No connectors found.");
 			
-		sourceConn.generatePath(targetConn);
+//		sourceConn.ge.generatePath(targetConn);
 		
 		connectors.add(source);
 		veil.addEntity(sourceConn);

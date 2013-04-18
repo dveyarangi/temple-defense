@@ -2,21 +2,20 @@ package yarangi.game.harmonium;
 
 import javax.media.opengl.GL;
 
+import yarangi.game.harmonium.ai.economy.IOrderScheduler;
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.ai.weapons.NetCore;
-import yarangi.game.harmonium.battle.IDamageable;
-import yarangi.game.harmonium.battle.EffectUtils;
-import yarangi.game.harmonium.battle.EntityCenter;
-import yarangi.game.harmonium.battle.IEnemy;
 import yarangi.game.harmonium.battle.ImpactFactory;
+import yarangi.game.harmonium.battle.MazeInterface;
+import yarangi.game.harmonium.battle.PolyMazeInterface;
 import yarangi.game.harmonium.controllers.ControlBehavior;
 import yarangi.game.harmonium.controllers.ControlLook;
 import yarangi.game.harmonium.controllers.OrdersActionController;
+import yarangi.game.harmonium.controllers.OrdersActionLook;
 import yarangi.game.harmonium.controllers.TempleController;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
 import yarangi.game.harmonium.enemies.swarm.SwarmDebugOverlay;
 import yarangi.game.harmonium.enemies.swarm.SwarmFactory;
-import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.temple.BattleInterface;
@@ -24,14 +23,13 @@ import yarangi.game.harmonium.temple.EnergyCore;
 import yarangi.game.harmonium.temple.ObserverBehavior;
 import yarangi.game.harmonium.temple.ServiceInterface;
 import yarangi.game.harmonium.temple.TempleLook;
+import yarangi.game.harmonium.temple.bots.Bot;
+import yarangi.game.harmonium.temple.bots.BotFactory;
 import yarangi.game.harmonium.temple.harvester.Harvester;
 import yarangi.game.harmonium.temple.harvester.HarvesterFactory;
 import yarangi.game.harmonium.temple.harvester.Waller;
-import yarangi.game.harmonium.temple.shields.Shield;
 import yarangi.game.harmonium.temple.weapons.Minigun;
 import yarangi.game.harmonium.temple.weapons.MinigunGlowingLook;
-import yarangi.game.harmonium.temple.weapons.MinigunLook;
-import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.game.harmonium.temple.weapons.TrackingBehavior;
 import yarangi.game.harmonium.temple.weapons.Weapon;
 import yarangi.game.harmonium.temple.weapons.WeaponFactory;
@@ -40,6 +38,8 @@ import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.QVoices;
 import yarangi.graphics.quadraturin.Scene;
+import yarangi.graphics.quadraturin.actions.ActionController;
+import yarangi.graphics.quadraturin.actions.DefaultActionFactory;
 import yarangi.graphics.quadraturin.config.EkranConfig;
 import yarangi.graphics.quadraturin.config.SceneConfig;
 import yarangi.graphics.quadraturin.objects.Dummy;
@@ -47,20 +47,15 @@ import yarangi.graphics.quadraturin.objects.EntityShell;
 import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.graphics.quadraturin.objects.Sensor;
-import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
-import yarangi.graphics.quadraturin.terrain.ITerrain;
-import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
-import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.graphics.quadraturin.ui.Direction;
 import yarangi.graphics.quadraturin.ui.Insets;
 import yarangi.graphics.quadraturin.ui.Overlay;
 import yarangi.graphics.quadraturin.ui.Panel;
 import yarangi.graphics.quadraturin.ui.PanelLook;
 import yarangi.math.Angles;
-import yarangi.numbers.RandomUtil;
 import yarangi.physics.Body;
-import yarangi.physics.IPhysicalObject;
 import yarangi.spatial.AABB;
+import yarangi.spatial.ITileMap;
 import yarangi.spatial.PointArea;
 
 public class Playground extends Scene
@@ -80,6 +75,10 @@ public class Playground extends Scene
 	
 	private final IntellectCore core;
 	
+	private final OrdersActionController actionController;
+	
+	private final MazeInterface mazeInterface;
+	
 	public Playground(SceneConfig sceneConfig, EkranConfig ekranConfig, QVoices voices)
 	{
 		super(sceneConfig, ekranConfig, voices);
@@ -88,7 +87,7 @@ public class Playground extends Scene
 		
 		createUI();
 		
-		EntityCenter.init(this);
+//		EntityCenter.init(this);
 		
 		
 		
@@ -96,8 +95,21 @@ public class Playground extends Scene
 //		addEntity(background);
 
 //		PowerGrid grid = new PowerGrid(this.getWorldVeil());
-		final PolygonTerrainMap terrain = (PolygonTerrainMap)getWorldLayer().<MultilayerTilePoly> getTerrain();
+//		final ITileMap terrain = (ITileMap)getWorldLayer().getTerrain();
 		
+		mazeInterface = new PolyMazeInterface(getWorldLayer().getTerrain());
+		
+		
+		actionController = new OrdersActionController(this, mazeInterface);
+		DefaultActionFactory.appendNavActions(this, actionController);
+		Debug.appendDebugActions( actionController.getActions(), this );
+		
+		EntityShell <ActionController> shell = new EntityShell<ActionController>( actionController, null, new OrdersActionLook(actionController) );
+		
+		// TODO: control modes
+		this.setActionController(shell);
+
+		// loading cannon's neural network:
 		core = new NetCore("netcore", this.getWorldLayer().getWidth(), this.getWorldLayer().getHeight());
 //		addEntity(new BubbleSwarm(getWorldVeil(), temple));
 		
@@ -149,7 +161,7 @@ public class Playground extends Scene
 			Port port = Port.createEmptyPort();
 			
 //			AABB area = AABB.createSquare(RandomUtil.R( 400 )-200, RandomUtil.R( 400 )-200,2,0);
-			Harvester harvester = HarvesterFactory.createHarvester(area, port, 64, terrain);
+			Harvester harvester = HarvesterFactory.createHarvester(area, port, 64, mazeInterface);
 			addEntity(harvester);			
 			
 			structure.addServiceable( harvester );
@@ -175,7 +187,7 @@ public class Playground extends Scene
 //			AABB area = AABB.createSquare(RandomUtil.R( 400 )-200, RandomUtil.R( 400 )-200,1,0);
 			AABB area = AABB.createSquare(radius*Math.cos(Angles.TAU/maxCannons *a), radius*Math.sin(Angles.TAU/maxCannons * a ),1,0);
 //			AABB area = AABB.createSquare(RandomUtil.R( 400 )-200, RandomUtil.R( 400 )-200,2,0);
-			Waller waller = HarvesterFactory.createWaller(area, port, 64, terrain, ((OrdersActionController)controller.getActionController()).getReinforcementMap());
+			Waller waller = HarvesterFactory.createWaller(area, port, 64, mazeInterface, actionController.getReinforcementMap());
 			addEntity(waller);
 
 		}
@@ -196,7 +208,7 @@ public class Playground extends Scene
 /*		for(int a = 0; a < maxHarvs; a ++)
 		{
 			double radius = (a % 3+1) * 80;
-		}
+		}*/
 		final IOrderScheduler botInterface = controller.getOrderScheduler();
 		
 		for(int i = 0; i < 5; i ++)
@@ -204,7 +216,7 @@ public class Playground extends Scene
 			Bot bot = BotFactory.createBot( temple, botInterface );
 			addEntity( bot );
 			botInterface.add(bot);
-		}	*/	
+		}	
 /*		for(int i = 0; i < 6; i ++)
 		{
 			double angle = i * Angles.PI_div_3 + Angles.PI_div_6;
@@ -227,9 +239,7 @@ public class Playground extends Scene
 //		KolbasaFactory.generateKolbasaMaze( this );
 		
 		Swarm swarm = SwarmFactory.createSwarm(swarmSize, this, 3);
-		IBehavior <Swarm> swarmBehavior = SwarmFactory.
-		
-		createDefaultBehavior((PolygonTerrainMap)getWorldLayer().<MultilayerTilePoly>getTerrain());
+		IBehavior <Swarm> swarmBehavior = SwarmFactory.createDefaultBehavior(mazeInterface);
 		swarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, Dummy.<Swarm>LOOK() );
 		addEntity(swarmShell);
 		
@@ -237,8 +247,15 @@ public class Playground extends Scene
 		debugSwarmShell = new EntityShell<Swarm>( swarm, swarmBehavior, swarmDebugLook );
 //		addEntity(debugSwarmShell);
 		
-		ImpactFactory impactFactory = new ImpactFactory( this, terrain );
-			}
+		ImpactFactory impactFactory = new ImpactFactory( this, mazeInterface );
+	}
+	
+	@Override
+	public void postAnimate(double time) 
+	{
+		if(mazeInterface != null) // TODO: remove
+			mazeInterface.grow( time );
+	}
 	
 	@Override
 	public void init(GL gl, IRenderingContext context)
@@ -300,7 +317,6 @@ public class Playground extends Scene
 	@Override
 	public void init()
 	{
-
 	}
 
 	@Override

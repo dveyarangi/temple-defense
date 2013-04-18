@@ -8,6 +8,7 @@ import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.ILook;
+import yarangi.graphics.veils.BlurVeil;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 
@@ -34,7 +35,7 @@ public class BotLook implements ILook<Bot> {
 	@Override
 	public void init(GL gl, IRenderingContext context) {
 		
-//		veil = context.<BlurVeil>getPlugin( BlurVeil.NAME );
+		veil = context.<BlurVeil>getPlugin( BlurVeil.NAME );
 		for(int idx = 0; idx < tail.length; idx ++)
 			// TODO: this creates ugly lines from 0,0
 			tail[idx] = Vector2D.ZERO();

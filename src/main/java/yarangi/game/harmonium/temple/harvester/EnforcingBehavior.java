@@ -1,13 +1,13 @@
 package yarangi.game.harmonium.temple.harvester;
 
+import yarangi.game.harmonium.battle.MazeInterface;
+import yarangi.game.harmonium.environment.terrain.EnforcingSeed;
 import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.graphics.quadraturin.terrain.ITerrain;
 import yarangi.graphics.quadraturin.terrain.ITilePoly;
 import yarangi.graphics.quadraturin.terrain.PolygonGrid;
-import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
-import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
 import yarangi.spatial.ISpatialSensor;
@@ -24,34 +24,38 @@ import com.seisw.util.geom.PolyDefault;
 public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <Waller>
 {
 	
-	private final PolygonTerrainMap terrain;
+	private final MazeInterface maze;
 	ITilePoly harvestedTile = null;
 	ITilePoly reserveTile = null;
 	boolean harvestedFound = false;
 	
-	private static final double maskWidth = 5 ;
+	private static final float maskWidth = 5 ;
 //	final GridyTerrainMap terrain = (GridyTerrainMap)scene.getWorldLayer().<Bitmap>getTerrain();
 //	private static final int MASK_WIDTH =16; 
 	
 //	private static final byte [] HARV_MASK = MaskUtil.createCircleMask( MASK_WIDTH/2, new Color(0f, 0f, 0f, 1f), true);
 	
-	private static final double ERRODE_INVERVAL = 0;
+	private static final double ERRODE_INVERVAL = 1;
 	
 	private Tile <Bitmap> prevTile;
 	
 	private int lastSaturation = 1;
 	private int saturation = 1;
 	
-	private final PolygonGrid <TilePoly> reinforcementMap;
-	
 	private final AskingSensor askingSensor = new AskingSensor();
+	
+	private final EnforcingSeed enforcingSeed; 
+	private final PolygonGrid reinforcementMap;
 
-	public EnforcingBehavior(double radius, PolygonTerrainMap terrain, PolygonGrid <TilePoly> reinforcementMap)
+	public EnforcingBehavior(double radius, MazeInterface maze, PolygonGrid reinforcementMap)
 	{
 		super(radius, ERRODE_INVERVAL);
-		this.terrain = terrain;
-		
+		this.maze = maze;
 		this.reinforcementMap = reinforcementMap;
+		
+		enforcingSeed = new EnforcingSeed( maskWidth, reinforcementMap );
+		if(maze != null) // TODO: remove
+			maze.seed( ERRODE_INVERVAL, enforcingSeed );
 	}
 	
 	@Override
@@ -65,11 +69,12 @@ public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <W
 		ITilePoly tile = (ITilePoly) object;
 //		if(!tile.get().isEmpty())
 		{
-			double rx = (tile.getMaxX()-tile.getMinX()) / 2;
-			double ry = (tile.getMaxY()-tile.getMinY()) / 2;
-			double cx = tile.getMinX() + rx;
-			double cy = tile.getMinY() + ry;
-			reinforcementMap.queryAABB( askingSensor, cx, cy, rx, ry );
+			float rx = (tile.getMaxX()-tile.getMinX()) / 2;
+			float ry = (tile.getMaxY()-tile.getMinY()) / 2;
+			float cx = tile.getMinX() + rx;
+			float cy = tile.getMinY() + ry;
+			if(maze != null) // TODO: remove
+				reinforcementMap.queryAABB( askingSensor, cx, cy, rx, ry );
 			
 			if(askingSensor.isFound()) {
 				saturation ++;
@@ -96,13 +101,11 @@ public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <W
 			return true;
 		}
 		
-		
-		Poly poly = new PolyDefault();
 		//		System.out.println("harvesting at : " + atx + " : " + atx);
 
 //		do {
-		double atx = RandomUtil.getRandomDouble( harvestedTile.getMaxX()-harvestedTile.getMinX() ) + harvestedTile.getMinX();
-		double aty = RandomUtil.getRandomDouble( harvestedTile.getMaxY()-harvestedTile.getMinY() ) + harvestedTile.getMinY();
+		float atx = RandomUtil.getRandomFloat( harvestedTile.getMaxX()-harvestedTile.getMinX() ) + harvestedTile.getMinX();
+		float aty = RandomUtil.getRandomFloat( harvestedTile.getMaxY()-harvestedTile.getMinY() ) + harvestedTile.getMinY();
 		// TODO: transpose prepared poly instead.
 		
 /*		double a = Math.atan2( atx, aty );
@@ -133,30 +136,16 @@ public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <W
 			poly.add( x, y );
 		}*/
 //		System.out.println(minx + "," + miny + "," + maxx + "," + maxy);
-	
-		for(double ang = 0 ; ang < Angles.TAU; ang += Angles.PI_div_6) {
-			poly.add( atx + maskWidth * Math.cos( ang ), aty + maskWidth * Math.sin( ang) );
-		}
+
 /*		double rx = (maxx-minx) / 2;
 		double ry = (maxy-miny) / 2;
 		double cx = minx + rx;
 		double cy = miny + ry;*/
 		
-		ReinforcementSensor s = new ReinforcementSensor(poly);
-//		reinforcementMap.queryAABB( s, cx, cy, rx, ry );
-		reinforcementMap.queryAABB( s, atx, aty, maskWidth, maskWidth );
-		
-		Poly res = s.getRes();
-		
-		if(res == null)
-			return true;
-		
-		
+		enforcingSeed.setLocation( atx, aty );
 		double dx = atx - waller.x();
 		double dy = aty - waller.y();
-//		} while()
-//		if(dx*dx+dy*dy < waller.getSensor().getRadius()*waller.getSensor().getRadius())
-			terrain.apply( atx, aty, maskWidth, maskWidth, false, res );
+		
 
 		if(RandomUtil.oneOf( 10 ))
 			harvestedTile = null;
@@ -179,11 +168,11 @@ public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <W
 		// TODO Auto-generated method stub
 		return harvestedTile;
 	}
-	private static class AskingSensor implements ISpatialSensor <TilePoly> {
+	private static class AskingSensor implements ISpatialSensor <ITilePoly> {
 		boolean found = false;
 		
 		@Override
-		public boolean objectFound(TilePoly object)
+		public boolean objectFound(ITilePoly object)
 		{
 			if(!object.isEmpty()) {
 				found = true;
@@ -201,38 +190,6 @@ public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <W
 			found = false;
 		}
 	}	
-	private static class ReinforcementSensor implements ISpatialSensor <TilePoly> {
 
-		Poly mask;
-		
-		Poly res;
-		
-		public ReinforcementSensor(Poly mask) {
-			this.mask = mask;
-			this.res = new PolyDefault();
-		}
-		
-		@Override
-		public boolean objectFound(TilePoly object)
-		{
-			if(object.isEmpty())
-				return false;
-			
-			res = res.union(object.getPoly().intersection( mask ));
-			
-			return false;
-		}
-		
-		public Poly getRes() {
-			return res;
-		}
-
-		@Override
-		public void clear()
-		{
-			res = null;
-		}
-		 
-	}
 }
 

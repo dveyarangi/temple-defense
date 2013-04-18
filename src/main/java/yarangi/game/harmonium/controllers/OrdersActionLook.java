@@ -8,8 +8,8 @@ import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.ILook;
+import yarangi.graphics.quadraturin.terrain.ITilePoly;
 import yarangi.graphics.quadraturin.terrain.PolygonGrid;
-import yarangi.graphics.quadraturin.terrain.TilePoly;
 import yarangi.math.Angles;
 import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
@@ -17,7 +17,7 @@ import yarangi.math.Vector2D;
 public class OrdersActionLook implements ILook <OrdersActionController>
 {
 	/** look for wolrd parst marked for terrain reinforcement */
-	private ILook <PolygonGrid<TilePoly>> look;
+	private ILook <PolygonGrid> look;
 
 	public OrdersActionLook( OrdersActionController controller)
 	{

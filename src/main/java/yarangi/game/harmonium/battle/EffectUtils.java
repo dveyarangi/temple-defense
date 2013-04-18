@@ -10,6 +10,11 @@ import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.math.IVector2D;
 import yarangi.spatial.PointArea;
 
+/**
+ * TODO: effects
+ * 
+ * @author dveyarangi
+ */
 public class EffectUtils
 {
 	

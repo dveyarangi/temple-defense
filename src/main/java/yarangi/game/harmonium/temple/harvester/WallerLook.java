@@ -12,7 +12,7 @@ import yarangi.math.Angles;
 public class WallerLook extends CircleLightLook <Waller>
 {
 
-
+	boolean showRadii = false;
 
 	public WallerLook(int size)
 	{
@@ -29,18 +29,21 @@ public class WallerLook extends CircleLightLook <Waller>
 		super.render( gl, entity, context );
 		
 		float x, y;
-		gl.glPushAttrib( GL2.GL_ENABLE_BIT );
-		gl.glEnable(GL.GL_BLEND);
-		gl.glColor4f( 0f, 1f, 0f, 0.1f );
-		gl.glBegin( GL.GL_LINE_STRIP );
-		for(double a = 0; a <= Angles.TAU+0.001; a += Angles.PI_div_40)
+		if(showRadii)
 		{
-			x = (float)(entity.getTerrainSensor().getRadius() * Math.cos( a ));
-			y = (float)(entity.getTerrainSensor().getRadius() * Math.sin( a ));
-			gl.glVertex2f( x, y );
+
+			gl.glPushAttrib( GL2.GL_ENABLE_BIT );
+			gl.glEnable(GL.GL_BLEND);
+			gl.glColor4f( 0f, 1f, 0f, 0.1f );
+			gl.glBegin( GL.GL_LINE_STRIP );
+			for(double a = 0; a <= Angles.TAU+0.001; a += Angles.PI_div_40)
+			{
+				x = (float)(entity.getTerrainSensor().getRadius() * Math.cos( a ));
+				y = (float)(entity.getTerrainSensor().getRadius() * Math.sin( a ));
+				gl.glVertex2f( x, y );
+			}
+			gl.glEnd();
 		}
-		gl.glEnd();
-			
 		gl.glBegin( GL2.GL_POLYGON );
 		gl.glColor4f( 0f, 1f, 0f, 0.3f );
 		for(double a = 0; a <= Angles.TAU; a += Angles.PI_div_20)

@@ -3,6 +3,8 @@ package yarangi.game.harmonium.temple.bots;
 import yarangi.game.harmonium.ai.economy.IOrder;
 import yarangi.game.harmonium.environment.resources.GatheringOrder;
 import yarangi.game.harmonium.temple.IServiceable;
+import yarangi.numbers.RandomUtil;
+import yarangi.physics.Body;
 
 public class ServicingBehavior extends SatelliteBehavior <Bot>
 {
@@ -17,7 +19,10 @@ public class ServicingBehavior extends SatelliteBehavior <Bot>
 	@Override
 	public double behave(double time, Bot bot)
 	{
-//		bot.getBody().setMaxSpeed(7+RandomUtil.getRandomGaussian( 0, 1 ) );
+		Body body = bot.getBody();
+		if(body.getMaxSpeed() > Bot.MAX_SPEED/2)
+			body.setMaxSpeed( body.getMaxSpeed()-time*1 );
+//		bot.getBody().setMaxSpeed(7+RandomUtil.STD( 0, 1 ) );
 		super.behave( time, bot);
 		IOrder order = bot.getOrder();
 		boolean finished = false;

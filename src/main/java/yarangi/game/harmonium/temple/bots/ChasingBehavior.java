@@ -6,6 +6,7 @@ import yarangi.math.Angles;
 import yarangi.math.Geometry;
 import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
+import yarangi.physics.Body;
 import yarangi.spatial.Area;
 
 public class ChasingBehavior <H extends IEntity>implements IBehaviorState <H> 
@@ -24,8 +25,10 @@ public class ChasingBehavior <H extends IEntity>implements IBehaviorState <H>
 	@Override
 	public double behave(double time, IEntity bot) 
 	{
-	
-
+		Body body = bot.getBody();
+		if(body.getMaxSpeed() < Bot.MAX_SPEED)
+			body.setMaxSpeed( body.getMaxSpeed()+time*1 );
+		
 		IVector2D targetLocation = target.getAnchor();
 		
 		double distanceToTarget = Geometry.calcHypotSquare(targetLocation, bot.getArea().getAnchor());
@@ -56,7 +59,7 @@ public class ChasingBehavior <H extends IEntity>implements IBehaviorState <H>
 //			System.out.println(bot.getArea() + " : " + offset);
 		bot.getBody().setForce( force.x(), force.y() );
 		
-		if (distanceToTarget < 8 * target.getMaxRadius()*target.getMaxRadius())
+		if (distanceToTarget < 10 * target.getMaxRadius()*target.getMaxRadius())
 		{
 			return 0; // proceed to next state
 		}

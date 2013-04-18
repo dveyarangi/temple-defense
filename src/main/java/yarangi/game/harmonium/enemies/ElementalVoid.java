@@ -1,6 +1,7 @@
 package yarangi.game.harmonium.enemies;
 
 import yarangi.game.harmonium.battle.Integrity;
+import yarangi.game.harmonium.enemies.swarm.agents.DroneBehavior;
 import yarangi.graphics.quadraturin.objects.ILayerObject;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
@@ -18,7 +19,7 @@ public class ElementalVoid extends GenericEnemy
 		);
 
 		setLook(new ElementalVoidLook());
-		setBehavior(new DroneBehavior());
+		setBehavior(new DroneBehavior(1));
 //		setMass(10);
 		
 //		setVelocity(RandomUtil.getRandomDouble(5)-2.5, RandomUtil.getRandomDouble(5)-2.5);

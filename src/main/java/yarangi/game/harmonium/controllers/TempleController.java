@@ -2,8 +2,6 @@ package yarangi.game.harmonium.controllers;
 
 import javax.media.opengl.GL;
 
-import yarangi.game.harmonium.Debug;
-import yarangi.game.harmonium.Playground;
 import yarangi.game.harmonium.ai.economy.IOrderScheduler;
 import yarangi.game.harmonium.ai.economy.StupidScheduler;
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
@@ -12,16 +10,14 @@ import yarangi.game.harmonium.temple.BattleInterface;
 import yarangi.game.harmonium.temple.EnergyCore;
 import yarangi.game.harmonium.temple.ServiceInterface;
 import yarangi.graphics.quadraturin.Scene;
-import yarangi.graphics.quadraturin.actions.ActionController;
-import yarangi.graphics.quadraturin.actions.DefaultActionFactory;
 import yarangi.graphics.quadraturin.events.CursorListener;
 import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.objects.Entity;
-import yarangi.graphics.quadraturin.objects.EntityShell;
 import yarangi.graphics.quadraturin.objects.ILayerObject;
 import yarangi.graphics.quadraturin.terrain.ITerrain;
 import yarangi.spatial.Area;
 import yarangi.spatial.ISpatialSensor;
+import yarangi.spatial.ITileMap;
  
 public class TempleController extends Entity implements CursorListener
 {
@@ -37,8 +33,7 @@ public class TempleController extends Entity implements CursorListener
 	private final ServiceInterface structureInterface;
 	
 	private final IOrderScheduler botInterface;
-	
-	private final OrdersActionController actionController;
+
 
 	public TempleController(final Scene scene, final IntellectCore core, final EnergyCore temple) 
 	{
@@ -54,15 +49,6 @@ public class TempleController extends Entity implements CursorListener
 		battleInterface = new BattleCommander(this, core);
 		structureInterface = new ServiceInterface();
 		botInterface = new StupidScheduler();
-		
-		actionController = new OrdersActionController(scene);
-		DefaultActionFactory.appendNavActions(scene, actionController);
-		Debug.appendDebugActions( actionController.getActions(), (Playground) scene );
-		
-		EntityShell <ActionController> shell = new EntityShell<ActionController>( actionController, null, new OrdersActionLook(actionController) );
-		
-		// TODO: control modes
-		scene.setActionController(shell);
 
 	}
 
@@ -129,17 +115,10 @@ public class TempleController extends Entity implements CursorListener
 		final LOSSensor sensor = new LOSSensor();
 //		scene.getEntityIndex().query( sensor, x, y, x2-x, y2-y );
 		if(scene.getWorldLayer().getTerrain() != null)
-			scene.getWorldLayer().<ITerrain>getTerrain().queryLine( sensor, x, y, x2-x, y2-y );
+			scene.getWorldLayer().<ITileMap<ITerrain>>getTerrain().queryLine( sensor, (float)x, (float)y, (float)(x2-x), (float)(y2-y) );
 		
 		return sensor.hasLOS();
 	}
-
-	public ActionController getActionController()
-	{
-		 return actionController;
-	}
-
-
 
 	public ServiceInterface getStructureInterface()
 	{

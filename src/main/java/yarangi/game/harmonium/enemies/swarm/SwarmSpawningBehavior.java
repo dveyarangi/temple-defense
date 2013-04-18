@@ -1,22 +1,20 @@
 package yarangi.game.harmonium.enemies.swarm;
 
+import yarangi.game.harmonium.battle.MazeInterface;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.enemies.ElementalVoidLook;
 import yarangi.game.harmonium.enemies.EnemyFactory;
-import yarangi.game.harmonium.enemies.MetaCircleLook;
 import yarangi.game.harmonium.enemies.swarm.agents.DroneBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.Seeder;
 import yarangi.game.harmonium.enemies.swarm.agents.SeederBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.SeederLook;
 import yarangi.game.harmonium.enemies.swarm.agents.SplitBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
-import yarangi.game.harmonium.temple.bots.ChasingBehavior;
 import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
 import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
-import yarangi.graphics.quadraturin.terrain.PolygonTerrainMap;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
@@ -34,15 +32,15 @@ class SwarmSpawningBehavior implements IBehaviorState<Swarm>
 	public static final double  AGENT_VELOCITY = 1;
 	public ILook agentLook = /*new MetaCircleLook();//*/new ElementalVoidLook();
 	public ILook seederLook = new SeederLook();
-	private final PolygonTerrainMap terrain;
+	private final MazeInterface maze;
 	
 	private static int getSpawnAmount() { return RandomUtil.N( 6 )+ 6; }
 	
 //	public Integrity integrity = new Integrity(30, 0, new double [] {0,0,0,0});
-	public SwarmSpawningBehavior(PolygonTerrainMap terrain, double spawnInterval)
+	public SwarmSpawningBehavior(MazeInterface maze, double spawnInterval)
 	{
 		
-		this.terrain = terrain;
+		this.maze = maze;
 		this.spawnInterval = spawnInterval;
 
 	}
@@ -92,8 +90,8 @@ class SwarmSpawningBehavior implements IBehaviorState<Swarm>
 											flavor, 30*flavor);
 					
 					
-//					agent.setBehavior(createSeederBehavior());
-					agent.setBehavior(new DroneBehavior(20));
+					agent.setBehavior(createSeederBehavior(maze));
+//					agent.setBehavior(new DroneBehavior(20));
 					agent.setEntitySensor(EnemyFactory.SHORT_SENSOR());
 					agent.setLook(seederLook);
 					agent.setBody(new Body(mass, AGENT_VELOCITY+RandomUtil.STD(0, 0.01)));
@@ -155,9 +153,11 @@ class SwarmSpawningBehavior implements IBehaviorState<Swarm>
 	}
 
 	
-	public IBehavior <Seeder> createSeederBehavior()
+	public IBehavior <Seeder> createSeederBehavior(MazeInterface maze)
 	{
-		final IBehaviorState<Seeder> seederState = new SeederBehavior(terrain);
+		
+		
+		final IBehaviorState<Seeder> seederState = new SeederBehavior(maze);
 //		final IBehaviorState<SwarmAgent> dangerState = new DangerBehavior();
 		final IBehaviorState<SwarmAgent> splitState = new SplitBehavior();
 		

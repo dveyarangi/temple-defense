@@ -21,6 +21,11 @@ public class DroneBehavior /*extends Sensor <IEntity>*/ implements IBehaviorStat
 	public DroneBehavior(double inertion) {
 		this.inertion = inertion;
 	}
+	
+	public void setInertion(double inertion)
+	{
+		this.inertion = inertion;
+	}
 
 	@Override
 	public double behave(double time, SwarmAgent agent) {

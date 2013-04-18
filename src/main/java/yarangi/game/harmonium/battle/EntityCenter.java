@@ -10,6 +10,8 @@ import yarangi.spatial.ISpatialSensor;
 import yarangi.spatial.SpatialHashMap;
 
 /** 
+ * TODO: not used
+ * 
  * This class controls generated game entities
  * Probably should be part of the scene.
  * 
@@ -67,7 +69,7 @@ public class EntityCenter
 	
 	public Set <ITemple> getTempleTargets(AABB area) {
 		TempleSetSensor sensor = new TempleSetSensor ();
-		index.queryAABB( sensor, area.getCenterX(), area.getCenterY(), area.getRX(), area.getRY() );
+		index.queryAABB( sensor, (float)area.getCenterX(), (float)area.getCenterY(), (float)area.getRX(), (float)area.getRY() );
 		
 		return sensor;
 	}

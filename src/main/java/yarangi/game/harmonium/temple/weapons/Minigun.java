@@ -36,8 +36,8 @@ public class Minigun extends Weapon
 			128, // tracking range
 			ACCURACY, 
 			projectileHitRadius, 
-			new Damage(1, 0.1, 0, 0),
-			resourceCapacity, 0, resourceType,
+			new Damage(4, 0.1, 0, 0),
+			resourceCapacity, 10, resourceType,
 			128);
 	
 	public static final WeaponProperties PROP_SMALL = new WeaponProperties(
@@ -51,7 +51,7 @@ public class Minigun extends Weapon
 			ACCURACY, 
 			projectileHitRadius, 
 			new Damage(15, 0.1, 0, 0),
-			resourceCapacity, 0, resourceType,
+			resourceCapacity, 1, resourceType,
 			32);
 	public static final WeaponProperties PROPS1 = new WeaponProperties(
 			BASE_TRACKING_SPEED, 
