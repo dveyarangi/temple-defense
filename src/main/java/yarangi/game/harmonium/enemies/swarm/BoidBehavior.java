@@ -20,6 +20,8 @@ import yarangi.math.Vector2D;
  * Regards both IEnemy and ITemple entities as fellow boids, though handles them a bit differently 
  *
  * @author dveyarangi
+ * 
+ * TODO:OPTIMIZE
  *
  */
 public class BoidBehavior implements IBehaviorState<SwarmAgent> 

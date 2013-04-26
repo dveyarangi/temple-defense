@@ -8,6 +8,7 @@ import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.ILook;
+import yarangi.graphics.veils.BlurVeil;
 
 public class MinigunBurstLook implements ILook <Projectile> 
 {
@@ -31,15 +32,18 @@ public class MinigunBurstLook implements ILook <Projectile>
 	{
 		GL2 gl = gl1.getGL2();
 		color.apply( gl );
+		gl.glPushAttrib( GL2.GL_ENABLE_BIT );
+		gl.glEnable(GL.GL_BLEND);
 		gl.glBegin(GL.GL_LINE_STRIP);
 			gl.glVertex2f(1.2f, 0.1f);
 			gl.glVertex2f(-1.2f, -0.1f);
 		gl.glEnd();
+		gl.glPopAttrib();
 	}
 
 	@Override
 	public void init(GL gl, IRenderingContext context) {
-//		veil = context.getPlugin( BlurVeil.NAME );
+		veil = context.getPlugin( BlurVeil.NAME );
 
 	}
 

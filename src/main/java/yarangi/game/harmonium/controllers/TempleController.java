@@ -15,6 +15,7 @@ import yarangi.graphics.quadraturin.events.ICursorEvent;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.ILayerObject;
 import yarangi.graphics.quadraturin.terrain.ITerrain;
+import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
 import yarangi.spatial.ISpatialSensor;
 import yarangi.spatial.ITileMap;
@@ -41,7 +42,7 @@ public class TempleController extends Entity implements CursorListener
 
 		this.scene = scene;
 		this.temple = temple;
-		setArea(Area.EMPTY);
+		setArea(AABB.createPoint(0,0));
 		setLook(new ControlLook());
 		setBehavior(new ControlBehavior());
 

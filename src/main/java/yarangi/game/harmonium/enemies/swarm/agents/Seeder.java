@@ -9,6 +9,7 @@ import yarangi.game.harmonium.environment.terrain.EntropySeed;
 import yarangi.graphics.curves.Bezier4Curve;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
+import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
 
 import com.seisw.util.geom.Poly;
@@ -25,7 +26,7 @@ public class Seeder extends SwarmAgent
 	
 	private final ISeed seed;
 	
-	public Seeder(Swarm swarm, Integrity integrity, Area area, double leadership, double attractiveness) 
+	public Seeder(Swarm swarm, Integrity integrity, AABB area, double leadership, double attractiveness) 
 	{
 		super(swarm, integrity, leadership, attractiveness);
 		

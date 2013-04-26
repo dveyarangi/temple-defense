@@ -18,7 +18,7 @@
 			{ 
 				"factoryClass" : "yarangi.graphics.veils.BlurVeil",
 				"properties" : {
-					"decay" : 0.01
+					"decay" : 0.03
 				}
 			},	
 			{ 

@@ -5,7 +5,7 @@ import yarangi.game.harmonium.battle.IDamageable;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.ILayerObject;
-import yarangi.spatial.Area;
+import yarangi.spatial.AABB;
 
 public abstract class GenericEnemy extends Entity implements IDamageable
 {
@@ -15,7 +15,7 @@ public abstract class GenericEnemy extends Entity implements IDamageable
 	private ILayerObject target;
 	
 	
-	public GenericEnemy(Area area, ILayerObject target, Integrity integrity) {
+	public GenericEnemy(AABB area, ILayerObject target, Integrity integrity) {
 		super();
 		this.target = target;
 		this.integrity = integrity;
@@ -33,10 +33,12 @@ public abstract class GenericEnemy extends Entity implements IDamageable
 		return true;
 	}
 
+	@Override
 	public Integrity getIntegrity() {
 		return integrity;
 	}
 
+	@Override
 	public void hit(Damage damage) 
 	{
 		integrity.hit(damage);

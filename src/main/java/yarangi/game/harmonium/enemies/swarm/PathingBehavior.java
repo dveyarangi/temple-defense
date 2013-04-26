@@ -82,6 +82,12 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 		return 0;
 	}	
 	
+	
+	private class NodesForceQueue extends PriorityQueue
+	{
+		
+	}
+	
 	public void markPath(int ox, int oy, int tx, int ty, Swarm swarm)
 	{
 		int WSIZE = swarm.getWorldSize();
@@ -196,14 +202,14 @@ public class PathingBehavior implements IBehaviorState<Swarm>
 		{
 		
 		// TODO: set target beacon if null (not supposed to happen)
-		
+			Vector2D flow = Vector2D.R( 0, 0 );
 			AStarNode node = swarm.getBeaconByIndex( tx, ty );
 			while(node.origin != null)
 			{
 				
 				cx = node.origin.getX();
 				cy = node.origin.getY();
-				Vector2D flow = Vector2D.R(node.getX()-node.origin.getX(), node.getY()-node.origin.getY()).normalize();//.mul(0.1);
+				flow.setxy(node.getX()-node.origin.getX(), node.getY()-node.origin.getY()).normalize();//.mul(0.1);
 //				node.origin.setFlow(flow);
 				for(int dx = -flowRadius; dx <= flowRadius; dx ++)
 					for(int dy = -flowRadius; dy <= flowRadius; dy ++)

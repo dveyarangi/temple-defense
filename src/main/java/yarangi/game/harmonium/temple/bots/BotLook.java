@@ -51,8 +51,8 @@ public class BotLook implements ILook<Bot> {
 			gl.glColor3f(1.0f, 1.0f, 1.0f);
 		else
 			gl.glColor3f(0.0f, 1.0f, 0.2f);*/
-		gl.glPushAttrib(GL2.GL_ENABLE_BIT);
-		gl.glDisable(GL.GL_DEPTH_TEST);
+//		gl.glPushAttrib(GL2.GL_ENABLE_BIT);
+//		gl.glDisable(GL.GL_DEPTH_TEST);
 		double resourcePercent = bot.getPort().get( Resource.Type.ENERGY ).getAmount() / bot.getPort().getCapacity( Resource.Type.ENERGY );
 		gl.glColor4f((float)(1-resourcePercent), (float)(1.0),(float)(1-resourcePercent),0.3f);
 //		gl.glColor4f(0,1,0,(float)(0.2+resourcePercent*0.5));
@@ -73,7 +73,7 @@ public class BotLook implements ILook<Bot> {
 		if(headIdx < 0)
 			headIdx =  tail.length-1;
 		
-		tail[headIdx] = Vector2D.COPY(bot.getArea().getAnchor());
+		tail[headIdx].set( bot.getArea().getAnchor() );
 		
 		for(int idx = headIdx; idx < tail.length; idx ++)
 			gl.glVertex2f((float)(tail[idx].x()-bx), (float)(tail[idx].y()-by)); 
@@ -82,7 +82,7 @@ public class BotLook implements ILook<Bot> {
 		gl.glEnd();
 
 		
-		gl.glPopAttrib();
+//		gl.glPopAttrib();
 
 	}
 

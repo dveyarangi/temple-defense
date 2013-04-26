@@ -1,11 +1,16 @@
 package yarangi.game.harmonium.temple.weapons;
 
+import javax.media.opengl.GL;
+
 import yarangi.game.harmonium.battle.IEnemy;
 import yarangi.game.harmonium.enemies.MetaCircleLook;
+import yarangi.graphics.quadraturin.IRenderingContext;
+import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.graphics.quadraturin.objects.ISensor;
 import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.graphics.textures.TextureLook;
+import yarangi.graphics.veils.BlurVeil;
 import yarangi.math.Angles;
 import yarangi.math.BitUtils;
 import yarangi.math.IVector2D;
@@ -19,7 +24,21 @@ import yarangi.spatial.ISpatialFilter;
 public class WeaponFactory
 {
 	//new MinigunBurstLook(weapon.getPort(), weapon.getProps())
-	private static TextureLook look = new TextureLook("/textures/red_gradient.jpg");
+	private static TextureLook look = new TextureLook("/textures/red_gradient.jpg") { 
+		
+		
+		private IVeil veil;
+		
+		@Override
+		public void init(GL gl, IRenderingContext context) {
+			super.init( gl, context );
+			
+			veil = null;//context.getPlugin( BlurVeil.NAME );
+		}
+		
+		@Override
+		public IVeil getVeil() { return veil; }
+	};
 //	private static MetaCircleLook look = new MetaCircleLook();
 	
 	public static Projectile createProjectile(Weapon weapon, double velocity)

@@ -11,7 +11,7 @@ import yarangi.spatial.Area;
 /**
  * In this state bot wanders aimlessly near its host.
  * @author dveyarangi
- *
+ *TODO:OPTIMIZE - vector allocation
  */
 public class SatelliteBehavior <K extends IEntity> implements IBehaviorState <K>
 {

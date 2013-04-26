@@ -1,7 +1,7 @@
 package yarangi.game.harmonium.battle;
 
 import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.spatial.Area;
+import yarangi.spatial.AABB;
 
 
 /**
@@ -15,7 +15,7 @@ public interface ITemple extends IEntity, IDamageable
 	public double getAttractiveness();
 	
 	@Override
-	public Area getArea();
+	public AABB getArea();
 	
 	public double getLeadership();
 }

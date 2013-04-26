@@ -55,8 +55,6 @@ import yarangi.graphics.quadraturin.ui.PanelLook;
 import yarangi.math.Angles;
 import yarangi.physics.Body;
 import yarangi.spatial.AABB;
-import yarangi.spatial.ITileMap;
-import yarangi.spatial.PointArea;
 
 public class Playground extends Scene
 {
@@ -118,7 +116,7 @@ public class Playground extends Scene
 		temple.setLook(new TempleLook( 512 ));
 		temple.setBehavior(new ObserverBehavior(controller));
 		temple.setEntitySensor(new Sensor<IBeing>(512, 3, null));
-		temple.setArea(AABB.createSquare(0,0,10, 0));
+		temple.setArea(AABB.createSquare(0,0,3, 0));
 		temple.setBody(new Body(1,0));
 		temple.setHealth( 1 );
 		addEntity( temple );
@@ -126,7 +124,7 @@ public class Playground extends Scene
 
 		
 //		TempleControlProps c = new TempleControlProps();
-		controller.setArea(new PointArea(0,0));
+		controller.setArea(AABB.createPoint( 0,0 ));
 		controller.setLook(new ControlLook());
 		controller.setBehavior(new ControlBehavior());
 		addEntity(controller);
@@ -211,7 +209,7 @@ public class Playground extends Scene
 		}*/
 		final IOrderScheduler botInterface = controller.getOrderScheduler();
 		
-		for(int i = 0; i < 5; i ++)
+		for(int i = 0; i < 30; i ++)
 		{
 			Bot bot = BotFactory.createBot( temple, botInterface );
 			addEntity( bot );

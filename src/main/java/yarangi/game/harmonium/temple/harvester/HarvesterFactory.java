@@ -5,13 +5,13 @@ import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.terrain.Bitmap;
 import yarangi.graphics.quadraturin.terrain.PolygonGrid;
-import yarangi.spatial.Area;
+import yarangi.spatial.AABB;
 import yarangi.spatial.ISpatialFilter;
 
 public class HarvesterFactory
 {
 	
-	public static Harvester createHarvester(Area area, Port port, double range, MazeInterface maze)
+	public static Harvester createHarvester(AABB area, Port port, double range, MazeInterface maze)
 	{
 		Harvester harvester = new Harvester(port, null);
 		
@@ -23,7 +23,7 @@ public class HarvesterFactory
 		
 		return harvester;
 	}
-	public static Waller createWaller(Area area, Port port, double range, MazeInterface maze, PolygonGrid reinforcementMap)
+	public static Waller createWaller(AABB area, Port port, double range, MazeInterface maze, PolygonGrid reinforcementMap)
 	{
 		Waller waller = new Waller(port, null);
 		

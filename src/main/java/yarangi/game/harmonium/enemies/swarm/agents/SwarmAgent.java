@@ -11,6 +11,7 @@ import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
+import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
 
 import com.seisw.util.geom.Poly;
@@ -60,7 +61,7 @@ public class SwarmAgent extends Entity implements IEnemy
 	}
 	
 	@Override
-	public void setArea(Area area) { 
+	public void setArea(AABB area) { 
 		super.setArea( area );
 		errosionPoly = createErrosionPoly( area );
 	}

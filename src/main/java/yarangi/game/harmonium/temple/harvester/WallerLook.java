@@ -43,6 +43,7 @@ public class WallerLook extends CircleLightLook <Waller>
 				gl.glVertex2f( x, y );
 			}
 			gl.glEnd();
+			gl.glPopAttrib();
 		}
 		gl.glBegin( GL2.GL_POLYGON );
 		gl.glColor4f( 0f, 1f, 0f, 0.3f );
@@ -67,7 +68,6 @@ public class WallerLook extends CircleLightLook <Waller>
 			gl.glEnd();
 		}*/
 			
-		gl.glPopAttrib();
 	}
 
 

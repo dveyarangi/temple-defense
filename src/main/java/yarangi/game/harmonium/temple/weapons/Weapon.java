@@ -43,7 +43,7 @@ public abstract class Weapon extends Entity implements IServiceable, ITemple, ID
 	
 	private boolean isPoweredUp = true;
 	
-	protected Weapon(BattleInterface battleInterface, Area area, WeaponProperties props, Integrity integrity) {
+	protected Weapon(BattleInterface battleInterface, AABB area, WeaponProperties props, Integrity integrity) {
 		
 		this.battleInterface = battleInterface;
 		this.props = props;
@@ -102,6 +102,7 @@ public abstract class Weapon extends Entity implements IServiceable, ITemple, ID
 		return getArea();
 	}
 
+	@Override
 	public Port getPort() { return port; }
 	
 	/** consumes resource amount required for single shot

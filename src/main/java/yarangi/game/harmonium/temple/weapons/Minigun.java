@@ -37,7 +37,7 @@ public class Minigun extends Weapon
 			ACCURACY, 
 			projectileHitRadius, 
 			new Damage(4, 0.1, 0, 0),
-			resourceCapacity, 10, resourceType,
+			resourceCapacity, 30, resourceType,
 			128);
 	
 	public static final WeaponProperties PROP_SMALL = new WeaponProperties(

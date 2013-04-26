@@ -38,7 +38,7 @@ public class TempleStructure extends Entity implements Connectable
 	{
 		super();
 		
-		setArea(Area.EMPTY);
+//		setArea(Area.EMPTY);
 /*		Hexagon centerHexagon = new Hexagon();
 		
 		this.commandPlatform = new CommandPlatform(temple, centerHexagon);
