@@ -15,11 +15,13 @@ public class ShieldDebugLook implements ILook <Shield>
 {
 
 	@Override
-	public void init(GL gl, IRenderingContext context){}
+	public void init(IRenderingContext context){}
 
 	@Override
-	public void render(GL gl, Shield entity, IRenderingContext context)
+	public void render(Shield entity, IRenderingContext ctx)
 	{
+		GL2 gl = ctx.gl();
+		
 		CircleSegmentList segments = entity.getExcludedSegments();
 		
 		for(AngleInterval segment : segments.getRegularList())
@@ -41,7 +43,7 @@ public class ShieldDebugLook implements ILook <Shield>
 	}
 
 	@Override
-	public void destroy(GL gl,IRenderingContext context){}
+	public void destroy(IRenderingContext ctx){}
 
 	@Override
 	public float getPriority()

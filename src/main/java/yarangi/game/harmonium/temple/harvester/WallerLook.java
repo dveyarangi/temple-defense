@@ -21,12 +21,13 @@ public class WallerLook extends CircleLightLook <Waller>
 
 
 	@Override
-	public void render(GL gl1, Waller entity, IRenderingContext context)
+	public void render(Waller entity, IRenderingContext ctx)
 	{
-		GL2 gl = gl1.getGL2();
+		GL2 gl = ctx.gl();
+		
 		float P = entity.getPort().getSaturation( Resource.Type.MATTER );
 		this.setColor(new Color( 0, P, 0, 1.0f));
-		super.render( gl, entity, context );
+		super.render( entity, ctx );
 		
 		float x, y;
 		if(showRadii)

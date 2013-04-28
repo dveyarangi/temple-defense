@@ -1,7 +1,5 @@
 package yarangi.game.harmonium.enemies;
 
-import javax.media.opengl.GL;
-
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
@@ -15,7 +13,7 @@ public class ElementalDarknessLook implements ILook <SwarmAgent>
 	private final double red = RandomUtil.getRandomDouble(0.5)+0.5;
 
 	@Override
-	public void render(GL gl, SwarmAgent entity, IRenderingContext context) 
+	public void render(SwarmAgent entity, IRenderingContext ctx) 
 	{
 //		Integrity integrity = entity.getIntegrity();
 ////		gl.glColor3f(0.4f, 0.4f, 0.5f);
@@ -48,10 +46,10 @@ public class ElementalDarknessLook implements ILook <SwarmAgent>
 	}
 
 	@Override
-	public void init(GL gl, IRenderingContext context) {}
+	public void init(IRenderingContext ctx) {}
 
 	@Override
-	public void destroy(GL gl, IRenderingContext context) {}
+	public void destroy(IRenderingContext ctx) {}
 
 	@Override
 	public float getPriority()

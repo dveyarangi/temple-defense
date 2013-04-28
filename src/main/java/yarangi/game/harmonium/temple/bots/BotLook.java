@@ -33,9 +33,9 @@ public class BotLook implements ILook<Bot> {
 	}
 	
 	@Override
-	public void init(GL gl, IRenderingContext context) {
+	public void init(IRenderingContext ctx) {
 		
-		veil = context.<BlurVeil>getPlugin( BlurVeil.NAME );
+		veil = ctx.<BlurVeil>getPlugin( BlurVeil.NAME );
 		for(int idx = 0; idx < tail.length; idx ++)
 			// TODO: this creates ugly lines from 0,0
 			tail[idx] = Vector2D.ZERO();
@@ -43,9 +43,9 @@ public class BotLook implements ILook<Bot> {
 	}
 
 	@Override
-	public void render(GL gl1, Bot bot, IRenderingContext context) 
+	public void render(Bot bot, IRenderingContext ctx) 
 	{
-		GL2 gl = gl1.getGL2();
+		GL2 gl = ctx.gl();
 		
 /*		if(entity.isHighlighted())
 			gl.glColor3f(1.0f, 1.0f, 1.0f);
@@ -88,7 +88,7 @@ public class BotLook implements ILook<Bot> {
 
 
 	@Override
-	public void destroy(GL gl,  IRenderingContext context) {}
+	public void destroy(IRenderingContext ctx) {}
 
 	@Override
 	public boolean isCastsShadow()

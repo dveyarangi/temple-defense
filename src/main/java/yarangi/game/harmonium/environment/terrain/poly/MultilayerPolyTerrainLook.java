@@ -25,10 +25,10 @@ public class MultilayerPolyTerrainLook extends PolyGridLook<ITilePoly, PolygonGr
 	}
 	
 	@Override
-	public void init(GL gl, IRenderingContext context)
+	public void init(IRenderingContext ctx)
 	{
-		super.init( gl, context );
-		veil = context.getPlugin( BlurVeil.NAME );
+		super.init( ctx );
+		veil = ctx.getPlugin( BlurVeil.NAME );
 	}
 
 	@Override

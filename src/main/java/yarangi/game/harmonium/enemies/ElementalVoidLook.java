@@ -4,15 +4,12 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
-import yarangi.graphics.GLList;
-import yarangi.graphics.colors.Color;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.graphics.veils.BlurVeil;
 import yarangi.math.Angles;
 import yarangi.math.IVector2D;
-import yarangi.numbers.RandomUtil;
 
 public class ElementalVoidLook implements ILook <SwarmAgent> 
 {
@@ -26,14 +23,14 @@ public class ElementalVoidLook implements ILook <SwarmAgent>
 	private IVeil veil;
 	
 	@Override
-	public void init(GL gl, IRenderingContext context) {
-		veil = context.getPlugin( BlurVeil.NAME );
+	public void init(IRenderingContext ctx) {
+		veil = ctx.getPlugin( BlurVeil.NAME );
 	}
 
 	@Override
-	public void render(GL gl1, SwarmAgent entity, IRenderingContext context) {
+	public void render(SwarmAgent entity, IRenderingContext ctx) {
 	
-		GL2 gl = gl1.getGL2();
+		GL2 gl = ctx.gl();
 //		gl.glBlendFunc(GL.GL_ONE, GL.GL_ZERO);
 		
 //		System.out.println("here");
@@ -61,7 +58,7 @@ public class ElementalVoidLook implements ILook <SwarmAgent>
 
 
 	@Override
-	public void destroy(GL gl, IRenderingContext context) { }
+	public void destroy(IRenderingContext context) { }
 
 	@Override
 	public boolean isCastsShadow() { return false; }

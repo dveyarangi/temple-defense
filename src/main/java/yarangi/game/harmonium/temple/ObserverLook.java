@@ -1,7 +1,5 @@
 package yarangi.game.harmonium.temple;
 
-import javax.media.opengl.GL;
-
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.CircleLightLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
@@ -13,9 +11,9 @@ public class ObserverLook extends CircleLightLook<IObserverEntity>
 	}
 
 	@Override
-	public void render(GL gl, IObserverEntity entity, IRenderingContext context) 
+	public void render(IObserverEntity entity, IRenderingContext ctx) 
 	{	
-		super.render(gl, entity, context);
+		super.render( entity, ctx );
 
 /*		Color color = getColor();
 		Vector2D observerLoc = entity.getArea().getRefPoint();

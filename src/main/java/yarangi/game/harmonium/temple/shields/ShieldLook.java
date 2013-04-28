@@ -33,10 +33,11 @@ public class ShieldLook implements ILook <Shield>
 //	private static int count = 0;
 
 	@Override
-	public void init(GL gl,IRenderingContext context) {
+	public void init(IRenderingContext ctx) {
 		
+		GL2 gl = ctx.gl();
 
-		veil = context.<IsoheightVeil> getPlugin( IsoheightVeil.NAME );
+		veil = ctx.<IsoheightVeil> getPlugin( IsoheightVeil.NAME );
 		if(veil == null)
 		{
 			Q.rendering.warn( "Plugin [" + IsoheightVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
@@ -66,8 +67,10 @@ public class ShieldLook implements ILook <Shield>
 //		veil = context.getPlugin( IsoheightVeil.NAME );	}
 	}
 	@Override
-	public void render(GL gl1, Shield entity, IRenderingContext context) {
-		GL2 gl = gl1.getGL2();
+	public void render(Shield entity, IRenderingContext ctx) 
+	{
+		GL2 gl = ctx.gl();
+		
 		gl.glPushAttrib( GL.GL_COLOR_BUFFER_BIT );
 		gl.glBlendFunc(GL.GL_ONE, GL.GL_ONE);
 		gl.glBlendEquation(GL.GL_FUNC_ADD);
@@ -78,7 +81,7 @@ public class ShieldLook implements ILook <Shield>
 		
 		gl.glPushMatrix();
 		gl.glRotatef( a1, 0, 0, 1 );
-		a1 += 0.005*context.getFrameLength();
+		a1 += 0.005*ctx.getFrameLength();
 		gl.glBegin(GL2.GL_QUADS);
 		gl.glTexCoord2f( 0.0f, 0.0f ); gl.glVertex2f(-radius, -radius);
 		gl.glTexCoord2f( 0.0f, 1.0f ); gl.glVertex2f(-radius,  radius);
@@ -88,7 +91,7 @@ public class ShieldLook implements ILook <Shield>
 		gl.glPopMatrix();
 		gl.glPushMatrix();
 		gl.glRotatef( a2, 0, 0, 1 );
-		a2 -= 0.005*context.getFrameLength();
+		a2 -= 0.005*ctx.getFrameLength();
 		gl.glBegin(GL2.GL_QUADS);
 		gl.glTexCoord2f( 0.0f, 0.0f ); gl.glVertex2f(-radius, -radius);
 		gl.glTexCoord2f( 0.0f, 1.0f ); gl.glVertex2f(-radius,  radius);
@@ -99,12 +102,12 @@ public class ShieldLook implements ILook <Shield>
 		
 		gl.glBindTexture( GL.GL_TEXTURE_2D, 0 );
 		gl.glPopAttrib();
-		context.setDefaultBlendMode( gl );
+		ctx.setDefaultBlendMode( gl );
 	}
 
 	@Override
-	public void destroy(GL gl,  IRenderingContext context) {
-		texture.destroy(gl);
+	public void destroy(IRenderingContext ctx) {
+		texture.destroy(ctx.gl());
 		texture = null; //
 
 	}

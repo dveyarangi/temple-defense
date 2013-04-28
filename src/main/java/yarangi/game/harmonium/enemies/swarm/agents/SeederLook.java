@@ -1,6 +1,5 @@
 package yarangi.game.harmonium.enemies.swarm.agents;
 
-import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
 import yarangi.graphics.curves.Bezier4Curve;
@@ -16,17 +15,18 @@ public class SeederLook implements ILook <Seeder>
 	IVeil veil;
 	
 	@Override
-	public void init(GL gl, IRenderingContext context) {
+	public void init(IRenderingContext ctx) {
 		// TODO Auto-generated method stub
-		veil = context.getPlugin( BlurVeil.NAME );
+		veil = ctx.getPlugin( BlurVeil.NAME );
 		
 		
 	}
 
 	@Override
-	public void render(GL gl1, Seeder seeder, IRenderingContext context) {
+	public void render(Seeder seeder, IRenderingContext ctx) {
 		
-		GL2 gl = gl1.getGL2();
+		GL2 gl = ctx.gl();
+		
 		Bezier4Curve left = seeder.getLeftEdge();
 		Bezier4Curve right = seeder.getRightEdge();
 		
@@ -65,7 +65,7 @@ public class SeederLook implements ILook <Seeder>
 	}
 
 	@Override
-	public void destroy(GL gl,  IRenderingContext context) {}
+	public void destroy(IRenderingContext ctx) {}
 
 	@Override
 	public float getPriority() {

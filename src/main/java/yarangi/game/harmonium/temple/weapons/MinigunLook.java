@@ -17,9 +17,9 @@ public class MinigunLook implements ILook<Minigun>
 
 
 	@Override
-	public void render(GL gl1, Minigun cannon, IRenderingContext context) 
+	public void render(Minigun cannon, IRenderingContext ctx) 
 	{
-		GL2 gl = gl1.getGL2();
+		GL2 gl = ctx.gl();
 
 		Area area = cannon.getArea();
 		IVector2D loc = area.getAnchor();
@@ -89,10 +89,10 @@ public class MinigunLook implements ILook<Minigun>
 	
 
 	@Override
-	public void init(GL gl, IRenderingContext context) {}
+	public void init(IRenderingContext ctx) {}
 
 	@Override
-	public void destroy(GL gl, IRenderingContext context) {}
+	public void destroy(IRenderingContext ctx) {}
 
 
 

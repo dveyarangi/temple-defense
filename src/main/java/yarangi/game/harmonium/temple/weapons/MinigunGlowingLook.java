@@ -26,9 +26,9 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 	}
 
 	@Override
-	public void init(GL gl, IRenderingContext context)
+	public void init(IRenderingContext ctx)
 	{
-		super.init( gl,  context );
+		super.init( ctx );
 //		veil = context.<IsoheightVeil> getPlugin( IsoheightVeil.NAME );
 		
 		if(veil == null)
@@ -40,16 +40,17 @@ public class MinigunGlowingLook extends CircleLightLook<Minigun>
 
 
 	@Override
-	public void render(GL gl1,  Minigun cannon, IRenderingContext context) 
+	public void render(Minigun cannon, IRenderingContext ctx) 
 	{
-		GL2 gl = gl1.getGL2();
+		GL2 gl = ctx.gl();
+		
 		Resource.Type type = cannon.getProps().getResourceType();
 		float P = (float)(cannon.getPort().get( type ).getAmount() / cannon.getPort().getCapacity( type ));
 //		this.setColor(new Color( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (P),1));
 //		this.setColor(new Color( P*0.2f+(1-P)*0.8f, 0.5f+0.5f*P, 1f*P, 1.0f));
 		this.setColor(new Color( 0f, 0, P, 1.0f));
 				
-		super.render( gl, cannon, context );		
+		super.render( cannon, ctx );		
 		
 		if(showRadii)
 		{

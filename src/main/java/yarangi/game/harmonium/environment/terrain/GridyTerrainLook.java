@@ -24,9 +24,9 @@ public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap>
 	}
 
 	@Override
-	public void init(GL gl, IRenderingContext context)
+	public void init(IRenderingContext ctx)
 	{
-		super.init( gl, context );
+		super.init( ctx );
 	}
 	
 	

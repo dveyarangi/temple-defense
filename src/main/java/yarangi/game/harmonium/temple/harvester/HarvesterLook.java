@@ -3,13 +3,11 @@ package yarangi.game.harmonium.temple.harvester;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
+import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.graphics.colors.Color;
 import yarangi.graphics.lights.CircleLightLook;
 import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.math.Angles;
-import yarangi.game.harmonium.environment.resources.Resource;
 
 public class HarvesterLook extends CircleLightLook <Harvester>
 {
@@ -23,13 +21,14 @@ public class HarvesterLook extends CircleLightLook <Harvester>
 
 
 	@Override
-	public void render(GL gl1, Harvester entity, IRenderingContext context)
+	public void render(Harvester entity, IRenderingContext ctx)
 	{
-		GL2 gl = gl1.getGL2();
+		GL2 gl = ctx.gl();
+		
 		float P = entity.getPort().getSaturation( Resource.Type.MATTER );
 		this.setColor(new Color( 1f, 0, 0, 1.0f));
 		
-		super.render( gl, entity, context );		
+		super.render( entity, ctx );		
 
 		float x, y;
 		if(showRadii)

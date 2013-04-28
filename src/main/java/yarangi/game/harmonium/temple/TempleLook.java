@@ -18,9 +18,10 @@ public class TempleLook extends CircleLightLook<EnergyCore>
 	}
 
 	@Override
-	public void render(GL gl1, EnergyCore temple, IRenderingContext context) 
+	public void render(EnergyCore temple, IRenderingContext ctx) 
 	{
-		GL2 gl = gl1.getGL2();
+		GL2 gl = ctx.gl();
+		
 		float P = (float)temple.getHealth();
 //		System.out.println(P);
 //		this.setColor(new Color( P*0.2f+(1-P)*0.8f, 0.5f+0.5f*P, 1f*P, 1.0f));
@@ -33,7 +34,7 @@ public class TempleLook extends CircleLightLook<EnergyCore>
 //		gl.glEnable(GL.GL_BLEND);
 //		gl.glBegin( GL.GL_LINE_STRIP );
 
-		super.render( gl, temple, context );
+		super.render( temple, ctx );
 		
 		gl.glColor4f( (float)((1-P)/4+P*0.3),  (float)(P*0.3), (P),1);
 		gl.glBegin(GL2.GL_POLYGON);

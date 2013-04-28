@@ -8,7 +8,6 @@ import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
 import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.graphics.quadraturin.objects.ILook;
-import yarangi.graphics.quadraturin.terrain.ITilePoly;
 import yarangi.graphics.quadraturin.terrain.PolygonGrid;
 import yarangi.math.Angles;
 import yarangi.math.IVector2D;
@@ -26,19 +25,19 @@ public class OrdersActionLook implements ILook <OrdersActionController>
 	}
 
 	@Override
-	public void init(GL gl, IRenderingContext context)
+	public void init(IRenderingContext ctx)
 	{
 		if(look != null)
-			look.init( gl, context );
+			look.init( ctx );
 	}
 
 	@Override
-	public void render(GL gl1, OrdersActionController entity, IRenderingContext context)
+	public void render(OrdersActionController entity, IRenderingContext ctx)
 	{
-		GL2 gl = gl1.getGL2();
+		GL2 gl = ctx.gl();
 		
 		if(look != null)
-			look.render( gl, entity.getReinforcementMap(), context );
+			look.render( entity.getReinforcementMap(), ctx );
 		
 		IEntity dragged = entity.getDragged();
 		IVector2D target = entity.getTarget();
@@ -73,10 +72,10 @@ public class OrdersActionLook implements ILook <OrdersActionController>
 	}
 
 	@Override
-	public void destroy(GL gl,IRenderingContext context)
+	public void destroy(IRenderingContext ctx)
 	{
 		if(look != null)
-			look.destroy( gl, context );
+			look.destroy( ctx );
 	}
 
 	@Override

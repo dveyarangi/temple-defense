@@ -26,7 +26,9 @@ public class MetaCircleLook implements ILook <Entity>
 	private static Texture texture;
 	
 	@Override
-	public void init(GL gl, IRenderingContext context) {
+	public void init(IRenderingContext ctx) {
+		
+		GL2 gl = ctx.gl();
 		
 		if(texture != null)
 			return;
@@ -50,7 +52,7 @@ public class MetaCircleLook implements ILook <Entity>
 //		veil = context.getPlugin( BlurVeil.NAME );
 //		veil = context.getPlugin( BlurVeil.NAME );
 
-		veil = context.<IVeil>getPlugin( IsoheightVeil.NAME );
+		veil = ctx.<IVeil>getPlugin( IsoheightVeil.NAME );
 		if(veil == null)
 		{
 			Q.rendering.warn( "Plugin [" + IsoheightVeil.NAME + "] requested by look [" + this.getClass() + "] is not available."  );
@@ -59,9 +61,10 @@ public class MetaCircleLook implements ILook <Entity>
 	}
 
 	@Override
-	public void render(GL gl1, Entity entity, IRenderingContext context) {
+	public void render(Entity entity, IRenderingContext ctx) {
 		
-		GL2 gl = gl1.getGL2();
+		GL2 gl = ctx.gl();
+		
 		gl.glPushAttrib( GL.GL_COLOR_BUFFER_BIT );
 		gl.glBlendFunc(GL.GL_ONE, GL.GL_ONE);
 		gl.glBlendEquation(GL.GL_FUNC_ADD);
@@ -81,12 +84,12 @@ public class MetaCircleLook implements ILook <Entity>
 		
 		gl.glBindTexture( GL.GL_TEXTURE_2D, 0 );
 		gl.glPopAttrib();
-		context.setDefaultBlendMode( gl );
+		ctx.setDefaultBlendMode( gl );
 	}
 
 	@Override
-	public void destroy(GL gl, IRenderingContext context) {
-		texture.destroy(gl);
+	public void destroy(IRenderingContext ctx) {
+		texture.destroy(ctx.gl());
 	}
 
 	@Override

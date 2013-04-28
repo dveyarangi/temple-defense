@@ -11,7 +11,7 @@ public class ControlLook implements ILook <TempleController>
 {
 	
 	@Override
-	public void render(GL gl, TempleController entity, IRenderingContext context) 
+	public void render(TempleController entity, IRenderingContext context) 
 	{
 //		entity.getActionController().display( gl, time, context );
 //		TempleEntity temple = entity.getTemple();
@@ -95,11 +95,11 @@ public class ControlLook implements ILook <TempleController>
 	}
 
 	@Override
-	public void init(GL gl, IRenderingContext context) {
+	public void init(IRenderingContext context) {
 	}
 
 	@Override
-	public void destroy(GL gl, IRenderingContext context) {
+	public void destroy(IRenderingContext context) {
 	}
 
 	@Override

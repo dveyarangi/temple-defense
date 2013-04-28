@@ -28,9 +28,10 @@ public class MinigunBurstLook implements ILook <Projectile>
 	}
 
 	@Override
-	public void render(GL gl1, Projectile prj, IRenderingContext context) 
+	public void render(Projectile prj, IRenderingContext ctx) 
 	{
-		GL2 gl = gl1.getGL2();
+		GL2 gl = ctx.gl();
+		
 		color.apply( gl );
 		gl.glPushAttrib( GL2.GL_ENABLE_BIT );
 		gl.glEnable(GL.GL_BLEND);
@@ -42,13 +43,13 @@ public class MinigunBurstLook implements ILook <Projectile>
 	}
 
 	@Override
-	public void init(GL gl, IRenderingContext context) {
-		veil = context.getPlugin( BlurVeil.NAME );
+	public void init(IRenderingContext ctx) {
+		veil = ctx.getPlugin( BlurVeil.NAME );
 
 	}
 
 	@Override
-	public void destroy(GL gl, IRenderingContext context) {
+	public void destroy(IRenderingContext ctx) {
 	}
 
 	@Override

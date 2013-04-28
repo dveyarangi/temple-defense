@@ -1,7 +1,5 @@
 package yarangi.game.harmonium.temple.structure;
 
-import javax.media.opengl.GL;
-
 import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.graphics.quadraturin.IVeil;
@@ -12,10 +10,10 @@ public class PowerConnectorLook implements ILook <PowerConnector>
 {
 
 	@Override
-	public void init(GL gl, IRenderingContext context) {}
+	public void init(IRenderingContext context) {}
 
 	@Override
-	public void render(GL gl, PowerConnector entity, IRenderingContext context) 
+	public void render(PowerConnector entity, IRenderingContext ctx) 
 	{
 		
 		Area sourceArea = entity.getSource().getServiceArea();
@@ -47,7 +45,7 @@ public class PowerConnectorLook implements ILook <PowerConnector>
 	}
 
 	@Override
-	public void destroy(GL gl, IRenderingContext context) {}
+	public void destroy(IRenderingContext ctx) {}
 
 	@Override
 	public float getPriority()

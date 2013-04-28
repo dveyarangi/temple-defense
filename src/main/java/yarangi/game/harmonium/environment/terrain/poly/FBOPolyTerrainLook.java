@@ -33,10 +33,10 @@ public class FBOPolyTerrainLook extends TileGridLook<ITilePoly, PolygonGrid>
 	@Override
 	public boolean isOriented() { return true; }
 	
-	public void init(GL gl, Tile<MultilayerTilePoly> tile, PolygonGrid grid, IRenderingContext context)
+	public void init(Tile<MultilayerTilePoly> tile, PolygonGrid grid, IRenderingContext ctx)
 	{
-		super.init( gl, context );
-		veil = context.getPlugin( BlurVeil.NAME );
+		super.init( ctx );
+		veil = ctx.getPlugin( BlurVeil.NAME );
 	}
 
 	@Override
