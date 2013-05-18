@@ -2,6 +2,12 @@ package yarangi.game.harmonium.controllers;
 
 import javax.media.opengl.GL;
 
+import yar.quadraturin.Scene;
+import yar.quadraturin.events.CursorListener;
+import yar.quadraturin.events.ICursorEvent;
+import yar.quadraturin.objects.Entity;
+import yar.quadraturin.objects.ILayerObject;
+import yar.quadraturin.terrain.ITerrain;
 import yarangi.game.harmonium.ai.economy.IOrderScheduler;
 import yarangi.game.harmonium.ai.economy.StupidScheduler;
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
@@ -9,12 +15,6 @@ import yarangi.game.harmonium.temple.BattleCommander;
 import yarangi.game.harmonium.temple.BattleInterface;
 import yarangi.game.harmonium.temple.EnergyCore;
 import yarangi.game.harmonium.temple.ServiceInterface;
-import yarangi.graphics.quadraturin.Scene;
-import yarangi.graphics.quadraturin.events.CursorListener;
-import yarangi.graphics.quadraturin.events.ICursorEvent;
-import yarangi.graphics.quadraturin.objects.Entity;
-import yarangi.graphics.quadraturin.objects.ILayerObject;
-import yarangi.graphics.quadraturin.terrain.ITerrain;
 import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
 import yarangi.spatial.ISpatialSensor;

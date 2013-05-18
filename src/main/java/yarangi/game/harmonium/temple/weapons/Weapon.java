@@ -1,5 +1,6 @@
 package yarangi.game.harmonium.temple.weapons;
 
+import yar.quadraturin.objects.Entity;
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.battle.Damage;
 import yarangi.game.harmonium.battle.IDamageable;
@@ -9,7 +10,6 @@ import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.temple.BattleInterface;
 import yarangi.game.harmonium.temple.IServiceable;
-import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
 

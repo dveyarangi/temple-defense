@@ -1,11 +1,11 @@
 package yarangi.game.harmonium.enemies.swarm;
 
+import yar.quadraturin.Scene;
+import yar.quadraturin.objects.IBehavior;
+import yar.quadraturin.objects.behaviors.FSMBehavior;
+import yar.quadraturin.objects.behaviors.IBehaviorCondition;
+import yar.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.game.harmonium.battle.MazeInterface;
-import yarangi.graphics.quadraturin.Scene;
-import yarangi.graphics.quadraturin.objects.IBehavior;
-import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
 

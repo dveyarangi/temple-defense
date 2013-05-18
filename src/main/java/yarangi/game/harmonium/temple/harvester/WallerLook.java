@@ -3,10 +3,10 @@ package yarangi.game.harmonium.temple.harvester;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.graphics.colors.Color;
+import yar.quadraturin.graphics.lights.CircleLightLook;
 import yarangi.game.harmonium.environment.resources.Resource;
-import yarangi.graphics.colors.Color;
-import yarangi.graphics.lights.CircleLightLook;
-import yarangi.graphics.quadraturin.IRenderingContext;
 import yarangi.math.Angles;
 
 public class WallerLook extends CircleLightLook <Waller>

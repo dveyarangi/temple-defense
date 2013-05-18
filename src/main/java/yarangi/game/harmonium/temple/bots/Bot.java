@@ -1,9 +1,9 @@
 package yarangi.game.harmonium.temple.bots;
 
+import yar.quadraturin.objects.Entity;
 import yarangi.game.harmonium.ai.economy.IOrder;
 import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.game.harmonium.temple.IServiceable;
-import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.spatial.Area;
 
 public class Bot extends Entity implements IServiceable

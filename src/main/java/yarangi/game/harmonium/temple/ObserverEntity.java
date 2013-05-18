@@ -3,8 +3,8 @@ package yarangi.game.harmonium.temple;
 import java.util.HashSet;
 import java.util.Set;
 
+import yar.quadraturin.objects.Entity;
 import yarangi.game.harmonium.ai.weapons.IFeedbackBeacon;
-import yarangi.graphics.quadraturin.objects.Entity;
 
 public class ObserverEntity extends Entity// implements Connectable 
 {

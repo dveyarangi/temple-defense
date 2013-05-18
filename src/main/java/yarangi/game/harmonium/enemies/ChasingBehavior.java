@@ -1,6 +1,6 @@
 package yarangi.game.harmonium.enemies;
 
-import yarangi.graphics.quadraturin.objects.IBehavior;
+import yar.quadraturin.objects.IBehavior;
 import yarangi.math.Geometry;
 import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;

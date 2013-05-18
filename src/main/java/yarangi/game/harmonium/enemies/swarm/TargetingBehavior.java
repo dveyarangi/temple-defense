@@ -1,7 +1,7 @@
 package yarangi.game.harmonium.enemies.swarm;
 
+import yar.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 
 class TargetingBehavior implements IBehaviorState<SwarmAgent> {
 

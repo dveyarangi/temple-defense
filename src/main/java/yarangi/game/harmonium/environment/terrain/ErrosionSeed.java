@@ -1,7 +1,7 @@
 package yarangi.game.harmonium.environment.terrain;
 
+import yar.quadraturin.terrain.PolygonGrid;
 import yarangi.game.harmonium.battle.ISeed;
-import yarangi.graphics.quadraturin.terrain.PolygonGrid;
 import yarangi.math.Angles;
 
 import com.seisw.util.geom.Poly;

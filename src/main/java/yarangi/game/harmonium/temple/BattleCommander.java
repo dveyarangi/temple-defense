@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.media.opengl.GL;
 
+import yar.quadraturin.objects.IBeing;
 import yarangi.game.harmonium.ai.weapons.IFeedbackBeacon;
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.ai.weapons.LinearFeedbackBeacon;
@@ -18,7 +19,6 @@ import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.game.harmonium.temple.weapons.Weapon;
-import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.math.Geometry;
 import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;

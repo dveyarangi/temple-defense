@@ -2,8 +2,8 @@ package yarangi.game.harmonium.temple.shields;
 
 import java.util.List;
 
-import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.objects.ISensor;
+import yar.quadraturin.objects.IEntity;
+import yar.quadraturin.objects.ISensor;
 import yarangi.intervals.AngleInterval;
 import yarangi.math.Angles;
 import yarangi.math.Geometry;

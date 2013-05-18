@@ -2,11 +2,11 @@ package yarangi.game.harmonium.enemies.swarm.agents;
 
 import java.awt.geom.Point2D;
 
+import yar.quadraturin.graphics.curves.Bezier4Curve;
 import yarangi.game.harmonium.battle.ISeed;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
 import yarangi.game.harmonium.environment.terrain.EntropySeed;
-import yarangi.graphics.curves.Bezier4Curve;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;

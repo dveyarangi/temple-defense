@@ -3,8 +3,8 @@ package yarangi.game.harmonium.temple.structure;
 import java.util.ArrayList;
 import java.util.List;
 
+import yar.quadraturin.objects.Entity;
 import yarangi.game.harmonium.temple.IServiceable;
-import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.math.Vector2D;
 import yarangi.spatial.Area;
 

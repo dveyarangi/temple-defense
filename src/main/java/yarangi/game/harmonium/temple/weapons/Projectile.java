@@ -1,11 +1,11 @@
 package yarangi.game.harmonium.temple.weapons;
 
+import yar.quadraturin.objects.Entity;
 import yarangi.game.harmonium.ai.weapons.IFeedbackBeacon;
 import yarangi.game.harmonium.ai.weapons.IFeedbackCarrier;
 import yarangi.game.harmonium.battle.Damage;
 import yarangi.game.harmonium.battle.IDamager;
 import yarangi.game.harmonium.battle.ITemple;
-import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.math.Vector2D;
 
 public class Projectile extends Entity implements IFeedbackCarrier, IDamager

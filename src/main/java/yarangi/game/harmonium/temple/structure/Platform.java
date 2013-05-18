@@ -1,9 +1,9 @@
 package yarangi.game.harmonium.temple.structure;
 
+import yar.quadraturin.objects.Entity;
 import yarangi.game.harmonium.battle.Damage;
 import yarangi.game.harmonium.battle.IDamageable;
 import yarangi.game.harmonium.battle.Integrity;
-import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.spatial.AABB;
 
 public abstract class Platform extends Entity implements IDamageable

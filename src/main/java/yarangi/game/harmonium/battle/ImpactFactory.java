@@ -1,14 +1,14 @@
 package yarangi.game.harmonium.battle;
 
+import yar.quadraturin.Scene;
+import yar.quadraturin.graphics.colors.Color;
+import yar.quadraturin.simulations.ICollisionHandler;
+import yar.quadraturin.terrain.ITerrain;
 import yarangi.game.harmonium.enemies.swarm.agents.Seeder;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.harmonium.environment.terrain.ErrosionSeed;
 import yarangi.game.harmonium.temple.shields.Shield;
 import yarangi.game.harmonium.temple.weapons.Projectile;
-import yarangi.graphics.colors.Color;
-import yarangi.graphics.quadraturin.Scene;
-import yarangi.graphics.quadraturin.simulations.ICollisionHandler;
-import yarangi.graphics.quadraturin.terrain.ITerrain;
 import yarangi.physics.IPhysicalObject;
 
 /**

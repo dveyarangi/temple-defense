@@ -1,8 +1,8 @@
 package yarangi.game.harmonium.temple.shields;
 
+import yar.quadraturin.objects.IBehavior;
 import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.game.harmonium.environment.resources.Resource;
-import yarangi.graphics.quadraturin.objects.IBehavior;
 
 public class ShieldBehavior implements IBehavior<Shield>
 {

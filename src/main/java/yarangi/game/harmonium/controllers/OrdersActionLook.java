@@ -3,12 +3,12 @@ package yarangi.game.harmonium.controllers;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.IVeil;
+import yar.quadraturin.objects.IEntity;
+import yar.quadraturin.objects.ILook;
+import yar.quadraturin.terrain.PolygonGrid;
 import yarangi.game.harmonium.environment.terrain.poly.PolyTerrainLook;
-import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.objects.ILook;
-import yarangi.graphics.quadraturin.terrain.PolygonGrid;
 import yarangi.math.Angles;
 import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;

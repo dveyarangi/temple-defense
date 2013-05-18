@@ -3,12 +3,12 @@ package yarangi.game.harmonium.temple.bots;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.IVeil;
+import yar.quadraturin.graphics.colors.Color;
+import yar.quadraturin.graphics.veils.BlurVeil;
+import yar.quadraturin.objects.ILook;
 import yarangi.game.harmonium.environment.resources.Resource;
-import yarangi.graphics.colors.Color;
-import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.ILook;
-import yarangi.graphics.veils.BlurVeil;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 

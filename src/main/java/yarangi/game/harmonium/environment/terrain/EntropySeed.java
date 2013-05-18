@@ -3,10 +3,10 @@ package yarangi.game.harmonium.environment.terrain;
 import com.seisw.util.geom.Poly;
 import com.seisw.util.geom.PolyDefault;
 
+import yar.quadraturin.objects.IEntity;
+import yar.quadraturin.terrain.PolygonGrid;
 import yarangi.game.harmonium.battle.ISeed;
 import yarangi.game.harmonium.enemies.swarm.agents.Seeder;
-import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.terrain.PolygonGrid;
 import yarangi.math.Angles;
 import yarangi.math.IVector2D;
 import yarangi.spatial.Area;

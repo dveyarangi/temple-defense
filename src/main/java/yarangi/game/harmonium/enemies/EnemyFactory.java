@@ -1,10 +1,10 @@
 package yarangi.game.harmonium.enemies;
 
+import yar.quadraturin.objects.IBeing;
+import yar.quadraturin.objects.ISensor;
+import yar.quadraturin.objects.Sensor;
 import yarangi.game.harmonium.battle.ITemple;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
-import yarangi.graphics.quadraturin.objects.IBeing;
-import yarangi.graphics.quadraturin.objects.ISensor;
-import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.spatial.ISpatialFilter;
 
 public class EnemyFactory

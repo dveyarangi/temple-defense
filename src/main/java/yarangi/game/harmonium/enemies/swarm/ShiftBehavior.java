@@ -1,6 +1,6 @@
 package yarangi.game.harmonium.enemies.swarm;
 
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
+import yar.quadraturin.objects.behaviors.IBehaviorState;
 
 class ShiftBehavior implements IBehaviorState<Swarm> 
 {

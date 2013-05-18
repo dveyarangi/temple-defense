@@ -3,7 +3,7 @@ package yarangi.game.harmonium.temple.structure;
 import java.util.HashSet;
 import java.util.Set;
 
-import yarangi.graphics.quadraturin.SceneLayer;
+import yar.quadraturin.SceneLayer;
 import yarangi.math.Geometry;
 
 public class PowerGrid

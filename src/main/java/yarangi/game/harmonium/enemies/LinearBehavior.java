@@ -1,6 +1,6 @@
 package yarangi.game.harmonium.enemies;
 
-import yarangi.graphics.quadraturin.objects.IBehavior;
+import yar.quadraturin.objects.IBehavior;
 import yarangi.spatial.AABB;
 
 public class LinearBehavior implements IBehavior<GenericEnemy> 

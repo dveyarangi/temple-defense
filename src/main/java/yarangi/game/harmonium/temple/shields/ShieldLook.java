@@ -11,11 +11,11 @@ import javax.media.opengl.GLProfile;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 
-import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.Q;
-import yarangi.graphics.quadraturin.objects.ILook;
-import yarangi.graphics.veils.IsoheightVeil;
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.IVeil;
+import yar.quadraturin.Q;
+import yar.quadraturin.graphics.veils.IsoheightVeil;
+import yar.quadraturin.objects.ILook;
 import yarangi.numbers.RandomUtil;
 
 

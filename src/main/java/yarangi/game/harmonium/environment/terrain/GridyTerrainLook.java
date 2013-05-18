@@ -5,12 +5,12 @@ import java.awt.Point;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
-import yarangi.graphics.grid.TileGridLook;
-import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.terrain.Bitmap;
-import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
-import yarangi.graphics.textures.TextureUtils;
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.IVeil;
+import yar.quadraturin.graphics.grid.TileGridLook;
+import yar.quadraturin.graphics.textures.TextureUtils;
+import yar.quadraturin.terrain.Bitmap;
+import yar.quadraturin.terrain.GridyTerrainMap;
 import yarangi.math.BitUtils;
 import yarangi.spatial.Tile;
 

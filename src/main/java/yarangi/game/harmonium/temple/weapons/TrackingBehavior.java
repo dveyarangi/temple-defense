@@ -1,6 +1,6 @@
 package yarangi.game.harmonium.temple.weapons;
 
-import yarangi.graphics.quadraturin.objects.IBehavior;
+import yar.quadraturin.objects.IBehavior;
 import yarangi.math.Vector2D;
 
 public class TrackingBehavior implements IBehavior <Weapon> 

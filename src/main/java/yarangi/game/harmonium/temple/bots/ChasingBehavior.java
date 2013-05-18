@@ -1,7 +1,7 @@
 package yarangi.game.harmonium.temple.bots;
 
-import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
+import yar.quadraturin.objects.IEntity;
+import yar.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.Angles;
 import yarangi.math.Geometry;
 import yarangi.math.IVector2D;

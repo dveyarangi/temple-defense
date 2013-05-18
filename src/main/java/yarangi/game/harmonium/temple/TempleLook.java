@@ -3,9 +3,9 @@ package yarangi.game.harmonium.temple;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
-import yarangi.graphics.colors.Color;
-import yarangi.graphics.lights.CircleLightLook;
-import yarangi.graphics.quadraturin.IRenderingContext;
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.graphics.colors.Color;
+import yar.quadraturin.graphics.lights.CircleLightLook;
 import yarangi.math.Angles;
 
 public class TempleLook extends CircleLightLook<EnergyCore> 

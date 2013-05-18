@@ -3,13 +3,13 @@ package yarangi.game.harmonium.temple.weapons;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.IVeil;
+import yar.quadraturin.Q;
+import yar.quadraturin.graphics.colors.Color;
+import yar.quadraturin.graphics.lights.CircleLightLook;
+import yar.quadraturin.graphics.veils.IsoheightVeil;
 import yarangi.game.harmonium.environment.resources.Resource;
-import yarangi.graphics.colors.Color;
-import yarangi.graphics.lights.CircleLightLook;
-import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.Q;
-import yarangi.graphics.veils.IsoheightVeil;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 

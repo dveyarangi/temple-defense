@@ -1,8 +1,8 @@
 package yarangi.game.harmonium.temple;
 
-import yarangi.graphics.colors.Color;
-import yarangi.graphics.lights.CircleLightLook;
-import yarangi.graphics.quadraturin.IRenderingContext;
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.graphics.colors.Color;
+import yar.quadraturin.graphics.lights.CircleLightLook;
 
 public class ObserverLook extends CircleLightLook<IObserverEntity> 
 {

@@ -1,8 +1,8 @@
 package yarangi.game.harmonium.environment.terrain;
 
+import yar.quadraturin.terrain.ITilePoly;
+import yar.quadraturin.terrain.PolygonGrid;
 import yarangi.game.harmonium.battle.ISeed;
-import yarangi.graphics.quadraturin.terrain.ITilePoly;
-import yarangi.graphics.quadraturin.terrain.PolygonGrid;
 import yarangi.math.Angles;
 import yarangi.spatial.ISpatialSensor;
 
@@ -33,24 +33,28 @@ public class EnforcingSeed implements ISeed <PolygonGrid>
 	public boolean grow(double time, PolygonGrid terrain)
 	{
 		if(Double.isNaN( atx ) || Double.isNaN(aty)) // XXX
-			return true;
+			return false;
 		
 		// TODO: transpose is faster?
 		poly.clear();
-		for(double ang = 0 ; ang < Angles.TAU; ang += Angles.PI_div_6)
+		for(double ang = 0 ; ang < Angles.TAU; ang += Angles.PI_div_3)
 			poly.add( atx + maskWidth *Angles.COS( ang ), aty + maskWidth * Angles.SIN( ang) );
 		
 		ReinforcementSensor s = new ReinforcementSensor(poly);
 //		reinforcementMap.queryAABB( s, cx, cy, rx, ry );
-		reinforcementMap.queryAABB( s, atx, aty, maskWidth, maskWidth );
+		if(reinforcementMap != null) {
+			reinforcementMap.queryAABB( s, atx, aty, maskWidth, maskWidth );
 		
-		Poly res = s.getRes();
+			Poly res = s.getRes();
 		
-		if(res == null)
-			return true;
-		
-		terrain.apply( atx, aty, maskWidth, maskWidth, false, res );
-		return true;
+			if(res == null)
+				return true;
+			terrain.apply( atx, aty, maskWidth, maskWidth, false, res );
+		}
+		else
+			terrain.apply( atx, aty, maskWidth, maskWidth, false, poly );
+			
+		return false;
 	}
 
 	public void setLocation(float atx, float aty)

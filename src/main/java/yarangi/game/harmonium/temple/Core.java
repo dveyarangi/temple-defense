@@ -1,9 +1,9 @@
 package yarangi.game.harmonium.temple;
 
+import yar.quadraturin.objects.Entity;
+import yar.quadraturin.objects.IBeing;
+import yar.quadraturin.objects.Sensor;
 import yarangi.game.harmonium.temple.shields.ShieldBehavior;
-import yarangi.graphics.quadraturin.objects.Entity;
-import yarangi.graphics.quadraturin.objects.IBeing;
-import yarangi.graphics.quadraturin.objects.Sensor;
 import yarangi.spatial.ISpatialFilter;
 
 public class Core extends Entity 

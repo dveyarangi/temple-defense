@@ -7,8 +7,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
+import yar.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.game.harmonium.enemies.swarm.Swarm.AStarNode;
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.FastMath;
 import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;

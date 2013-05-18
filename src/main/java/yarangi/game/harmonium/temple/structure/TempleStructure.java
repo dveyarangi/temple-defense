@@ -6,10 +6,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import yar.quadraturin.objects.Entity;
 import yarangi.game.harmonium.controllers.TempleController;
 import yarangi.game.harmonium.temple.EnergyCore;
 import yarangi.game.harmonium.temple.structure.Hexagon.HexagonId;
-import yarangi.graphics.quadraturin.objects.Entity;
 import yarangi.math.Angles;
 import yarangi.math.Geometry;
 import yarangi.math.Vector2D;

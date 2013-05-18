@@ -4,12 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import com.spinn3r.log5j.Logger;
-
-import yarangi.game.harmonium.environment.terrain.MazeNode;
 import yarangi.spatial.ITileMap;
-import yarangi.spatial.SpatialHashMap;
-import yarangi.spatial.SpatialIndexer;
 
 /**
  * Controls growth of seeds.
@@ -20,15 +15,10 @@ public abstract class MazeInterface <T extends ITileMap>
 {
 //	private interface Seed extends ISeed <T> {};
 	
-	private static final String NAME = MazeInterface.class.toString();
-	
 	protected final T terrain;
 	
 	private final Map <Dao, ISeed<T>> dao = new HashMap <Dao, ISeed<T>> ();
 	
-	private Logger log = Logger.getLogger();
-	
-	private SpatialIndexer <MazeNode> nodes;
 	
 	private double dt;
 	
@@ -36,14 +26,7 @@ public abstract class MazeInterface <T extends ITileMap>
 	{
 		this.terrain = terrain;
 		
-		float width = terrain.getWidth();
-		float height = terrain.getHeight();
-		
-		float cellSize = 10;
-		
-		int size = (int)Math.ceil( width*height/(cellSize*cellSize) );
-		
-		this.nodes = new SpatialHashMap<MazeNode>( NAME, size, cellSize, width, height );
+
 	}
 	
 	/**

@@ -1,8 +1,8 @@
 package yarangi.game.harmonium.enemies.swarm.agents;
 
+import yar.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.game.harmonium.enemies.swarm.IBeacon;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
 

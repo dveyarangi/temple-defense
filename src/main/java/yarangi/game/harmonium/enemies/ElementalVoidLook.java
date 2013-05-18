@@ -3,11 +3,11 @@ package yarangi.game.harmonium.enemies;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.IVeil;
+import yar.quadraturin.graphics.veils.BlurVeil;
+import yar.quadraturin.objects.ILook;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
-import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.ILook;
-import yarangi.graphics.veils.BlurVeil;
 import yarangi.math.Angles;
 import yarangi.math.IVector2D;
 

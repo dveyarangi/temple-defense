@@ -1,8 +1,8 @@
 package yarangi.game.harmonium.temple.harvester;
 
+import yar.quadraturin.terrain.GridyTerrainMap;
 import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.game.harmonium.temple.IServiceable;
-import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
 import yarangi.spatial.AABB;
 import yarangi.spatial.Area;
 

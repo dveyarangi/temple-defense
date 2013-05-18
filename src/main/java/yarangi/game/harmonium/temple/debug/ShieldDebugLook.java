@@ -3,11 +3,11 @@ package yarangi.game.harmonium.temple.debug;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.IVeil;
+import yar.quadraturin.objects.ILook;
 import yarangi.fragments.CircleSegmentList;
 import yarangi.game.harmonium.temple.shields.Shield;
-import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.intervals.AngleInterval;
 import yarangi.math.IVector2D;
 

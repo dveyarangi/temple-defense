@@ -1,6 +1,6 @@
 package yarangi.game.harmonium.enemies.swarm.agents;
 
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
+import yar.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.numbers.RandomUtil;
 
 public class SplitBehavior implements IBehaviorState<SwarmAgent>

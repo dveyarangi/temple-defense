@@ -2,7 +2,7 @@ package yarangi.game.harmonium.ai.weapons;
 
 import java.lang.ref.WeakReference;
 
-import yarangi.graphics.quadraturin.objects.IBeing;
+import yar.quadraturin.objects.IBeing;
 import yarangi.math.Geometry;
 import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;

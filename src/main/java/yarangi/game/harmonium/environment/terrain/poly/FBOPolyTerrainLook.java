@@ -5,13 +5,12 @@ import java.awt.Point;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
-import yarangi.graphics.grid.TileGridLook;
-import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.terrain.ITilePoly;
-import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
-import yarangi.graphics.quadraturin.terrain.PolygonGrid;
-import yarangi.graphics.veils.BlurVeil;
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.IVeil;
+import yar.quadraturin.graphics.grid.TileGridLook;
+import yar.quadraturin.terrain.ITilePoly;
+import yar.quadraturin.terrain.MultilayerTilePoly;
+import yar.quadraturin.terrain.PolygonGrid;
 import yarangi.spatial.Tile;
 
 import com.seisw.util.geom.Poly;
@@ -33,15 +32,17 @@ public class FBOPolyTerrainLook extends TileGridLook<ITilePoly, PolygonGrid>
 	@Override
 	public boolean isOriented() { return true; }
 	
-	public void init(Tile<MultilayerTilePoly> tile, PolygonGrid grid, IRenderingContext ctx)
+	@Override
+	public void init(IRenderingContext ctx)
 	{
 		super.init( ctx );
-		veil = ctx.getPlugin( BlurVeil.NAME );
+//		veil = ctx.getPlugin( BlurVeil.NAME );
 	}
 
 	@Override
-	protected void renderTile(GL2 gl, IRenderingContext context, Tile<ITilePoly> tile, PolygonGrid grid, int scale)
+	protected void renderTile(IRenderingContext context, Tile<ITilePoly> tile, PolygonGrid grid, int scale)
 	{
+		GL2 gl = context.gl();
 		// 
 //		for(Poly poly : tile.get().getPolys())
 //			renderPoly( gl, poly );
@@ -94,7 +95,6 @@ public class FBOPolyTerrainLook extends TileGridLook<ITilePoly, PolygonGrid>
 	@Override
 	public float getPriority()
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

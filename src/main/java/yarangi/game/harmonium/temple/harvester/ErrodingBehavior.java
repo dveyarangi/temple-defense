@@ -1,11 +1,11 @@
 package yarangi.game.harmonium.temple.harvester;
 
+import yar.quadraturin.objects.IBehavior;
+import yar.quadraturin.objects.Sensor;
+import yar.quadraturin.terrain.ITerrain;
+import yar.quadraturin.terrain.MultilayerTilePoly;
 import yarangi.game.harmonium.battle.MazeInterface;
 import yarangi.game.harmonium.environment.terrain.ErrosionSeed;
-import yarangi.graphics.quadraturin.objects.IBehavior;
-import yarangi.graphics.quadraturin.objects.Sensor;
-import yarangi.graphics.quadraturin.terrain.ITerrain;
-import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
 import yarangi.numbers.RandomUtil;
 
 
@@ -30,8 +30,7 @@ public class ErrodingBehavior extends Sensor <ITerrain> implements IBehavior <Ha
 		super(radius, ERRODE_INVERVAL);
 		this.maze = maze;
 		
-		if(maze != null) // TODO: remove
-			maze.seed( ERRODE_INVERVAL, errodingSeed );
+//		if(maze != null) // TODO: remove
 	}
 	
 	@Override
@@ -73,6 +72,7 @@ public class ErrodingBehavior extends Sensor <ITerrain> implements IBehavior <Ha
 //			System.out.println("harvesting at : " + atx + " : " + atx);
 			
 			errodingSeed.setLocation(atx, aty);
+			maze.seed( ERRODE_INVERVAL, errodingSeed );
 		}
 		if(harvestedTile.isEmpty())
 		{

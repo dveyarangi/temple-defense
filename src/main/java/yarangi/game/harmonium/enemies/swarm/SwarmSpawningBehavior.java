@@ -1,5 +1,10 @@
 package yarangi.game.harmonium.enemies.swarm;
 
+import yar.quadraturin.objects.IBehavior;
+import yar.quadraturin.objects.ILook;
+import yar.quadraturin.objects.behaviors.FSMBehavior;
+import yar.quadraturin.objects.behaviors.IBehaviorCondition;
+import yar.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.game.harmonium.battle.MazeInterface;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.enemies.ElementalVoidLook;
@@ -10,11 +15,6 @@ import yarangi.game.harmonium.enemies.swarm.agents.SeederBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.SeederLook;
 import yarangi.game.harmonium.enemies.swarm.agents.SplitBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
-import yarangi.graphics.quadraturin.objects.IBehavior;
-import yarangi.graphics.quadraturin.objects.ILook;
-import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.Angles;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
@@ -34,7 +34,7 @@ class SwarmSpawningBehavior implements IBehaviorState<Swarm>
 	public ILook seederLook = new SeederLook();
 	private final MazeInterface maze;
 	
-	private static int getSpawnAmount() { return RandomUtil.N( 6 )+ 6; }
+	private static int getSpawnAmount() { return RandomUtil.N( 1 ) + 30; }
 	
 //	public Integrity integrity = new Integrity(30, 0, new double [] {0,0,0,0});
 	public SwarmSpawningBehavior(MazeInterface maze, double spawnInterval)
@@ -72,7 +72,7 @@ class SwarmSpawningBehavior implements IBehaviorState<Swarm>
 				SwarmAgent agent = null;
 				switch(RandomUtil.N( 20 )) {
 				case 0: case 1: case 2: case 3: case 4: case 5: case 6:
-				case 7: case 8: case 9: case 10: case 11: case 12: case 13: case 14: 
+				case 7: case 8: case 9: case 10: case 11: case 12: 
 					agent = new SwarmAgent(swarm, new Integrity(10*flavor, 0, new double [] {0,0,0,0}), flavor/100, 5*flavor);
 					agent.setLook(agentLook);
 					agent.setBehavior(createBoidBehavior());
@@ -83,7 +83,7 @@ class SwarmSpawningBehavior implements IBehaviorState<Swarm>
 					agent.setBody(new Body(10*mass, AGENT_VELOCITY+RandomUtil.STD(0, 0.02)));
 					break;
 	//			System.out.println("Agent spawn at " + agent.getArea().getRefPoint());
-				case 16: case 17: case 18: case 15:
+				case 13: case 14: case 16: case 17: case 18: case 15:
 					agent = new Seeder(swarm, 
 											new Integrity(5*flavor, 0, new double [] {0,0,0,0.99}), 
 											AABB.createSquare(spawnX, spawnY, 4*size, angle),

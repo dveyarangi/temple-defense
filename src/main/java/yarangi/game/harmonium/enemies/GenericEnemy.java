@@ -1,10 +1,10 @@
 package yarangi.game.harmonium.enemies;
 
+import yar.quadraturin.objects.Entity;
+import yar.quadraturin.objects.ILayerObject;
 import yarangi.game.harmonium.battle.Damage;
 import yarangi.game.harmonium.battle.IDamageable;
 import yarangi.game.harmonium.battle.Integrity;
-import yarangi.graphics.quadraturin.objects.Entity;
-import yarangi.graphics.quadraturin.objects.ILayerObject;
 import yarangi.spatial.AABB;
 
 public abstract class GenericEnemy extends Entity implements IDamageable

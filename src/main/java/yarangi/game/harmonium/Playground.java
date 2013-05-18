@@ -1,7 +1,17 @@
 package yarangi.game.harmonium;
 
-import javax.media.opengl.GL;
-
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.QVoices;
+import yar.quadraturin.Scene;
+import yar.quadraturin.actions.ActionController;
+import yar.quadraturin.actions.DefaultActionFactory;
+import yar.quadraturin.config.EkranConfig;
+import yar.quadraturin.config.SceneConfig;
+import yar.quadraturin.objects.Dummy;
+import yar.quadraturin.objects.EntityShell;
+import yar.quadraturin.objects.IBehavior;
+import yar.quadraturin.objects.IBeing;
+import yar.quadraturin.objects.Sensor;
 import yarangi.game.harmonium.ai.economy.IOrderScheduler;
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.ai.weapons.NetCore;
@@ -34,24 +44,6 @@ import yarangi.game.harmonium.temple.weapons.TrackingBehavior;
 import yarangi.game.harmonium.temple.weapons.Weapon;
 import yarangi.game.harmonium.temple.weapons.WeaponFactory;
 import yarangi.game.harmonium.temple.weapons.WeaponProperties;
-import yarangi.graphics.colors.Color;
-import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.QVoices;
-import yarangi.graphics.quadraturin.Scene;
-import yarangi.graphics.quadraturin.actions.ActionController;
-import yarangi.graphics.quadraturin.actions.DefaultActionFactory;
-import yarangi.graphics.quadraturin.config.EkranConfig;
-import yarangi.graphics.quadraturin.config.SceneConfig;
-import yarangi.graphics.quadraturin.objects.Dummy;
-import yarangi.graphics.quadraturin.objects.EntityShell;
-import yarangi.graphics.quadraturin.objects.IBehavior;
-import yarangi.graphics.quadraturin.objects.IBeing;
-import yarangi.graphics.quadraturin.objects.Sensor;
-import yarangi.graphics.quadraturin.ui.Direction;
-import yarangi.graphics.quadraturin.ui.Insets;
-import yarangi.graphics.quadraturin.ui.Overlay;
-import yarangi.graphics.quadraturin.ui.Panel;
-import yarangi.graphics.quadraturin.ui.PanelLook;
 import yarangi.math.Angles;
 import yarangi.physics.Body;
 import yarangi.spatial.AABB;
@@ -59,23 +51,23 @@ import yarangi.spatial.AABB;
 public class Playground extends Scene
 {
 	
-	private final EnergyCore temple;
+	private EnergyCore temple;
 	
 //	private BackgroundEntity background;
 	
 //	private int worldWidth = 1000;
 //	private int worldHeight = 1000;
 	
-	private final EntityShell <Swarm> swarmShell;
-	private final EntityShell <Swarm> debugSwarmShell;
+	private EntityShell <Swarm> swarmShell;
+	private EntityShell <Swarm> debugSwarmShell;
 	private boolean debugSwarm = false;
 	int swarmSize;
 	
-	private final IntellectCore core;
+	private IntellectCore core;
 	
-	private final OrdersActionController actionController;
+	private OrdersActionController actionController;
 	
-	private final MazeInterface mazeInterface;
+	private MazeInterface mazeInterface;
 	
 	public Playground(SceneConfig sceneConfig, EkranConfig ekranConfig, QVoices voices)
 	{
@@ -83,6 +75,19 @@ public class Playground extends Scene
 
 		this.swarmSize = sceneConfig.getWidth();
 		
+	}
+	
+	@Override
+	public void postAnimate(double time) 
+	{
+		if(mazeInterface != null) // TODO: remove
+			mazeInterface.grow( time );
+	}
+	
+	@Override
+	public void init()
+	{
+		super.init();
 		createUI();
 		
 //		EntityCenter.init(this);
@@ -102,15 +107,20 @@ public class Playground extends Scene
 		DefaultActionFactory.appendNavActions(this, actionController);
 		Debug.appendDebugActions( actionController.getActions(), this );
 		
-		EntityShell <ActionController> shell = new EntityShell<ActionController>( actionController, null, new OrdersActionLook(actionController) );
-		
 		// TODO: control modes
-		this.setActionController(shell);
+		this.setActionController(actionController);
+		
+		// renderer for actions:
+		EntityShell <ActionController> actionControllerShell = 
+				new EntityShell<ActionController>( actionController, null, new OrdersActionLook(actionController) );
+		
+		addEntity( actionControllerShell );
 
+		
 		// loading cannon's neural network:
 		core = new NetCore("netcore", this.getWorldLayer().getWidth(), this.getWorldLayer().getHeight());
-//		addEntity(new BubbleSwarm(getWorldVeil(), temple));
-		
+
+		// creating temple
 		temple = new EnergyCore(this);
 		TempleController controller = new TempleController(this, core, temple);
 		temple.setLook(new TempleLook( 512 ));
@@ -154,15 +164,15 @@ public class Playground extends Scene
 			structure.addServiceable( weapon );
 			
 			// harvester location is linked to cannon:
-//			Harvester harvester = HarvesterFactory.createHarvester(area, weapon.getPort(), 64, terrain);
-//			addEntity(harvester);
-			Port port = Port.createEmptyPort();
+			Harvester harvester = HarvesterFactory.createHarvester(area, weapon.getPort(), 64, mazeInterface);
+			addEntity(harvester);
+//			Port port = Port.createEmptyPort();
 			
 //			AABB area = AABB.createSquare(RandomUtil.R( 400 )-200, RandomUtil.R( 400 )-200,2,0);
-			Harvester harvester = HarvesterFactory.createHarvester(area, port, 64, mazeInterface);
-			addEntity(harvester);			
+//			Harvester harvester = HarvesterFactory.createHarvester(area, port, 64, mazeInterface);
+//			addEntity(harvester);			
 			
-			structure.addServiceable( harvester );
+//			structure.addServiceable( harvester );
 
 			
 /*			Shield shield = new Shield(bi, weapon.getPort());
@@ -249,24 +259,17 @@ public class Playground extends Scene
 	}
 	
 	@Override
-	public void postAnimate(double time) 
+	public void destroy()
 	{
-		if(mazeInterface != null) // TODO: remove
-			mazeInterface.grow( time );
-	}
-	
-	@Override
-	public void init(GL gl, IRenderingContext context)
-	{
-		super.init(gl, context);
-		gl.glClearColor(0.0f,0.0f, 0.0f, 1.0f);
-	}
-	
-	@Override
-	public void destroy(GL gl, IRenderingContext context)
-	{
-		super.destroy(gl, context);
+		super.destroy();
 		core.shutdown();
+	}
+	
+	@Override
+	public void preRender( IRenderingContext context )
+	{
+//		context.gl().glClearColor(1.0f,1.0f, 1.0f, 1.0f);
+//		context.gl().glCle
 	}
 
 	@Override
@@ -291,36 +294,28 @@ public class Playground extends Scene
 	
 	
 	public void createUI() {
-		Panel [] mainPanels = this.getUILayer().getBasePanel().split( 
+/*		Panel [] mainPanels = this.getUILayer().getBasePanel().split( 
 				new int [] {20, 60, 20 }, Direction.HORIZONTAL );
 		
 		Panel [] leftPanels = mainPanels[0].split( new int [] {10, 90 }, Direction.VERTICAL );
 		
+		Color color = new Color(0.3f, 0.5f, 0.9f, 0.2f);
+		
 		Overlay panel1 = new Overlay(leftPanels[0], true);
 		leftPanels[0].setInsets( new Insets(5,5,5,5));
-		panel1.setLook( new PanelLook( new Color(0.1f, 0.3f, 0.3f, 0.7f) ) );
-//		Overlay panel2 = new Overlay(leftPanels[1], true);
-//		leftPanels[1].setInsets( new Insets(5,5,5,5));
-//		panel2.setLook( new PanelLook( new Color(0.1f, 0.3f, 0.3f, 0.7f) ) );
+		panel1.setLook( new PanelLook( color ) );
+		Overlay panel2 = new Overlay(leftPanels[1], true);
+		leftPanels[1].setInsets( new Insets(5,5,5,5));
+		panel2.setLook( new PanelLook( color ) );
 		
-//		Overlay panel3 = new Overlay(mainPanels[2], true);
-//		mainPanels[2].setInsets( new Insets(5,5,5,5));
-//		panel3.setLook( new PanelLook( new Color(0.1f, 0.3f, 0.3f, 0.7f) ) );
+		Overlay panel3 = new Overlay(mainPanels[2], true);
+		mainPanels[2].setInsets( new Insets(5,5,5,5));
+		panel3.setLook( new PanelLook( color ) );
 		
 		this.getUILayer().addEntity( panel1 );
-//		this.getUILayer().addEntity( panel2 );
-//		this.getUILayer().addEntity( panel3 );
+		this.getUILayer().addEntity( panel2 );
+		this.getUILayer().addEntity( panel3 );*/
 	}
 
-	@Override
-	public void init()
-	{
-	}
 
-	@Override
-	public void destroy()
-	{
-		// TODO Auto-generated method stub
-		
-	}
 }

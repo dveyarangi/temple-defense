@@ -5,9 +5,9 @@ import java.awt.Point;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
-import yarangi.graphics.grid.TileGridLook;
-import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.IVeil;
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.IVeil;
+import yar.quadraturin.graphics.grid.TileGridLook;
 import yarangi.math.Vector2D;
 import yarangi.spatial.Tile;
 

@@ -2,13 +2,13 @@ package yarangi.game.harmonium.enemies.swarm.agents;
 
 import java.awt.geom.Point2D;
 
+import yar.quadraturin.graphics.colors.Color;
+import yar.quadraturin.objects.Entity;
+import yar.quadraturin.objects.IEntity;
 import yarangi.game.harmonium.battle.Damage;
 import yarangi.game.harmonium.battle.IEnemy;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
-import yarangi.graphics.colors.Color;
-import yarangi.graphics.quadraturin.objects.Entity;
-import yarangi.graphics.quadraturin.objects.IEntity;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
 import yarangi.spatial.AABB;

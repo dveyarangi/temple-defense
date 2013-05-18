@@ -1,11 +1,11 @@
 package yarangi.game.harmonium.enemies.swarm.agents;
 
 
+import yar.quadraturin.graphics.colors.Color;
+import yar.quadraturin.graphics.colors.MaskUtil;
+import yar.quadraturin.graphics.curves.Bezier4Curve;
+import yar.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.game.harmonium.battle.MazeInterface;
-import yarangi.graphics.colors.Color;
-import yarangi.graphics.colors.MaskUtil;
-import yarangi.graphics.curves.Bezier4Curve;
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.numbers.RandomUtil;
 
 public class SeederBehavior implements IBehaviorState <Seeder>

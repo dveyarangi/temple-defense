@@ -5,12 +5,12 @@ import java.util.Map;
 
 import javax.media.opengl.GL;
 
+import yar.quadraturin.objects.IBeing;
 import yarangi.game.harmonium.ai.weapons.IFeedbackBeacon;
 import yarangi.game.harmonium.ai.weapons.IntellectCore;
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.game.harmonium.temple.weapons.Weapon;
-import yarangi.graphics.quadraturin.objects.IBeing;
 import yarangi.math.Vector2D;
 
 public interface BattleInterface 

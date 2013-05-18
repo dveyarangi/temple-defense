@@ -1,8 +1,8 @@
 package yarangi.game.harmonium.temple.shields;
 
 import static yarangi.math.Angles.*;
+import yar.quadraturin.objects.IBehavior;
 import yarangi.game.harmonium.temple.ForcePoint;
-import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.math.Vector2D;
 import yarangi.numbers.RandomUtil;
 

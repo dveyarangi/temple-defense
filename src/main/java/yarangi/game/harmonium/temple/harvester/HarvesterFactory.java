@@ -1,10 +1,10 @@
 package yarangi.game.harmonium.temple.harvester;
 
+import yar.quadraturin.objects.IEntity;
+import yar.quadraturin.terrain.Bitmap;
+import yar.quadraturin.terrain.PolygonGrid;
 import yarangi.game.harmonium.battle.MazeInterface;
 import yarangi.game.harmonium.environment.resources.Port;
-import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.terrain.Bitmap;
-import yarangi.graphics.quadraturin.terrain.PolygonGrid;
 import yarangi.spatial.AABB;
 import yarangi.spatial.ISpatialFilter;
 

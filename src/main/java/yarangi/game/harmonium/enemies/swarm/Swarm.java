@@ -4,10 +4,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import yar.quadraturin.Scene;
 import yarangi.game.harmonium.battle.ITemple;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
-import yarangi.graphics.quadraturin.Scene;
 import yarangi.math.FastMath;
 import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
@@ -41,7 +41,7 @@ public class Swarm extends GridMap<Tile<Beacon>, Beacon>
 	
 	static final double DANGER_FACTOR_DECAY = 0.001;
 	static final double OMNISCIENCE_PERIOD = 100.;
-	static final double SPAWNING_INTERVAL = 10;
+	static final double SPAWNING_INTERVAL = 30;
 	public static final int SPAWNING_RADIUS = 50;
 	public static final Integrity AGENT_INTEGRITY = new Integrity(10, 0, new double [] {0,0,0,0});
 

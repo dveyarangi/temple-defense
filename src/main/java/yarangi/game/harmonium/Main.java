@@ -1,9 +1,9 @@
 package yarangi.game.harmonium;
 
-import yarangi.graphics.quadraturin.Q;
-import yarangi.graphics.quadraturin.Stage;
-import yarangi.graphics.quadraturin.Swing2DContainer;
-import yarangi.graphics.shaders.ShaderFactory;
+import yar.quadraturin.Q;
+import yar.quadraturin.Stage;
+import yar.quadraturin.Swing2DContainer;
+import yar.quadraturin.graphics.shaders.ShaderFactory;
 
 public class Main 
 {

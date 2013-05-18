@@ -3,8 +3,8 @@ package yarangi.game.harmonium.battle;
 import java.util.HashSet;
 import java.util.Set;
 
-import yarangi.graphics.quadraturin.Scene;
-import yarangi.graphics.quadraturin.objects.IEntity;
+import yar.quadraturin.Scene;
+import yar.quadraturin.objects.IEntity;
 import yarangi.spatial.AABB;
 import yarangi.spatial.ISpatialSensor;
 import yarangi.spatial.SpatialHashMap;
@@ -36,7 +36,7 @@ public class EntityCenter
 	private EntityCenter(Scene scene)
 	{
 		this.scene = scene;
-		index = (SpatialHashMap <IEntity>)scene.getEntityIndex();
+		index = (SpatialHashMap <IEntity>)scene.getWorldLayer().getEntityIndex();
 	}
 	
 	public static void addTempleTarget(ITemple temple)

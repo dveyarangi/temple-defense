@@ -1,8 +1,8 @@
 package yarangi.game.harmonium.battle;
 
-import yarangi.graphics.colors.Color;
-import yarangi.graphics.quadraturin.objects.IBehavior;
-import yarangi.graphics.quadraturin.objects.Entity;
+import yar.quadraturin.graphics.colors.Color;
+import yar.quadraturin.objects.Entity;
+import yar.quadraturin.objects.IBehavior;
 
 public class ExplodingBehavior implements IBehavior <Entity>  
 {

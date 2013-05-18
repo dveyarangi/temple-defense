@@ -1,9 +1,9 @@
 package yarangi.game.harmonium.temple.structure;
 
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.IVeil;
+import yar.quadraturin.objects.ILook;
 import yarangi.game.harmonium.environment.resources.Port;
-import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.spatial.Area;
 
 public class PowerConnectorLook implements ILook <PowerConnector> 

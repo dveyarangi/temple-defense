@@ -3,13 +3,13 @@ package yarangi.game.harmonium.temple;
 import java.util.HashSet;
 import java.util.Set;
 
+import yar.quadraturin.objects.IBehavior;
+import yar.quadraturin.objects.IBeing;
+import yar.quadraturin.objects.ISensor;
 import yarangi.game.harmonium.ai.weapons.IFeedbackBeacon;
 import yarangi.game.harmonium.controllers.TempleController;
 import yarangi.game.harmonium.temple.weapons.Projectile;
 import yarangi.game.harmonium.temple.weapons.Weapon;
-import yarangi.graphics.quadraturin.objects.IBehavior;
-import yarangi.graphics.quadraturin.objects.IBeing;
-import yarangi.graphics.quadraturin.objects.ISensor;
 
 public class ObserverBehavior implements IBehavior <ObserverEntity>
 {

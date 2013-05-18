@@ -1,6 +1,6 @@
 package yarangi.game.harmonium.battle;
 
-import yarangi.graphics.quadraturin.objects.IEntity;
+import yar.quadraturin.objects.IEntity;
 import yarangi.spatial.AABB;
 
 

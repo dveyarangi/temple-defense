@@ -2,10 +2,10 @@ package yarangi.game.harmonium.environment.terrain.poly;
 
 import javax.media.opengl.GL2;
 
-import yarangi.graphics.grid.PolyGridLook;
-import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.terrain.ITilePoly;
-import yarangi.graphics.quadraturin.terrain.PolygonGrid;
+import yar.quadraturin.IVeil;
+import yar.quadraturin.graphics.grid.PolyGridLook;
+import yar.quadraturin.terrain.ITilePoly;
+import yar.quadraturin.terrain.PolygonGrid;
 import yarangi.spatial.Tile;
 
 import com.seisw.util.geom.Poly;

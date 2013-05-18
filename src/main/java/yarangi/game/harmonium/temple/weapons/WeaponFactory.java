@@ -1,12 +1,12 @@
 package yarangi.game.harmonium.temple.weapons;
 
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.IVeil;
+import yar.quadraturin.graphics.textures.TextureLook;
+import yar.quadraturin.objects.IBeing;
+import yar.quadraturin.objects.ISensor;
+import yar.quadraturin.objects.Sensor;
 import yarangi.game.harmonium.battle.IEnemy;
-import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.IBeing;
-import yarangi.graphics.quadraturin.objects.ISensor;
-import yarangi.graphics.quadraturin.objects.Sensor;
-import yarangi.graphics.textures.TextureLook;
 import yarangi.math.Angles;
 import yarangi.math.BitUtils;
 import yarangi.math.IVector2D;

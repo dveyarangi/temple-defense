@@ -1,12 +1,12 @@
 package yarangi.game.harmonium.environment.terrain.poly;
 
-import yarangi.graphics.quadraturin.Q;
-import yarangi.graphics.quadraturin.objects.EntityShell;
-import yarangi.graphics.quadraturin.objects.ILook;
-import yarangi.graphics.quadraturin.terrain.ITerrainFactory;
-import yarangi.graphics.quadraturin.terrain.ITilePoly;
-import yarangi.graphics.quadraturin.terrain.MultilayerTilePoly;
-import yarangi.graphics.quadraturin.terrain.PolygonGrid;
+import yar.quadraturin.Q;
+import yar.quadraturin.objects.EntityShell;
+import yar.quadraturin.objects.ILook;
+import yar.quadraturin.terrain.ITerrainFactory;
+import yar.quadraturin.terrain.ITilePoly;
+import yar.quadraturin.terrain.MultilayerTilePoly;
+import yar.quadraturin.terrain.PolygonGrid;
 import yarangi.spatial.Tile;
 
 

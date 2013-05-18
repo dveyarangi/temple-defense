@@ -1,8 +1,8 @@
 package yarangi.game.harmonium.enemies;
 
+import yar.quadraturin.objects.ILayerObject;
 import yarangi.game.harmonium.battle.Integrity;
 import yarangi.game.harmonium.enemies.swarm.agents.DroneBehavior;
-import yarangi.graphics.quadraturin.objects.ILayerObject;
 import yarangi.math.Vector2D;
 import yarangi.spatial.AABB;
 

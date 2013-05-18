@@ -2,7 +2,7 @@ package yarangi.game.harmonium.temple;
 
 import java.util.LinkedList;
 
-import yarangi.graphics.quadraturin.objects.ILayerObject;
+import yar.quadraturin.objects.ILayerObject;
 
 public class Path
 {

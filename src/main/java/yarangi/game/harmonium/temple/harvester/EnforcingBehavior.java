@@ -1,13 +1,14 @@
 package yarangi.game.harmonium.temple.harvester;
 
+import yar.quadraturin.objects.IBehavior;
+import yar.quadraturin.objects.Sensor;
+import yar.quadraturin.terrain.Bitmap;
+import yar.quadraturin.terrain.ITerrain;
+import yar.quadraturin.terrain.ITilePoly;
+import yar.quadraturin.terrain.PolygonGrid;
 import yarangi.game.harmonium.battle.MazeInterface;
+import yarangi.game.harmonium.environment.terrain.DragonSeed;
 import yarangi.game.harmonium.environment.terrain.EnforcingSeed;
-import yarangi.graphics.quadraturin.objects.IBehavior;
-import yarangi.graphics.quadraturin.objects.Sensor;
-import yarangi.graphics.quadraturin.terrain.Bitmap;
-import yarangi.graphics.quadraturin.terrain.ITerrain;
-import yarangi.graphics.quadraturin.terrain.ITilePoly;
-import yarangi.graphics.quadraturin.terrain.PolygonGrid;
 import yarangi.math.Angles;
 import yarangi.numbers.RandomUtil;
 import yarangi.spatial.ISpatialSensor;
@@ -44,7 +45,8 @@ public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <W
 	
 	private final AskingSensor askingSensor = new AskingSensor();
 	
-	private final EnforcingSeed enforcingSeed; 
+//	private final EnforcingSeed enforcingSeed; 
+	private final DragonSeed enforcingSeed; 
 	private final PolygonGrid reinforcementMap;
 
 	public EnforcingBehavior(double radius, MazeInterface maze, PolygonGrid reinforcementMap)
@@ -53,9 +55,10 @@ public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <W
 		this.maze = maze;
 		this.reinforcementMap = reinforcementMap;
 		
-		enforcingSeed = new EnforcingSeed( maskWidth, reinforcementMap );
-		if(maze != null) // TODO: remove
-			maze.seed( ERRODE_INVERVAL, enforcingSeed );
+//		enforcingSeed = new EnforcingSeed( maskWidth, reinforcementMap );
+		enforcingSeed = new DragonSeed(  );
+//		if(maze != null) // TODO: remove
+//			maze.seed( ERRODE_INVERVAL, enforcingSeed );
 	}
 	
 	@Override
@@ -73,10 +76,10 @@ public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <W
 			float ry = (tile.getMaxY()-tile.getMinY()) / 2;
 			float cx = tile.getMinX() + rx;
 			float cy = tile.getMinY() + ry;
-			if(maze != null) // TODO: remove
-				reinforcementMap.queryAABB( askingSensor, cx, cy, rx, ry );
+//			if(maze != null) // TODO: remove
+//				reinforcementMap.queryAABB( askingSensor, cx, cy, rx, ry );
 			
-			if(askingSensor.isFound()) {
+//			if(askingSensor.isFound()) {
 				saturation ++;
 				if(RandomUtil.oneOf( lastSaturation+1 ))
 				{
@@ -86,7 +89,7 @@ public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <W
 //					return true;
 
 				}
-			}
+	//		}
 		}
 		
 		return false;
@@ -141,8 +144,10 @@ public class EnforcingBehavior extends Sensor <ITerrain> implements IBehavior <W
 		double ry = (maxy-miny) / 2;
 		double cx = minx + rx;
 		double cy = miny + ry;*/
-		
+
 		enforcingSeed.setLocation( atx, aty );
+		maze.seed( ERRODE_INVERVAL, enforcingSeed );
+
 		double dx = atx - waller.x();
 		double dy = aty - waller.y();
 		

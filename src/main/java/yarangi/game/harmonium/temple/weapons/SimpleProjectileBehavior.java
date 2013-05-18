@@ -1,7 +1,7 @@
 package yarangi.game.harmonium.temple.weapons;
 
+import yar.quadraturin.objects.IBehavior;
 import yarangi.game.harmonium.temple.BattleInterface;
-import yarangi.graphics.quadraturin.objects.IBehavior;
 import yarangi.math.Vector2D;
 
 public class SimpleProjectileBehavior implements IBehavior <Projectile>

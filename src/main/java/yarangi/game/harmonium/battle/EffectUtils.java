@@ -1,12 +1,12 @@
 package yarangi.game.harmonium.battle;
 
-import yarangi.graphics.colors.Color;
-import yarangi.graphics.lights.CircleLightLook;
-import yarangi.graphics.quadraturin.SceneLayer;
-import yarangi.graphics.quadraturin.objects.DummySensor;
-import yarangi.graphics.quadraturin.objects.Entity;
-import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.objects.ILook;
+import yar.quadraturin.SceneLayer;
+import yar.quadraturin.graphics.colors.Color;
+import yar.quadraturin.graphics.lights.CircleLightLook;
+import yar.quadraturin.objects.DummySensor;
+import yar.quadraturin.objects.Entity;
+import yar.quadraturin.objects.IEntity;
+import yar.quadraturin.objects.ILook;
 import yarangi.math.IVector2D;
 import yarangi.spatial.PointArea;
 

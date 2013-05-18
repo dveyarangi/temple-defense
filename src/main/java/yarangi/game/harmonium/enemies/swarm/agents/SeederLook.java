@@ -2,11 +2,11 @@ package yarangi.game.harmonium.enemies.swarm.agents;
 
 import javax.media.opengl.GL2;
 
-import yarangi.graphics.curves.Bezier4Curve;
-import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.ILook;
-import yarangi.graphics.veils.BlurVeil;
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.IVeil;
+import yar.quadraturin.graphics.curves.Bezier4Curve;
+import yar.quadraturin.graphics.veils.BlurVeil;
+import yar.quadraturin.objects.ILook;
 import yarangi.math.IVector2D;
 
 public class SeederLook implements ILook <Seeder> 

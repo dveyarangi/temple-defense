@@ -1,9 +1,9 @@
 package yarangi.game.harmonium.enemies;
 
+import yar.quadraturin.IRenderingContext;
+import yar.quadraturin.IVeil;
+import yar.quadraturin.objects.ILook;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
-import yarangi.graphics.quadraturin.IRenderingContext;
-import yarangi.graphics.quadraturin.IVeil;
-import yarangi.graphics.quadraturin.objects.ILook;
 import yarangi.numbers.RandomUtil;
 
 public class ElementalDarknessLook implements ILook <SwarmAgent>

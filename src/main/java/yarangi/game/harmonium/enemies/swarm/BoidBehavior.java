@@ -2,14 +2,14 @@ package yarangi.game.harmonium.enemies.swarm;
 
 import java.util.List;
 
+import yar.quadraturin.objects.Entity;
+import yar.quadraturin.objects.ISensor;
+import yar.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.game.harmonium.battle.IEnemy;
 import yarangi.game.harmonium.battle.ITemple;
 import yarangi.game.harmonium.enemies.swarm.agents.DroneBehavior;
 import yarangi.game.harmonium.enemies.swarm.agents.SwarmAgent;
 import yarangi.game.harmonium.temple.bots.SatelliteBehavior;
-import yarangi.graphics.quadraturin.objects.Entity;
-import yarangi.graphics.quadraturin.objects.ISensor;
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.math.Geometry;
 import yarangi.math.IVector2D;
 import yarangi.math.Vector2D;
@@ -87,7 +87,7 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 			{
 				attractivity = ((ITemple) neigh).getAttractiveness();
 				leadership = ((ITemple) neigh).getLeadership(); //
-				flocking = false; //not one of our kind, we do not flock with him
+				flocking = false; //not one of our kin, we do not flock with him
 				
 //				if(boid.getTarget() == null) // lock on temple core, not used currently
 				{
@@ -150,6 +150,7 @@ public class BoidBehavior implements IBehaviorState<SwarmAgent>
 		boid.getBody().addForce( tAttractionForce );
 		boid.getBody().addForce( tSeparationForce );
 		boid.getBody().addVelocity( tFlockingVelocity.substract( boid.getBody().getVelocity()).multiply( FLOCKING_COEF ) );
+//		boid.getBody().setVelocity( tFlockingVelocity.multiply( FLOCKING_COEF ) );
 		
 		
 //		System.out.println(Fatt + " : " + Fsep + " : " + Flok + ", res:" + boid.getBody().getForce());

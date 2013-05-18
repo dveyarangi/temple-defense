@@ -2,8 +2,8 @@ package yarangi.game.harmonium;
 
 import java.util.Map;
 
-import yarangi.graphics.quadraturin.actions.IAction;
-import yarangi.graphics.quadraturin.events.UserActionEvent;
+import yar.quadraturin.actions.IAction;
+import yar.quadraturin.events.UserActionEvent;
 
 public class Debug
 {

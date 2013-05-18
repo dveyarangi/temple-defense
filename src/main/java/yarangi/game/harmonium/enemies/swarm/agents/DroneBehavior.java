@@ -1,12 +1,12 @@
 package yarangi.game.harmonium.enemies.swarm.agents;
 
+import yar.quadraturin.objects.IBehavior;
+import yar.quadraturin.objects.IEntity;
+import yar.quadraturin.objects.ISensor;
+import yar.quadraturin.objects.Sensor;
+import yar.quadraturin.objects.behaviors.IBehaviorState;
+import yar.quadraturin.terrain.ITerrain;
 import yarangi.game.harmonium.enemies.swarm.Swarm;
-import yarangi.graphics.quadraturin.objects.IBehavior;
-import yarangi.graphics.quadraturin.objects.IEntity;
-import yarangi.graphics.quadraturin.objects.ISensor;
-import yarangi.graphics.quadraturin.objects.Sensor;
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
-import yarangi.graphics.quadraturin.terrain.ITerrain;
 import yarangi.math.Angles;
 import yarangi.math.Geometry;
 import yarangi.math.IVector2D;

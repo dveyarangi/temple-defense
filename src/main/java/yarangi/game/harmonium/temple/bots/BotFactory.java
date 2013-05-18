@@ -1,13 +1,13 @@
 package yarangi.game.harmonium.temple.bots;
 
+import yar.quadraturin.objects.IBehavior;
+import yar.quadraturin.objects.behaviors.FSMBehavior;
+import yar.quadraturin.objects.behaviors.IBehaviorCondition;
+import yar.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.game.harmonium.ai.economy.IOrder;
 import yarangi.game.harmonium.environment.resources.Port;
 import yarangi.game.harmonium.environment.resources.Resource;
 import yarangi.game.harmonium.temple.IServiceable;
-import yarangi.graphics.quadraturin.objects.IBehavior;
-import yarangi.graphics.quadraturin.objects.behaviors.FSMBehavior;
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorCondition;
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.physics.Body;
 import yarangi.spatial.AABB;
 import yarangi.spatial.PointArea;

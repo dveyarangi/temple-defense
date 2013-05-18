@@ -1,8 +1,8 @@
 package yarangi.game.harmonium.temple.bots;
 
+import yar.quadraturin.objects.behaviors.IBehaviorState;
 import yarangi.game.harmonium.ai.economy.EOrderState;
 import yarangi.game.harmonium.ai.economy.IOrder;
-import yarangi.graphics.quadraturin.objects.behaviors.IBehaviorState;
 
 /**
  * Requests for orders and transits order states.

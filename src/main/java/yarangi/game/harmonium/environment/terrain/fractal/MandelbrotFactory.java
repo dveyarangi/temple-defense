@@ -1,12 +1,12 @@
 package yarangi.game.harmonium.environment.terrain.fractal;
 
-import yarangi.graphics.colors.Color;
-import yarangi.graphics.quadraturin.objects.Dummy;
-import yarangi.graphics.quadraturin.objects.EntityShell;
-import yarangi.graphics.quadraturin.objects.ILook;
-import yarangi.graphics.quadraturin.terrain.Bitmap;
-import yarangi.graphics.quadraturin.terrain.GridyTerrainMap;
-import yarangi.graphics.quadraturin.terrain.ITerrainFactory;
+import yar.quadraturin.graphics.colors.Color;
+import yar.quadraturin.objects.Dummy;
+import yar.quadraturin.objects.EntityShell;
+import yar.quadraturin.objects.ILook;
+import yar.quadraturin.terrain.Bitmap;
+import yar.quadraturin.terrain.GridyTerrainMap;
+import yar.quadraturin.terrain.ITerrainFactory;
 
 public class MandelbrotFactory implements ITerrainFactory
 {
