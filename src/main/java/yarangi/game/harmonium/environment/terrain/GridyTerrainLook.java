@@ -31,8 +31,9 @@ public class GridyTerrainLook extends TileGridLook<Bitmap, GridyTerrainMap>
 	
 	
 	@Override
-	protected void renderTile(GL2 gl, IRenderingContext context, Tile<Bitmap> tile, GridyTerrainMap grid, int scale)
+	protected void renderTile(IRenderingContext context, Tile<Bitmap> tile, GridyTerrainMap grid, int scale)
 	{
+		GL2 gl = context.gl();
 		Bitmap chunk = tile.get();
 		if(chunk == null)
 			return;
