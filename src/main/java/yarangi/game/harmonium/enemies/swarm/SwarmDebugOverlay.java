@@ -26,10 +26,12 @@ public class SwarmDebugOverlay extends TileGridLook <Beacon, Swarm>
 
 
 	@Override
-	protected void renderTile(GL2 gl, IRenderingContext context, Tile<Beacon> tile, Swarm swarm, int scale)
+	protected void renderTile(IRenderingContext context, Tile<Beacon> tile, Swarm swarm, int scale)
 	{
        if(tile == null)
         	return;
+       
+       	GL2 gl = context.gl();
         
 		float size = swarm.getCellSize();
 		float hsize = swarm.getCellSize()/2;
